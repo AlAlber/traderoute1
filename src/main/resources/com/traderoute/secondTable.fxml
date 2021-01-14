@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="780.0" prefWidth="1530.0" stylesheets="@../styles/Styles.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.traderoute.firstTableController">
+   <children>
+      <VBox prefHeight="800.0" prefWidth="1530.0" style="-fx-background-color: #1E1D1A;">
+         <children>
+            <TableView fx:id="firstTableView" prefHeight="130.0" prefWidth="1482.0" styleClass="table-row-cell" stylesheets="@../styles/Styles.css">
+               <columns>
+                  <TableColumn fx:id="RTMNameColumn" prefWidth="148.0" resizable="false" text="Route-To-Market Options" />
+                  <TableColumn fx:id="slottingPerSkuColumn" prefWidth="148.0" resizable="false" text="Slotting Per Sku" />
+                  <TableColumn fx:id="freightOutPerUnitColumn" prefWidth="148.0" resizable="false" text="Freight Out Per Unit" />
+                  <TableColumn fx:id="firstReceiverColumn" prefWidth="148.0" resizable="false" text="First Receiver Pays" />
+                  <TableColumn fx:id="secondReceiverColumn" prefWidth="148.0" resizable="false" text="Second Receiver Pays" />
+                  <TableColumn fx:id="thirdReceiverColumn" prefWidth="148.0" resizable="false" text="Third Receiver Pays" />
+                  <TableColumn fx:id="fourthReceiverColumn" prefWidth="148.0" resizable="false" text="Fourth Receiver Pays" />
+                  <TableColumn prefWidth="148.0" resizable="false" text="Landed Store Cost" />
+                  <TableColumn fx:id="resultingEverydayRetailCalcdColumn" prefWidth="148.0" resizable="false" text="Calculated" />
+                  <TableColumn fx:id="resultingEverydayRetailOverrideColumn" prefWidth="148.0" resizable="false" text="Override" />
+               </columns>
+               <VBox.margin>
+                  <Insets top="40.0" />
+               </VBox.margin>
+            </TableView>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <AnchorPane prefHeight="100.0" prefWidth="300.0" style="-fx-background-color: #FFFFFF;">
+                     <children>
+                        <VBox prefHeight="130.0" prefWidth="150.0" style="-fx-background-color: #f7f0c3;">
+                           <children>
+                              <Label prefHeight="15.0" prefWidth="141.0" text="FIll in your estimated unit" textFill="WHITE">
+                                 <VBox.margin>
+                                    <Insets top="2.0" />
+                                 </VBox.margin>
+                                 <padding>
+                                    <Insets left="7.0" />
+                                 </padding>
+                              </Label>
+                              <Label prefHeight="15.0" prefWidth="142.0" text="velocity U/F/S/W at the min" textFill="WHITE">
+                                 <VBox.margin>
+                                    <Insets top="2.0" />
+                                 </VBox.margin>
+                                 <padding>
+                                    <Insets left="7.0" />
+                                 </padding>
+                              </Label>
+                              <Label prefHeight="15.0" prefWidth="147.0" text="resulting everyday retail price" textFill="WHITE">
+                                 <VBox.margin>
+                                    <Insets top="2.0" />
+                                 </VBox.margin>
+                                 <padding>
+                                    <Insets left="7.0" />
+                                 </padding>
+                              </Label>
+                              <Label prefHeight="15.0" prefWidth="142.0" text="of $" textFill="WHITE">
+                                 <VBox.margin>
+                                    <Insets top="2.0" />
+                                 </VBox.margin>
+                                 <padding>
+                                    <Insets left="7.0" />
+                                 </padding>
+                              </Label>
+                              <Label prefHeight="15.0" prefWidth="142.0" text="and we'll calculate the rest " textFill="WHITE">
+                                 <VBox.margin>
+                                    <Insets top="2.0" />
+                                 </VBox.margin>
+                                 <padding>
+                                    <Insets left="7.0" />
+                                 </padding>
+                              </Label>
+                              <Label prefHeight="15.0" prefWidth="142.0" text="for you." textFill="WHITE">
+                                 <VBox.margin>
+                                    <Insets top="2.0" />
+                                 </VBox.margin>
+                                 <padding>
+                                    <Insets left="7.0" />
+                                 </padding>
+                              </Label>
+                              <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                                 <children>
+                                    <JFXTextField maxHeight="-Infinity" minHeight="-Infinity" prefHeight="16.0" prefWidth="87.0" promptText="Weekly U/S/F/W">
+                                       <font>
+                                          <Font size="10.0" />
+                                       </font>
+                                       <padding>
+                                          <Insets left="7.0" />
+                                       </padding>
+                                    </JFXTextField>
+                                    <JFXButton layoutX="98.0" layoutY="-4.0" maxWidth="-Infinity" minHeight="-Infinity" prefHeight="22.0" prefWidth="55.0" style="-fx-background-color: #A79543;" text="Calculate">
+                                       <font>
+                                          <Font size="10.0" />
+                                       </font>
+                                    </JFXButton>
+                                 </children>
+                              </AnchorPane>
+                           </children>
+                        </VBox>
+                     </children>
+                  </AnchorPane>
+                  <TableView fx:id="secondTableView" prefHeight="130.0" prefWidth="1482.0" styleClass="table-row-cell" stylesheets="@../styles/Styles.css">
+                     <columns>
+                        <TableColumn fx:id="RTMNameColumn2" prefWidth="158.40004272460942" resizable="false" text="Route-To-Market Options" />
+                        <TableColumn fx:id="elasticizedEstimatedUnitVelocityColumn1" prefWidth="174.3999481201172" resizable="false" text="Elasticized Estimated Unit Velocity" />
+                        <TableColumn fx:id="estimatedAnnualVolumePerSkuColumn1" prefWidth="183.19998168945312" resizable="false" text="Estimated Annual Volume/Sku" />
+                        <TableColumn fx:id="slottingPaybackPeriodColumn1" prefWidth="149.60003662109375" resizable="false" text="Slotting Payback Period" />
+                        <TableColumn fx:id="postFreightPostSpoilsWeCollectColumn1" prefWidth="195.99993896484375" resizable="false" text="Post Freight Post Spoils We Collect" />
+                        <TableColumn fx:id="tradePerUnitColumn1" prefWidth="164.00006103515625" resizable="false" text="Unspent Trade Per Unit" />
+                        <TableColumn fx:id="fourYearEqGpPerSkuColumn1" prefWidth="162.4000244140625" resizable="false" text="4-Year EQ GP $ Per Sku" />
+                        <TableColumn fx:id="fourYearEqGpPerUnitColumn1" prefWidth="144.0" resizable="false" text="4-Year EQ GP $ Per Unit" />
+                     </columns>
+                  </TableView>
+               </children>
+            </HBox>
+         </children>
+         <padding>
+            <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
+         </padding>
+      </VBox>
+   </children>
+</AnchorPane>

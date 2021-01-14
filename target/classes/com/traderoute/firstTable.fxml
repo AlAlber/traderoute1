@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="780.0" prefWidth="1530.0" stylesheets="@../styles/Styles.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.traderoute.firstTableController">
+   <children>
+      <VBox prefHeight="800.0" prefWidth="1530.0">
+         <children>
+            <HBox prefHeight="22.0" prefWidth="1482.0">
+               <children>
+                  <Label prefHeight="18.0" prefWidth="87.0" text="Route - To -" />
+                  <Label prefHeight="18.0" prefWidth="87.0" text="Slotting Per" />
+                  <Label prefHeight="18.0" prefWidth="87.0" text="Freight Out" />
+                  <Label prefHeight="18.0" prefWidth="87.0" text="First Receiver" />
+                  <Label prefHeight="18.0" prefWidth="86.0" text="Second Receiver">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </Label>
+                  <Label prefHeight="18.0" prefWidth="87.0" text="Third Receiver" />
+                  <Label prefHeight="18.0" prefWidth="87.0" text="Fourth Receiver" />
+                  <Label prefHeight="18.0" prefWidth="142.0" text="Resulting Everyday Retail" />
+                  <Label prefHeight="18.0" prefWidth="87.0" text="Weekly Velocity" />
+                  <Label prefHeight="18.0" prefWidth="100.0" text="Elasticized" />
+                  <Label prefHeight="18.0" prefWidth="86.0" text="Estimated Annual" />
+                  <Label prefHeight="18.0" prefWidth="89.0" text="Slotting Payback" />
+                  <Label prefHeight="18.0" prefWidth="106.0" text="Post Spoils &amp; Freight" />
+                  <Label prefHeight="18.0" prefWidth="81.0" text="Trade Per " />
+                  <Label prefHeight="18.0" prefWidth="87.0" text="4 Year EQ GP $" />
+                  <Label prefHeight="18.0" prefWidth="87.0" text="4 Year EQ GP $ " />
+               </children>
+               <VBox.margin>
+                  <Insets bottom="-2.0" left="2.0" />
+               </VBox.margin>
+            </HBox>
+            <TableView fx:id="firstTableView" prefHeight="217.0" prefWidth="1496.0" styleClass="table-row-cell" stylesheets="@../styles/Styles.css">
+              <columns>
+                <TableColumn fx:id="RTMNameColumn" prefWidth="87.0" resizable="false" text="Route-To-">
+                     <columns>
+                        <TableColumn prefWidth="75.0" text="Market Option" />
+                     </columns>
+                  </TableColumn>
+                <TableColumn fx:id="slottingPerSkuColumn" prefWidth="87.0" resizable="false" text="Sku" />
+                  <TableColumn fx:id="freightOutPerUnitColumn" prefWidth="87.0" resizable="false" text="Per Unit" />
+                  <TableColumn fx:id="firstReceiverColumn" prefWidth="87.0" resizable="false" text="Pays" />
+                  <TableColumn fx:id="secondReceiverColumn" prefWidth="87.0" resizable="false" text="Pays" />
+                  <TableColumn fx:id="thirdReceiverColumn" prefWidth="87.0" resizable="false" text="Pays" />
+                  <TableColumn fx:id="fourthReceiverColumn" prefWidth="82.39996337890625" resizable="false" text="Pays" />
+                  <TableColumn fx:id="resultingEverydayRetailCalcdColumn" prefWidth="72.800048828125" resizable="false" text="Calculated">
+                     <columns>
+                        <TableColumn prefWidth="75.0" text="Column X" />
+                     </columns>
+                  </TableColumn>
+                  <TableColumn fx:id="resultingEverydayRetailOverrideColumn" prefWidth="69.60003662109375" resizable="false" text="Override" />
+                  <TableColumn fx:id="weeklyVelocityUfswColumn" prefWidth="86.39996337890625" resizable="false" text="U/F/S/W" />
+                  <TableColumn fx:id="elasticizedEstimatedUnitVelocityColumn" prefWidth="100.79998779296875" resizable="false" text="Estimated U/F/S/W" />
+                  <TableColumn fx:id="estimatedAnnualVolumePerSkuColumn" prefWidth="87.9998779296875" resizable="false" text="Volume/Sku" />
+                  <TableColumn fx:id="slottingPaybackPeriodColumn" prefWidth="88.0001220703125" resizable="false" text="Period" />
+                  <TableColumn fx:id="postFreightPostSpoilsWeCollectColumn" prefWidth="113.599853515625" resizable="false" text="Post Spoils We Collect" />
+                  <TableColumn fx:id="tradePerUnitColumn" prefWidth="81.60009765625" resizable="false" text="Unit" />
+                  <TableColumn fx:id="fourYearEqGpPerSkuColumn" prefWidth="88.0" resizable="false" text="Per Sku" />
+                  <TableColumn fx:id="fourYearEqGpPerUnitColumn" prefWidth="95.199951171875" resizable="false" text="Per Unit" />
+                  <TableColumn fx:id="fourthReceiverColumn1" prefWidth="82.39996337890625" resizable="false" text="Pays" />
+              </columns>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </TableView>
+         </children>
+         <padding>
+            <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
+         </padding>
+      </VBox>
+   </children>
+</AnchorPane>
