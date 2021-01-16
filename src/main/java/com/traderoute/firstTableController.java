@@ -9,6 +9,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.util.converter.DoubleStringConverter;
 import javafx.util.converter.IntegerStringConverter;
 
 import java.net.URL;
@@ -21,11 +22,12 @@ public class firstTableController implements Initializable {
     @FXML private TableView<RTMOption> firstTableView;
     @FXML private TableColumn<RTMOption, String> RTMNameColumn;
     @FXML private TableColumn<RTMOption, Integer> slottingPerSkuColumn;
-    @FXML private TableColumn<RTMOption,Integer> freightOutPerUnitColumn;
-    @FXML private TableColumn<RTMOption,Integer> firstReceiverColumn;
-    @FXML private TableColumn<RTMOption,Integer> secondReceiverColumn;
-    @FXML private TableColumn<RTMOption,Integer> thirdReceiverColumn;
-    @FXML private TableColumn<RTMOption, Integer> fourthReceiverColumn;
+    @FXML private TableColumn<RTMOption, Double> freightOutPerUnitColumn;
+    @FXML private TableColumn<RTMOption, Double> firstReceiverColumn;
+    @FXML private TableColumn<RTMOption, Double> secondReceiverColumn;
+    @FXML private TableColumn<RTMOption, Double> thirdReceiverColumn;
+    @FXML private TableColumn<RTMOption, Double> fourthReceiverColumn;
+    @FXML private TableColumn<RTMOption, Double> landedStoreCostColumn;
     @FXML private TableColumn<RTMOption, Integer> resultingEverydayRetailCalcdColumn;
     @FXML private TableColumn<RTMOption, Integer> resultingEverydayRetailOverrideColumn;
     @FXML private TableColumn<RTMOption, String> weeklyVelocityAtMinColumn;
@@ -55,11 +57,12 @@ public class firstTableController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         RTMNameColumn.setCellValueFactory(new PropertyValueFactory<RTMOption, String>("RTMName"));
         slottingPerSkuColumn.setCellValueFactory(new PropertyValueFactory<RTMOption, Integer>("slottingPerSku"));
-        freightOutPerUnitColumn.setCellValueFactory(new PropertyValueFactory<RTMOption, Integer>("freightOutPerUnit"));
-        firstReceiverColumn.setCellValueFactory(new PropertyValueFactory<RTMOption, Integer>("firstReceiver"));
-        secondReceiverColumn.setCellValueFactory(new PropertyValueFactory<RTMOption, Integer>("secondReceiver"));
-        thirdReceiverColumn.setCellValueFactory(new PropertyValueFactory<RTMOption, Integer>("thirdReceiver"));
-        fourthReceiverColumn.setCellValueFactory(new PropertyValueFactory<RTMOption,Integer>("fourthReceiver"));
+        freightOutPerUnitColumn.setCellValueFactory(new PropertyValueFactory<RTMOption, Double>("freightOutPerUnit"));
+        firstReceiverColumn.setCellValueFactory(new PropertyValueFactory<RTMOption, Double>("firstReceiver"));
+        secondReceiverColumn.setCellValueFactory(new PropertyValueFactory<RTMOption, Double>("secondReceiver"));
+        thirdReceiverColumn.setCellValueFactory(new PropertyValueFactory<RTMOption, Double>("thirdReceiver"));
+        fourthReceiverColumn.setCellValueFactory(new PropertyValueFactory<RTMOption,Double>("fourthReceiver"));
+        landedStoreCostColumn.setCellValueFactory(new PropertyValueFactory<RTMOption,Double>("landedStoreCost"));
         resultingEverydayRetailCalcdColumn.setCellValueFactory(new PropertyValueFactory<RTMOption, Integer>("resultingEverydayRetailCalcd"));
         resultingEverydayRetailOverrideColumn.setCellValueFactory(new PropertyValueFactory<RTMOption, Integer>("resultingEverydayRetailOverride"));
         RTMNameColumn2.setCellValueFactory(new PropertyValueFactory<RTMOption, String>("RTMName"));
@@ -71,11 +74,13 @@ public class firstTableController implements Initializable {
 
         RTMNameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
         slottingPerSkuColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
-        freightOutPerUnitColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
-        firstReceiverColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
-        secondReceiverColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
-        thirdReceiverColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
-        fourthReceiverColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
+        freightOutPerUnitColumn.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter()));
+        firstReceiverColumn.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter()));
+        secondReceiverColumn.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter()));
+        thirdReceiverColumn.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter()));
+        fourthReceiverColumn.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter()));
+        landedStoreCostColumn.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter()));
+
         resultingEverydayRetailOverrideColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
 //        weeklyVelocityUfsw.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter()));
 
@@ -83,23 +88,23 @@ public class firstTableController implements Initializable {
     public ObservableList<RTMOption> getRTMOptions()
     {
         ObservableList<RTMOption> RTMOptions = FXCollections.observableArrayList();
-        RTMOptions.add(new RTMOption("Frank",1,0,0,
-                0,0,0,0,
+        RTMOptions.add(new RTMOption("Frank",1.3,0,0.5,
+                0.1,0.3,0.2,0.0,
                 0,0,0,
                 0,0,0,
-                0,0,0,0));
-        RTMOptions.add(new RTMOption("Rebecca",2,0,
-                0,0,0,0,
+                0,0,0,0,0));
+        RTMOptions.add(new RTMOption("Rebecca",2.1,0,
+                0.01,0.03,0.02,0.5,
+                0.0,0,0,
                 0,0,0,
                 0,0,0,
-                0,0,0,
-                0,0));
-        RTMOptions.add(new RTMOption("Mr.",3,0,
-                0,0,0,0,
-                0,0,0,
+                0,0,0));
+        RTMOptions.add(new RTMOption("Mr.",3.1,0,
+                0.03,0.1,0.2,0.2,
+                0.0,0,0,
                 0,0,0,
                 0,0,0,0
-                ,0));
+                ,0,0));
 
         return RTMOptions;
     }

@@ -24,7 +24,7 @@
                   <TableColumn fx:id="secondReceiverColumn" prefWidth="148.0" resizable="false" text="Second Receiver Pays" />
                   <TableColumn fx:id="thirdReceiverColumn" prefWidth="148.0" resizable="false" text="Third Receiver Pays" />
                   <TableColumn fx:id="fourthReceiverColumn" prefWidth="148.0" resizable="false" text="Fourth Receiver Pays" />
-                  <TableColumn prefWidth="148.0" resizable="false" text="Landed Store Cost" />
+                  <TableColumn fx:id="landedStoreCostColumn" prefWidth="148.0" resizable="false" text="Landed Store Cost" />
                   <TableColumn fx:id="resultingEverydayRetailCalcdColumn" prefWidth="148.0" resizable="false" text="Calculated" />
                   <TableColumn fx:id="resultingEverydayRetailOverrideColumn" prefWidth="148.0" resizable="false" text="Override" />
                </columns>
