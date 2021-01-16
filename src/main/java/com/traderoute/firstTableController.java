@@ -72,6 +72,7 @@ public class firstTableController implements Initializable {
         secondTableView.setItems(getRTMOptions());
 //      firstTableView.setEditable(true);
 
+
         RTMNameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
         slottingPerSkuColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
         freightOutPerUnitColumn.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter()));
@@ -89,22 +90,22 @@ public class firstTableController implements Initializable {
     {
         ObservableList<RTMOption> RTMOptions = FXCollections.observableArrayList();
         RTMOptions.add(new RTMOption("Frank",1.3,0,0.5,
-                0.1,0.3,0.2,0.0,
+                0.1,0.3,0.2,0,
                 0,0,0,
                 0,0,0,
-                0,0,0,0,0));
+                0,0,0,0));
         RTMOptions.add(new RTMOption("Rebecca",2.1,0,
                 0.01,0.03,0.02,0.5,
-                0.0,0,0,
                 0,0,0,
                 0,0,0,
-                0,0,0));
+                0,0,0,
+                0,0));
         RTMOptions.add(new RTMOption("Mr.",3.1,0,
                 0.03,0.1,0.2,0.2,
-                0.0,0,0,
+                0,0,0,
                 0,0,0,
                 0,0,0,0
-                ,0,0));
+                ,0));
 
         return RTMOptions;
     }

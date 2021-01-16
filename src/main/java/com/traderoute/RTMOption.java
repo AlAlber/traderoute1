@@ -1,5 +1,9 @@
 package com.traderoute;
 
+import javafx.beans.binding.Bindings;
+import javafx.beans.binding.DoubleBinding;
+import javafx.beans.binding.NumberBinding;
+import javafx.beans.property.ReadOnlyFloatWrapper;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -10,13 +14,13 @@ public class RTMOption {
             resultingEverydayRetailOverride, weeklyVelocityAtMin,weeklyVelocityUsfw,
             elasticizedEstimatedUnitVelocity,annualVolumePerSku,slottingPaybackPeriod,
             postFreightSpoilsWeCollect,unspentTradePerUnit,fourYearEqGpPerSku,fourYearEqGpPerUnit;
-    private SimpleDoubleProperty freightOutPerUnit, firstReceiver,secondReceiver,thirdReceiver,
+    private final SimpleDoubleProperty freightOutPerUnit, firstReceiver,secondReceiver,thirdReceiver,
             fourthReceiver,landedStoreCost;
 
 
     public RTMOption(String RTMName, Double freightOutPerUnit, Integer slottingPerSku,
-                     Double firstReceiver, Double secondReceiver,
-                     Double thirdReceiver, Double fourthReceiver, Double landedStoreCost,
+                     double firstReceiver, double secondReceiver,
+                     double thirdReceiver, double fourthReceiver,
                      Integer resultingEverydayRetailCalcd,
                      Integer resultingEverydayRetailOverride,
                      Integer weeklyVelocityAtMin, Integer weeklyVelocityUsfw,
@@ -31,7 +35,11 @@ public class RTMOption {
         this.secondReceiver = new SimpleDoubleProperty(secondReceiver);
         this.thirdReceiver = new SimpleDoubleProperty(thirdReceiver);
         this.fourthReceiver = new SimpleDoubleProperty(fourthReceiver);
-        this.landedStoreCost = new SimpleDoubleProperty(landedStoreCost);
+        this.landedStoreCost = new SimpleDoubleProperty();
+        NumberBinding max = (DoubleBinding) Bindings.max(this.firstReceiverProperty(),Bindings.max(
+                this.secondReceiverProperty(),Bindings.max(this.thirdReceiverProperty(),this.fourthReceiverProperty())));
+        this.landedStoreCost.bind(max);
+//        this.landedStoreCost = new SimpleDoubleProperty(landedStoreCost);
         this.resultingEverydayRetailCalcd = new SimpleIntegerProperty(resultingEverydayRetailCalcd);
         this.resultingEverydayRetailOverride = new SimpleIntegerProperty(resultingEverydayRetailOverride);
         this.weeklyVelocityAtMin = new SimpleIntegerProperty(weeklyVelocityAtMin);
@@ -67,47 +75,103 @@ public class RTMOption {
     }
 
     public void setFreightOutPerUnit(double freightOutPerUnit) {
-        this.freightOutPerUnit = new SimpleDoubleProperty(freightOutPerUnit);
+        this.freightOutPerUnit.set(freightOutPerUnit);
     }
 
-    public double getFirstReceiver() {
-        return firstReceiver.get();
+
+    public SimpleDoubleProperty firstReceiverProperty() {
+        return firstReceiver;
     }
 
     public void setFirstReceiver(double firstReceiver) {
-        this.firstReceiver = new SimpleDoubleProperty(firstReceiver);
+        this.firstReceiver.set(firstReceiver);
     }
 
     public double getSecondReceiver() {
         return secondReceiver.get();
     }
 
+    public SimpleDoubleProperty secondReceiverProperty() {
+        return secondReceiver;
+    }
+
     public void setSecondReceiver(double secondReceiver) {
-        this.secondReceiver = new SimpleDoubleProperty(secondReceiver);
+        this.secondReceiver.set(secondReceiver);
     }
 
     public double getThirdReceiver() {
         return thirdReceiver.get();
     }
 
+    public SimpleDoubleProperty thirdReceiverProperty() {
+        return thirdReceiver;
+    }
+
     public void setThirdReceiver(double thirdReceiver) {
-        this.thirdReceiver = new SimpleDoubleProperty(thirdReceiver);
+        this.thirdReceiver.set(thirdReceiver);
     }
 
     public double getFourthReceiver() {
         return fourthReceiver.get();
     }
 
-    public void setFourthReceiver(double fourthReceiver) {
-        this.fourthReceiver = new SimpleDoubleProperty(fourthReceiver);
+    public SimpleDoubleProperty fourthReceiverProperty() {
+        return fourthReceiver;
     }
+
+    public void setFourthReceiver(double fourthReceiver) {
+        this.fourthReceiver.set(fourthReceiver);
+    }
+
     public double getLandedStoreCost() {
         return landedStoreCost.get();
     }
 
-    public void setLandedStoreCost(double landedStoreCost) {
-        this.landedStoreCost = new SimpleDoubleProperty(landedStoreCost);
+    public SimpleDoubleProperty landedStoreCostProperty() {
+        return landedStoreCost;
     }
+
+    public void setLandedStoreCost(float landedStoreCost) {
+        this.landedStoreCost.set(landedStoreCost);
+    }
+//    public double getFirstReceiver() {
+//        return firstReceiver.get();
+//    }
+
+    //    public void setFirstReceiver(double firstReceiver) {
+//        this.firstReceiver = new SimpleDoubleProperty(firstReceiver);
+//    }
+//
+//    public double getSecondReceiver() {
+//        return secondReceiver.get();
+//    }
+//
+//    public void setSecondReceiver(double secondReceiver) {
+//        this.secondReceiver = new SimpleDoubleProperty(secondReceiver);
+//    }
+//
+//    public double getThirdReceiver() {
+//        return thirdReceiver.get();
+//    }
+//
+//    public void setThirdReceiver(double thirdReceiver) {
+//        this.thirdReceiver = new SimpleDoubleProperty(thirdReceiver);
+//    }
+//
+//    public double getFourthReceiver() {
+//        return fourthReceiver.get();
+//    }
+//
+//    public void setFourthReceiver(double fourthReceiver) {
+//        this.fourthReceiver = new SimpleDoubleProperty(fourthReceiver);
+//    }
+//    public double getLandedStoreCost() {
+//        return Math.max(getFirstReceiver(),getSecondReceiver()); //,getThirdReceiver(),getFourthReceiver()
+//    }
+//
+//    public void setLandedStoreCost(double landedStoreCost) {
+//        this.landedStoreCost = new SimpleDoubleProperty(landedStoreCost);
+//    }
 
     public int getResultingEverydayRetailCalcd() {
         return resultingEverydayRetailCalcd.get();
