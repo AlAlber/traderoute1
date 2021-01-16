@@ -6,7 +6,7 @@
 }
 .table-view .column-header {
     -fx-background-color:  #A79543;
-    -fx-cell-size: 20px;
+    -fx-cell-size: 30px;
 }
 .table-view .column-header-background .filler {
     -fx-background-color:   #A79543;
