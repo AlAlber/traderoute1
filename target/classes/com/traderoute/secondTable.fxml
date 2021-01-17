@@ -6,6 +6,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
@@ -15,6 +16,20 @@
    <children>
       <VBox prefHeight="800.0" prefWidth="1530.0" style="-fx-background-color: #1E1D1A;">
          <children>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <Label layoutY="34.0" prefHeight="15.0" prefWidth="96.0" style="-fx-background-color: #FFFFFF;" text="Year 1 Store Count" />
+                        <Label layoutY="57.0" prefHeight="15.0" prefWidth="96.0" style="-fx-background-color: #FFFFFF;" text="Everyday GPM %" />
+                        <Label layoutY="78.0" prefHeight="15.0" prefWidth="96.0" style="-fx-background-color: #FFFFFF;" text="Spoils + Fees %" />
+                        <TextField fx:id="everyDayGPMField" layoutX="100.0" layoutY="56.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="17.0" prefWidth="107.0" text="40.0" />
+                        <TextField fx:id="yearOneStoreCountField" layoutX="100.0" layoutY="33.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="17.0" prefWidth="107.0" text="40.0" />
+                        <TextField fx:id="spoilsFeesField" layoutX="100.0" layoutY="77.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="17.0" prefWidth="107.0" text="40.0" />
+                     </children>
+                  </AnchorPane>
+               </children>
+            </HBox>
             <TableView fx:id="firstTableView" prefHeight="130.0" prefWidth="1482.0" styleClass="table-row-cell" stylesheets="@../styles/Styles.css">
                <columns>
                   <TableColumn fx:id="RTMNameColumn" prefWidth="148.0" resizable="false" text="Route-To-Market Options" />
@@ -121,6 +136,7 @@
                   </TableView>
                </children>
             </HBox>
+            <HBox prefHeight="100.0" prefWidth="200.0" />
          </children>
          <padding>
             <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />

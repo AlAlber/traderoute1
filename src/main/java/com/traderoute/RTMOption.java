@@ -1,27 +1,25 @@
 package com.traderoute;
 
 import javafx.beans.binding.Bindings;
-import javafx.beans.binding.DoubleBinding;
 import javafx.beans.binding.NumberBinding;
-import javafx.beans.property.ReadOnlyFloatWrapper;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 public class RTMOption {
     private SimpleStringProperty RTMName;
-    private SimpleIntegerProperty slottingPerSku, resultingEverydayRetailCalcd,
+    private SimpleIntegerProperty slottingPerSku,
             resultingEverydayRetailOverride, weeklyVelocityAtMin,weeklyVelocityUsfw,
             elasticizedEstimatedUnitVelocity,annualVolumePerSku,slottingPaybackPeriod,
             postFreightSpoilsWeCollect,unspentTradePerUnit,fourYearEqGpPerSku,fourYearEqGpPerUnit;
-    private final SimpleDoubleProperty freightOutPerUnit, firstReceiver,secondReceiver,thirdReceiver,
-            fourthReceiver,landedStoreCost;
+    private SimpleDoubleProperty  everyDayGPM, freightOutPerUnit, firstReceiver,secondReceiver,thirdReceiver,
+            fourthReceiver,landedStoreCost, resultingEverydayRetailCalcd;
+
 
 
     public RTMOption(String RTMName, Double freightOutPerUnit, Integer slottingPerSku,
                      double firstReceiver, double secondReceiver,
                      double thirdReceiver, double fourthReceiver,
-                     Integer resultingEverydayRetailCalcd,
                      Integer resultingEverydayRetailOverride,
                      Integer weeklyVelocityAtMin, Integer weeklyVelocityUsfw,
                      Integer elasticizedEstimatedUnitVelocity,
@@ -29,6 +27,7 @@ public class RTMOption {
                      Integer postFreightSpoilsWeCollect, Integer unspentTradePerUnit,
                      Integer fourYearEqGpPerSku, Integer fourYearEqGpPerUnit) {
         this.RTMName = new SimpleStringProperty(RTMName);
+        this.everyDayGPM = new SimpleDoubleProperty();
         this.slottingPerSku = new SimpleIntegerProperty(slottingPerSku);
         this.freightOutPerUnit = new SimpleDoubleProperty(freightOutPerUnit);
         this.firstReceiver = new SimpleDoubleProperty(firstReceiver);
@@ -36,11 +35,17 @@ public class RTMOption {
         this.thirdReceiver = new SimpleDoubleProperty(thirdReceiver);
         this.fourthReceiver = new SimpleDoubleProperty(fourthReceiver);
         this.landedStoreCost = new SimpleDoubleProperty();
-        NumberBinding max = (DoubleBinding) Bindings.max(this.firstReceiverProperty(),Bindings.max(
+        NumberBinding maxReceivers = Bindings.max(this.firstReceiverProperty(),Bindings.max(
                 this.secondReceiverProperty(),Bindings.max(this.thirdReceiverProperty(),this.fourthReceiverProperty())));
-        this.landedStoreCost.bind(max);
-//        this.landedStoreCost = new SimpleDoubleProperty(landedStoreCost);
-        this.resultingEverydayRetailCalcd = new SimpleIntegerProperty(resultingEverydayRetailCalcd);
+        this.landedStoreCost.bind(maxReceivers);
+
+//        NumberBinding multipliedGPM = Bindings.divide(Bindings.multiply(this.landedStoreCostProperty() , 100), Bindings.subtract(100, this.everyDayGPM));
+        this.resultingEverydayRetailCalcd = new SimpleDoubleProperty();
+//        NumberBinding hundredMinusGPM = Bindings.subtract(100,this.everyDayGPMProperty());
+//        NumberBinding hundredTimesLSC = Bindings.multiply(100, this.landedStoreCostProperty());
+//        NumberBinding multipliedGPM = hundredTimesLSC.divide(hundredMinusGPM);
+//        this.resultingEverydayRetailProperty().bind(multipliedGPM);
+
         this.resultingEverydayRetailOverride = new SimpleIntegerProperty(resultingEverydayRetailOverride);
         this.weeklyVelocityAtMin = new SimpleIntegerProperty(weeklyVelocityAtMin);
         this.weeklyVelocityUsfw = new SimpleIntegerProperty(weeklyVelocityUsfw);
@@ -53,6 +58,25 @@ public class RTMOption {
         this.fourYearEqGpPerUnit = new SimpleIntegerProperty(fourYearEqGpPerUnit);
     }
 
+    public String toString (){
+        String stringBuilder= "";
+        stringBuilder += "RTMName: " + this.getRTMName() + ", Slotting per Sku:"+ this.getSlottingPerSku()+
+            ", Landed Store Cost:" + this.getLandedStoreCost()+ ", EverydayGPM:" + this.getEveryDayGPM() + "Calculated:"+ this.getResultingEverydayRetailCalcd();
+
+        return stringBuilder;
+    }
+
+    public double getEveryDayGPM() {
+        return everyDayGPM.get();
+    }
+
+    public SimpleDoubleProperty everyDayGPMProperty() {
+        return everyDayGPM;
+    }
+
+    public void setEveryDayGPM(double everyDayGPM) {
+        this.everyDayGPM.set(everyDayGPM);
+    }
 
     public String getRTMName() {
         return RTMName.get();
@@ -131,54 +155,20 @@ public class RTMOption {
         return landedStoreCost;
     }
 
-    public void setLandedStoreCost(float landedStoreCost) {
+    public void setLandedStoreCost(double landedStoreCost) {
         this.landedStoreCost.set(landedStoreCost);
     }
-//    public double getFirstReceiver() {
-//        return firstReceiver.get();
-//    }
 
-    //    public void setFirstReceiver(double firstReceiver) {
-//        this.firstReceiver = new SimpleDoubleProperty(firstReceiver);
-//    }
-//
-//    public double getSecondReceiver() {
-//        return secondReceiver.get();
-//    }
-//
-//    public void setSecondReceiver(double secondReceiver) {
-//        this.secondReceiver = new SimpleDoubleProperty(secondReceiver);
-//    }
-//
-//    public double getThirdReceiver() {
-//        return thirdReceiver.get();
-//    }
-//
-//    public void setThirdReceiver(double thirdReceiver) {
-//        this.thirdReceiver = new SimpleDoubleProperty(thirdReceiver);
-//    }
-//
-//    public double getFourthReceiver() {
-//        return fourthReceiver.get();
-//    }
-//
-//    public void setFourthReceiver(double fourthReceiver) {
-//        this.fourthReceiver = new SimpleDoubleProperty(fourthReceiver);
-//    }
-//    public double getLandedStoreCost() {
-//        return Math.max(getFirstReceiver(),getSecondReceiver()); //,getThirdReceiver(),getFourthReceiver()
-//    }
-//
-//    public void setLandedStoreCost(double landedStoreCost) {
-//        this.landedStoreCost = new SimpleDoubleProperty(landedStoreCost);
-//    }
-
-    public int getResultingEverydayRetailCalcd() {
+    public double getResultingEverydayRetailCalcd() {
         return resultingEverydayRetailCalcd.get();
     }
 
-    public void setResultingEverydayRetailCalcd(int resultingEverydayRetailCalcd) {
-        this.resultingEverydayRetailCalcd = new SimpleIntegerProperty(resultingEverydayRetailCalcd);
+    public SimpleDoubleProperty resultingEverydayRetailProperty() {
+        return resultingEverydayRetailCalcd;
+    }
+
+    public void setResultingEverydayRetailCalcd(double resultingEverydayRetailCalcd) {
+        this.resultingEverydayRetailCalcd.set(resultingEverydayRetailCalcd);
     }
 
     public int getResultingEverydayRetailOverride() {
