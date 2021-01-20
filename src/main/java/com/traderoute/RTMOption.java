@@ -1,10 +1,9 @@
 package com.traderoute;
 
-import javafx.beans.binding.Bindings;
-import javafx.beans.binding.NumberBinding;
-import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.*;
+
+
+import java.math.BigDecimal;
 
 public class RTMOption {
     private SimpleStringProperty RTMName;
@@ -12,14 +11,24 @@ public class RTMOption {
             resultingEverydayRetailOverride, weeklyVelocityAtMin,weeklyVelocityUsfw,
             elasticizedEstimatedUnitVelocity,annualVolumePerSku,slottingPaybackPeriod,
             postFreightSpoilsWeCollect,unspentTradePerUnit,fourYearEqGpPerSku,fourYearEqGpPerUnit;
-    private SimpleDoubleProperty  everyDayGPM, freightOutPerUnit, firstReceiver,secondReceiver,thirdReceiver,
-            fourthReceiver,landedStoreCost, resultingEverydayRetailCalcd;
-
-
+    private SimpleDoubleProperty freightOutPerUnit;
+    private SimpleObjectProperty <BigDecimal> everyDayGPM, landedStoreCost, firstReceiver,secondReceiver,thirdReceiver,
+    fourthReceiver, resultingEverydayRetailCalcd;
+    public RTMOption(){
+        this.RTMName = new SimpleStringProperty();
+        this.everyDayGPM = new SimpleObjectProperty<BigDecimal>();
+        this.slottingPerSku = new SimpleIntegerProperty();
+        this.freightOutPerUnit = new SimpleDoubleProperty();
+        this.firstReceiver = new SimpleObjectProperty<BigDecimal>();
+        this.secondReceiver = new SimpleObjectProperty<BigDecimal>();
+        this.thirdReceiver = new SimpleObjectProperty<BigDecimal>();
+        this.fourthReceiver = new SimpleObjectProperty<BigDecimal>();
+        this.landedStoreCost = new SimpleObjectProperty<BigDecimal>();
+    }
 
     public RTMOption(String RTMName, Double freightOutPerUnit, Integer slottingPerSku,
-                     double firstReceiver, double secondReceiver,
-                     double thirdReceiver, double fourthReceiver,
+                     BigDecimal firstReceiver, BigDecimal secondReceiver,
+                     BigDecimal thirdReceiver, BigDecimal fourthReceiver,
                      Integer resultingEverydayRetailOverride,
                      Integer weeklyVelocityAtMin, Integer weeklyVelocityUsfw,
                      Integer elasticizedEstimatedUnitVelocity,
@@ -27,20 +36,22 @@ public class RTMOption {
                      Integer postFreightSpoilsWeCollect, Integer unspentTradePerUnit,
                      Integer fourYearEqGpPerSku, Integer fourYearEqGpPerUnit) {
         this.RTMName = new SimpleStringProperty(RTMName);
-        this.everyDayGPM = new SimpleDoubleProperty();
+        this.everyDayGPM = new SimpleObjectProperty<BigDecimal>();
         this.slottingPerSku = new SimpleIntegerProperty(slottingPerSku);
         this.freightOutPerUnit = new SimpleDoubleProperty(freightOutPerUnit);
-        this.firstReceiver = new SimpleDoubleProperty(firstReceiver);
-        this.secondReceiver = new SimpleDoubleProperty(secondReceiver);
-        this.thirdReceiver = new SimpleDoubleProperty(thirdReceiver);
-        this.fourthReceiver = new SimpleDoubleProperty(fourthReceiver);
-        this.landedStoreCost = new SimpleDoubleProperty();
-        NumberBinding maxReceivers = Bindings.max(this.firstReceiverProperty(),Bindings.max(
-                this.secondReceiverProperty(),Bindings.max(this.thirdReceiverProperty(),this.fourthReceiverProperty())));
-        this.landedStoreCost.bind(maxReceivers);
+        this.firstReceiver = new SimpleObjectProperty<BigDecimal>(firstReceiver);
+        this.secondReceiver = new SimpleObjectProperty<BigDecimal>(secondReceiver);
+        this.thirdReceiver = new SimpleObjectProperty<BigDecimal>(thirdReceiver);
+        this.fourthReceiver = new SimpleObjectProperty<BigDecimal>(fourthReceiver);
+        this.landedStoreCost = new SimpleObjectProperty<BigDecimal>();
+//        this.landedStoreCost = new ObjectPropertyBase<>(Bindings.max(this.firstReceiverProperty(),Bindings.max(
+//                this.secondReceiverProperty(),Bindings.max(this.thirdReceiverProperty(),this.fourthReceiverProperty()))));
+//        this.landedStoreCost.bind(Bindings.createObjectBinding(() -> Bindings.max(this.firstReceiverProperty(),Bindings.max(
+//                this.secondReceiverProperty(),Bindings.max(this.thirdReceiverProperty(),this.fourthReceiverProperty()))),firstReceiver,secondReceiver,thirdReceiver,fourthReceiver));
+
 
 //        NumberBinding multipliedGPM = Bindings.divide(Bindings.multiply(this.landedStoreCostProperty() , 100), Bindings.subtract(100, this.everyDayGPM));
-        this.resultingEverydayRetailCalcd = new SimpleDoubleProperty();
+        this.resultingEverydayRetailCalcd = new SimpleObjectProperty<BigDecimal>();
 //        NumberBinding hundredMinusGPM = Bindings.subtract(100,this.everyDayGPMProperty());
 //        NumberBinding hundredTimesLSC = Bindings.multiply(100, this.landedStoreCostProperty());
 //        NumberBinding multipliedGPM = hundredTimesLSC.divide(hundredMinusGPM);
@@ -66,15 +77,21 @@ public class RTMOption {
         return stringBuilder;
     }
 
-    public double getEveryDayGPM() {
+    public BigDecimal getEveryDayGPM() {
+        if (everyDayGPM.get()==null){
+            return new BigDecimal("0.0");
+        }
         return everyDayGPM.get();
     }
 
-    public SimpleDoubleProperty everyDayGPMProperty() {
+    public SimpleObjectProperty<BigDecimal> everyDayGPMProperty() {
+        if (everyDayGPM==null) {
+            return new SimpleObjectProperty<BigDecimal>(new BigDecimal("0.0"));
+        }
         return everyDayGPM;
     }
 
-    public void setEveryDayGPM(double everyDayGPM) {
+    public void setEveryDayGPM(BigDecimal everyDayGPM) {
         this.everyDayGPM.set(everyDayGPM);
     }
 
@@ -103,71 +120,90 @@ public class RTMOption {
     }
 
 
-    public SimpleDoubleProperty firstReceiverProperty() {
+    public BigDecimal getFirstReceiver (){return firstReceiverProperty().get();
+    };
+    public SimpleObjectProperty<BigDecimal> firstReceiverProperty() {
         return firstReceiver;
     }
 
-    public void setFirstReceiver(double firstReceiver) {
+    public void setFirstReceiver(BigDecimal firstReceiver) {
         this.firstReceiver.set(firstReceiver);
     }
 
-    public double getSecondReceiver() {
+    public BigDecimal getSecondReceiver() {
         return secondReceiver.get();
     }
 
-    public SimpleDoubleProperty secondReceiverProperty() {
+    public SimpleObjectProperty<BigDecimal> secondReceiverProperty() {
         return secondReceiver;
     }
 
-    public void setSecondReceiver(double secondReceiver) {
+    public void setSecondReceiver(BigDecimal secondReceiver) {
         this.secondReceiver.set(secondReceiver);
     }
 
-    public double getThirdReceiver() {
+    public BigDecimal getThirdReceiver() {
         return thirdReceiver.get();
     }
 
-    public SimpleDoubleProperty thirdReceiverProperty() {
+    public SimpleObjectProperty<BigDecimal> thirdReceiverProperty() {
         return thirdReceiver;
     }
 
-    public void setThirdReceiver(double thirdReceiver) {
+    public void setThirdReceiver(BigDecimal thirdReceiver) {
         this.thirdReceiver.set(thirdReceiver);
     }
-
-    public double getFourthReceiver() {
+    public BigDecimal getFourthReceiver() {
         return fourthReceiver.get();
     }
 
-    public SimpleDoubleProperty fourthReceiverProperty() {
+    public SimpleObjectProperty<BigDecimal> fourthReceiverProperty() {
         return fourthReceiver;
     }
 
-    public void setFourthReceiver(double fourthReceiver) {
+    public void setFourthReceiver(BigDecimal fourthReceiver) {
         this.fourthReceiver.set(fourthReceiver);
     }
 
-    public double getLandedStoreCost() {
+//    public double getFourthReceiver() {
+//        return fourthReceiver.get();
+//    }
+//
+//    public SimpleDoubleProperty fourthReceiverProperty() {
+//        return fourthReceiver;
+//    }
+//
+//    public void setFourthReceiver(double fourthReceiver) {
+//        this.fourthReceiver.set(fourthReceiver);
+//    }
+
+    public BigDecimal getLandedStoreCost() {
+        if (landedStoreCostProperty().get()==null ){
+            return new BigDecimal("0.0");
+        }
         return landedStoreCost.get();
     }
 
-    public SimpleDoubleProperty landedStoreCostProperty() {
+    public SimpleObjectProperty<BigDecimal> landedStoreCostProperty() {
+        if (landedStoreCost==null){
+            return new SimpleObjectProperty<BigDecimal>(new BigDecimal("0.0"));
+        }
         return landedStoreCost;
     }
 
-    public void setLandedStoreCost(double landedStoreCost) {
+    public void setLandedStoreCost(BigDecimal landedStoreCost) {
         this.landedStoreCost.set(landedStoreCost);
     }
 
-    public double getResultingEverydayRetailCalcd() {
+    public BigDecimal getResultingEverydayRetailCalcd() {
         return resultingEverydayRetailCalcd.get();
     }
 
-    public SimpleDoubleProperty resultingEverydayRetailProperty() {
+    public SimpleObjectProperty<BigDecimal> resultingEverydayRetailProperty() {
         return resultingEverydayRetailCalcd;
     }
 
-    public void setResultingEverydayRetailCalcd(double resultingEverydayRetailCalcd) {
+    public void setResultingEverydayRetailCalcd(BigDecimal resultingEverydayRetailCalcd) {
         this.resultingEverydayRetailCalcd.set(resultingEverydayRetailCalcd);
     }
 

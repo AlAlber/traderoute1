@@ -1,2 +1,8 @@
+com\traderoute\PrimaryController.class
 com\traderoute\firstTableController.class
+com\traderoute\App.class
+module-info.class
 com\traderoute\RTMOption.class
+com\traderoute\MoneyStringConverter.class
+com\traderoute\SecondaryController.class
+com\traderoute\firstTableController$1.class

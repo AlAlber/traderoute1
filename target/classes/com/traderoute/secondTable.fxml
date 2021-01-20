@@ -7,6 +7,8 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
@@ -18,16 +20,40 @@
          <children>
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                  <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../images/inner%20trade%20route%20logo.JPG" />
+                     </image>
+                     <HBox.margin>
+                        <Insets right="30.0" />
+                     </HBox.margin>
+                  </ImageView>
+                  <Label prefHeight="30.0" prefWidth="134.0" style="-fx-background-color: #A79543;" text="AHOLD GIANT (LANDOVER)" textAlignment="CENTER" textFill="#f2efef">
+                     <font>
+                        <Font name="Arial Nova Light" size="36.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets right="30.0" />
+                     </HBox.margin>
+                  </Label>
+                  <AnchorPane maxHeight="-Infinity" minHeight="-Infinity" prefHeight="68.0" prefWidth="207.0">
                      <children>
-                        <Label layoutY="34.0" prefHeight="15.0" prefWidth="96.0" style="-fx-background-color: #FFFFFF;" text="Year 1 Store Count" />
-                        <Label layoutY="57.0" prefHeight="15.0" prefWidth="96.0" style="-fx-background-color: #FFFFFF;" text="Everyday GPM %" />
-                        <Label layoutY="78.0" prefHeight="15.0" prefWidth="96.0" style="-fx-background-color: #FFFFFF;" text="Spoils + Fees %" />
-                        <TextField fx:id="everyDayGPMField" layoutX="100.0" layoutY="56.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="17.0" prefWidth="107.0" text="40.0" />
-                        <TextField fx:id="yearOneStoreCountField" layoutX="100.0" layoutY="33.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="17.0" prefWidth="107.0" text="40.0" />
-                        <TextField fx:id="spoilsFeesField" layoutX="100.0" layoutY="77.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="17.0" prefWidth="107.0" text="40.0" />
+                        <Label layoutY="1.0" prefHeight="15.0" prefWidth="96.0" style="-fx-background-color: #FFFFFF;" text="Year 1 Store Count" />
+                        <Label layoutY="24.0" prefHeight="15.0" prefWidth="96.0" style="-fx-background-color: #FFFFFF;" text="Everyday GPM %" />
+                        <Label layoutY="45.0" prefHeight="15.0" prefWidth="96.0" style="-fx-background-color: #FFFFFF;" text="Spoils + Fees %" />
+                        <TextField fx:id="everyDayGPMField" layoutX="100.0" layoutY="23.0" maxHeight="-Infinity" minHeight="-Infinity" onAction="#changeEveryDayGPMCellEvent" prefHeight="17.0" prefWidth="107.0" text="40.0" />
+                        <TextField fx:id="yearOneStoreCountField" layoutX="100.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="17.0" prefWidth="107.0" text="40.0" />
+                        <TextField fx:id="spoilsFeesField" layoutX="100.0" layoutY="44.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="17.0" prefWidth="107.0" text="40.0" />
                      </children>
+                     <HBox.margin>
+                        <Insets right="30.0" />
+                     </HBox.margin>
                   </AnchorPane>
+                  <ImageView fitHeight="46.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../images/burger-menu.png" />
+                     </image>
+                  </ImageView>
                </children>
             </HBox>
             <TableView fx:id="firstTableView" prefHeight="130.0" prefWidth="1482.0" styleClass="table-row-cell" stylesheets="@../styles/Styles.css">
@@ -35,10 +61,10 @@
                   <TableColumn fx:id="RTMNameColumn" prefWidth="148.0" resizable="false" text="Route-To-Market Options" />
                   <TableColumn fx:id="slottingPerSkuColumn" prefWidth="148.0" resizable="false" text="Slotting Per Sku" />
                   <TableColumn fx:id="freightOutPerUnitColumn" prefWidth="148.0" resizable="false" text="Freight Out Per Unit" />
-                  <TableColumn fx:id="firstReceiverColumn" prefWidth="148.0" resizable="false" text="First Receiver Pays" />
-                  <TableColumn fx:id="secondReceiverColumn" prefWidth="148.0" resizable="false" text="Second Receiver Pays" />
-                  <TableColumn fx:id="thirdReceiverColumn" prefWidth="148.0" resizable="false" text="Third Receiver Pays" />
-                  <TableColumn fx:id="fourthReceiverColumn" prefWidth="148.0" resizable="false" text="Fourth Receiver Pays" />
+                  <TableColumn fx:id="firstReceiverColumn" onEditCommit="#changeFirstReceiverCellEvent" prefWidth="148.0" resizable="false" text="First Receiver Pays" />
+                  <TableColumn fx:id="secondReceiverColumn" onEditCommit="#changeSecondReceiverCellEvent" prefWidth="148.0" resizable="false" text="Second Receiver Pays" />
+                  <TableColumn fx:id="thirdReceiverColumn" onEditCommit="#changeThirdReceiverCellEvent" prefWidth="148.0" resizable="false" text="Third Receiver Pays" />
+                  <TableColumn fx:id="fourthReceiverColumn" onEditCommit="#changeFourthReceiverCellEvent" prefWidth="148.0" resizable="false" text="Fourth Receiver Pays" />
                   <TableColumn fx:id="landedStoreCostColumn" prefWidth="148.0" resizable="false" text="Landed Store Cost" />
                   <TableColumn fx:id="resultingEverydayRetailCalcdColumn" prefWidth="148.0" resizable="false" text="Calculated" />
                   <TableColumn fx:id="resultingEverydayRetailOverrideColumn" prefWidth="148.0" resizable="false" text="Override" />
