@@ -12,10 +12,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
-import javafx.scene.control.TextFormatter;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.util.StringConverter;
@@ -45,7 +42,7 @@ public class firstTableController implements Initializable {
     @FXML private TableColumn<RTMOption, BigDecimal> fourthReceiverColumn;
     @FXML private TableColumn<RTMOption, BigDecimal> landedStoreCostColumn;
     @FXML private TableColumn<RTMOption, BigDecimal> resultingEverydayRetailCalcdColumn;
-    @FXML private TableColumn<RTMOption, Integer> resultingEverydayRetailOverrideColumn;
+    @FXML private TableColumn<RTMOption, BigDecimal> resultingEverydayRetailOverrideColumn;
     @FXML private TableColumn<RTMOption, String> weeklyVelocityAtMinColumn;
     @FXML private TableColumn<RTMOption, Integer> weeklyVelocityUfswColumn;
     @FXML private TableColumn<RTMOption, String> RTMNameColumn2;
@@ -68,7 +65,9 @@ public class firstTableController implements Initializable {
     @FXML private TextField thirdReceiverField;
     @FXML private TextField fourthReceiverField;
     @FXML private TextField resultingEveryDayRetailOverrideField;
-    @FXML private TextField weeklyVelocityUfswField;
+    @FXML private TextField weeklyUFSWAtMinField;
+
+    @FXML private Label maxOverrideLabel;
 
 
 
@@ -87,7 +86,7 @@ public class firstTableController implements Initializable {
         fourthReceiverColumn.setCellValueFactory(new PropertyValueFactory<RTMOption, BigDecimal>("fourthReceiver"));
         landedStoreCostColumn.setCellValueFactory(new PropertyValueFactory<RTMOption, BigDecimal>("landedStoreCost"));
         resultingEverydayRetailCalcdColumn.setCellValueFactory(new PropertyValueFactory<RTMOption, BigDecimal>("resultingEverydayRetailCalcd"));
-        resultingEverydayRetailOverrideColumn.setCellValueFactory(new PropertyValueFactory<RTMOption, Integer>("resultingEverydayRetailOverride"));
+        resultingEverydayRetailOverrideColumn.setCellValueFactory(new PropertyValueFactory<RTMOption, BigDecimal>("resultingEverydayRetailOverride"));
         RTMNameColumn2.setCellValueFactory(new PropertyValueFactory<RTMOption, String>("RTMName"));
 
         firstTableView.setItems(getRTMOptions());
@@ -111,17 +110,15 @@ public class firstTableController implements Initializable {
         fourthReceiverColumn.setCellFactory(TextFieldTableCell.forTableColumn(new BigDecimalStringConverter()));
         landedStoreCostColumn.setCellFactory(TextFieldTableCell.forTableColumn(new BigDecimalStringConverter()));
         resultingEverydayRetailCalcdColumn.setCellFactory(TextFieldTableCell.forTableColumn(new BigDecimalStringConverter()));
-
-        resultingEverydayRetailOverrideColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
-
+        resultingEverydayRetailOverrideColumn.setCellFactory(TextFieldTableCell.forTableColumn(new BigDecimalStringConverter()));
         }
-
     /*
      Set Up listeners for everyDayGPM and landed store Cost Property
      */
-
     public void setUpListeners() {
-
+        /*
+        Check if landedStoreCostProperty changed, if it it did calculate everyday Retail
+        */
         for (RTMOption row : firstTableView.getItems()) {
 
             row.landedStoreCostProperty().addListener(new ChangeListener<BigDecimal>() {
@@ -132,72 +129,128 @@ public class firstTableController implements Initializable {
                     if (!changing) {
                         try {
                             changing = true;
-                            if (!row.getLandedStoreCost().equals(new BigDecimal(0.0)) && row.getLandedStoreCost() != null && !row.getEveryDayGPM().equals(new BigDecimal(0.0)) && row.getEveryDayGPM() != null) {
-                                row.setResultingEverydayRetailCalcd((row.getLandedStoreCost().multiply(new BigDecimal("100"))).divide(row.getEveryDayGPM().subtract(new BigDecimal("100")).multiply(new BigDecimal(-1)), 2, RoundingMode.HALF_UP));
-                                ; //newValue.subtract(new BigDecimal("100"))divide(getTotalValue(), RoundingMode.HALF_DOWN)));
-                                firstTableView.refresh();
-                            }
+                            row.setResultingEverydayRetailCalcd(((row.getLandedStoreCost().multiply(new BigDecimal("100")))
+                                    .divide((getEveryDayGPM().subtract(new BigDecimal("100"))), 2, RoundingMode.HALF_UP).abs()));
                         } finally {
                             changing = false;
                         }
                     }
                 }
             });
-        }
-    }
+            /*
+            Set Override to automatically take current value of resulting every day retail calculated
+            */
+            row.resultingEverydayRetailProperty().addListener(new ChangeListener<BigDecimal>() {
+                private boolean changing;
 
-    /*
-    Set EverydayGPm and do calculation if possible
-    */
-        public void changeEveryDayGPMCellEvent (ActionEvent event) {
-            BigDecimal newEveryDayGPM = new BigDecimal(everyDayGPMField.getText());
-            for (RTMOption row : firstTableView.getItems()) {
-                row.setEveryDayGPM(newEveryDayGPM);
-                if (!row.getLandedStoreCost().equals(new BigDecimal(0.0)) && row.getLandedStoreCost()!= null && row.getEveryDayGPM()!=new BigDecimal("100.0")) {
-                    row.setResultingEverydayRetailCalcd((row.getLandedStoreCost().multiply(new BigDecimal("100")).
-                            divide(row.getEveryDayGPM().subtract(new BigDecimal("100")).multiply(new BigDecimal(-1)), 2, RoundingMode.HALF_UP)));
-                    firstTableView.refresh();
+                @Override
+                public void changed(ObservableValue<? extends BigDecimal> observable, BigDecimal oldValue, BigDecimal newValue) {
+                    if (!changing) {
+                        try {
+                            changing = true;
+                                row.setResultingEverydayRetailOverride(row.getResultingEverydayRetailCalcd());
+                                firstTableView.refresh();
+                        } finally {
+                            changing = false;
+                        }
+                    }
                 }
-                if (row.getEveryDayGPM()== new BigDecimal("100.0")){
+            });
+            /*
+            Check if resulting everyday retail changed, if it did check the max of the column and assign it to maxOverrideLabel
+            */
+            row.resultingEverydayRetailOverrideProperty().addListener(new ChangeListener<BigDecimal>() {
+                private boolean changing;
+
+                @Override
+                public void changed(ObservableValue<? extends BigDecimal> observable, BigDecimal oldValue, BigDecimal newValue) {
+                    if (!changing) {
+                        try {
+                            changing = true;
+                            BigDecimal largest= new BigDecimal("0.0");
+                            for (RTMOption row : firstTableView.getItems()) {
+                                BigDecimal currentNumber = row.getResultingEverydayRetailOverride();
+                                if (currentNumber.compareTo(largest) >0 ){
+                                    largest = currentNumber;
+                                }
+                            }
+                            maxOverrideLabel.setText("of $" + largest);
+                            firstTableView.refresh();
+                        } finally {
+                            changing = false;
+                        }
+                    }
+                }
+            });
+        }}
+
+        /*
+        Set EverydayGPm and do calculation if possible
+        */
+        public void changeEveryDayGPMCellEvent (ActionEvent event) {
+//            BigDecimal newEveryDayGPM = new BigDecimal(everyDayGPMField.getText());
+            for (RTMOption row : firstTableView.getItems()) {
+                    row.setResultingEverydayRetailCalcd(((row.getLandedStoreCost().multiply(new BigDecimal("100")))
+                            .divide((this.getEveryDayGPM().subtract(new BigDecimal("100"))), 2, RoundingMode.HALF_UP).abs()));
+                if (this.getEveryDayGPM()== new BigDecimal("100.0")){
 
                 }
             }
         }
+        /*
+        Return Value from EveryDayGPMField
+         */
+        public BigDecimal getEveryDayGPM(){
+            if (everyDayGPMField.getText()==null){
+                return new BigDecimal("0.0");
+            }
+            return new BigDecimal(everyDayGPMField.getText());
+        }
+        /*
+        Return Value from EveryDayGPMField
+        */
+        public BigDecimal getWeeklyUSFWAtMin(){
+            if (everyDayGPMField.getText()==null){
+                return new BigDecimal("0.0");
+            }
+            return new BigDecimal(everyDayGPMField.getText());
+        }
+        /*
+        Calculate elasticized volume velocity
+         */
 
-    public void changeFirstReceiverCellEvent(TableColumn.CellEditEvent editedCell)
-    {
+        public void changeFirstReceiverCellEvent(TableColumn.CellEditEvent editedCell)
+        {
         RTMOption RTMOptionSelected =  firstTableView.getSelectionModel().getSelectedItem();
         RTMOptionSelected.setFirstReceiver(new BigDecimal(editedCell.getNewValue().toString()));
-
         RTMOptionSelected.setLandedStoreCost(RTMOptionSelected.getFirstReceiver().max(RTMOptionSelected.getSecondReceiver()
                 .max(RTMOptionSelected.getThirdReceiver().max(RTMOptionSelected.getFourthReceiver()))));
-    }
-    public void changeSecondReceiverCellEvent(TableColumn.CellEditEvent editedCell)
-    {
+        }
+        public void changeSecondReceiverCellEvent(TableColumn.CellEditEvent editedCell)
+        {
         RTMOption RTMOptionSelected =  firstTableView.getSelectionModel().getSelectedItem();
         RTMOptionSelected.setSecondReceiver(new BigDecimal(editedCell.getNewValue().toString()));
         RTMOptionSelected.setLandedStoreCost(RTMOptionSelected.getFirstReceiver().max(RTMOptionSelected.getSecondReceiver()
                 .max(RTMOptionSelected.getThirdReceiver().max(RTMOptionSelected.getFourthReceiver()))));
-    }
-    public void changeThirdReceiverCellEvent(TableColumn.CellEditEvent editedCell)
-    {
+        }
+        public void changeThirdReceiverCellEvent(TableColumn.CellEditEvent editedCell)
+        {
         RTMOption RTMOptionSelected =  firstTableView.getSelectionModel().getSelectedItem();
         RTMOptionSelected.setThirdReceiver(new BigDecimal(editedCell.getNewValue().toString()));
         RTMOptionSelected.setLandedStoreCost(RTMOptionSelected.getFirstReceiver().max(RTMOptionSelected.getSecondReceiver()
                 .max(RTMOptionSelected.getThirdReceiver().max(RTMOptionSelected.getFourthReceiver()))));
-    }
-    public void changeFourthReceiverCellEvent(TableColumn.CellEditEvent editedCell)
-    {
+        }
+        public void changeFourthReceiverCellEvent(TableColumn.CellEditEvent editedCell)
+        {
         RTMOption RTMOptionSelected =  firstTableView.getSelectionModel().getSelectedItem();
         RTMOptionSelected.setFourthReceiver(new BigDecimal(editedCell.getNewValue().toString()));
         RTMOptionSelected.setLandedStoreCost(RTMOptionSelected.getFirstReceiver().max(RTMOptionSelected.getSecondReceiver()
                 .max(RTMOptionSelected.getThirdReceiver().max(RTMOptionSelected.getFourthReceiver()))));
-    }
+        }
 
-
-    /*
-     Loads dummy data
-     */
+        /*
+        Loads dummy data
+        */
         public ObservableList<RTMOption> getRTMOptions () {
             ObservableList<RTMOption> RTMOptions = FXCollections.observableArrayList();
             RTMOptions.add(new RTMOption("Frank", 1.3, 0, BigDecimal.valueOf(0.5),
@@ -205,20 +258,20 @@ public class firstTableController implements Initializable {
                     0, 0, 0,
                     0, 0, 0,
                     0, 0, 0, 0));
-            RTMOptions.add(new RTMOption("Rebecca", 2.1, 0, BigDecimal.valueOf(0.5),
-                    BigDecimal.valueOf(0.4), BigDecimal.valueOf(0.5), BigDecimal.valueOf(3.45),
-                    0, 0, 0,
-                    0, 0, 0,
-                    0, 0, 0,
-                    0));
-            RTMOptions.add(new RTMOption("Mr.", 3.1, 0,
-                    BigDecimal.valueOf(0.2),
-                    BigDecimal.valueOf(0.01), BigDecimal.valueOf(0.00001), BigDecimal.valueOf(4.00),
-                    0, 0, 0,
-                    0, 0, 0,
-                    0, 0, 0, 0
-            ));
-//            RTMOptions.add(new RTMOption());;
+//            RTMOptions.add(new RTMOption("Rebecca", 2.1, 0, BigDecimal.valueOf(0.5),
+//                    BigDecimal.valueOf(0.4), BigDecimal.valueOf(0.5), BigDecimal.valueOf(3.45),
+//                    0, 0, 0,
+//                    0, 0, 0,
+//                    0, 0, 0,
+//                    0));
+//            RTMOptions.add(new RTMOption("Mr.", 3.1, 0,
+//                    BigDecimal.valueOf(0.2),
+//                    BigDecimal.valueOf(0.01), BigDecimal.valueOf(0.00001), BigDecimal.valueOf(4.00),
+//                    0, 0, 0,
+//                    0, 0, 0,
+//                    0, 0, 0, 0
+//            ));
+            RTMOptions.add(new RTMOption());
 
             return RTMOptions;
         }

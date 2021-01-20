@@ -103,7 +103,7 @@
                                     <Insets left="7.0" />
                                  </padding>
                               </Label>
-                              <Label prefHeight="15.0" prefWidth="142.0" text="of $" textFill="WHITE">
+                              <Label fx:id="maxOverrideLabel" prefHeight="15.0" prefWidth="142.0" text="of $" textFill="WHITE">
                                  <VBox.margin>
                                     <Insets top="2.0" />
                                  </VBox.margin>

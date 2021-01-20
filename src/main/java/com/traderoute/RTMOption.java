@@ -7,16 +7,15 @@ import java.math.BigDecimal;
 
 public class RTMOption {
     private SimpleStringProperty RTMName;
-    private SimpleIntegerProperty slottingPerSku,
-            resultingEverydayRetailOverride, weeklyVelocityAtMin,weeklyVelocityUsfw,
+    private SimpleIntegerProperty slottingPerSku, weeklyVelocityAtMin,weeklyVelocityUsfw,
             elasticizedEstimatedUnitVelocity,annualVolumePerSku,slottingPaybackPeriod,
             postFreightSpoilsWeCollect,unspentTradePerUnit,fourYearEqGpPerSku,fourYearEqGpPerUnit;
     private SimpleDoubleProperty freightOutPerUnit;
-    private SimpleObjectProperty <BigDecimal> everyDayGPM, landedStoreCost, firstReceiver,secondReceiver,thirdReceiver,
-    fourthReceiver, resultingEverydayRetailCalcd;
+    private SimpleObjectProperty <BigDecimal> landedStoreCost, firstReceiver,secondReceiver,thirdReceiver,
+    fourthReceiver, resultingEverydayRetailCalcd,
+            resultingEverydayRetailOverride;
     public RTMOption(){
         this.RTMName = new SimpleStringProperty();
-        this.everyDayGPM = new SimpleObjectProperty<BigDecimal>();
         this.slottingPerSku = new SimpleIntegerProperty();
         this.freightOutPerUnit = new SimpleDoubleProperty();
         this.firstReceiver = new SimpleObjectProperty<BigDecimal>();
@@ -24,6 +23,8 @@ public class RTMOption {
         this.thirdReceiver = new SimpleObjectProperty<BigDecimal>();
         this.fourthReceiver = new SimpleObjectProperty<BigDecimal>();
         this.landedStoreCost = new SimpleObjectProperty<BigDecimal>();
+        this.resultingEverydayRetailCalcd = new SimpleObjectProperty<BigDecimal>();
+        this.resultingEverydayRetailOverride = new SimpleObjectProperty<BigDecimal>();
     }
 
     public RTMOption(String RTMName, Double freightOutPerUnit, Integer slottingPerSku,
@@ -36,7 +37,6 @@ public class RTMOption {
                      Integer postFreightSpoilsWeCollect, Integer unspentTradePerUnit,
                      Integer fourYearEqGpPerSku, Integer fourYearEqGpPerUnit) {
         this.RTMName = new SimpleStringProperty(RTMName);
-        this.everyDayGPM = new SimpleObjectProperty<BigDecimal>();
         this.slottingPerSku = new SimpleIntegerProperty(slottingPerSku);
         this.freightOutPerUnit = new SimpleDoubleProperty(freightOutPerUnit);
         this.firstReceiver = new SimpleObjectProperty<BigDecimal>(firstReceiver);
@@ -57,7 +57,7 @@ public class RTMOption {
 //        NumberBinding multipliedGPM = hundredTimesLSC.divide(hundredMinusGPM);
 //        this.resultingEverydayRetailProperty().bind(multipliedGPM);
 
-        this.resultingEverydayRetailOverride = new SimpleIntegerProperty(resultingEverydayRetailOverride);
+        this.resultingEverydayRetailOverride = new SimpleObjectProperty<BigDecimal>();
         this.weeklyVelocityAtMin = new SimpleIntegerProperty(weeklyVelocityAtMin);
         this.weeklyVelocityUsfw = new SimpleIntegerProperty(weeklyVelocityUsfw);
         this.elasticizedEstimatedUnitVelocity = new SimpleIntegerProperty(elasticizedEstimatedUnitVelocity);
@@ -72,27 +72,9 @@ public class RTMOption {
     public String toString (){
         String stringBuilder= "";
         stringBuilder += "RTMName: " + this.getRTMName() + ", Slotting per Sku:"+ this.getSlottingPerSku()+
-            ", Landed Store Cost:" + this.getLandedStoreCost()+ ", EverydayGPM:" + this.getEveryDayGPM() + "Calculated:"+ this.getResultingEverydayRetailCalcd();
+            ", Landed Store Cost:" + this.getLandedStoreCost()+ "Calculated:"+ this.getResultingEverydayRetailCalcd();
 
         return stringBuilder;
-    }
-
-    public BigDecimal getEveryDayGPM() {
-        if (everyDayGPM.get()==null){
-            return new BigDecimal("0.0");
-        }
-        return everyDayGPM.get();
-    }
-
-    public SimpleObjectProperty<BigDecimal> everyDayGPMProperty() {
-        if (everyDayGPM==null) {
-            return new SimpleObjectProperty<BigDecimal>(new BigDecimal("0.0"));
-        }
-        return everyDayGPM;
-    }
-
-    public void setEveryDayGPM(BigDecimal everyDayGPM) {
-        this.everyDayGPM.set(everyDayGPM);
     }
 
     public String getRTMName() {
@@ -120,7 +102,11 @@ public class RTMOption {
     }
 
 
-    public BigDecimal getFirstReceiver (){return firstReceiverProperty().get();
+    public BigDecimal getFirstReceiver (){
+        if (firstReceiverProperty().get()==null) {
+            return new BigDecimal("0.0");
+        }
+        return firstReceiverProperty().get();
     };
     public SimpleObjectProperty<BigDecimal> firstReceiverProperty() {
         return firstReceiver;
@@ -131,6 +117,9 @@ public class RTMOption {
     }
 
     public BigDecimal getSecondReceiver() {
+        if (secondReceiverProperty().get()==null) {
+            return new BigDecimal("0.0");
+        }
         return secondReceiver.get();
     }
 
@@ -143,6 +132,9 @@ public class RTMOption {
     }
 
     public BigDecimal getThirdReceiver() {
+        if (thirdReceiverProperty().get()==null) {
+            return new BigDecimal("0.0");
+        }
         return thirdReceiver.get();
     }
 
@@ -154,6 +146,9 @@ public class RTMOption {
         this.thirdReceiver.set(thirdReceiver);
     }
     public BigDecimal getFourthReceiver() {
+        if (fourthReceiverProperty().get()==null) {
+            return new BigDecimal("0.0");
+        }
         return fourthReceiver.get();
     }
 
@@ -164,18 +159,6 @@ public class RTMOption {
     public void setFourthReceiver(BigDecimal fourthReceiver) {
         this.fourthReceiver.set(fourthReceiver);
     }
-
-//    public double getFourthReceiver() {
-//        return fourthReceiver.get();
-//    }
-//
-//    public SimpleDoubleProperty fourthReceiverProperty() {
-//        return fourthReceiver;
-//    }
-//
-//    public void setFourthReceiver(double fourthReceiver) {
-//        this.fourthReceiver.set(fourthReceiver);
-//    }
 
     public BigDecimal getLandedStoreCost() {
         if (landedStoreCostProperty().get()==null ){
@@ -196,10 +179,16 @@ public class RTMOption {
     }
 
     public BigDecimal getResultingEverydayRetailCalcd() {
+        if (resultingEverydayRetailOverride==null){
+            return new BigDecimal(0.0);
+        }
         return resultingEverydayRetailCalcd.get();
     }
 
     public SimpleObjectProperty<BigDecimal> resultingEverydayRetailProperty() {
+        if (landedStoreCost==null){
+            return new SimpleObjectProperty<BigDecimal>(new BigDecimal("0.0"));
+        }
         return resultingEverydayRetailCalcd;
     }
 
@@ -207,12 +196,21 @@ public class RTMOption {
         this.resultingEverydayRetailCalcd.set(resultingEverydayRetailCalcd);
     }
 
-    public int getResultingEverydayRetailOverride() {
+    public BigDecimal getResultingEverydayRetailOverride() {
+        if (resultingEverydayRetailOverride.get()==null){
+            return new BigDecimal("0.0");
+        }
         return resultingEverydayRetailOverride.get();
     }
+    public SimpleObjectProperty<BigDecimal> resultingEverydayRetailOverrideProperty() {
+        if (landedStoreCost==null){
+            return new SimpleObjectProperty<BigDecimal>(new BigDecimal("0.0"));
+        }
+        return resultingEverydayRetailOverride;
+    }
 
-    public void setResultingEverydayRetailOverride(int resultingEverydayRetailOverride) {
-        this.resultingEverydayRetailOverride = new SimpleIntegerProperty(resultingEverydayRetailOverride);
+    public void setResultingEverydayRetailOverride(BigDecimal resultingEverydayRetailOverride) {
+        this.resultingEverydayRetailOverride.set(resultingEverydayRetailOverride);
     }
 
     public int getWeeklyVelocityAtMin() {
@@ -287,3 +285,23 @@ public class RTMOption {
         this.fourYearEqGpPerUnit = new SimpleIntegerProperty(fourYearEqGpPerUnit);
     }
 }
+/*
+Everyday GPM still as field
+ */
+
+//    public void setEveryDayGPM(BigDecimal everyDayGPM) {
+//        this.everyDayGPM.set(everyDayGPM);
+//    }
+//public BigDecimal getEveryDayGPM() {
+//        if (everyDayGPM.get()==null){
+//            return new BigDecimal("0.0");
+//        }
+//        return everyDayGPM.get();
+//    }
+//
+//    public SimpleObjectProperty<BigDecimal> everyDayGPMProperty() {
+//        if (everyDayGPM==null) {
+//            return new SimpleObjectProperty<BigDecimal>(new BigDecimal("0.0"));
+//        }
+//        return everyDayGPM;
+//    }
