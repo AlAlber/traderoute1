@@ -43,10 +43,10 @@ public class firstTableController implements Initializable {
     @FXML private TableColumn<RTMOption, BigDecimal> landedStoreCostColumn;
     @FXML private TableColumn<RTMOption, BigDecimal> resultingEverydayRetailCalcdColumn;
     @FXML private TableColumn<RTMOption, BigDecimal> resultingEverydayRetailOverrideColumn;
-    @FXML private TableColumn<RTMOption, String> weeklyVelocityAtMinColumn;
+    @FXML private TableColumn<RTMOption, BigDecimal> weeklyVelocityAtMinColumn;
     @FXML private TableColumn<RTMOption, Integer> weeklyVelocityUfswColumn;
     @FXML private TableColumn<RTMOption, String> RTMNameColumn2;
-    @FXML private TableColumn<RTMOption, Integer> elasticizedEstimatedUnitVelocityColumn;
+    @FXML private TableColumn<RTMOption, BigDecimal> elasticizedEstimatedUnitVelocityColumn;
     @FXML private TableColumn<RTMOption, Integer> estimatedAnnualVolumePerSkuColumn;
     @FXML private TableColumn<RTMOption, Integer> slottingPaybackPeriodColumn;
     @FXML private TableColumn<RTMOption, Integer> postFreightPostSpoilsWeCollectColumn;
@@ -55,6 +55,7 @@ public class firstTableController implements Initializable {
     @FXML private TableColumn<RTMOption, Double> fourYearEqGpPerUnitColumn;
 
     @FXML private TextField everyDayGPMField;
+    @FXML private TextField weeklyUFSWAtMinField;
     @FXML private TextField yearOneStoreCountField;
     @FXML private TextField spoilsFeesField;
     @FXML private TextField RTMNameField;
@@ -65,7 +66,6 @@ public class firstTableController implements Initializable {
     @FXML private TextField thirdReceiverField;
     @FXML private TextField fourthReceiverField;
     @FXML private TextField resultingEveryDayRetailOverrideField;
-    @FXML private TextField weeklyUFSWAtMinField;
 
     @FXML private Label maxOverrideLabel;
 
@@ -87,10 +87,10 @@ public class firstTableController implements Initializable {
         landedStoreCostColumn.setCellValueFactory(new PropertyValueFactory<RTMOption, BigDecimal>("landedStoreCost"));
         resultingEverydayRetailCalcdColumn.setCellValueFactory(new PropertyValueFactory<RTMOption, BigDecimal>("resultingEverydayRetailCalcd"));
         resultingEverydayRetailOverrideColumn.setCellValueFactory(new PropertyValueFactory<RTMOption, BigDecimal>("resultingEverydayRetailOverride"));
+        elasticizedEstimatedUnitVelocityColumn.setCellValueFactory(new PropertyValueFactory<RTMOption, BigDecimal>("elasticizedEstimatedUnitVelocity"));
         RTMNameColumn2.setCellValueFactory(new PropertyValueFactory<RTMOption, String>("RTMName"));
-
         firstTableView.setItems(getRTMOptions());
-        secondTableView.setItems(getRTMOptions());
+        secondTableView.setItems(firstTableView.getItems());
 
         firstTableView.setEditable(true);
         landedStoreCostColumn.setEditable(false);
@@ -111,6 +111,7 @@ public class firstTableController implements Initializable {
         landedStoreCostColumn.setCellFactory(TextFieldTableCell.forTableColumn(new BigDecimalStringConverter()));
         resultingEverydayRetailCalcdColumn.setCellFactory(TextFieldTableCell.forTableColumn(new BigDecimalStringConverter()));
         resultingEverydayRetailOverrideColumn.setCellFactory(TextFieldTableCell.forTableColumn(new BigDecimalStringConverter()));
+        elasticizedEstimatedUnitVelocityColumn.setCellFactory(TextFieldTableCell.forTableColumn(new BigDecimalStringConverter()));
         }
     /*
      Set Up listeners for everyDayGPM and landed store Cost Property
@@ -149,6 +150,7 @@ public class firstTableController implements Initializable {
                         try {
                             changing = true;
                                 row.setResultingEverydayRetailOverride(row.getResultingEverydayRetailCalcd());
+                                maxOverrideLabel.setText("of $" + getMinOverride());
                                 firstTableView.refresh();
                         } finally {
                             changing = false;
@@ -167,14 +169,7 @@ public class firstTableController implements Initializable {
                     if (!changing) {
                         try {
                             changing = true;
-                            BigDecimal largest= new BigDecimal("0.0");
-                            for (RTMOption row : firstTableView.getItems()) {
-                                BigDecimal currentNumber = row.getResultingEverydayRetailOverride();
-                                if (currentNumber.compareTo(largest) >0 ){
-                                    largest = currentNumber;
-                                }
-                            }
-                            maxOverrideLabel.setText("of $" + largest);
+                            maxOverrideLabel.setText("of $" + getMinOverride());
                             firstTableView.refresh();
                         } finally {
                             changing = false;
@@ -190,13 +185,47 @@ public class firstTableController implements Initializable {
         public void changeEveryDayGPMCellEvent (ActionEvent event) {
 //            BigDecimal newEveryDayGPM = new BigDecimal(everyDayGPMField.getText());
             for (RTMOption row : firstTableView.getItems()) {
-                    row.setResultingEverydayRetailCalcd(((row.getLandedStoreCost().multiply(new BigDecimal("100")))
-                            .divide((this.getEveryDayGPM().subtract(new BigDecimal("100"))), 2, RoundingMode.HALF_UP).abs()));
+                    row.setResultingEverydayRetailCalcd((row.getLandedStoreCost().multiply(new BigDecimal("100")))
+                            .divide((this.getEveryDayGPM().subtract(new BigDecimal("100"))), 2, RoundingMode.HALF_UP).abs());
+                    //FIGURE OUT CORRECT ROUNDING
                 if (this.getEveryDayGPM()== new BigDecimal("100.0")){
 
                 }
             }
         }
+        /*
+        Return minimum value from override column
+         */
+        public BigDecimal getMinOverride() {
+            BigDecimal smallest = new BigDecimal("100000000000");
+            for (RTMOption row : firstTableView.getItems()) {
+                BigDecimal currentNumber = row.getResultingEverydayRetailOverride();
+                if (currentNumber.compareTo(smallest) < 0) {
+                    smallest = currentNumber;
+                }
+            }
+            return smallest;
+        }
+    /*
+    Get elasticized velocities from weeklyUSFWAtMin Field  and do calculation if possible
+    */
+    public void changeWeeklyUSFWAtMinEvent (ActionEvent event) {
+//            BigDecimal newEveryDayGPM = new BigDecimal(everyDayGPMField.getText());
+        secondTableView.setItems(firstTableView.getItems());
+        for (RTMOption row : secondTableView.getItems()) {
+            if (this.getMinOverride()==row.getResultingEverydayRetailOverride()){
+                secondTableView.setItems(firstTableView.getItems());
+                row.setElasticizedEstimatedUnitVelocity(this.getWeeklyUSFWAtMin());
+                System.out.println("Are you getting here");
+            }
+            else {
+                row.setElasticizedEstimatedUnitVelocity((new BigDecimal("0.015").multiply(row.getResultingEverydayRetailOverride()
+                        .subtract(this.getMinOverride())).multiply(this.getWeeklyUSFWAtMin())).divide(((this.getMinOverride())).subtract(this.getWeeklyUSFWAtMin()), 5, RoundingMode.HALF_UP));
+                System.out.println("Are you getting here pt2");
+            }
+        }
+        secondTableView.refresh();
+    }
         /*
         Return Value from EveryDayGPMField
          */
@@ -210,10 +239,10 @@ public class firstTableController implements Initializable {
         Return Value from EveryDayGPMField
         */
         public BigDecimal getWeeklyUSFWAtMin(){
-            if (everyDayGPMField.getText()==null){
+            if (weeklyUFSWAtMinField.getText()== null){
                 return new BigDecimal("0.0");
             }
-            return new BigDecimal(everyDayGPMField.getText());
+            return new BigDecimal(weeklyUFSWAtMinField.getText());
         }
         /*
         Calculate elasticized volume velocity
@@ -256,7 +285,7 @@ public class firstTableController implements Initializable {
             RTMOptions.add(new RTMOption("Frank", 1.3, 0, BigDecimal.valueOf(0.5),
                     BigDecimal.valueOf(0.1), BigDecimal.valueOf(0.3), BigDecimal.valueOf(3.95),
                     0, 0, 0,
-                    0, 0, 0,
+                    BigDecimal.valueOf(0.0), 0, 0,
                     0, 0, 0, 0));
 //            RTMOptions.add(new RTMOption("Rebecca", 2.1, 0, BigDecimal.valueOf(0.5),
 //                    BigDecimal.valueOf(0.4), BigDecimal.valueOf(0.5), BigDecimal.valueOf(3.45),

@@ -7,13 +7,11 @@ import java.math.BigDecimal;
 
 public class RTMOption {
     private SimpleStringProperty RTMName;
-    private SimpleIntegerProperty slottingPerSku, weeklyVelocityAtMin,weeklyVelocityUsfw,
-            elasticizedEstimatedUnitVelocity,annualVolumePerSku,slottingPaybackPeriod,
+    private SimpleIntegerProperty slottingPerSku, weeklyVelocityAtMin,weeklyVelocityUsfw,annualVolumePerSku,slottingPaybackPeriod,
             postFreightSpoilsWeCollect,unspentTradePerUnit,fourYearEqGpPerSku,fourYearEqGpPerUnit;
     private SimpleDoubleProperty freightOutPerUnit;
     private SimpleObjectProperty <BigDecimal> landedStoreCost, firstReceiver,secondReceiver,thirdReceiver,
-    fourthReceiver, resultingEverydayRetailCalcd,
-            resultingEverydayRetailOverride;
+    fourthReceiver, resultingEverydayRetailCalcd,resultingEverydayRetailOverride, elasticizedEstimatedUnitVelocity;
     public RTMOption(){
         this.RTMName = new SimpleStringProperty();
         this.slottingPerSku = new SimpleIntegerProperty();
@@ -32,7 +30,7 @@ public class RTMOption {
                      BigDecimal thirdReceiver, BigDecimal fourthReceiver,
                      Integer resultingEverydayRetailOverride,
                      Integer weeklyVelocityAtMin, Integer weeklyVelocityUsfw,
-                     Integer elasticizedEstimatedUnitVelocity,
+                     BigDecimal elasticizedEstimatedUnitVelocity,
                      Integer annualVolumePerSku, Integer slottingPaybackPeriod,
                      Integer postFreightSpoilsWeCollect, Integer unspentTradePerUnit,
                      Integer fourYearEqGpPerSku, Integer fourYearEqGpPerUnit) {
@@ -44,23 +42,12 @@ public class RTMOption {
         this.thirdReceiver = new SimpleObjectProperty<BigDecimal>(thirdReceiver);
         this.fourthReceiver = new SimpleObjectProperty<BigDecimal>(fourthReceiver);
         this.landedStoreCost = new SimpleObjectProperty<BigDecimal>();
-//        this.landedStoreCost = new ObjectPropertyBase<>(Bindings.max(this.firstReceiverProperty(),Bindings.max(
-//                this.secondReceiverProperty(),Bindings.max(this.thirdReceiverProperty(),this.fourthReceiverProperty()))));
-//        this.landedStoreCost.bind(Bindings.createObjectBinding(() -> Bindings.max(this.firstReceiverProperty(),Bindings.max(
-//                this.secondReceiverProperty(),Bindings.max(this.thirdReceiverProperty(),this.fourthReceiverProperty()))),firstReceiver,secondReceiver,thirdReceiver,fourthReceiver));
-
-
-//        NumberBinding multipliedGPM = Bindings.divide(Bindings.multiply(this.landedStoreCostProperty() , 100), Bindings.subtract(100, this.everyDayGPM));
         this.resultingEverydayRetailCalcd = new SimpleObjectProperty<BigDecimal>();
-//        NumberBinding hundredMinusGPM = Bindings.subtract(100,this.everyDayGPMProperty());
-//        NumberBinding hundredTimesLSC = Bindings.multiply(100, this.landedStoreCostProperty());
-//        NumberBinding multipliedGPM = hundredTimesLSC.divide(hundredMinusGPM);
-//        this.resultingEverydayRetailProperty().bind(multipliedGPM);
 
         this.resultingEverydayRetailOverride = new SimpleObjectProperty<BigDecimal>();
         this.weeklyVelocityAtMin = new SimpleIntegerProperty(weeklyVelocityAtMin);
         this.weeklyVelocityUsfw = new SimpleIntegerProperty(weeklyVelocityUsfw);
-        this.elasticizedEstimatedUnitVelocity = new SimpleIntegerProperty(elasticizedEstimatedUnitVelocity);
+        this.elasticizedEstimatedUnitVelocity = new SimpleObjectProperty<BigDecimal>();
         this.annualVolumePerSku = new SimpleIntegerProperty(annualVolumePerSku);
         this.slottingPaybackPeriod = new SimpleIntegerProperty(slottingPaybackPeriod);
         this.postFreightSpoilsWeCollect = new SimpleIntegerProperty(postFreightSpoilsWeCollect);
@@ -229,12 +216,18 @@ public class RTMOption {
         this.weeklyVelocityUsfw = new SimpleIntegerProperty(weeklyVelocityUsfw);
     }
 
-    public int getElasticizedEstimatedUnitVelocity() {
+    public BigDecimal getElasticizedEstimatedUnitVelocity() {
         return elasticizedEstimatedUnitVelocity.get();
     }
 
-    public void setElasticizedEstimatedUnitVelocity(int elasticizedEstimatedUnitVelocity) {
-        this.elasticizedEstimatedUnitVelocity = new SimpleIntegerProperty(elasticizedEstimatedUnitVelocity);
+    public void setElasticizedEstimatedUnitVelocity(BigDecimal elasticizedEstimatedUnitVelocity) {
+        this.elasticizedEstimatedUnitVelocity = new SimpleObjectProperty<BigDecimal>(elasticizedEstimatedUnitVelocity);
+    }
+    public SimpleObjectProperty<BigDecimal> elasticizedEstimatedUnitVelocityProperty() {
+        if (landedStoreCost==null){
+            return new SimpleObjectProperty<BigDecimal>(new BigDecimal("0.0"));
+        }
+        return elasticizedEstimatedUnitVelocity;
     }
 
     public int getAnnualVolumePerSku() {
@@ -285,6 +278,22 @@ public class RTMOption {
         this.fourYearEqGpPerUnit = new SimpleIntegerProperty(fourYearEqGpPerUnit);
     }
 }
+/*
+Old Bindings used
+ */
+
+//        this.landedStoreCost = new ObjectPropertyBase<>(Bindings.max(this.firstReceiverProperty(),Bindings.max(
+//                this.secondReceiverProperty(),Bindings.max(this.thirdReceiverProperty(),this.fourthReceiverProperty()))));
+//        this.landedStoreCost.bind(Bindings.createObjectBinding(() -> Bindings.max(this.firstReceiverProperty(),Bindings.max(
+//                this.secondReceiverProperty(),Bindings.max(this.thirdReceiverProperty(),this.fourthReceiverProperty()))),firstReceiver,secondReceiver,thirdReceiver,fourthReceiver));
+
+
+//        NumberBinding multipliedGPM = Bindings.divide(Bindings.multiply(this.landedStoreCostProperty() , 100), Bindings.subtract(100, this.everyDayGPM));
+
+//        NumberBinding hundredMinusGPM = Bindings.subtract(100,this.everyDayGPMProperty());
+//        NumberBinding hundredTimesLSC = Bindings.multiply(100, this.landedStoreCostProperty());
+//        NumberBinding multipliedGPM = hundredTimesLSC.divide(hundredMinusGPM);
+//        this.resultingEverydayRetailProperty().bind(multipliedGPM);
 /*
 Everyday GPM still as field
  */

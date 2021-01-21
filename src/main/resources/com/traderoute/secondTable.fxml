@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.JFXButton?>
-<?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
@@ -41,9 +39,9 @@
                         <Label layoutY="1.0" prefHeight="15.0" prefWidth="96.0" style="-fx-background-color: #FFFFFF;" text="Year 1 Store Count" />
                         <Label layoutY="24.0" prefHeight="15.0" prefWidth="96.0" style="-fx-background-color: #FFFFFF;" text="Everyday GPM %" />
                         <Label layoutY="45.0" prefHeight="15.0" prefWidth="96.0" style="-fx-background-color: #FFFFFF;" text="Spoils + Fees %" />
-                        <TextField fx:id="everyDayGPMField" layoutX="100.0" layoutY="23.0" maxHeight="-Infinity" minHeight="-Infinity" onAction="#changeEveryDayGPMCellEvent" prefHeight="17.0" prefWidth="107.0" text="40.0" />
-                        <TextField fx:id="yearOneStoreCountField" layoutX="100.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="17.0" prefWidth="107.0" text="40.0" />
-                        <TextField fx:id="spoilsFeesField" layoutX="100.0" layoutY="44.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="17.0" prefWidth="107.0" text="40.0" />
+                        <TextField fx:id="everyDayGPMField" layoutX="100.0" layoutY="23.0" maxHeight="-Infinity" minHeight="-Infinity" onAction="#changeEveryDayGPMCellEvent" prefHeight="17.0" prefWidth="107.0" promptText="0.0" />
+                        <TextField fx:id="yearOneStoreCountField" layoutX="100.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="17.0" prefWidth="107.0" promptText="0.0" />
+                        <TextField fx:id="spoilsFeesField" layoutX="100.0" layoutY="44.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="17.0" prefWidth="107.0" promptText="0.0" />
                      </children>
                      <HBox.margin>
                         <Insets right="30.0" />
@@ -127,23 +125,8 @@
                                     <Insets left="7.0" />
                                  </padding>
                               </Label>
-                              <AnchorPane prefHeight="200.0" prefWidth="200.0">
-                                 <children>
-                                    <JFXTextField maxHeight="-Infinity" minHeight="-Infinity" prefHeight="16.0" prefWidth="87.0" promptText="Weekly U/S/F/W">
-                                       <font>
-                                          <Font size="10.0" />
-                                       </font>
-                                       <padding>
-                                          <Insets left="7.0" />
-                                       </padding>
-                                    </JFXTextField>
-                                    <JFXButton layoutX="98.0" layoutY="-4.0" maxWidth="-Infinity" minHeight="-Infinity" prefHeight="22.0" prefWidth="55.0" style="-fx-background-color: #A79543;" text="Calculate">
-                                       <font>
-                                          <Font size="10.0" />
-                                       </font>
-                                    </JFXButton>
-                                 </children>
-                              </AnchorPane>
+                              <TextField fx:id="weeklyUFSWAtMinField" maxHeight="-Infinity" minHeight="-Infinity" onAction="#changeWeeklyUSFWAtMinEvent" prefHeight="18.0" prefWidth="106.0" promptText="0.0" />
+                              <AnchorPane prefHeight="200.0" prefWidth="200.0" />
                            </children>
                         </VBox>
                      </children>
@@ -151,7 +134,7 @@
                   <TableView fx:id="secondTableView" prefHeight="130.0" prefWidth="1482.0" styleClass="table-row-cell" stylesheets="@../styles/Styles.css">
                      <columns>
                         <TableColumn fx:id="RTMNameColumn2" prefWidth="158.40004272460942" resizable="false" text="Route-To-Market Options" />
-                        <TableColumn fx:id="elasticizedEstimatedUnitVelocityColumn1" prefWidth="174.3999481201172" resizable="false" text="Elasticized Estimated Unit Velocity" />
+                        <TableColumn fx:id="elasticizedEstimatedUnitVelocityColumn" prefWidth="174.3999481201172" resizable="false" text="Elasticized Estimated Unit Velocity" />
                         <TableColumn fx:id="estimatedAnnualVolumePerSkuColumn1" prefWidth="183.19998168945312" resizable="false" text="Estimated Annual Volume/Sku" />
                         <TableColumn fx:id="slottingPaybackPeriodColumn1" prefWidth="149.60003662109375" resizable="false" text="Slotting Payback Period" />
                         <TableColumn fx:id="postFreightPostSpoilsWeCollectColumn1" prefWidth="195.99993896484375" resizable="false" text="Post Freight Post Spoils We Collect" />
