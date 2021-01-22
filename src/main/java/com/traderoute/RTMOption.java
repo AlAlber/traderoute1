@@ -7,11 +7,12 @@ import java.math.BigDecimal;
 
 public class RTMOption {
     private SimpleStringProperty RTMName;
-    private SimpleIntegerProperty slottingPerSku, weeklyVelocityAtMin,weeklyVelocityUsfw,annualVolumePerSku,slottingPaybackPeriod,
-            postFreightSpoilsWeCollect,unspentTradePerUnit,fourYearEqGpPerSku,fourYearEqGpPerUnit;
+    private SimpleIntegerProperty slottingPerSku, weeklyVelocityAtMin,weeklyVelocityUsfw,slottingPaybackPeriod,
+            postFreightSpoilsWeCollect,unspentTradePerUnit,fourYearEqGpPerSku,fourYearEqGpPerUnit,estimatedAnnualVolumePerSku;
     private SimpleDoubleProperty freightOutPerUnit;
     private SimpleObjectProperty <BigDecimal> landedStoreCost, firstReceiver,secondReceiver,thirdReceiver,
-    fourthReceiver, resultingEverydayRetailCalcd,resultingEverydayRetailOverride, elasticizedEstimatedUnitVelocity;
+    fourthReceiver, resultingEverydayRetailCalcd,resultingEverydayRetailOverride,
+            elasticizedEstimatedUnitVelocity;
     public RTMOption(){
         this.RTMName = new SimpleStringProperty();
         this.slottingPerSku = new SimpleIntegerProperty();
@@ -23,6 +24,8 @@ public class RTMOption {
         this.landedStoreCost = new SimpleObjectProperty<BigDecimal>();
         this.resultingEverydayRetailCalcd = new SimpleObjectProperty<BigDecimal>();
         this.resultingEverydayRetailOverride = new SimpleObjectProperty<BigDecimal>();
+        this.elasticizedEstimatedUnitVelocity = new SimpleObjectProperty<BigDecimal>();
+        this.estimatedAnnualVolumePerSku = new SimpleIntegerProperty();
     }
 
     public RTMOption(String RTMName, Double freightOutPerUnit, Integer slottingPerSku,
@@ -31,7 +34,7 @@ public class RTMOption {
                      Integer resultingEverydayRetailOverride,
                      Integer weeklyVelocityAtMin, Integer weeklyVelocityUsfw,
                      BigDecimal elasticizedEstimatedUnitVelocity,
-                     Integer annualVolumePerSku, Integer slottingPaybackPeriod,
+                     Integer estimatedAnnualVolumePerSku, Integer slottingPaybackPeriod,
                      Integer postFreightSpoilsWeCollect, Integer unspentTradePerUnit,
                      Integer fourYearEqGpPerSku, Integer fourYearEqGpPerUnit) {
         this.RTMName = new SimpleStringProperty(RTMName);
@@ -48,7 +51,7 @@ public class RTMOption {
         this.weeklyVelocityAtMin = new SimpleIntegerProperty(weeklyVelocityAtMin);
         this.weeklyVelocityUsfw = new SimpleIntegerProperty(weeklyVelocityUsfw);
         this.elasticizedEstimatedUnitVelocity = new SimpleObjectProperty<BigDecimal>();
-        this.annualVolumePerSku = new SimpleIntegerProperty(annualVolumePerSku);
+        this.estimatedAnnualVolumePerSku = new SimpleIntegerProperty();
         this.slottingPaybackPeriod = new SimpleIntegerProperty(slottingPaybackPeriod);
         this.postFreightSpoilsWeCollect = new SimpleIntegerProperty(postFreightSpoilsWeCollect);
         this.unspentTradePerUnit = new SimpleIntegerProperty(unspentTradePerUnit);
@@ -230,12 +233,18 @@ public class RTMOption {
         return elasticizedEstimatedUnitVelocity;
     }
 
-    public int getAnnualVolumePerSku() {
-        return annualVolumePerSku.get();
+    public int getEstimatedAnnualVolumePerSku() {
+        return estimatedAnnualVolumePerSku.get();
     }
 
-    public void setAnnualVolumePerSku(int annualVolumePerSku) {
-        this.annualVolumePerSku = new SimpleIntegerProperty(annualVolumePerSku);
+    public void setEstimatedAnnualVolumePerSku(int estimatedAnnualVolumePerSku) {
+        this.estimatedAnnualVolumePerSku = new SimpleIntegerProperty(estimatedAnnualVolumePerSku);
+    }
+    public SimpleIntegerProperty estimatedAnnualVolumePerSkuProperty() {
+        if (landedStoreCost==null){
+            return new SimpleIntegerProperty(0);
+        }
+        return estimatedAnnualVolumePerSku;
     }
 
     public int getSlottingPaybackPeriod() {

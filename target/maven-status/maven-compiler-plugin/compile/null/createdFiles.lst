@@ -2,6 +2,7 @@ com\traderoute\PrimaryController.class
 com\traderoute\firstTableController.class
 com\traderoute\App.class
 com\traderoute\firstTableController$3.class
+com\traderoute\firstTableController$4.class
 module-info.class
 com\traderoute\firstTableController$2.class
 com\traderoute\RTMOption.class
