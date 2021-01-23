@@ -17,6 +17,8 @@ import javafx.util.converter.IntegerStringConverter;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class firstTableController implements Initializable {
@@ -26,7 +28,7 @@ public class firstTableController implements Initializable {
     @FXML private TableView<RTMOption> firstTableView;
     @FXML private TableColumn<RTMOption, String> RTMNameColumn;
     @FXML private TableColumn<RTMOption, Integer> slottingPerSkuColumn;
-    @FXML private TableColumn<RTMOption, Double> freightOutPerUnitColumn;
+    @FXML private TableColumn<RTMOption, BigDecimal> freightOutPerUnitColumn;
     @FXML private TableColumn<RTMOption, BigDecimal> firstReceiverColumn;
     @FXML private TableColumn<RTMOption, BigDecimal> secondReceiverColumn;
     @FXML private TableColumn<RTMOption, BigDecimal> thirdReceiverColumn;
@@ -34,22 +36,24 @@ public class firstTableController implements Initializable {
     @FXML private TableColumn<RTMOption, BigDecimal> landedStoreCostColumn;
     @FXML private TableColumn<RTMOption, BigDecimal> resultingEverydayRetailCalcdColumn;
     @FXML private TableColumn<RTMOption, BigDecimal> resultingEverydayRetailOverrideColumn;
-    @FXML private TableColumn<RTMOption, BigDecimal> weeklyVelocityAtMinColumn;
-    @FXML private TableColumn<RTMOption, Integer> weeklyVelocityUfswColumn;
     @FXML private TableColumn<RTMOption, String> RTMNameColumn2;
     @FXML private TableColumn<RTMOption, BigDecimal> elasticizedEstimatedUnitVelocityColumn;
     @FXML private TableColumn<RTMOption, Integer> estimatedAnnualVolumePerSkuColumn;
-    @FXML private TableColumn<RTMOption, Integer> slottingPaybackPeriodColumn;
-    @FXML private TableColumn<RTMOption, Integer> postFreightPostSpoilsWeCollectColumn;
-    @FXML private TableColumn<RTMOption, Integer> tradePerUnitColumn;
-    @FXML private TableColumn<RTMOption, Integer> fourYearEqGpPerSkuColumn;
-    @FXML private TableColumn<RTMOption, Double> fourYearEqGpPerUnitColumn;
+    @FXML private TableColumn<RTMOption, BigDecimal> slottingPaybackPeriodColumn;
+    @FXML private TableColumn<RTMOption, BigDecimal> postFreightPostSpoilsWeCollectColumn;
+    @FXML private TableColumn<RTMOption, BigDecimal> unspentTradePerUnitColumn;
+    @FXML private TableColumn<RTMOption, BigDecimal> fourYearEqGpPerSkuColumn;
+    @FXML private TableColumn<RTMOption, BigDecimal> fourYearEqGpPerUnitColumn;
 
     @FXML private TextField everyDayGPMField;
     @FXML private TextField weeklyUFSWAtMinField;
     @FXML private TextField yearOneStoreCountField;
 
     @FXML private Label maxOverrideLabel;
+
+    /*
+    Initialization for tooltips
+     */
     @FXML private final Label RTMNameColumnLabel = new Label ("Route to market options");
     @FXML private final Label slottingPerSkuLabel = new Label ("Slotting Per Sku");
     @FXML private final Label freightOutPerUnitLabel = new Label ("Freight Out Per Unit");
@@ -68,58 +72,67 @@ public class firstTableController implements Initializable {
     @FXML private final Label fourYearEqGpPerSkuLabel = new Label ("4-Year EQ GP $ Per Sku");
     @FXML private final Label fourYearEqGpPerUnitLabel = new Label ("4-Year EQ GP $ Per Unit");
 
-//    @FXML private final Tooltip
+    @FXML private final Tooltip RTMNameColumnTip =
+            new Tooltip ("Please enter the most likely 'route-to-market' options to get the product to the market.");
+    @FXML private final Tooltip slottingPerSkuTip =
+            new Tooltip ("Please enter the required slotting (placement) investment specific to this 'route-to-arket option.'");
+    @FXML private final Tooltip freightOutPerUnitTip =
+            new Tooltip ("If we're responsible for the cost of shipping for this route-to -market option, please enter in the 'per unit cost' of this 'Freight-Out.' For F.O.B (Pick-up) Customers, Freight-Out equals $0.");
+    @FXML private final Tooltip firstReceiverTip =
+            new Tooltip ("The Per Unit Cost the First Receiver pays us, typically the Unit List Cost or the Unit F.O.B");
+    @FXML private final Tooltip secondReceiverTip =
+            new Tooltip ("The Per Unit Cost the Second Receiver pays to the First Receiver.");
+    @FXML private final Tooltip thirdReceiverTip =
+            new Tooltip ("The Per Unit Cost the Third Receiver pays to the Second Receiver.");
+    @FXML private final Tooltip fourthReceiverTip =
+            new Tooltip ("The Per Unit Cost the Fourth Receiver pays to the Third Receiver.");
+    @FXML private final Tooltip landedStoreCostTip =
+            new Tooltip ("The Per Unit Cost the Retail OutLet (Last Receiver pays prior to applying the Required GPM% to establish the Everyday Retail.");
+    @FXML private final Tooltip resultingEveryDayRetailCalcdTip =
+            new Tooltip ("The auto-calculated Resulting Everyday Retail given the Landed Store Cost and Required Gross Profit Margin %.");
+    @FXML private final Tooltip resultingEveryDayRetailOverrideTip =
+            new Tooltip ("Please enter the REALISTIC Everyday Retail considering the auto-calculated retail to the left.");
+    @FXML private final Tooltip elasticizedEstimatedUnitVelocityTip =
+            new Tooltip ("For each route-to-market option provided, these are the Estimated Weekly Unit Velocities given the Product Class's Price Elasticity Multiple (for each X% increase in Unit Price there is a Y% decrease in Units Sold");
+    @FXML private final Tooltip estimatedAnnualVolumePerSkuTip =
+            new Tooltip ("For each route-to-market option provided, these are the Estimated Annual Volumes Per SKU (accounting for price elasticities)");
+    @FXML private final Tooltip slottingPaybackPeriodTip =
+            new Tooltip ("If Slotting is a consideration these are the Payback Periods (in years) for each route-to-market option provided to recoup the initial Slotting Investment.");
+    @FXML private final Tooltip postFreightPostSpoilsWeCollectTip =
+            new Tooltip ("For each route-to-market option provided, the Per Unit Rate we collect after which Freight Costs and Spoils are accounted (but prior to Trade Spending).");
+    @FXML private final Tooltip unspentTradePerUnitTip =
+            new Tooltip ("Unspent Trade Per Unit");
+    @FXML private final Tooltip fourYearEqGpPerSkuTip =
+            new Tooltip ("4-Year Equivalized Gross Profit $ Per Sku");
+    @FXML private final Tooltip fourYearEqGpPerUnitTip =
+            new Tooltip ("4-Year Equivalized Gross Profit $ Per Unit");
+
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        /*
-        Set up cellValue factories
-        */
+        //Set up cell value factories
+        setCellValueFactories();
 
-        RTMNameColumn.setCellValueFactory(new PropertyValueFactory<RTMOption, String>("RTMName"));
-        slottingPerSkuColumn.setCellValueFactory(new PropertyValueFactory<RTMOption, Integer>("slottingPerSku"));
-        freightOutPerUnitColumn.setCellValueFactory(new PropertyValueFactory<RTMOption, Double>("freightOutPerUnit"));
-        firstReceiverColumn.setCellValueFactory(new PropertyValueFactory<RTMOption, BigDecimal>("firstReceiver"));
-        secondReceiverColumn.setCellValueFactory(new PropertyValueFactory<RTMOption, BigDecimal>("secondReceiver"));
-        thirdReceiverColumn.setCellValueFactory(new PropertyValueFactory<RTMOption, BigDecimal>("thirdReceiver"));
-        fourthReceiverColumn.setCellValueFactory(new PropertyValueFactory<RTMOption, BigDecimal>("fourthReceiver"));
-        landedStoreCostColumn.setCellValueFactory(new PropertyValueFactory<RTMOption, BigDecimal>("landedStoreCost"));
-        resultingEverydayRetailCalcdColumn.setCellValueFactory(new PropertyValueFactory<RTMOption, BigDecimal>("resultingEverydayRetailCalcd"));
-        resultingEverydayRetailOverrideColumn.setCellValueFactory(new PropertyValueFactory<RTMOption, BigDecimal>("resultingEverydayRetailOverride"));
-        elasticizedEstimatedUnitVelocityColumn.setCellValueFactory(new PropertyValueFactory<RTMOption, BigDecimal>("elasticizedEstimatedUnitVelocity"));
-        estimatedAnnualVolumePerSkuColumn.setCellValueFactory(new PropertyValueFactory<RTMOption, Integer>("estimatedAnnualVolumePerSku"));
-        RTMNameColumn2.setCellValueFactory(new PropertyValueFactory<RTMOption, String>("RTMName"));
+        //Set dummy data
         firstTableView.setItems(getRTMOptions());
         secondTableView.setItems(firstTableView.getItems());
 
-        TableColumnHeader RTMNameColumnHeader = (TableColumnHeader) firstTableView.lookup("#" + RTMNameColumn.getId());
-        Label label = (Label) RTMNameColumnHeader.lookup(".label");
-        label.setTooltip(new Tooltip("This is RTM Name Column tooltip"));
-//        Label RTMNameColumnLabel = new Label ("RTM Option");
-//        RTMNameColumnLabel.setTooltip(new Tooltip("This is RTM Name Column tooltip"));
-//        RTMNameColumn.setGraphic(RTMNameColumnLabel);
+        // Add Labels to list, give them tooltips
+        setToolTipsFirstAndSecondTableview();
 
+        //Set editable columns
         firstTableView.setEditable(true);
         landedStoreCostColumn.setEditable(false);
-        setUpListeners();
         resultingEverydayRetailCalcdColumn.setEditable(false);
 
-        /*
-        Set Cell Factories for second Table View
-        */
+        //Set up event listerners
+        setUpListeners();
 
-        RTMNameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-        slottingPerSkuColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
-        freightOutPerUnitColumn.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter()));
-        firstReceiverColumn.setCellFactory(TextFieldTableCell.forTableColumn(new BigDecimalStringConverter()));
-        secondReceiverColumn.setCellFactory(TextFieldTableCell.forTableColumn(new BigDecimalStringConverter()));
-        thirdReceiverColumn.setCellFactory(TextFieldTableCell.forTableColumn(new BigDecimalStringConverter()));
-        fourthReceiverColumn.setCellFactory(TextFieldTableCell.forTableColumn(new BigDecimalStringConverter()));
-        landedStoreCostColumn.setCellFactory(TextFieldTableCell.forTableColumn(new BigDecimalStringConverter()));
-        resultingEverydayRetailCalcdColumn.setCellFactory(TextFieldTableCell.forTableColumn(new BigDecimalStringConverter()));
-        resultingEverydayRetailOverrideColumn.setCellFactory(TextFieldTableCell.forTableColumn(new BigDecimalStringConverter()));
-        elasticizedEstimatedUnitVelocityColumn.setCellFactory(TextFieldTableCell.forTableColumn(new BigDecimalStringConverter()));
-        estimatedAnnualVolumePerSkuColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
+        // Set cell factories
+        setCellFactories();
         }
+
+
     /*
      Set Up listeners for everyDayGPM and landed store Cost Property
      */
@@ -131,7 +144,6 @@ public class firstTableController implements Initializable {
 
             row.landedStoreCostProperty().addListener(new ChangeListener<BigDecimal>() {
                 private boolean changing;
-
                 @Override
                 public void changed(ObservableValue<? extends BigDecimal> observable, BigDecimal oldValue, BigDecimal newValue) {
                     if (!changing) {
@@ -333,11 +345,8 @@ public class firstTableController implements Initializable {
         */
         public ObservableList<RTMOption> getRTMOptions () {
             ObservableList<RTMOption> RTMOptions = FXCollections.observableArrayList();
-            RTMOptions.add(new RTMOption("Frank", 1.3, 0, BigDecimal.valueOf(0.5),
-                    BigDecimal.valueOf(0.1), BigDecimal.valueOf(0.3), BigDecimal.valueOf(3.95),
-                    0, 0, 0,
-                    BigDecimal.valueOf(0.0), 0, 0,
-                    0, 0, 0, 0));
+            RTMOptions.add(new RTMOption("Frank", BigDecimal.valueOf(1.3), 0, BigDecimal.valueOf(0.5),
+                    BigDecimal.valueOf(0.1), BigDecimal.valueOf(0.3), BigDecimal.valueOf(3.95)));
 //            RTMOptions.add(new RTMOption("Rebecca", 2.1, 0, BigDecimal.valueOf(0.5),
 //                    BigDecimal.valueOf(0.4), BigDecimal.valueOf(0.5), BigDecimal.valueOf(3.45),
 //                    0, 0, 0,
@@ -355,8 +364,154 @@ public class firstTableController implements Initializable {
 
             return RTMOptions;
         }
-}
+        /*
+        Set Column header tooltips for first and second tableview
+         */
+    public void setToolTipsFirstAndSecondTableview() {
+        RTMNameColumnLabel.setTooltip(RTMNameColumnTip);
+        RTMNameColumn.setGraphic(RTMNameColumnLabel);
+
+        freightOutPerUnitLabel.setTooltip(freightOutPerUnitTip);
+        freightOutPerUnitColumn.setGraphic(freightOutPerUnitLabel);
+
+        slottingPerSkuLabel.setTooltip(slottingPerSkuTip);
+        slottingPerSkuColumn.setGraphic(slottingPerSkuLabel);
+
+        firstReceiverLabel.setTooltip(firstReceiverTip);
+        firstReceiverColumn.setGraphic(firstReceiverLabel);
+
+        secondReceiverLabel.setTooltip(secondReceiverTip);
+        secondReceiverColumn.setGraphic(secondReceiverLabel);
+
+        thirdReceiverLabel.setTooltip(thirdReceiverTip);
+        thirdReceiverColumn.setGraphic(thirdReceiverLabel);
+
+        fourthReceiverLabel.setTooltip(fourthReceiverTip);
+        fourthReceiverColumn.setGraphic(fourthReceiverLabel);
+
+        landedStoreCostLabel.setTooltip(landedStoreCostTip);
+        landedStoreCostColumn.setGraphic(landedStoreCostLabel);
+
+        resultingEveryDayRetailCalcdLabel.setTooltip(resultingEveryDayRetailCalcdTip);
+        resultingEverydayRetailCalcdColumn.setGraphic(resultingEveryDayRetailCalcdLabel);
+
+        resultingEveryDayRetailOverrideLabel.setTooltip(resultingEveryDayRetailOverrideTip);
+        resultingEverydayRetailOverrideColumn.setGraphic(resultingEveryDayRetailOverrideLabel);
+
+        elasticizedEstimatedUnitVelocityLabel.setTooltip(elasticizedEstimatedUnitVelocityTip);
+        elasticizedEstimatedUnitVelocityColumn.setGraphic(elasticizedEstimatedUnitVelocityLabel);
+
+        estimatedAnnualVolumePerSkuLabel.setTooltip(estimatedAnnualVolumePerSkuTip);
+        estimatedAnnualVolumePerSkuColumn.setGraphic(estimatedAnnualVolumePerSkuLabel);
+
+        slottingPaybackPeriodLabel.setTooltip(slottingPaybackPeriodTip);
+        slottingPaybackPeriodColumn.setGraphic(slottingPaybackPeriodLabel);
+
+        postFreightPostSpoilsWeCollectLabel.setTooltip(postFreightPostSpoilsWeCollectTip);
+        postFreightPostSpoilsWeCollectColumn.setGraphic(postFreightPostSpoilsWeCollectLabel);
+
+        unspentTradePerUnitLabel.setTooltip(unspentTradePerUnitTip);
+        unspentTradePerUnitColumn.setGraphic(unspentTradePerUnitLabel);
+
+        fourYearEqGpPerSkuLabel.setTooltip(fourYearEqGpPerSkuTip);
+        fourYearEqGpPerSkuColumn.setGraphic(fourYearEqGpPerSkuLabel);
+
+        fourYearEqGpPerUnitLabel.setTooltip(fourYearEqGpPerUnitTip);
+        fourYearEqGpPerUnitColumn.setGraphic(fourYearEqGpPerUnitLabel);
+    }
     /*
+    Set up cellValue factories
+    */
+    public void setCellValueFactories(){
+
+        RTMNameColumn.setCellValueFactory(new PropertyValueFactory<RTMOption, String>("RTMName"));
+        slottingPerSkuColumn.setCellValueFactory(new PropertyValueFactory<RTMOption, Integer>("slottingPerSku"));
+        freightOutPerUnitColumn.setCellValueFactory(new PropertyValueFactory<RTMOption, BigDecimal>("freightOutPerUnit"));
+        firstReceiverColumn.setCellValueFactory(new PropertyValueFactory<RTMOption, BigDecimal>("firstReceiver"));
+        secondReceiverColumn.setCellValueFactory(new PropertyValueFactory<RTMOption, BigDecimal>("secondReceiver"));
+        thirdReceiverColumn.setCellValueFactory(new PropertyValueFactory<RTMOption, BigDecimal>("thirdReceiver"));
+        fourthReceiverColumn.setCellValueFactory(new PropertyValueFactory<RTMOption, BigDecimal>("fourthReceiver"));
+        landedStoreCostColumn.setCellValueFactory(new PropertyValueFactory<RTMOption, BigDecimal>("landedStoreCost"));
+        resultingEverydayRetailCalcdColumn.setCellValueFactory(new PropertyValueFactory<RTMOption, BigDecimal>("resultingEverydayRetailCalcd"));
+        resultingEverydayRetailOverrideColumn.setCellValueFactory(new PropertyValueFactory<RTMOption, BigDecimal>("resultingEverydayRetailOverride"));
+        elasticizedEstimatedUnitVelocityColumn.setCellValueFactory(new PropertyValueFactory<RTMOption, BigDecimal>("elasticizedEstimatedUnitVelocity"));
+        estimatedAnnualVolumePerSkuColumn.setCellValueFactory(new PropertyValueFactory<RTMOption, Integer>("estimatedAnnualVolumePerSku"));
+        slottingPaybackPeriodColumn.setCellValueFactory(new PropertyValueFactory<RTMOption, BigDecimal>("slottingPaybackPeriod"));
+        postFreightPostSpoilsWeCollectColumn.setCellValueFactory(new PropertyValueFactory<RTMOption,BigDecimal>("postFreightPostSpoilsWeCollect"));
+        unspentTradePerUnitColumn.setCellValueFactory(new PropertyValueFactory<RTMOption, BigDecimal>("unspentTradePerUnit"));
+        fourYearEqGpPerSkuColumn.setCellValueFactory(new PropertyValueFactory<RTMOption,BigDecimal>("fourYearEqGpPerSku"));
+        fourYearEqGpPerUnitColumn.setCellValueFactory(new PropertyValueFactory<RTMOption,BigDecimal>("fourYearEqGpPerUnit"));
+        RTMNameColumn2.setCellValueFactory(new PropertyValueFactory<RTMOption, String>("RTMName"));
+    }
+
+    /*
+        Set Cell Factories for first and second Table View
+        */
+    public void setCellFactories() {
+
+        RTMNameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        slottingPerSkuColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
+        freightOutPerUnitColumn.setCellFactory(TextFieldTableCell.forTableColumn(new BigDecimalStringConverter()));
+        firstReceiverColumn.setCellFactory(TextFieldTableCell.forTableColumn(new BigDecimalStringConverter()));
+        secondReceiverColumn.setCellFactory(TextFieldTableCell.forTableColumn(new BigDecimalStringConverter()));
+        thirdReceiverColumn.setCellFactory(TextFieldTableCell.forTableColumn(new BigDecimalStringConverter()));
+        fourthReceiverColumn.setCellFactory(TextFieldTableCell.forTableColumn(new BigDecimalStringConverter()));
+        landedStoreCostColumn.setCellFactory(TextFieldTableCell.forTableColumn(new BigDecimalStringConverter()));
+        resultingEverydayRetailCalcdColumn.setCellFactory(TextFieldTableCell.forTableColumn(new BigDecimalStringConverter()));
+        resultingEverydayRetailOverrideColumn.setCellFactory(TextFieldTableCell.forTableColumn(new BigDecimalStringConverter()));
+        elasticizedEstimatedUnitVelocityColumn.setCellFactory(TextFieldTableCell.forTableColumn(new BigDecimalStringConverter()));
+        estimatedAnnualVolumePerSkuColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
+        slottingPaybackPeriodColumn.setCellFactory(TextFieldTableCell.forTableColumn(new BigDecimalStringConverter()));
+        postFreightPostSpoilsWeCollectColumn.setCellFactory(TextFieldTableCell.forTableColumn(new BigDecimalStringConverter()));
+        unspentTradePerUnitColumn.setCellFactory(TextFieldTableCell.forTableColumn(new BigDecimalStringConverter()));
+        fourYearEqGpPerSkuColumn.setCellFactory(TextFieldTableCell.forTableColumn(new BigDecimalStringConverter()));
+        fourYearEqGpPerUnitColumn.setCellFactory(TextFieldTableCell.forTableColumn(new BigDecimalStringConverter()));
+    }
+    }
+
+/*
+Setting Column headers to text and giving them tooltips
+ */
+//
+//        TableColumnHeader RTMNameColumnHeader = (TableColumnHeader) firstTableView.lookup("#" + RTMNameColumn.getId());
+//        Label label = (Label) RTMNameColumnHeader.lookup(".label");
+//        label.setTooltip(new Tooltip("This is RTM Name Column tooltip"));
+//        Label RTMNameColumnLabel = new Label ("RTM Option");
+//        RTMNameColumnLabel.setTooltip(new Tooltip("This is RTM Name Column tooltip"));
+//        RTMNameColumn.setGraphic(RTMNameColumnLabel);
+
+/*
+List for tooltips
+ */
+//    Label[] columnHeaderLabels = new Label[20];
+//List<Label> columnHeaderLabels = new ArrayList<Label>(RTMNameColumnLabel, slottingPerSkuLabel,
+//        freightOutPerUnitLabel,firstReceiverLabel,secondReceiverLabel,
+//        thirdReceiverLabel,fourthReceiverLabel,landedStoreCostLabel,
+//        resultingEveryDayRetailCalcdLabel,resultingEveryDayRetailOverrideLabel,
+//        elasticizedEstimatedUnitVelocityLabel,estimatedAnnualVolumePerSkuLabel,
+//        slottingPaybackPeriodLabel,postFreightPostSpoilsWeCollectLabel,
+//        unspentTradePerUnitLabel,fourYearEqGpPerSkuLabel, fourYearEqGpPerUnitLabel);
+////    Label RTMNameColumnLabel = new Label ("RTM Option");
+//    //        RTMNameColumnLabel.setTooltip(new Tooltip("This is RTM Name Column tooltip"));
+////        RTMNameColumn.setGraphic(RTMNameColumnLabel);
+//
+//
+//    //    Tooltip[] columnHeaderTooltips = new Tooltip[20];
+//    Tooltip[] columnHeaderTooltips = {RTMNameColumnTip, slottingPerSkuTip, freightOutPerUnitTip,
+//            firstReceiverTip,secondReceiverTip,thirdReceiverTip,fourthReceiverTip,
+//            landedStoreCostTip,resultingEveryDayRetailCalcdTip,resultingEveryDayRetailOverrideTip,
+//            elasticizedEstimatedUnitVelocityTip, estimatedAnnualVolumePerSkuTip,
+//            slottingPaybackPeriodTip, postFreightPostSpoilsWeCollectTip,
+//            unspentTradePerUnitTip,fourYearEqGpPerSkuTip, fourYearEqGpPerUnitTip};
+//    TableColumn[] columnsForTooltips = {RTMNameColumn,slottingPerSkuColumn,
+//            freightOutPerUnitColumn,firstReceiverColumn,secondReceiverColumn,
+//            thirdReceiverColumn,fourthReceiverColumn,landedStoreCostColumn,
+//            resultingEverydayRetailCalcdColumn,resultingEverydayRetailOverrideColumn,
+//            elasticizedEstimatedUnitVelocityColumn, estimatedAnnualVolumePerSkuColumn,
+//            slottingPaybackPeriodColumn,postFreightPostSpoilsWeCollectColumn,
+//            unspentTradePerUnitColumn, fourYearEqGpPerSkuColumn, fourYearEqGpPerUnitColumn};
+
+/*
     Old Listener for EveryDayGPM Property()
      */
 

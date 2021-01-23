@@ -136,11 +136,11 @@
                         <TableColumn fx:id="RTMNameColumn2" prefWidth="158.40004272460942" resizable="false" text="Route-To-Market Options" />
                         <TableColumn fx:id="elasticizedEstimatedUnitVelocityColumn" prefWidth="174.3999481201172" resizable="false" text="Elasticized Estimated Unit Velocity" />
                         <TableColumn fx:id="estimatedAnnualVolumePerSkuColumn" prefWidth="183.19998168945312" resizable="false" text="Estimated Annual Volume/Sku" />
-                        <TableColumn fx:id="slottingPaybackPeriodColumn1" prefWidth="149.60003662109375" resizable="false" text="Slotting Payback Period" />
-                        <TableColumn fx:id="postFreightPostSpoilsWeCollectColumn1" prefWidth="195.99993896484375" resizable="false" text="Post Freight Post Spoils We Collect" />
-                        <TableColumn fx:id="tradePerUnitColumn1" prefWidth="164.00006103515625" resizable="false" text="Unspent Trade Per Unit" />
-                        <TableColumn fx:id="fourYearEqGpPerSkuColumn1" prefWidth="162.4000244140625" resizable="false" text="4-Year EQ GP $ Per Sku" />
-                        <TableColumn fx:id="fourYearEqGpPerUnitColumn1" prefWidth="144.0" resizable="false" text="4-Year EQ GP $ Per Unit" />
+                        <TableColumn fx:id="slottingPaybackPeriodColumn" prefWidth="149.60003662109375" resizable="false" text="Slotting Payback Period" />
+                        <TableColumn fx:id="postFreightPostSpoilsWeCollectColumn" prefWidth="195.99993896484375" resizable="false" text="Post Freight Post Spoils We Collect" />
+                        <TableColumn fx:id="unspentTradePerUnitColumn" prefWidth="164.00006103515625" resizable="false" text="Unspent Trade Per Unit" />
+                        <TableColumn fx:id="fourYearEqGpPerSkuColumn" prefWidth="162.4000244140625" resizable="false" text="4-Year EQ GP $ Per Sku" />
+                        <TableColumn fx:id="fourYearEqGpPerUnitColumn" prefWidth="144.0" resizable="false" text="4-Year EQ GP $ Per Unit" />
                      </columns>
                   </TableView>
                </children>
