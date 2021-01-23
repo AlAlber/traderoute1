@@ -9,16 +9,12 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
-import javafx.scene.control.skin.TableColumnHeader;
 import javafx.util.converter.BigDecimalStringConverter;
-import javafx.util.converter.DoubleStringConverter;
 import javafx.util.converter.IntegerStringConverter;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 
 public class firstTableController implements Initializable {
@@ -280,26 +276,26 @@ public class firstTableController implements Initializable {
         }
         secondTableView.refresh();
     }
-        /*
-        Return Value from EveryDayGPMField
-         */
-        public BigDecimal getEveryDayGPM(){
-            if (everyDayGPMField.getText()==null){
-                return new BigDecimal("0.0");
-            }
-            return new BigDecimal(everyDayGPMField.getText());
-        }
-        /*
-        Return Value from EveryDayGPMField
-        */
-        public BigDecimal getWeeklyUSFWAtMin(){
-            if (weeklyUFSWAtMinField.getText()== null){
-                return new BigDecimal("0.0");
-            }
-            return new BigDecimal(weeklyUFSWAtMinField.getText());
-        }
     /*
     Return Value from EveryDayGPMField
+    */
+    public BigDecimal getEveryDayGPM(){
+        if (everyDayGPMField.getText()==null){
+            return new BigDecimal("0.0");
+        }
+        return new BigDecimal(everyDayGPMField.getText());
+    }
+    /*
+    Return Value from EveryDayGPMField
+    */
+    public BigDecimal getWeeklyUSFWAtMin(){
+        if (weeklyUFSWAtMinField.getText()== null){
+            return new BigDecimal("0.0");
+        }
+        return new BigDecimal(weeklyUFSWAtMinField.getText());
+    }
+    /*
+    Return Value from Year One Store Count
     */
     public int getYearOneStoreCount(){
         if (yearOneStoreCountField.getText()== null){
@@ -307,46 +303,46 @@ public class firstTableController implements Initializable {
         }
         return Integer.valueOf(yearOneStoreCountField.getText());
     }
-        /*
-        Calculate elasticized volume velocity
-         */
+    /*
+    Calculate max from the receivers
+    */
 
-        public void changeFirstReceiverCellEvent(TableColumn.CellEditEvent editedCell)
-        {
+    public void changeFirstReceiverCellEvent(TableColumn.CellEditEvent editedCell)
+    {
         RTMOption RTMOptionSelected =  firstTableView.getSelectionModel().getSelectedItem();
         RTMOptionSelected.setFirstReceiver(new BigDecimal(editedCell.getNewValue().toString()));
         RTMOptionSelected.setLandedStoreCost(RTMOptionSelected.getFirstReceiver().max(RTMOptionSelected.getSecondReceiver()
                 .max(RTMOptionSelected.getThirdReceiver().max(RTMOptionSelected.getFourthReceiver()))));
-        }
-        public void changeSecondReceiverCellEvent(TableColumn.CellEditEvent editedCell)
-        {
+    }
+    public void changeSecondReceiverCellEvent(TableColumn.CellEditEvent editedCell)
+    {
         RTMOption RTMOptionSelected =  firstTableView.getSelectionModel().getSelectedItem();
         RTMOptionSelected.setSecondReceiver(new BigDecimal(editedCell.getNewValue().toString()));
         RTMOptionSelected.setLandedStoreCost(RTMOptionSelected.getFirstReceiver().max(RTMOptionSelected.getSecondReceiver()
                 .max(RTMOptionSelected.getThirdReceiver().max(RTMOptionSelected.getFourthReceiver()))));
-        }
-        public void changeThirdReceiverCellEvent(TableColumn.CellEditEvent editedCell)
-        {
+    }
+    public void changeThirdReceiverCellEvent(TableColumn.CellEditEvent editedCell)
+    {
         RTMOption RTMOptionSelected =  firstTableView.getSelectionModel().getSelectedItem();
         RTMOptionSelected.setThirdReceiver(new BigDecimal(editedCell.getNewValue().toString()));
         RTMOptionSelected.setLandedStoreCost(RTMOptionSelected.getFirstReceiver().max(RTMOptionSelected.getSecondReceiver()
                 .max(RTMOptionSelected.getThirdReceiver().max(RTMOptionSelected.getFourthReceiver()))));
-        }
-        public void changeFourthReceiverCellEvent(TableColumn.CellEditEvent editedCell)
-        {
+    }
+    public void changeFourthReceiverCellEvent(TableColumn.CellEditEvent editedCell)
+    {
         RTMOption RTMOptionSelected =  firstTableView.getSelectionModel().getSelectedItem();
         RTMOptionSelected.setFourthReceiver(new BigDecimal(editedCell.getNewValue().toString()));
         RTMOptionSelected.setLandedStoreCost(RTMOptionSelected.getFirstReceiver().max(RTMOptionSelected.getSecondReceiver()
                 .max(RTMOptionSelected.getThirdReceiver().max(RTMOptionSelected.getFourthReceiver()))));
-        }
+    }
 
-        /*
-        Loads dummy data
-        */
-        public ObservableList<RTMOption> getRTMOptions () {
-            ObservableList<RTMOption> RTMOptions = FXCollections.observableArrayList();
-            RTMOptions.add(new RTMOption("Frank", BigDecimal.valueOf(1.3), 0, BigDecimal.valueOf(0.5),
-                    BigDecimal.valueOf(0.1), BigDecimal.valueOf(0.3), BigDecimal.valueOf(3.95)));
+    /*
+    Loads dummy data
+    */
+    public ObservableList<RTMOption> getRTMOptions () {
+        ObservableList<RTMOption> RTMOptions = FXCollections.observableArrayList();
+        RTMOptions.add(new RTMOption("Frank", BigDecimal.valueOf(1.3), 0, BigDecimal.valueOf(0.5),
+                BigDecimal.valueOf(0.1), BigDecimal.valueOf(0.3), BigDecimal.valueOf(3.95)));
 //            RTMOptions.add(new RTMOption("Rebecca", 2.1, 0, BigDecimal.valueOf(0.5),
 //                    BigDecimal.valueOf(0.4), BigDecimal.valueOf(0.5), BigDecimal.valueOf(3.45),
 //                    0, 0, 0,
@@ -363,10 +359,10 @@ public class firstTableController implements Initializable {
             RTMOptions.add(new RTMOption());
 
             return RTMOptions;
-        }
-        /*
-        Set Column header tooltips for first and second tableview
-         */
+    }
+    /*
+    Set Column header tooltips for first and second tableview
+    */
     public void setToolTipsFirstAndSecondTableview() {
         RTMNameColumnLabel.setTooltip(RTMNameColumnTip);
         RTMNameColumn.setGraphic(RTMNameColumnLabel);
@@ -445,8 +441,8 @@ public class firstTableController implements Initializable {
     }
 
     /*
-        Set Cell Factories for first and second Table View
-        */
+    Set Cell Factories for first and second Table View
+    */
     public void setCellFactories() {
 
         RTMNameColumn.setCellFactory(TextFieldTableCell.forTableColumn());

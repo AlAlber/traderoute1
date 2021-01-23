@@ -1,16 +1,29 @@
 package com.traderoute;
 
 import javafx.beans.property.*;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 public class RTMOption {
     private SimpleStringProperty RTMName;
     private SimpleIntegerProperty slottingPerSku,estimatedAnnualVolumePerSku;
-    private SimpleObjectProperty <BigDecimal> freightOutPerUnit, firstReceiver,secondReceiver,thirdReceiver,
-    fourthReceiver,landedStoreCost, resultingEverydayRetailCalcd,resultingEverydayRetailOverride, elasticizedEstimatedUnitVelocity,
-            slottingPaybackPeriod, postFreightPostSpoilsWeCollect,unspentTradePerUnit,fourYearEqGpPerSku,fourYearEqGpPerUnit;
+    SimpleBooleanProperty isFob;
+    private SimpleObjectProperty <BigDecimal> freightOutPerUnit, firstReceiver,
+            secondReceiver,thirdReceiver, fourthReceiver,landedStoreCost,
+            resultingEverydayRetailCalcd,resultingEverydayRetailOverride,
+            elasticizedEstimatedUnitVelocity, slottingPaybackPeriod, postFreightPostSpoilsWeCollectPerUnit
+            ,unspentTradePerUnit,fourYearEqGpPerSku,fourYearEqGpPerUnit,
+            fourYearUnitVolumePerSku,ourFreightCost, grossRevenueList, fobDiscount, grossRevenueActual, spoilsTrade, standardAllowanceTrade,
+            afterSpoilsAndStandardAllowanceAvailableTrade, ifFobFreightCredit, equalsNet1Rev, totalFobFreightCredit, equalsNet2Rev,
+            totalFobFreightSpending, equalsNet3Rev, netRev3Rate,cogs,totalCogs, grossProfit,grossProfitPerUnit,
+            grossProfitIndex, slottingPayback, postSpoilsAndFreightWeCollect, postSpoilsAndStdAllowancesAvailableTrade;
+
+
+    ;
 
     public RTMOption(){
         this.RTMName = new SimpleStringProperty();
@@ -25,6 +38,35 @@ public class RTMOption {
         this.resultingEverydayRetailOverride = new SimpleObjectProperty<BigDecimal>();
         this.elasticizedEstimatedUnitVelocity = new SimpleObjectProperty<BigDecimal>();
         this.estimatedAnnualVolumePerSku = new SimpleIntegerProperty();
+        this.slottingPaybackPeriod = new SimpleObjectProperty<BigDecimal>();
+        this.postFreightPostSpoilsWeCollectPerUnit = new SimpleObjectProperty<BigDecimal>();
+        this.unspentTradePerUnit = new SimpleObjectProperty<BigDecimal>();
+        this.fourYearEqGpPerSku = new SimpleObjectProperty<BigDecimal>();
+        this.fourYearEqGpPerUnit = new SimpleObjectProperty<BigDecimal>();
+
+        this.fourYearUnitVolumePerSku = new SimpleObjectProperty<BigDecimal>();
+        this.ourFreightCost = new SimpleObjectProperty<BigDecimal>();
+        this.grossRevenueList = new SimpleObjectProperty<BigDecimal>();
+        this.fobDiscount = new SimpleObjectProperty<BigDecimal>();
+        this.grossRevenueActual = new SimpleObjectProperty<BigDecimal>();
+        this.spoilsTrade = new SimpleObjectProperty<BigDecimal>();
+        this.standardAllowanceTrade = new SimpleObjectProperty<BigDecimal>();
+        this.afterSpoilsAndStandardAllowanceAvailableTrade = new SimpleObjectProperty<BigDecimal>();
+        this.ifFobFreightCredit = new SimpleObjectProperty<BigDecimal>();
+        this.equalsNet1Rev = new SimpleObjectProperty<BigDecimal>();
+        this.totalFobFreightCredit = new SimpleObjectProperty<BigDecimal>();
+        this.equalsNet2Rev = new SimpleObjectProperty<BigDecimal>();
+        this.totalFobFreightSpending = new SimpleObjectProperty<BigDecimal>();
+        this.equalsNet3Rev = new SimpleObjectProperty<BigDecimal>();
+        this.netRev3Rate = new SimpleObjectProperty<BigDecimal>();
+        this.cogs = new SimpleObjectProperty<BigDecimal>(new BigDecimal("2.05")); //HARDCODED FOR NOW
+        this.totalCogs = new SimpleObjectProperty<BigDecimal>();
+        this.grossProfit = new SimpleObjectProperty<BigDecimal>();
+        this.grossProfitPerUnit = new SimpleObjectProperty<BigDecimal>();
+        this.grossProfitIndex = new SimpleObjectProperty<BigDecimal>();
+        this.slottingPayback = new SimpleObjectProperty<BigDecimal>();
+        this.postSpoilsAndFreightWeCollect = new SimpleObjectProperty<BigDecimal>();
+        this.postSpoilsAndStdAllowancesAvailableTrade = new SimpleObjectProperty<BigDecimal>();
     }
 
     public RTMOption(String RTMName, BigDecimal freightOutPerUnit, Integer slottingPerSku,
@@ -43,10 +85,53 @@ public class RTMOption {
         this.elasticizedEstimatedUnitVelocity = new SimpleObjectProperty<BigDecimal>();
         this.estimatedAnnualVolumePerSku = new SimpleIntegerProperty();
         this.slottingPaybackPeriod = new SimpleObjectProperty<BigDecimal>();
-        this.postFreightPostSpoilsWeCollect = new SimpleObjectProperty<BigDecimal>();
+        this.postFreightPostSpoilsWeCollectPerUnit = new SimpleObjectProperty<BigDecimal>();
         this.unspentTradePerUnit = new SimpleObjectProperty<BigDecimal>();
         this.fourYearEqGpPerSku = new SimpleObjectProperty<BigDecimal>();
         this.fourYearEqGpPerUnit = new SimpleObjectProperty<BigDecimal>();
+
+        this.fourYearUnitVolumePerSku = new SimpleObjectProperty<BigDecimal>();
+        this.ourFreightCost = new SimpleObjectProperty<BigDecimal>();
+        this.grossRevenueList = new SimpleObjectProperty<BigDecimal>();
+        this.fobDiscount = new SimpleObjectProperty<BigDecimal>();
+        this.grossRevenueActual = new SimpleObjectProperty<BigDecimal>();
+        this.spoilsTrade = new SimpleObjectProperty<BigDecimal>();
+        this.standardAllowanceTrade = new SimpleObjectProperty<BigDecimal>();
+        this.afterSpoilsAndStandardAllowanceAvailableTrade = new SimpleObjectProperty<BigDecimal>();
+        this.ifFobFreightCredit = new SimpleObjectProperty<BigDecimal>();
+        this.equalsNet1Rev = new SimpleObjectProperty<BigDecimal>();
+        this.totalFobFreightCredit = new SimpleObjectProperty<BigDecimal>();
+        this.equalsNet2Rev = new SimpleObjectProperty<BigDecimal>();
+        this.totalFobFreightCredit = new SimpleObjectProperty<BigDecimal>();
+        this.equalsNet3Rev = new SimpleObjectProperty<BigDecimal>();
+        this.netRev3Rate = new SimpleObjectProperty<BigDecimal>();
+        this.cogs = new SimpleObjectProperty<BigDecimal>(new BigDecimal("2.05")); //HARDCODED FOR NOW
+        this.totalCogs = new SimpleObjectProperty<BigDecimal>();
+        this.grossProfit = new SimpleObjectProperty<BigDecimal>();
+        this.grossProfitPerUnit = new SimpleObjectProperty<BigDecimal>();
+        this.grossProfitIndex = new SimpleObjectProperty<BigDecimal>();
+        this.slottingPayback = new SimpleObjectProperty<BigDecimal>();
+        this.postSpoilsAndFreightWeCollect = new SimpleObjectProperty<BigDecimal>();
+        this.postSpoilsAndStdAllowancesAvailableTrade = new SimpleObjectProperty<BigDecimal>();
+        setUpInternalListeners();
+    }
+
+    private void setUpInternalListeners() {
+        fourYearUnitVolumePerSku.addListener(new ChangeListener<BigDecimal>() {
+            private boolean changing;
+            @Override
+            public void changed(ObservableValue<? extends BigDecimal> observable, BigDecimal oldValue, BigDecimal newValue) {
+                if (!changing) {
+                    try {
+                        changing = true;
+//                        setResultingEverydayRetailCalcd(((row.getLandedStoreCost().multiply(new BigDecimal("100")))
+//                                .divide((getEveryDayGPM().subtract(new BigDecimal("100"))), 2, RoundingMode.HALF_UP).abs()));
+                    } finally {
+                        changing = false;
+                    }
+                }
+            }
+        });
     }
 
     public String toString (){
@@ -238,16 +323,16 @@ public class RTMOption {
         this.slottingPaybackPeriod.set(slottingPaybackPeriod);
     }
 
-    public BigDecimal getPostFreightPostSpoilsWeCollect() {
-        return postFreightPostSpoilsWeCollect.get();
+    public BigDecimal getPostFreightPostSpoilsWeCollectPerUnit() {
+        return postFreightPostSpoilsWeCollectPerUnit.get();
     }
 
-    public SimpleObjectProperty<BigDecimal> postFreightPostSpoilsWeCollectProperty() {
-        return postFreightPostSpoilsWeCollect;
+    public SimpleObjectProperty<BigDecimal> postFreightPostSpoilsWeCollectPerUnitProperty() {
+        return postFreightPostSpoilsWeCollectPerUnit;
     }
 
-    public void setPostFreightPostSpoilsWeCollect(BigDecimal postFreightPostSpoilsWeCollect) {
-        this.postFreightPostSpoilsWeCollect.set(postFreightPostSpoilsWeCollect);
+    public void setPostFreightPostSpoilsWeCollectPerUnit(BigDecimal postFreightPostSpoilsWeCollectPerUnit) {
+        this.postFreightPostSpoilsWeCollectPerUnit.set(postFreightPostSpoilsWeCollectPerUnit);
     }
 
     public BigDecimal getUnspentTradePerUnit() {
@@ -284,6 +369,282 @@ public class RTMOption {
 
     public void setFourYearEqGpPerUnit(BigDecimal fourYearEqGpPerUnit) {
         this.fourYearEqGpPerUnit.set(fourYearEqGpPerUnit);
+    }
+
+    public BigDecimal getFourYearUnitVolumePerSku() {
+        return fourYearUnitVolumePerSku.get();
+    }
+
+    public SimpleObjectProperty<BigDecimal> fourYearUnitVolumePerSkuProperty() {
+        return fourYearUnitVolumePerSku;
+    }
+
+    public void setFourYearUnitVolumePerSku(BigDecimal fourYearUnitVolumePerSku) {
+        this.fourYearUnitVolumePerSku.set(fourYearUnitVolumePerSku);
+    }
+
+    public BigDecimal getOurFreightCost() {
+        return ourFreightCost.get();
+    }
+
+    public SimpleObjectProperty<BigDecimal> ourFreightCostProperty() {
+        return ourFreightCost;
+    }
+
+    public void setOurFreightCost(BigDecimal ourFreightCost) {
+        this.ourFreightCost.set(ourFreightCost);
+    }
+
+    public BigDecimal getGrossRevenueList() {
+        return grossRevenueList.get();
+    }
+
+    public SimpleObjectProperty<BigDecimal> grossRevenueListProperty() {
+        return grossRevenueList;
+    }
+
+    public void setGrossRevenueList(BigDecimal grossRevenueList) {
+        this.grossRevenueList.set(grossRevenueList);
+    }
+
+    public BigDecimal getFobDiscount() {
+        return fobDiscount.get();
+    }
+
+    public SimpleObjectProperty<BigDecimal> fobDiscountProperty() {
+        return fobDiscount;
+    }
+
+    public void setFobDiscount(BigDecimal fobDiscount) {
+        this.fobDiscount.set(fobDiscount);
+    }
+
+    public BigDecimal getGrossRevenueActual() {
+        return grossRevenueActual.get();
+    }
+
+    public SimpleObjectProperty<BigDecimal> grossRevenueActualProperty() {
+        return grossRevenueActual;
+    }
+
+    public void setGrossRevenueActual(BigDecimal grossRevenueActual) {
+        this.grossRevenueActual.set(grossRevenueActual);
+    }
+
+    public BigDecimal getSpoilsTrade() {
+        return spoilsTrade.get();
+    }
+
+    public SimpleObjectProperty<BigDecimal> spoilsTradeProperty() {
+        return spoilsTrade;
+    }
+
+    public void setSpoilsTrade(BigDecimal spoilsTrade) {
+        this.spoilsTrade.set(spoilsTrade);
+    }
+
+    public BigDecimal getStandardAllowanceTrade() {
+        return standardAllowanceTrade.get();
+    }
+
+    public SimpleObjectProperty<BigDecimal> standardAllowanceTradeProperty() {
+        return standardAllowanceTrade;
+    }
+
+    public void setStandardAllowanceTrade(BigDecimal standardAllowanceTrade) {
+        this.standardAllowanceTrade.set(standardAllowanceTrade);
+    }
+
+    public BigDecimal getAfterSpoilsAndStandardAllowanceAvailableTrade() {
+        return afterSpoilsAndStandardAllowanceAvailableTrade.get();
+    }
+
+    public SimpleObjectProperty<BigDecimal> afterSpoilsAndStandardAllowanceAvailableTradeProperty() {
+        return afterSpoilsAndStandardAllowanceAvailableTrade;
+    }
+
+    public void setAfterSpoilsAndStandardAllowanceAvailableTrade(BigDecimal afterSpoilsAndStandardAllowanceAvailableTrade) {
+        this.afterSpoilsAndStandardAllowanceAvailableTrade.set(afterSpoilsAndStandardAllowanceAvailableTrade);
+    }
+
+    public BigDecimal getIfFobFreightCredit() {
+        return ifFobFreightCredit.get();
+    }
+
+    public SimpleObjectProperty<BigDecimal> ifFobFreightCreditProperty() {
+        return ifFobFreightCredit;
+    }
+
+    public void setIfFobFreightCredit(BigDecimal ifFobFreightCredit) {
+        this.ifFobFreightCredit.set(ifFobFreightCredit);
+    }
+
+    public BigDecimal getEqualsNet1Rev() {
+        return equalsNet1Rev.get();
+    }
+
+    public SimpleObjectProperty<BigDecimal> equalsNet1RevProperty() {
+        return equalsNet1Rev;
+    }
+
+    public void setEqualsNet1Rev(BigDecimal equalsNet1Rev) {
+        this.equalsNet1Rev.set(equalsNet1Rev);
+    }
+
+    public BigDecimal getTotalFobFreightCredit() {
+        return totalFobFreightCredit.get();
+    }
+
+    public SimpleObjectProperty<BigDecimal> totalFobFreightCreditProperty() {
+        return totalFobFreightCredit;
+    }
+
+    public void setTotalFobFreightCredit(BigDecimal totalFobFreightCredit) {
+        this.totalFobFreightCredit.set(totalFobFreightCredit);
+    }
+
+    public BigDecimal getEqualsNet2Rev() {
+        return equalsNet2Rev.get();
+    }
+
+    public SimpleObjectProperty<BigDecimal> equalsNet2RevProperty() {
+        return equalsNet2Rev;
+    }
+
+    public void setEqualsNet2Rev(BigDecimal equalsNet2Rev) {
+        this.equalsNet2Rev.set(equalsNet2Rev);
+    }
+
+    public BigDecimal getTotalFobFreightSpending() {
+        return totalFobFreightSpending.get();
+    }
+
+    public SimpleObjectProperty<BigDecimal> totalFobFreightSpendingProperty() {
+        return totalFobFreightSpending;
+    }
+
+    public void setTotalFobFreightSpending(BigDecimal totalFobFreightSpending) {
+        this.totalFobFreightSpending.set(totalFobFreightSpending);
+    }
+
+    public BigDecimal getEqualsNet3Rev() {
+        return equalsNet3Rev.get();
+    }
+
+    public SimpleObjectProperty<BigDecimal> equalsNet3RevProperty() {
+        return equalsNet3Rev;
+    }
+
+    public void setEqualsNet3Rev(BigDecimal equalsNet3Rev) {
+        this.equalsNet3Rev.set(equalsNet3Rev);
+    }
+
+    public BigDecimal getNetRev3Rate() {
+        return netRev3Rate.get();
+    }
+
+    public SimpleObjectProperty<BigDecimal> netRev3RateProperty() {
+        return netRev3Rate;
+    }
+
+    public void setNetRev3Rate(BigDecimal netRev3Rate) {
+        this.netRev3Rate.set(netRev3Rate);
+    }
+
+    public BigDecimal getCogs() {
+        return cogs.get();
+    }
+
+    public SimpleObjectProperty<BigDecimal> cogsProperty() {
+        return cogs;
+    }
+
+    public void setCogs(BigDecimal cogs) {
+        this.cogs.set(cogs);
+    }
+
+    public BigDecimal getTotalCogs() {
+        return totalCogs.get();
+    }
+
+    public SimpleObjectProperty<BigDecimal> totalCogsProperty() {
+        return totalCogs;
+    }
+
+    public void setTotalCogs(BigDecimal totalCogs) {
+        this.totalCogs.set(totalCogs);
+    }
+
+    public BigDecimal getGrossProfit() {
+        return grossProfit.get();
+    }
+
+    public SimpleObjectProperty<BigDecimal> grossProfitProperty() {
+        return grossProfit;
+    }
+
+    public void setGrossProfit(BigDecimal grossProfit) {
+        this.grossProfit.set(grossProfit);
+    }
+
+    public BigDecimal getGrossProfitPerUnit() {
+        return grossProfitPerUnit.get();
+    }
+
+    public SimpleObjectProperty<BigDecimal> grossProfitPerUnitProperty() {
+        return grossProfitPerUnit;
+    }
+
+    public void setGrossProfitPerUnit(BigDecimal grossProfitPerUnit) {
+        this.grossProfitPerUnit.set(grossProfitPerUnit);
+    }
+
+    public BigDecimal getGrossProfitIndex() {
+        return grossProfitIndex.get();
+    }
+
+    public SimpleObjectProperty<BigDecimal> grossProfitIndexProperty() {
+        return grossProfitIndex;
+    }
+
+    public void setGrossProfitIndex(BigDecimal grossProfitIndex) {
+        this.grossProfitIndex.set(grossProfitIndex);
+    }
+
+    public BigDecimal getSlottingPayback() {
+        return slottingPayback.get();
+    }
+
+    public SimpleObjectProperty<BigDecimal> slottingPaybackProperty() {
+        return slottingPayback;
+    }
+
+    public void setSlottingPayback(BigDecimal slottingPayback) {
+        this.slottingPayback.set(slottingPayback);
+    }
+
+    public BigDecimal getPostSpoilsAndFreightWeCollect() {
+        return postSpoilsAndFreightWeCollect.get();
+    }
+
+    public SimpleObjectProperty<BigDecimal> postSpoilsAndFreightWeCollectProperty() {
+        return postSpoilsAndFreightWeCollect;
+    }
+
+    public void setPostSpoilsAndFreightWeCollect(BigDecimal postSpoilsAndFreightWeCollect) {
+        this.postSpoilsAndFreightWeCollect.set(postSpoilsAndFreightWeCollect);
+    }
+
+    public BigDecimal getPostSpoilsAndStdAllowancesAvailableTrade() {
+        return postSpoilsAndStdAllowancesAvailableTrade.get();
+    }
+
+    public SimpleObjectProperty<BigDecimal> postSpoilsAndStdAllowancesAvailableTradeProperty() {
+        return postSpoilsAndStdAllowancesAvailableTrade;
+    }
+
+    public void setPostSpoilsAndStdAllowancesAvailableTrade(BigDecimal postSpoilsAndStdAllowancesAvailableTrade) {
+        this.postSpoilsAndStdAllowancesAvailableTrade.set(postSpoilsAndStdAllowancesAvailableTrade);
     }
 }
 /*
