@@ -10,19 +10,13 @@ import java.math.RoundingMode;
 
 public class RTMOption {
     private SimpleStringProperty RTMName;
-    private SimpleIntegerProperty slottingPerSku, estimatedAnnualVolumePerSku;
-    SimpleBooleanProperty isFob;
+    private SimpleIntegerProperty slottingPerSku, estimatedAnnualVolumePerSku, yearOneStoreCount;
     private SimpleObjectProperty<BigDecimal> freightOutPerUnit, firstReceiver,
             secondReceiver, thirdReceiver, fourthReceiver, landedStoreCost,
             resultingEverydayRetailCalcd, resultingEverydayRetailOverride,
-            elasticizedEstimatedUnitVelocity, slottingPaybackPeriod, postFreightPostSpoilsWeCollectPerUnit, unspentTradePerUnit, fourYearEqGpPerSku, fourYearEqGpPerUnit,
-            fourYearUnitVolumePerSku, ourFreightCost, grossRevenueList, fobDiscount, grossRevenueActual, spoilsTrade, standardAllowanceTrade,
-            afterSpoilsAndStandardAllowanceAvailableTrade, ifFobFreightCredit, equalsNet1Rev, totalFobFreightCredit, equalsNet2Rev,
-            totalFobFreightSpending, equalsNet3Rev, netRev3Rate, cogs, totalCogs, grossProfit, grossProfitPerUnit,
-            grossProfitIndex, slottingPayback, postSpoilsAndFreightWeCollect, postSpoilsAndStdAllowancesAvailableTrade;
-
-
-    ;
+            elasticizedEstimatedUnitVelocity, slottingPaybackPeriod,
+            postFreightPostSpoilsWeCollectPerUnit, unspentTradePerUnit, fourYearEqGpPerSku, fourYearEqGpPerUnit,
+            minOverride,weeklyUSFWAtMin, everydayGPM, spoilsAndFees;
 
     public RTMOption() {
         this.RTMName = new SimpleStringProperty();
@@ -35,6 +29,8 @@ public class RTMOption {
         this.landedStoreCost = new SimpleObjectProperty<BigDecimal>();
         this.resultingEverydayRetailCalcd = new SimpleObjectProperty<BigDecimal>();
         this.resultingEverydayRetailOverride = new SimpleObjectProperty<BigDecimal>();
+        this.minOverride = new SimpleObjectProperty<>();
+        this.weeklyUSFWAtMin = new SimpleObjectProperty<>();
         this.elasticizedEstimatedUnitVelocity = new SimpleObjectProperty<BigDecimal>();
         this.estimatedAnnualVolumePerSku = new SimpleIntegerProperty();
         this.slottingPaybackPeriod = new SimpleObjectProperty<BigDecimal>();
@@ -43,29 +39,13 @@ public class RTMOption {
         this.fourYearEqGpPerSku = new SimpleObjectProperty<BigDecimal>();
         this.fourYearEqGpPerUnit = new SimpleObjectProperty<BigDecimal>();
 
-        this.fourYearUnitVolumePerSku = new SimpleObjectProperty<BigDecimal>();
-        this.ourFreightCost = new SimpleObjectProperty<BigDecimal>();
-        this.grossRevenueList = new SimpleObjectProperty<BigDecimal>();
-        this.fobDiscount = new SimpleObjectProperty<BigDecimal>();
-        this.grossRevenueActual = new SimpleObjectProperty<BigDecimal>();
-        this.spoilsTrade = new SimpleObjectProperty<BigDecimal>();
-        this.standardAllowanceTrade = new SimpleObjectProperty<BigDecimal>();
-        this.afterSpoilsAndStandardAllowanceAvailableTrade = new SimpleObjectProperty<BigDecimal>();
-        this.ifFobFreightCredit = new SimpleObjectProperty<BigDecimal>();
-        this.equalsNet1Rev = new SimpleObjectProperty<BigDecimal>();
-        this.totalFobFreightCredit = new SimpleObjectProperty<BigDecimal>();
-        this.equalsNet2Rev = new SimpleObjectProperty<BigDecimal>();
-        this.totalFobFreightSpending = new SimpleObjectProperty<BigDecimal>();
-        this.equalsNet3Rev = new SimpleObjectProperty<BigDecimal>();
-        this.netRev3Rate = new SimpleObjectProperty<BigDecimal>();
-        this.cogs = new SimpleObjectProperty<BigDecimal>(new BigDecimal("2.05")); //HARDCODED FOR NOW
-        this.totalCogs = new SimpleObjectProperty<BigDecimal>();
-        this.grossProfit = new SimpleObjectProperty<BigDecimal>();
-        this.grossProfitPerUnit = new SimpleObjectProperty<BigDecimal>();
-        this.grossProfitIndex = new SimpleObjectProperty<BigDecimal>();
-        this.slottingPayback = new SimpleObjectProperty<BigDecimal>();
-        this.postSpoilsAndFreightWeCollect = new SimpleObjectProperty<BigDecimal>();
-        this.postSpoilsAndStdAllowancesAvailableTrade = new SimpleObjectProperty<BigDecimal>();
+        this.minOverride = new SimpleObjectProperty<>();
+        this.weeklyUSFWAtMin = new SimpleObjectProperty<>();
+        this.everydayGPM = new SimpleObjectProperty<>();
+        this.yearOneStoreCount = new SimpleIntegerProperty();
+        this.spoilsAndFees = new SimpleObjectProperty<>();
+
+        setupListeners();
     }
 
     public RTMOption(String RTMName, BigDecimal freightOutPerUnit, Integer slottingPerSku,
@@ -89,49 +69,152 @@ public class RTMOption {
         this.fourYearEqGpPerSku = new SimpleObjectProperty<BigDecimal>();
         this.fourYearEqGpPerUnit = new SimpleObjectProperty<BigDecimal>();
 
-        this.fourYearUnitVolumePerSku = new SimpleObjectProperty<BigDecimal>();
-        this.ourFreightCost = new SimpleObjectProperty<BigDecimal>();
-        this.grossRevenueList = new SimpleObjectProperty<BigDecimal>();
-        this.fobDiscount = new SimpleObjectProperty<BigDecimal>();
-        this.grossRevenueActual = new SimpleObjectProperty<BigDecimal>();
-        this.spoilsTrade = new SimpleObjectProperty<BigDecimal>();
-        this.standardAllowanceTrade = new SimpleObjectProperty<BigDecimal>();
-        this.afterSpoilsAndStandardAllowanceAvailableTrade = new SimpleObjectProperty<BigDecimal>();
-        this.ifFobFreightCredit = new SimpleObjectProperty<BigDecimal>();
-        this.equalsNet1Rev = new SimpleObjectProperty<BigDecimal>();
-        this.totalFobFreightCredit = new SimpleObjectProperty<BigDecimal>();
-        this.equalsNet2Rev = new SimpleObjectProperty<BigDecimal>();
-        this.totalFobFreightCredit = new SimpleObjectProperty<BigDecimal>();
-        this.equalsNet3Rev = new SimpleObjectProperty<BigDecimal>();
-        this.netRev3Rate = new SimpleObjectProperty<BigDecimal>();
-        this.cogs = new SimpleObjectProperty<BigDecimal>(new BigDecimal("2.05")); //HARDCODED FOR NOW
-        this.totalCogs = new SimpleObjectProperty<BigDecimal>();
-        this.grossProfit = new SimpleObjectProperty<BigDecimal>();
-        this.grossProfitPerUnit = new SimpleObjectProperty<BigDecimal>();
-        this.grossProfitIndex = new SimpleObjectProperty<BigDecimal>();
-        this.slottingPayback = new SimpleObjectProperty<BigDecimal>();
-        this.postSpoilsAndFreightWeCollect = new SimpleObjectProperty<BigDecimal>();
-        this.postSpoilsAndStdAllowancesAvailableTrade = new SimpleObjectProperty<BigDecimal>();
-//        setUpInternalListeners();
+        this.minOverride = new SimpleObjectProperty<>();
+        this.weeklyUSFWAtMin = new SimpleObjectProperty<>();
+        this.everydayGPM = new SimpleObjectProperty<>();
+        this.yearOneStoreCount = new SimpleIntegerProperty();
+        this.spoilsAndFees = new SimpleObjectProperty<>();
+
+        setupListeners();
     }
 
-//    private void setUpInternalListeners() {
-//        fourYearUnitVolumePerSku.addListener(new ChangeListener<BigDecimal>() {
-//            private boolean changing;
-//            @Override
-//            public void changed(ObservableValue<? extends BigDecimal> observable, BigDecimal oldValue, BigDecimal newValue) {
-//                if (!changing) {
-//                    try {
-//                        changing = true;
-////                        setResultingEverydayRetailCalcd(((row.getLandedStoreCost().multiply(new BigDecimal("100")))
-////                                .divide((getEveryDayGPM().subtract(new BigDecimal("100"))), 2, RoundingMode.HALF_UP).abs()));
-//                    } finally {
-//                        changing = false;
-//                    }
-//                }
-//            }
-//        });
-//    }
+    private void setupListeners() {
+        /*
+        Check if landedStoreCostProperty changed, if it it did calculate everyday Retail
+        */
+            landedStoreCostProperty().addListener(new ChangeListener<BigDecimal>() {
+                private boolean changing;
+                @Override
+                public void changed(ObservableValue<? extends BigDecimal> observable, BigDecimal oldValue, BigDecimal newValue) {
+                    if (!changing) {
+                        try {
+                            changing = true;
+                            updateResultingEverydayRetailCald();
+                        } finally {
+                            changing = false;
+                        }
+                    }
+                }
+            });
+        yearOneStoreCountProperty().addListener(new ChangeListener<Number>() {
+            private boolean changing;
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                if (!changing) {
+                    try {
+                        changing = true;
+                        updateEstimatedAnnualVolumePerSku();
+                    } finally {
+                        changing = false;
+                    }
+                }
+            }
+        });
+        everydayGPMProperty().addListener(new ChangeListener<BigDecimal>() {
+            private boolean changing;
+            @Override
+            public void changed(ObservableValue<? extends BigDecimal> observable, BigDecimal oldValue, BigDecimal newValue) {
+                if (!changing) {
+                    try {
+                        changing = true;
+                        System.out.println("Is this working");
+                        updateResultingEverydayRetailCald();
+                    } finally {
+                        changing = false;
+                    }
+                }
+            }
+        });
+        // ADD RETAILER SPECS SPOILS AND FEES
+        weeklyUSFWAtMinProperty().addListener(new ChangeListener<BigDecimal>() {
+            private boolean changing;
+            @Override
+            public void changed(ObservableValue<? extends BigDecimal> observable, BigDecimal oldValue, BigDecimal newValue) {
+                if (!changing) {
+                    try {
+                        changing = true;
+                        System.out.println("Is this working thooo");
+                        updateElasticizedEstimatedUnitVelocity();
+                        updateEstimatedAnnualVolumePerSku();
+                    } finally {
+                        changing = false;
+                    }
+                }
+            }
+        });
+    }
+    public void updateResultingEverydayRetailCald(){
+        if (getEverydayGPM().compareTo(new BigDecimal("0.0"))>0 &&
+                getLandedStoreCost().compareTo(new BigDecimal("0.0"))>0){
+            setResultingEverydayRetailCalcd((getLandedStoreCost().multiply(new BigDecimal("100")))
+                    .divide((getEverydayGPM().subtract(new BigDecimal("100"))), 2, RoundingMode.HALF_UP).abs());
+        }
+    }
+    public void updateElasticizedEstimatedUnitVelocity() {
+        if (getWeeklyUSFWAtMin().compareTo(new BigDecimal("0.0"))>0 && getMinOverride().compareTo(new BigDecimal("100000000000"))<0
+        && getMinOverride().compareTo(new BigDecimal("0.0"))>0) {
+            if (getMinOverride().compareTo(getResultingEverydayRetailOverride())==0) {
+                System.out.println("are you getting here");
+                setElasticizedEstimatedUnitVelocity(getWeeklyUSFWAtMin());
+            } else {
+                setElasticizedEstimatedUnitVelocity(((getResultingEverydayRetailOverride().subtract(getMinOverride()))
+                        .divide((getMinOverride()), 10, RoundingMode.HALF_UP).multiply(new BigDecimal("-1.15"))
+                        .multiply(getWeeklyUSFWAtMin())).add(getWeeklyUSFWAtMin()));
+            }
+        }
+    }
+    public void updateEstimatedAnnualVolumePerSku(){
+        if (getYearOneStoreCount()>0 && getElasticizedEstimatedUnitVelocity().compareTo(new BigDecimal("0.0"))>0) {
+            setEstimatedAnnualVolumePerSku(Integer.valueOf(((new BigDecimal("52").multiply(new BigDecimal(
+                    getYearOneStoreCount()).multiply(getElasticizedEstimatedUnitVelocity())))
+                    .setScale(0, RoundingMode.HALF_UP)).intValue()));
+        }
+    }
+
+    public Integer getYearOneStoreCount() {
+        return yearOneStoreCount.get();
+    }
+
+    public SimpleIntegerProperty yearOneStoreCountProperty() {
+        if (yearOneStoreCount==null){
+            return new SimpleIntegerProperty();
+        }
+        return yearOneStoreCount;
+    }
+
+    public void setYearOneStoreCount(Integer yearOneStoreCount) {
+        this.yearOneStoreCount.set(yearOneStoreCount);
+    }
+
+    public BigDecimal getEverydayGPM() {
+        if (everydayGPM.get()==null){
+            return new BigDecimal("0.0");
+        }
+        return everydayGPM.get();
+    }
+
+    public SimpleObjectProperty<BigDecimal> everydayGPMProperty() {
+        if (everydayGPM ==null){
+            return new SimpleObjectProperty<>();
+        }
+        return everydayGPM;
+    }
+
+    public void setEverydayGPM(BigDecimal everydayGPM) {
+        this.everydayGPM.set(everydayGPM);
+    }
+
+    public BigDecimal getSpoilsAndFees() {
+        return spoilsAndFees.get();
+    }
+
+    public SimpleObjectProperty<BigDecimal> spoilsAndFeesProperty() {
+        return spoilsAndFees;
+    }
+
+    public void setSpoilsAndFees(BigDecimal spoilsAndFees) {
+        this.spoilsAndFees.set(spoilsAndFees);
+    }
 
     public boolean isFob() {
         if (getFreightOutPerUnit().compareTo(new BigDecimal(0.0)) > 0) {
@@ -212,6 +295,7 @@ public class RTMOption {
     public BigDecimal getSlottingPayback(){
         return (BigDecimal.valueOf(getSlottingPerSku()).divide(getGrossProfitPerUnit())).divide(BigDecimal.valueOf(getEstimatedAnnualVolumePerSku()));
     }
+    // IMPLEMENT GET GROSS PROFIT INDEX
     public BigDecimal getPostSpoilsAndFreightWeCollect(){
         return getGrossRevenueList().subtract(getSpoilsTrade()).subtract(getOurFreightCost()).subtract(getFobDiscount());
     }
@@ -378,6 +462,36 @@ public class RTMOption {
         this.resultingEverydayRetailOverride.set(resultingEverydayRetailOverride);
     }
 
+    public BigDecimal getMinOverride() {
+        if (minOverride.get()==null){
+            return new BigDecimal("0.0");
+        }
+        return minOverride.get();
+    }
+
+    public SimpleObjectProperty<BigDecimal> minOverrideProperty() {
+        return minOverride;
+    }
+
+    public void setMinOverride(BigDecimal minOverride) {
+        this.minOverride.set(minOverride);
+    }
+
+    public BigDecimal getWeeklyUSFWAtMin() {
+        if (weeklyUSFWAtMin.get()==null){
+            return new BigDecimal("0.0");
+        }
+        return weeklyUSFWAtMin.get();
+    }
+
+    public SimpleObjectProperty<BigDecimal> weeklyUSFWAtMinProperty() {
+        return weeklyUSFWAtMin;
+    }
+
+    public void setWeeklyUSFWAtMin(BigDecimal weeklyUSFWAtMin) {
+        this.weeklyUSFWAtMin.set(weeklyUSFWAtMin);
+    }
+
     public BigDecimal getElasticizedEstimatedUnitVelocity() {
         return elasticizedEstimatedUnitVelocity.get();
     }
@@ -468,6 +582,32 @@ public class RTMOption {
         this.fourYearEqGpPerUnit.set(fourYearEqGpPerUnit);
     }
 }
+/*
+Previous implementation of External table values
+ */
+//        this.fourYearUnitVolumePerSku = new SimpleObjectProperty<BigDecimal>();
+//        this.ourFreightCost = new SimpleObjectProperty<BigDecimal>();
+//        this.grossRevenueList = new SimpleObjectProperty<BigDecimal>();
+//        this.fobDiscount = new SimpleObjectProperty<BigDecimal>();
+//        this.grossRevenueActual = new SimpleObjectProperty<BigDecimal>();
+//        this.spoilsTrade = new SimpleObjectProperty<BigDecimal>();
+//        this.standardAllowanceTrade = new SimpleObjectProperty<BigDecimal>();
+//        this.afterSpoilsAndStandardAllowanceAvailableTrade = new SimpleObjectProperty<BigDecimal>();
+//        this.ifFobFreightCredit = new SimpleObjectProperty<BigDecimal>();
+//        this.equalsNet1Rev = new SimpleObjectProperty<BigDecimal>();
+//        this.totalFobFreightCredit = new SimpleObjectProperty<BigDecimal>();
+//        this.equalsNet2Rev = new SimpleObjectProperty<BigDecimal>();
+//        this.totalFobFreightSpending = new SimpleObjectProperty<BigDecimal>();
+//        this.equalsNet3Rev = new SimpleObjectProperty<BigDecimal>();
+//        this.netRev3Rate = new SimpleObjectProperty<BigDecimal>();
+//        this.cogs = new SimpleObjectProperty<BigDecimal>(new BigDecimal("2.05")); //HARDCODED FOR NOW
+//        this.totalCogs = new SimpleObjectProperty<BigDecimal>();
+//        this.grossProfit = new SimpleObjectProperty<BigDecimal>();
+//        this.grossProfitPerUnit = new SimpleObjectProperty<BigDecimal>();
+//        this.grossProfitIndex = new SimpleObjectProperty<BigDecimal>();
+//        this.slottingPayback = new SimpleObjectProperty<BigDecimal>();
+//        this.postSpoilsAndFreightWeCollect = new SimpleObjectProperty<BigDecimal>();
+//        this.postSpoilsAndStdAllowancesAvailableTrade = new SimpleObjectProperty<BigDecimal>();
 
 //    public BigDecimal getFourYearUnitVolumePerSku() {
 //        return fourYearUnitVolumePerSku.get();

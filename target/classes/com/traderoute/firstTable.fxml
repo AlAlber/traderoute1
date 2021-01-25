@@ -62,7 +62,7 @@
                   <TableColumn fx:id="elasticizedEstimatedUnitVelocityColumn" prefWidth="100.79998779296875" resizable="false" text="Estimated U/F/S/W" />
                   <TableColumn fx:id="estimatedAnnualVolumePerSkuColumn" prefWidth="87.9998779296875" resizable="false" text="Volume/Sku" />
                   <TableColumn fx:id="slottingPaybackPeriodColumn" prefWidth="88.0001220703125" resizable="false" text="Period" />
-                  <TableColumn fx:id="postFreightPostSpoilsWeCollectColumn" prefWidth="113.599853515625" resizable="false" text="Post Spoils We Collect" />
+                  <TableColumn fx:id="postFreightPostSpoilsWeCollectPerUnitColumn" prefWidth="113.599853515625" resizable="false" text="Post Spoils We Collect" />
                   <TableColumn fx:id="unspentTradePerUnitColumn" prefWidth="81.60009765625" resizable="false" text="Unit" />
                   <TableColumn fx:id="fourYearEqGpPerSkuColumn" prefWidth="88.0" resizable="false" text="Per Sku" />
                   <TableColumn fx:id="fourYearEqGpPerUnitColumn" prefWidth="95.199951171875" resizable="false" text="Per Unit" />
