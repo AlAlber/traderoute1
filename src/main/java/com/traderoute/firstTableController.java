@@ -128,15 +128,7 @@ public class firstTableController implements Initializable {
 
         // Set cell factories
         setCellFactories();
-
-        // Create a Retailer Specs Object and assign it to all the RTMOptions
-//        RetailerSpecifics retailerSpecs = new RetailerSpecifics();
-//        for (RTMOption row : firstTableView.getItems()){
-//            row.setRetailerSpecs(retailerSpecs);
-//        }
         }
-
-
     /*
      Set Up listeners for everyDayGPM and landed store Cost Property
      */
@@ -145,23 +137,7 @@ public class firstTableController implements Initializable {
         Check if landedStoreCostProperty changed, if it it did calculate everyday Retail
         */
         for (RTMOption row : firstTableView.getItems()) {
-//
-//            PLANNED
-//            row.landedStoreCostProperty().addListener(new ChangeListener<BigDecimal>() {
-//                private boolean changing;
-//                @Override
-//                public void changed(ObservableValue<? extends BigDecimal> observable, BigDecimal oldValue, BigDecimal newValue) {
-//                    if (!changing) {
-//                        try {
-//                            changing = true;
-//                            row.setResultingEverydayRetailCalcd(((row.getLandedStoreCost().multiply(new BigDecimal("100")))
-//                                    .divide((getEveryDayGPM().subtract(new BigDecimal("100"))), 2, RoundingMode.HALF_UP).abs()));
-//                        } finally {
-//                            changing = false;
-//                        }
-//                    }
-//                }
-//            });
+
             /*
             Set Override to automatically take current value of resulting every day retail calculated
             */
@@ -187,7 +163,6 @@ public class firstTableController implements Initializable {
             */
             row.resultingEverydayRetailOverrideProperty().addListener(new ChangeListener<BigDecimal>() {
                 private boolean changing;
-
                 @Override
                 public void changed(ObservableValue<? extends BigDecimal> observable, BigDecimal oldValue, BigDecimal newValue) {
                     if (!changing) {
@@ -204,60 +179,7 @@ public class firstTableController implements Initializable {
                     }
                 }
             });
-
-            /*
-            Check if resulting everyday retail changed, if it did check the max of the column and assign it to maxOverrideLabel
-            PLANNED
-            */
-//            row.elasticizedEstimatedUnitVelocityProperty().addListener(new ChangeListener<BigDecimal>() {
-//                private boolean changing;
-//
-//                @Override
-//                public void changed(ObservableValue<? extends BigDecimal> observable, BigDecimal oldValue, BigDecimal newValue) {
-//                    if (!changing) {
-//                        try {
-//                            changing = true;
-//                            row.setEstimatedAnnualVolumePerSku(Integer.valueOf(((new BigDecimal("52").multiply(new BigDecimal(
-//                                    getYearOneStoreCount()).multiply(row.getElasticizedEstimatedUnitVelocity())))
-//                                    .setScale(0,RoundingMode.HALF_UP)).intValue()));
-//                            secondTableView.refresh();
-//                        } finally {
-//                            changing = false;
-//                        }
-//                    }
-//                }
-//            });
         }}
-
-        public void updateValues(){
-            for (RTMOption row : firstTableView.getItems()) {
-                BigDecimal maxReceivers = row.getFirstReceiver().max(row.getSecondReceiver()
-                        .max(row.getThirdReceiver().max(row.getFourthReceiver())));
-                if (maxReceivers.compareTo(new BigDecimal("0.0"))>0){
-                    row.setLandedStoreCost(row.getFirstReceiver().max(row.getSecondReceiver()
-                            .max(row.getThirdReceiver().max(row.getFourthReceiver()))));
-                }
-                if (this.getEveryDayGPM().compareTo(new BigDecimal("0.0"))>0 &&
-                        row.getLandedStoreCost().compareTo(new BigDecimal("0.0"))>0){
-                    row.setResultingEverydayRetailCalcd((row.getLandedStoreCost().multiply(new BigDecimal("100")))
-                            .divide((this.getEveryDayGPM().subtract(new BigDecimal("100"))), 2, RoundingMode.HALF_UP).abs());
-                }
-                if (this.getWeeklyUSFWAtMin().compareTo(new BigDecimal("0.0"))>0 && this.getMinOverride().compareTo(new BigDecimal("100000000000"))<0) {
-                    if (this.getMinOverride() == row.getResultingEverydayRetailOverride()) {
-                        row.setElasticizedEstimatedUnitVelocity(this.getWeeklyUSFWAtMin());
-                    } else {
-                        row.setElasticizedEstimatedUnitVelocity(((row.getResultingEverydayRetailOverride().subtract(this.getMinOverride()))
-                                .divide((this.getMinOverride()), 10, RoundingMode.HALF_UP).multiply(new BigDecimal("-1.15"))
-                                .multiply(this.getWeeklyUSFWAtMin())).add(this.getWeeklyUSFWAtMin()));
-                    }
-                }
-                if (this.getYearOneStoreCount()>0 && row.getElasticizedEstimatedUnitVelocity().compareTo(new BigDecimal("0.0"))>0) {
-                    row.setEstimatedAnnualVolumePerSku(Integer.valueOf(((new BigDecimal("52").multiply(new BigDecimal(
-                            this.getYearOneStoreCount()).multiply(row.getElasticizedEstimatedUnitVelocity())))
-                            .setScale(0, RoundingMode.HALF_UP)).intValue()));
-                }
-            }
-        }
 
         /*
         Return minimum value from override column
@@ -276,41 +198,20 @@ public class firstTableController implements Initializable {
     Get elasticized velocities from weeklyUSFWAtMin Field  and do calculation if possible
     */
     public void changeWeeklyUSFWAtMinEvent (ActionEvent event) {
-//            BigDecimal newEveryDayGPM = new BigDecimal(everyDayGPMField.getText());
         secondTableView.setItems(firstTableView.getItems());
         for (RTMOption row : secondTableView.getItems()) {
             row.setMinOverride(getMinOverride());
             row.setWeeklyUSFWAtMin(getWeeklyUSFWAtMin());
         }
-//      FOR TEST
-//        for (RTMOption row : secondTableView.getItems()) {
-//            if (this.getMinOverride()==row.getResultingEverydayRetailOverride()){
-//                row.setElasticizedEstimatedUnitVelocity(this.getWeeklyUSFWAtMin());
-//            }
-//            else {
-//                row.setElasticizedEstimatedUnitVelocity(((row.getResultingEverydayRetailOverride().subtract(this.getMinOverride()))
-//                        .divide((this.getMinOverride()), 10, RoundingMode.HALF_UP).multiply(new BigDecimal("-1.15"))
-//                        .multiply(this.getWeeklyUSFWAtMin())).add(this.getWeeklyUSFWAtMin()));
-//            }
-//            row.setEstimatedAnnualVolumePerSku(Integer.valueOf(((new BigDecimal("52").multiply(new BigDecimal(
-//                    getYearOneStoreCount()).multiply(row.getElasticizedEstimatedUnitVelocity())))
-//                    .setScale(0,RoundingMode.HALF_UP)).intValue()));
-//            row.setSlottingPaybackPeriod(row.getSlottingPayback());
-//        }
         secondTableView.refresh();
     }
     /*
     Get estimated annual volume/sku
     */
     public void changeYearOneStoreCount (ActionEvent event) {
-
         secondTableView.setItems(firstTableView.getItems());
         for (RTMOption row : secondTableView.getItems()) {
             row.setYearOneStoreCount(getYearOneStoreCount());
-//            FOR TEST
-//            row.setEstimatedAnnualVolumePerSku(Integer.valueOf(((new BigDecimal("52").multiply(new BigDecimal(
-//                    this.getYearOneStoreCount()).multiply(row.getElasticizedEstimatedUnitVelocity())))
-//                    .setScale(0,RoundingMode.HALF_UP)).intValue()));
         }
         secondTableView.refresh();
     }
@@ -319,61 +220,9 @@ public class firstTableController implements Initializable {
     Set EverydayGPm and do calculation if possible
     */
     public void changeEveryDayGPMCellEvent (ActionEvent event) {
-//            BigDecimal newEveryDayGPM = new BigDecimal(everyDayGPMField.getText());
         for (RTMOption row : firstTableView.getItems()) {
             row.setEverydayGPM(this.getEveryDayGPM());
-//            FOR TEST
-//            row.setResultingEverydayRetailCalcd((row.getLandedStoreCost().multiply(new BigDecimal("100")))
-//                    .divide((this.getEveryDayGPM().subtract(new BigDecimal("100"))), 2, RoundingMode.HALF_UP).abs());
-//            //FIGURE OUT CORRECT ROUNDING
-//            if (this.getEveryDayGPM()== new BigDecimal("100.0")){
-//            }
         }
-    }
-    /*
-    Update resulting EverydayRetailCalcd
-     */
-    public void updateResultingEverydayRetailCalcd(){
-        for (RTMOption row : firstTableView.getItems()) {
-            if (this.getEveryDayGPM().compareTo(new BigDecimal("0.0")) > 0 &&
-                    row.getLandedStoreCost().compareTo(new BigDecimal("0.0")) > 0) {
-                row.setResultingEverydayRetailCalcd((row.getLandedStoreCost().multiply(new BigDecimal("100")))
-                        .divide((this.getEveryDayGPM().subtract(new BigDecimal("100"))), 2, RoundingMode.HALF_UP).abs());
-            }
-        }
-        firstTableView.refresh();
-    }
-    /*
-    Update elasticized estimated Unit Velocity
-     */
-    public void updateElasticizedEstimatedUnitVelocity() {
-        secondTableView.setItems(firstTableView.getItems());
-        for (RTMOption row : secondTableView.getItems()) {
-            if (this.getWeeklyUSFWAtMin().compareTo(new BigDecimal("0.0")) > 0 && this.getMinOverride().compareTo(new BigDecimal("100000000000")) < 0) {
-                if (this.getMinOverride() == row.getResultingEverydayRetailOverride()) {
-                    row.setElasticizedEstimatedUnitVelocity(this.getWeeklyUSFWAtMin());
-                } else {
-                    row.setElasticizedEstimatedUnitVelocity(((row.getResultingEverydayRetailOverride().subtract(this.getMinOverride()))
-                            .divide((this.getMinOverride()), 10, RoundingMode.HALF_UP).multiply(new BigDecimal("-1.15"))
-                            .multiply(this.getWeeklyUSFWAtMin())).add(this.getWeeklyUSFWAtMin()));
-                }
-            }
-        }
-        secondTableView.refresh();
-    }
-    /*
-    Update estimated annual volume per sku
-     */
-    public void updateEstimatedAnnualVolumePerSku(){
-        secondTableView.setItems(firstTableView.getItems());
-        for (RTMOption row : secondTableView.getItems()) {
-            if (this.getYearOneStoreCount() > 0 && row.getElasticizedEstimatedUnitVelocity().compareTo(new BigDecimal("0.0")) > 0) {
-                row.setEstimatedAnnualVolumePerSku(Integer.valueOf(((new BigDecimal("52").multiply(new BigDecimal(
-                        this.getYearOneStoreCount()).multiply(row.getElasticizedEstimatedUnitVelocity())))
-                        .setScale(0, RoundingMode.HALF_UP)).intValue()));
-            }
-        }
-        secondTableView.refresh();
     }
 
     /*
@@ -384,42 +233,19 @@ public class firstTableController implements Initializable {
             row.setSpoilsAndFees(getSpoilsAndFees());
         }
     }
-    /*
-    Return Value from Year One Store Count
-    */
-    public int getYearOneStoreCount(){
-        if (yearOneStoreCountField.getText()== null){
-            return 0;
-        }
-        return Integer.valueOf(yearOneStoreCountField.getText());
-    }
-    /*
-    Return Value from EveryDayGPMField
-    */
-    public BigDecimal getEveryDayGPM(){
-        if (everyDayGPMField.getText()==null){
-            return new BigDecimal("0.0");
-        }
-        return new BigDecimal(everyDayGPMField.getText());
-    }
-    /*
-    Return Value from Spoils And Fees Count
-    */
-    public BigDecimal getSpoilsAndFees(){
-        if (yearOneStoreCountField.getText()== null){
-            return new BigDecimal(0.0);
-        }
-        return new BigDecimal(spoilsAndFeesField.getText());
-    }
 
-    /*
-    Return Value from EveryDayGPMField
-    */
-    public BigDecimal getWeeklyUSFWAtMin(){
-        if (weeklyUFSWAtMinField.getText()== null){
-            return new BigDecimal("0.0");
-        }
-        return new BigDecimal(weeklyUFSWAtMinField.getText());
+// Change Slotting Per Sku
+    public void changeSlottingPerSkuCellEvent(TableColumn.CellEditEvent editedCell)
+    {
+        secondTableView.setItems(firstTableView.getItems());
+        RTMOption RTMOptionSelected =  firstTableView.getSelectionModel().getSelectedItem();
+        RTMOptionSelected.setSlottingPerSku(Integer.valueOf(editedCell.getNewValue().toString()));
+    }
+    // Change Override
+    public void changeResultingEverydayRetailOverride(TableColumn.CellEditEvent editedCell)
+    {
+        RTMOption RTMOptionSelected =  firstTableView.getSelectionModel().getSelectedItem();
+        RTMOptionSelected.setResultingEverydayRetailOverride(new BigDecimal(editedCell.getNewValue().toString()));
     }
 
     /*
@@ -457,6 +283,43 @@ public class firstTableController implements Initializable {
                     .max(selectedOption.getThirdReceiver().max(selectedOption.getFourthReceiver()))));
         }
     }
+    /*
+Return Value from Year One Store Count
+*/
+    public int getYearOneStoreCount(){
+        if (yearOneStoreCountField.getText()== null){
+            return 0;
+        }
+        return Integer.valueOf(yearOneStoreCountField.getText());
+    }
+    /*
+    Return Value from EveryDayGPMField
+    */
+    public BigDecimal getEveryDayGPM(){
+        if (everyDayGPMField.getText()==null){
+            return new BigDecimal("0.0");
+        }
+        return new BigDecimal(everyDayGPMField.getText());
+    }
+    /*
+    Return Value from Spoils And Fees Count
+    */
+    public BigDecimal getSpoilsAndFees(){
+        if (yearOneStoreCountField.getText()== null){
+            return new BigDecimal(0.0);
+        }
+        return new BigDecimal(spoilsAndFeesField.getText());
+    }
+
+    /*
+    Return Value from EveryDayGPMField
+    */
+    public BigDecimal getWeeklyUSFWAtMin(){
+        if (weeklyUFSWAtMinField.getText()== null){
+            return new BigDecimal("0.0");
+        }
+        return new BigDecimal(weeklyUFSWAtMinField.getText());
+    }
 
     /*
     Loads dummy data
@@ -465,21 +328,7 @@ public class firstTableController implements Initializable {
         ObservableList<RTMOption> RTMOptions = FXCollections.observableArrayList();
         RTMOptions.add(new RTMOption("Frank", BigDecimal.valueOf(1.3), 0, BigDecimal.valueOf(0.5),
                 BigDecimal.valueOf(0.1), BigDecimal.valueOf(0.3), BigDecimal.valueOf(3.95)));
-//            RTMOptions.add(new RTMOption("Rebecca", 2.1, 0, BigDecimal.valueOf(0.5),
-//                    BigDecimal.valueOf(0.4), BigDecimal.valueOf(0.5), BigDecimal.valueOf(3.45),
-//                    0, 0, 0,
-//                    0, 0, 0,
-//                    0, 0, 0,
-//                    0));
-//            RTMOptions.add(new RTMOption("Mr.", 3.1, 0,
-//                    BigDecimal.valueOf(0.2),
-//                    BigDecimal.valueOf(0.01), BigDecimal.valueOf(0.00001), BigDecimal.valueOf(4.00),
-//                    0, 0, 0,
-//                    0, 0, 0,
-//                    0, 0, 0, 0
-//            ));
             RTMOptions.add(new RTMOption());
-
             return RTMOptions;
     }
     /*
@@ -586,6 +435,173 @@ public class firstTableController implements Initializable {
         fourYearEqGpPerUnitColumn.setCellFactory(TextFieldTableCell.forTableColumn(new BigDecimalStringConverter()));
     }
     }
+//
+
+// Create a Retailer Specs Object and assign it to all the RTMOptions
+//        RetailerSpecifics retailerSpecs = new RetailerSpecifics();
+//        for (RTMOption row : firstTableView.getItems()){
+//            row.setRetailerSpecs(retailerSpecs);
+//        }
+    /*
+    Update resulting EverydayRetailCalcd
+     */
+//    public void updateResultingEverydayRetailCalcd(){
+//        for (RTMOption row : firstTableView.getItems()) {
+//            if (this.getEveryDayGPM().compareTo(new BigDecimal("0.0")) > 0 &&
+//                    row.getLandedStoreCost().compareTo(new BigDecimal("0.0")) > 0) {
+//                row.setResultingEverydayRetailCalcd((row.getLandedStoreCost().multiply(new BigDecimal("100")))
+//                        .divide((this.getEveryDayGPM().subtract(new BigDecimal("100"))), 2, RoundingMode.HALF_UP).abs());
+//            }
+//        }
+//        firstTableView.refresh();
+//    }
+//    /*
+//    Update elasticized estimated Unit Velocity
+//     */
+//    public void updateElasticizedEstimatedUnitVelocity() {
+//        secondTableView.setItems(firstTableView.getItems());
+//        for (RTMOption row : secondTableView.getItems()) {
+//            if (this.getWeeklyUSFWAtMin().compareTo(new BigDecimal("0.0")) > 0 && this.getMinOverride().compareTo(new BigDecimal("100000000000")) < 0) {
+//                if (this.getMinOverride() == row.getResultingEverydayRetailOverride()) {
+//                    row.setElasticizedEstimatedUnitVelocity(this.getWeeklyUSFWAtMin());
+//                } else {
+//                    row.setElasticizedEstimatedUnitVelocity(((row.getResultingEverydayRetailOverride().subtract(this.getMinOverride()))
+//                            .divide((this.getMinOverride()), 10, RoundingMode.HALF_UP).multiply(new BigDecimal("-1.15"))
+//                            .multiply(this.getWeeklyUSFWAtMin())).add(this.getWeeklyUSFWAtMin()));
+//                }
+//            }
+//        }
+//        secondTableView.refresh();
+//    }
+//    /*
+//    Update estimated annual volume per sku
+//     */
+//    public void updateEstimatedAnnualVolumePerSku(){
+//        secondTableView.setItems(firstTableView.getItems());
+//        for (RTMOption row : secondTableView.getItems()) {
+//            if (this.getYearOneStoreCount() > 0 && row.getElasticizedEstimatedUnitVelocity().compareTo(new BigDecimal("0.0")) > 0) {
+//                row.setEstimatedAnnualVolumePerSku(Integer.valueOf(((new BigDecimal("52").multiply(new BigDecimal(
+//                        this.getYearOneStoreCount()).multiply(row.getElasticizedEstimatedUnitVelocity())))
+//                        .setScale(0, RoundingMode.HALF_UP)).intValue()));
+//            }
+//        }
+//        secondTableView.refresh();
+//    }
+//
+//            PLANNED
+//            row.landedStoreCostProperty().addListener(new ChangeListener<BigDecimal>() {
+//                private boolean changing;
+//                @Override
+//                public void changed(ObservableValue<? extends BigDecimal> observable, BigDecimal oldValue, BigDecimal newValue) {
+//                    if (!changing) {
+//                        try {
+//                            changing = true;
+//                            row.setResultingEverydayRetailCalcd(((row.getLandedStoreCost().multiply(new BigDecimal("100")))
+//                                    .divide((getEveryDayGPM().subtract(new BigDecimal("100"))), 2, RoundingMode.HALF_UP).abs()));
+//                        } finally {
+//                            changing = false;
+//                        }
+//                    }
+//                }
+//            });
+
+            /*
+            Check if resulting everyday retail changed, if it did check the max of the column and assign it to maxOverrideLabel
+            PLANNED
+            */
+//            row.elasticizedEstimatedUnitVelocityProperty().addListener(new ChangeListener<BigDecimal>() {
+//                private boolean changing;
+//
+//                @Override
+//                public void changed(ObservableValue<? extends BigDecimal> observable, BigDecimal oldValue, BigDecimal newValue) {
+//                    if (!changing) {
+//                        try {
+//                            changing = true;
+//                            row.setEstimatedAnnualVolumePerSku(Integer.valueOf(((new BigDecimal("52").multiply(new BigDecimal(
+//                                    getYearOneStoreCount()).multiply(row.getElasticizedEstimatedUnitVelocity())))
+//                                    .setScale(0,RoundingMode.HALF_UP)).intValue()));
+//                            secondTableView.refresh();
+//                        } finally {
+//                            changing = false;
+//                        }
+//                    }
+//                }
+//            });
+//    /*
+//    Get elasticized velocities from weeklyUSFWAtMin Field  and do calculation if possible
+//    */
+//    public void changeWeeklyUSFWAtMinEvent (ActionEvent event) {
+////            BigDecimal newEveryDayGPM = new BigDecimal(everyDayGPMField.getText());
+//        secondTableView.setItems(firstTableView.getItems());
+//        for (RTMOption row : secondTableView.getItems()) {
+//            row.setMinOverride(getMinOverride());
+//            row.setWeeklyUSFWAtMin(getWeeklyUSFWAtMin());
+//        }
+////      FOR TEST
+////        for (RTMOption row : secondTableView.getItems()) {
+////            if (this.getMinOverride()==row.getResultingEverydayRetailOverride()){
+////                row.setElasticizedEstimatedUnitVelocity(this.getWeeklyUSFWAtMin());
+////            }
+////            else {
+////                row.setElasticizedEstimatedUnitVelocity(((row.getResultingEverydayRetailOverride().subtract(this.getMinOverride()))
+////                        .divide((this.getMinOverride()), 10, RoundingMode.HALF_UP).multiply(new BigDecimal("-1.15"))
+////                        .multiply(this.getWeeklyUSFWAtMin())).add(this.getWeeklyUSFWAtMin()));
+////            }
+////            row.setEstimatedAnnualVolumePerSku(Integer.valueOf(((new BigDecimal("52").multiply(new BigDecimal(
+////                    getYearOneStoreCount()).multiply(row.getElasticizedEstimatedUnitVelocity())))
+////                    .setScale(0,RoundingMode.HALF_UP)).intValue()));
+////            row.setSlottingPaybackPeriod(row.getSlottingPayback());
+////        }
+//        secondTableView.refresh();
+//    }
+    /*
+    some rtm options
+     */
+//    RTMOptions.add(new RTMOption("Rebecca", 2.1, 0, BigDecimal.valueOf(0.5),
+//                    BigDecimal.valueOf(0.4), BigDecimal.valueOf(0.5), BigDecimal.valueOf(3.45),
+//                    0, 0, 0,
+//                    0, 0, 0,
+//                    0, 0, 0,
+//                    0));
+//            RTMOptions.add(new RTMOption("Mr.", 3.1, 0,
+//                    BigDecimal.valueOf(0.2),
+//                    BigDecimal.valueOf(0.01), BigDecimal.valueOf(0.00001), BigDecimal.valueOf(4.00),
+//                    0, 0, 0,
+//                    0, 0, 0,
+//                    0, 0, 0, 0
+//            ));
+    /*
+    Get estimated annual volume/sku
+    */
+//    public void changeYearOneStoreCount (ActionEvent event) {
+//
+//        secondTableView.setItems(firstTableView.getItems());
+//        for (RTMOption row : secondTableView.getItems()) {
+//            row.setYearOneStoreCount(getYearOneStoreCount());
+//            FOR TEST
+//            row.setEstimatedAnnualVolumePerSku(Integer.valueOf(((new BigDecimal("52").multiply(new BigDecimal(
+//                    this.getYearOneStoreCount()).multiply(row.getElasticizedEstimatedUnitVelocity())))
+//                    .setScale(0,RoundingMode.HALF_UP)).intValue()));
+//        }
+//        secondTableView.refresh();
+//    }
+
+
+    /*
+    Set EverydayGPm and do calculation if possible
+    */
+//    public void changeEveryDayGPMCellEvent (ActionEvent event) {
+////            BigDecimal newEveryDayGPM = new BigDecimal(everyDayGPMField.getText());
+//        for (RTMOption row : firstTableView.getItems()) {
+//            row.setEverydayGPM(this.getEveryDayGPM());
+//            FOR TEST
+//            row.setResultingEverydayRetailCalcd((row.getLandedStoreCost().multiply(new BigDecimal("100")))
+//                    .divide((this.getEveryDayGPM().subtract(new BigDecimal("100"))), 2, RoundingMode.HALF_UP).abs());
+//            //FIGURE OUT CORRECT ROUNDING
+//            if (this.getEveryDayGPM()== new BigDecimal("100.0")){
+//            }
+//        }
+//    }
 
 /*
 Setting Column headers to text and giving them tooltips
@@ -597,6 +613,37 @@ Setting Column headers to text and giving them tooltips
 //        Label RTMNameColumnLabel = new Label ("RTM Option");
 //        RTMNameColumnLabel.setTooltip(new Tooltip("This is RTM Name Column tooltip"));
 //        RTMNameColumn.setGraphic(RTMNameColumnLabel);
+//
+// IDEA FOR SINGLE METHOD FOR ALL CALCS
+//public void updateValues(){
+//    for (RTMOption row : firstTableView.getItems()) {
+//        BigDecimal maxReceivers = row.getFirstReceiver().max(row.getSecondReceiver()
+//                .max(row.getThirdReceiver().max(row.getFourthReceiver())));
+//        if (maxReceivers.compareTo(new BigDecimal("0.0"))>0){
+//            row.setLandedStoreCost(row.getFirstReceiver().max(row.getSecondReceiver()
+//                    .max(row.getThirdReceiver().max(row.getFourthReceiver()))));
+//        }
+//        if (this.getEveryDayGPM().compareTo(new BigDecimal("0.0"))>0 &&
+//                row.getLandedStoreCost().compareTo(new BigDecimal("0.0"))>0){
+//            row.setResultingEverydayRetailCalcd((row.getLandedStoreCost().multiply(new BigDecimal("100")))
+//                    .divide((this.getEveryDayGPM().subtract(new BigDecimal("100"))), 2, RoundingMode.HALF_UP).abs());
+//        }
+//        if (this.getWeeklyUSFWAtMin().compareTo(new BigDecimal("0.0"))>0 && this.getMinOverride().compareTo(new BigDecimal("100000000000"))<0) {
+//            if (this.getMinOverride() == row.getResultingEverydayRetailOverride()) {
+//                row.setElasticizedEstimatedUnitVelocity(this.getWeeklyUSFWAtMin());
+//            } else {
+//                row.setElasticizedEstimatedUnitVelocity(((row.getResultingEverydayRetailOverride().subtract(this.getMinOverride()))
+//                        .divide((this.getMinOverride()), 10, RoundingMode.HALF_UP).multiply(new BigDecimal("-1.15"))
+//                        .multiply(this.getWeeklyUSFWAtMin())).add(this.getWeeklyUSFWAtMin()));
+//            }
+//        }
+//        if (this.getYearOneStoreCount()>0 && row.getElasticizedEstimatedUnitVelocity().compareTo(new BigDecimal("0.0"))>0) {
+//            row.setEstimatedAnnualVolumePerSku(Integer.valueOf(((new BigDecimal("52").multiply(new BigDecimal(
+//                    this.getYearOneStoreCount()).multiply(row.getElasticizedEstimatedUnitVelocity())))
+//                    .setScale(0, RoundingMode.HALF_UP)).intValue()));
+//        }
+//    }
+//}
 
 /*
 List for tooltips

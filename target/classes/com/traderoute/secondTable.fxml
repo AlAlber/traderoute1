@@ -57,7 +57,7 @@
             <TableView fx:id="firstTableView" prefHeight="130.0" prefWidth="1482.0" styleClass="table-row-cell" stylesheets="@../styles/Styles.css">
                <columns>
                   <TableColumn fx:id="RTMNameColumn" prefWidth="148.0" resizable="false" text="Route-To-Market Options" />
-                  <TableColumn fx:id="slottingPerSkuColumn" prefWidth="148.0" resizable="false" text="Slotting Per Sku" />
+                  <TableColumn fx:id="slottingPerSkuColumn" onEditCommit="#changeSlottingPerSkuCellEvent" prefWidth="148.0" resizable="false" text="Slotting Per Sku" />
                   <TableColumn fx:id="freightOutPerUnitColumn" prefWidth="148.0" resizable="false" text="Freight Out Per Unit" />
                   <TableColumn fx:id="firstReceiverColumn" onEditCommit="#changeFirstReceiverCellEvent" prefWidth="148.0" resizable="false" text="First Receiver Pays" />
                   <TableColumn fx:id="secondReceiverColumn" onEditCommit="#changeSecondReceiverCellEvent" prefWidth="148.0" resizable="false" text="Second Receiver Pays" />
@@ -65,7 +65,7 @@
                   <TableColumn fx:id="fourthReceiverColumn" onEditCommit="#changeFourthReceiverCellEvent" prefWidth="148.0" resizable="false" text="Fourth Receiver Pays" />
                   <TableColumn fx:id="landedStoreCostColumn" prefWidth="148.0" resizable="false" text="Landed Store Cost" />
                   <TableColumn fx:id="resultingEverydayRetailCalcdColumn" prefWidth="148.0" resizable="false" text="Calculated" />
-                  <TableColumn fx:id="resultingEverydayRetailOverrideColumn" prefWidth="148.0" resizable="false" text="Override" />
+                  <TableColumn fx:id="resultingEverydayRetailOverrideColumn" onEditCommit="#changeResultingEverydayRetailOverride" prefWidth="148.0" resizable="false" text="Override" />
                </columns>
                <VBox.margin>
                   <Insets top="40.0" />

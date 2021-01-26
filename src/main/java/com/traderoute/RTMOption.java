@@ -74,7 +74,6 @@ public class RTMOption {
         this.everydayGPM = new SimpleObjectProperty<>();
         this.yearOneStoreCount = new SimpleIntegerProperty();
         this.spoilsAndFees = new SimpleObjectProperty<>();
-
         setupListeners();
     }
 
@@ -136,6 +135,23 @@ public class RTMOption {
                         System.out.println("Is this working thooo");
                         updateElasticizedEstimatedUnitVelocity();
                         updateEstimatedAnnualVolumePerSku();
+                        updateSlottingPaybackPeriod();
+                    } finally {
+                        changing = false;
+                    }
+                }
+            }
+        });
+        elasticizedEstimatedUnitVelocityProperty().addListener(new ChangeListener<BigDecimal>() {
+            private boolean changing;
+            @Override
+            public void changed(ObservableValue<? extends BigDecimal> observable, BigDecimal oldValue, BigDecimal newValue) {
+                if (!changing) {
+                    try {
+                        changing = true;
+                        System.out.println("Is this working hello");
+                        updateEstimatedAnnualVolumePerSku();
+                        updateSlottingPaybackPeriod();
                     } finally {
                         changing = false;
                     }
@@ -152,10 +168,10 @@ public class RTMOption {
     }
     public void updateElasticizedEstimatedUnitVelocity() {
         if (getWeeklyUSFWAtMin().compareTo(new BigDecimal("0.0"))>0 && getMinOverride().compareTo(new BigDecimal("100000000000"))<0
-        && getMinOverride().compareTo(new BigDecimal("0.0"))>0) {
+        && getMinOverride().compareTo(new BigDecimal("0.0"))>0 && getResultingEverydayRetailOverride().compareTo(new BigDecimal("0.0"))>0) {
             if (getMinOverride().compareTo(getResultingEverydayRetailOverride())==0) {
                 System.out.println("are you getting here");
-                setElasticizedEstimatedUnitVelocity(getWeeklyUSFWAtMin());
+                setElasticizedEstimatedUnitVelocity(this.getWeeklyUSFWAtMin());
             } else {
                 setElasticizedEstimatedUnitVelocity(((getResultingEverydayRetailOverride().subtract(getMinOverride()))
                         .divide((getMinOverride()), 10, RoundingMode.HALF_UP).multiply(new BigDecimal("-1.15"))
@@ -164,10 +180,17 @@ public class RTMOption {
         }
     }
     public void updateEstimatedAnnualVolumePerSku(){
-        if (getYearOneStoreCount()>0 && getElasticizedEstimatedUnitVelocity().compareTo(new BigDecimal("0.0"))>0) {
+        if (getYearOneStoreCount()>0 &&  getElasticizedEstimatedUnitVelocity().compareTo(new BigDecimal("0.0"))>0) {
             setEstimatedAnnualVolumePerSku(Integer.valueOf(((new BigDecimal("52").multiply(new BigDecimal(
                     getYearOneStoreCount()).multiply(getElasticizedEstimatedUnitVelocity())))
                     .setScale(0, RoundingMode.HALF_UP)).intValue()));
+        }
+    }
+
+    public void updateSlottingPaybackPeriod(){
+        if (getSlottingPerSku()>0 && getWeeklyUSFWAtMin().compareTo(new BigDecimal("0.0"))>0
+                && getMinOverride().compareTo(new BigDecimal("0.0"))>0  && getEstimatedAnnualVolumePerSku()>0) {
+            setSlottingPaybackPeriod(getSlottingPayback());
         }
     }
 
@@ -282,7 +305,7 @@ public class RTMOption {
         return getEqualsNet3Rev().subtract(getTotalCogs());
     }
     public BigDecimal getGrossProfitPerUnit(){
-        return getGrossProfit().divide(getFourYearUnitVolumePerSku());
+        return getGrossProfit().divide((getFourYearUnitVolumePerSku()), 10, RoundingMode.HALF_UP);
     }
     // IMPLEMENT THIS IN FIRST TABLE CONTROLLER, get the max from gross profit
 //    public BigDecimal getGrossProfitIndex(){
@@ -293,7 +316,7 @@ public class RTMOption {
 //    }
 
     public BigDecimal getSlottingPayback(){
-        return (BigDecimal.valueOf(getSlottingPerSku()).divide(getGrossProfitPerUnit())).divide(BigDecimal.valueOf(getEstimatedAnnualVolumePerSku()));
+        return (BigDecimal.valueOf(getSlottingPerSku()).divide((getGrossProfitPerUnit()), 10, RoundingMode.HALF_UP)).divide((BigDecimal.valueOf(getEstimatedAnnualVolumePerSku())), 5, RoundingMode.HALF_UP);
     }
     // IMPLEMENT GET GROSS PROFIT INDEX
     public BigDecimal getPostSpoilsAndFreightWeCollect(){
@@ -310,7 +333,7 @@ public class RTMOption {
     public String toString() {
         String stringBuilder = "";
         stringBuilder += "RTMName: " + this.getRTMName() + ", Slotting per Sku:" + this.getSlottingPerSku() +
-                ", Landed Store Cost:" + this.getLandedStoreCost() + "Calculated:" + this.getResultingEverydayRetailCalcd();
+                ", Landed Store Cost:" + this.getLandedStoreCost() + "Calcd" + this.getResultingEverydayRetailCalcd();
 
         return stringBuilder;
     }
@@ -493,6 +516,9 @@ public class RTMOption {
     }
 
     public BigDecimal getElasticizedEstimatedUnitVelocity() {
+        if (elasticizedEstimatedUnitVelocity.get()==null){
+            return new BigDecimal("0.0");
+        }
         return elasticizedEstimatedUnitVelocity.get();
     }
 
