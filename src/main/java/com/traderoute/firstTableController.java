@@ -15,6 +15,7 @@ import javafx.util.converter.IntegerStringConverter;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.net.URL;
+import java.text.DecimalFormat;
 import java.util.ResourceBundle;
 
 public class firstTableController implements Initializable {
@@ -105,7 +106,7 @@ public class firstTableController implements Initializable {
     @FXML private final Tooltip fourYearEqGpPerUnitTip =
             new Tooltip ("4-Year Equivalized Gross Profit $ Per Unit");
 
-
+    DecimalFormat df = new DecimalFormat("#,###.00");
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         //Set up cell value factories
@@ -424,7 +425,22 @@ Return Value from Year One Store Count
         thirdReceiverColumn.setCellFactory(TextFieldTableCell.forTableColumn(new BigDecimalStringConverter()));
         fourthReceiverColumn.setCellFactory(TextFieldTableCell.forTableColumn(new BigDecimalStringConverter()));
         landedStoreCostColumn.setCellFactory(TextFieldTableCell.forTableColumn(new BigDecimalStringConverter()));
-        resultingEverydayRetailCalcdColumn.setCellFactory(TextFieldTableCell.forTableColumn(new BigDecimalStringConverter()));
+        resultingEverydayRetailCalcdColumn.setCellFactory(tc -> new TableCell<RTMOption, BigDecimal>() {
+            @Override
+            protected void updateItem(BigDecimal resultingEverydayRetailCalcd, boolean empty) {
+                super.updateItem(resultingEverydayRetailCalcd, empty);
+                if (empty) {
+                    setText("Hello");
+                }
+                if (resultingEverydayRetailCalcd==null){
+                    setText("");
+                }
+                else {
+                    setText(String.format("%,.2f", resultingEverydayRetailCalcd));
+                }
+            }
+        });
+//                TextFieldTableCell.forTableColumn(new BigDecimalStringConverter()));
         resultingEverydayRetailOverrideColumn.setCellFactory(TextFieldTableCell.forTableColumn(new BigDecimalStringConverter()));
         elasticizedEstimatedUnitVelocityColumn.setCellFactory(TextFieldTableCell.forTableColumn(new BigDecimalStringConverter()));
         estimatedAnnualVolumePerSkuColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
