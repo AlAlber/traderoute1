@@ -164,28 +164,33 @@ public class RTMOption {
                         updateElasticizedEstimatedUnitVelocity();
                         updateEstimatedAnnualVolumePerSku();
                         updateSlottingPaybackPeriod();
+                        updatePostFreightPostSpoilsWeCollect();
+                        updateUnspentTrade();
+                        updateFourYearEqGpPerSku();
+                        updateFourYearEqGpPerUnit();
+                        System.out.print("Slotting payback:" + getSlottingPaybackPeriod());
                     } finally {
                         changing = false;
                     }
                 }
             }
         });
-        elasticizedEstimatedUnitVelocityProperty().addListener(new ChangeListener<BigDecimal>() {
-            private boolean changing;
-            @Override
-            public void changed(ObservableValue<? extends BigDecimal> observable, BigDecimal oldValue, BigDecimal newValue) {
-                if (!changing) {
-                    try {
-                        changing = true;
-                        System.out.println("Is this working hello");
-                        updateEstimatedAnnualVolumePerSku();
-                        updateSlottingPaybackPeriod();
-                    } finally {
-                        changing = false;
-                    }
-                }
-            }
-        });
+//        elasticizedEstimatedUnitVelocityProperty().addListener(new ChangeListener<BigDecimal>() {
+//            private boolean changing;
+//            @Override
+//            public void changed(ObservableValue<? extends BigDecimal> observable, BigDecimal oldValue, BigDecimal newValue) {
+//                if (!changing) {
+//                    try {
+//                        changing = true;
+//                        System.out.println("Is this working hello");
+//                        updateEstimatedAnnualVolumePerSku();
+//                        updateSlottingPaybackPeriod();
+//                    } finally {
+//                        changing = false;
+//                    }
+//                }
+//            }
+//        });
     }
     public void updateResultingEverydayRetailCald(){
         if (getEverydayGPM().compareTo(new BigDecimal("0.0"))>0 &&
@@ -221,7 +226,30 @@ public class RTMOption {
             setSlottingPaybackPeriod(getSlottingPayback());
         }
     }
-
+    public void updatePostFreightPostSpoilsWeCollect(){
+        if (getSlottingPerSku()>0 && getWeeklyUSFWAtMin().compareTo(new BigDecimal("0.0"))>0
+                && getMinOverride().compareTo(new BigDecimal("0.0"))>0  && getEstimatedAnnualVolumePerSku()>0) {
+            setPostFreightPostSpoilsWeCollectPerUnit(getPostSpoilsAndFreightWeCollectPerUnit());
+        }
+    }
+    public void updateUnspentTrade(){
+        if (getSlottingPerSku()>0 && getWeeklyUSFWAtMin().compareTo(new BigDecimal("0.0"))>0
+                && getMinOverride().compareTo(new BigDecimal("0.0"))>0  && getEstimatedAnnualVolumePerSku()>0) {
+            setUnspentTradePerUnit(getPostSpoilsAndStdAllowancesAvailableTrade());
+        }
+    }
+    public void updateFourYearEqGpPerSku() {
+        if (getSlottingPerSku() > 0 && getWeeklyUSFWAtMin().compareTo(new BigDecimal("0.0")) > 0
+                && getMinOverride().compareTo(new BigDecimal("0.0")) > 0 && getEstimatedAnnualVolumePerSku() > 0) {
+            setFourYearEqGpPerSku(getGrossProfit());
+        }
+    }
+    public void updateFourYearEqGpPerUnit() {
+        if (getSlottingPerSku() > 0 && getWeeklyUSFWAtMin().compareTo(new BigDecimal("0.0")) > 0
+                && getMinOverride().compareTo(new BigDecimal("0.0")) > 0 && getEstimatedAnnualVolumePerSku() > 0) {
+            setFourYearEqGpPerUnit(getGrossProfitPerUnit());
+        }
+    }
     public Integer getYearOneStoreCount() {
         return yearOneStoreCount.get();
     }
@@ -389,7 +417,7 @@ public class RTMOption {
     }
 
     public BigDecimal getFreightOutPerUnit() {
-        if (firstReceiverProperty().get() == null) {
+        if (freightOutPerUnit.get() == null) {
             return new BigDecimal("0.0");
         }
         return freightOutPerUnit.get();
@@ -400,7 +428,7 @@ public class RTMOption {
     }
 
     public SimpleObjectProperty<BigDecimal> freightOutPerUnitProperty() {
-        return firstReceiver;
+        return freightOutPerUnit;
     }
 
     public BigDecimal getFirstReceiver() {

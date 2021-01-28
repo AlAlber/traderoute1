@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -41,7 +42,7 @@
                         <Label layoutY="45.0" prefHeight="15.0" prefWidth="96.0" style="-fx-background-color: #FFFFFF;" text="Spoils + Fees %" />
                         <TextField fx:id="everyDayGPMField" layoutX="100.0" layoutY="23.0" maxHeight="-Infinity" minHeight="-Infinity" onAction="#changeEveryDayGPMCellEvent" prefHeight="17.0" prefWidth="107.0" promptText="0.0" />
                         <TextField fx:id="yearOneStoreCountField" layoutX="100.0" maxHeight="-Infinity" minHeight="-Infinity" onAction="#changeYearOneStoreCount" prefHeight="17.0" prefWidth="107.0" promptText="0.0" />
-                        <TextField fx:id="spoilsAndFeesField" layoutX="100.0" layoutY="44.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="17.0" prefWidth="107.0" promptText="0.0" />
+                        <TextField fx:id="spoilsAndFeesField" layoutX="100.0" layoutY="44.0" maxHeight="-Infinity" minHeight="-Infinity" onAction="#changeSpoilsAndFeesEvent" prefHeight="17.0" prefWidth="107.0" promptText="0.0" />
                      </children>
                      <HBox.margin>
                         <Insets right="30.0" />
@@ -52,13 +53,14 @@
                         <Image url="@../../images/burger-menu.png" />
                      </image>
                   </ImageView>
+                  <ComboBox fx:id="productCombobox" prefWidth="150.0" />
                </children>
             </HBox>
             <TableView fx:id="firstTableView" prefHeight="130.0" prefWidth="1482.0" styleClass="table-row-cell" stylesheets="@../styles/Styles.css">
                <columns>
                   <TableColumn fx:id="RTMNameColumn" prefWidth="148.0" resizable="false" text="Route-To-Market Options" />
                   <TableColumn fx:id="slottingPerSkuColumn" onEditCommit="#changeSlottingPerSkuCellEvent" prefWidth="148.0" resizable="false" text="Slotting Per Sku" />
-                  <TableColumn fx:id="freightOutPerUnitColumn" prefWidth="148.0" resizable="false" text="Freight Out Per Unit" />
+                  <TableColumn fx:id="freightOutPerUnitColumn" onEditCommit="#changeFreightOutPerUnitCellEvent" prefWidth="148.0" resizable="false" text="Freight Out Per Unit" />
                   <TableColumn fx:id="firstReceiverColumn" onEditCommit="#changeFirstReceiverCellEvent" prefWidth="148.0" resizable="false" text="First Receiver Pays" />
                   <TableColumn fx:id="secondReceiverColumn" onEditCommit="#changeSecondReceiverCellEvent" prefWidth="148.0" resizable="false" text="Second Receiver Pays" />
                   <TableColumn fx:id="thirdReceiverColumn" onEditCommit="#changeThirdReceiverCellEvent" prefWidth="148.0" resizable="false" text="Third Receiver Pays" />
