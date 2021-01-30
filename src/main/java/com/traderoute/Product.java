@@ -16,6 +16,16 @@ public class Product {
     private SimpleObjectProperty<BigDecimal> unitBlendedCogs;
     private SimpleObjectProperty<BigDecimal> elasticityMultiple;
 
+    public Product(){
+        this.brandName = new SimpleStringProperty();
+        this.productClass = new SimpleStringProperty();
+        this.unitListCost = new SimpleObjectProperty<>();
+        this.unitBaseFreight = new SimpleObjectProperty<>();
+        this.unitFobCost = new SimpleObjectProperty<>();
+        this.unitNet1Goal = new SimpleObjectProperty<>();
+        this.unitBlendedCogs = new SimpleObjectProperty<>();
+        this.elasticityMultiple = new SimpleObjectProperty<>();
+    }
     public Product(String brandName, String productClass, BigDecimal unitListCost,
                    BigDecimal unitBaseFreight, BigDecimal unitFobCost, BigDecimal unitNet1Goal
                     , BigDecimal unitBlendedCogs, BigDecimal elasticityMultiple){
@@ -27,6 +37,11 @@ public class Product {
         this.unitNet1Goal = new SimpleObjectProperty<>(unitNet1Goal);
         this.unitBlendedCogs = new SimpleObjectProperty<>(unitBlendedCogs);
         this.elasticityMultiple = new SimpleObjectProperty<>(elasticityMultiple);
+    }
+
+    public String toString(){
+        String product = "brandName: " + this.getBrandName() + " productClass: " + this.getProductClass() + " Unit List Cost: " + this.getUnitListCost();
+        return product;
     }
 
     public String getBrandName() {

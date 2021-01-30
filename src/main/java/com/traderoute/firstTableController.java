@@ -9,6 +9,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.util.Callback;
 import javafx.util.StringConverter;
 import javafx.util.converter.BigDecimalStringConverter;
 import javafx.util.converter.IntegerStringConverter;
@@ -16,8 +17,9 @@ import javafx.util.converter.IntegerStringConverter;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.net.URL;
-import java.text.DecimalFormat;
 import java.util.ResourceBundle;
+import java.util.function.UnaryOperator;
+import java.util.regex.Pattern;
 
 public class firstTableController implements Initializable {
 
@@ -169,27 +171,37 @@ public class firstTableController implements Initializable {
     @FXML
     private ComboBox<Product> productCombobox;
 
+    @FXML
+    private Label listLabel;
+    @FXML
+    private Label fobLabel;
+    @FXML
+    private Label net1GoalLabel;
+    @FXML
+    private Label elasticityRatioLabel;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         //Set up cell value factories
         setCellValueFactories();
 
+        //Set up product combobox and make it display product class
         productCombobox.setItems(getExampleProducts());
+        productCombobox.setConverter(getProductComboboxConverter());
 
-        productCombobox.setConverter(new StringConverter<Product>() {
+        // Restrict input fields to only accept text in Integer or Double format
+        yearOneStoreCountField.textProperty().addListener(new ChangeListener<String>() {
             @Override
-            public String toString(Product product) {
-                return product.getProductClass();
-            }
-
-            @Override
-            public Product fromString(String string) {
-                return null;
+            public void changed(ObservableValue<? extends String> observable, String oldValue,
+                                String newValue) {
+                if (!newValue.matches("\\d*")) {
+                    yearOneStoreCountField.setText(newValue.replaceAll("[^\\d]", ""));
+                }
             }
         });
-
-
-
+        everyDayGPMField.setTextFormatter(new TextFormatter<>(getDoubleInputConverter(), 0.0, getDoubleInputFilter()));
+        spoilsAndFeesField.setTextFormatter(new TextFormatter<>(getDoubleInputConverter(), 0.0, getDoubleInputFilter()));
+        weeklyUFSWAtMinField.setTextFormatter(new TextFormatter<>(getDoubleInputConverter(), 0.0, getDoubleInputFilter()));
 
         //Set dummy data
         firstTableView.setItems(getRTMOptions());
@@ -261,6 +273,19 @@ public class firstTableController implements Initializable {
                     }
                 }
             });
+        }
+    }
+    /*
+    Product class changed Event
+     */
+    public void changeProductComboboxEvent(ActionEvent event) {
+        Product selectedProduct = productCombobox.getSelectionModel().getSelectedItem();
+        listLabel.setText("List = $" + selectedProduct.getUnitListCost());
+        fobLabel.setText("F.O.B. = $" + selectedProduct.getUnitFobCost());
+        net1GoalLabel.setText("Net 1 Goal = $" + selectedProduct.getUnitNet1Goal());
+        elasticityRatioLabel.setText("Elasticity Ratio = +1% Price :"+ selectedProduct.getElasticityMultiple() + "% Volume");
+        for (RTMOption row : firstTableView.getItems()) {
+            row.setProduct(selectedProduct);
         }
     }
 
@@ -544,7 +569,7 @@ Return Value from Year One Store Count
                 if (resultingEverydayRetailCalcd == null) {
                     setText("");
                 } else {
-                    setText(String.format("%,.2f", resultingEverydayRetailCalcd));
+                    setText("$" + String.format("%,.2f", resultingEverydayRetailCalcd));
                 }
             }
         });
@@ -559,22 +584,77 @@ Return Value from Year One Store Count
         fourYearEqGpPerUnitColumn.setCellFactory(TextFieldTableCell.forTableColumn(new BigDecimalStringConverter()));
     }
 
-    public TableCell<RTMOption, BigDecimal> getBigDecimalTextField() {
-        TableCell<RTMOption, BigDecimal> tc = new TableCell<RTMOption, BigDecimal>() {
-            @Override
-            protected void updateItem(BigDecimal resultingEverydayRetailCalcd, boolean empty) {
-                super.updateItem(resultingEverydayRetailCalcd, empty);
-                if (empty) {
-                    setText("Hello");
-                }
-                if (resultingEverydayRetailCalcd == null) {
-                    setText("");
+//    public Callback<TableColumn<RTMOption, BigDecimal>, TableCell<RTMOption, BigDecimal>> getBigDecimalTextField() {
+//        return tc-> new TableCell<RTMOption, BigDecimal>() {
+//            @Override
+//            protected void updateItem(BigDecimal landedStoreCost, boolean empty) {
+//                super.updateItem(landedStoreCost, empty);
+//                if (empty) {
+//                    setText("Hello");
+//                }
+//                if (landedStoreCost == null) {
+//                    setText("");
+//                } else {
+//                    setText(String.format("%,.2f", landedStoreCost));
+//                }
+//            }
+//        };
+//    }
+    /*
+    Return a filter to use in the double text formatters
+     */
+    public UnaryOperator<TextFormatter.Change> getDoubleInputFilter(){
+        Pattern validEditingState = Pattern.compile("-?(([1-9][0-9]*)|0)?(\\.[0-9]*)?");
+            UnaryOperator<TextFormatter.Change> filter = c -> {
+                String text = c.getControlNewText();
+                if (validEditingState.matcher(text).matches()) {
+                    return c;
                 } else {
-                    setText(String.format("%,.2f", resultingEverydayRetailCalcd));
+                    return null;
+                }
+            };
+            return filter;
+    }
+    /*
+    Return a converter to use in the double text formatters
+     */
+    public StringConverter<Double> getDoubleInputConverter(){
+        StringConverter<Double> converter = new StringConverter<>() {
+            @Override
+            public Double fromString(String s) {
+                if (s.isEmpty() || "-".equals(s) || ".".equals(s) || "-.".equals(s)) {
+                    return 0.0;
+                } else {
+                    return Double.valueOf(s);
                 }
             }
+
+            @Override
+            public String toString(Double d) {
+                return d.toString();
+            }
         };
-        return tc;
+        return converter;
+    }
+    /*
+    Return a converter for product combobox
+     */
+    public StringConverter<Product> getProductComboboxConverter(){
+        StringConverter<Product> productBoxConverter = new StringConverter<Product>() {
+            @Override
+            public String toString(Product product) {
+                if (product!= null) {
+                    return product.getProductClass();
+                }
+                return null;
+            }
+
+            @Override
+            public Product fromString(String string) {
+                return null;
+            }
+        };
+        return productBoxConverter;
     }
 }
 //

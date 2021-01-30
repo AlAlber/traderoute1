@@ -17,6 +17,7 @@ public class RTMOption {
             elasticizedEstimatedUnitVelocity, slottingPaybackPeriod,
             postFreightPostSpoilsWeCollectPerUnit, unspentTradePerUnit, fourYearEqGpPerSku, fourYearEqGpPerUnit,
             minOverride,weeklyUSFWAtMin, everydayGPM, spoilsAndFees;
+    private SimpleObjectProperty<Product> product;
 
     public RTMOption() {
         this.RTMName = new SimpleStringProperty();
@@ -44,6 +45,8 @@ public class RTMOption {
         this.everydayGPM = new SimpleObjectProperty<>();
         this.yearOneStoreCount = new SimpleIntegerProperty();
         this.spoilsAndFees = new SimpleObjectProperty<>();
+
+        this.product = new SimpleObjectProperty<>();
 
         setupListeners();
     }
@@ -74,7 +77,9 @@ public class RTMOption {
         this.everydayGPM = new SimpleObjectProperty<>();
         this.yearOneStoreCount = new SimpleIntegerProperty();
         this.spoilsAndFees = new SimpleObjectProperty<>();
+        this.product = new SimpleObjectProperty<Product>();
         setupListeners();
+
     }
     public RTMOption(String RTMName, BigDecimal freightOutPerUnit, Integer slottingPerSku,
                      BigDecimal firstReceiver,BigDecimal secondReceiver, Integer yearOneStoreCount, BigDecimal everydayGPM,
@@ -103,6 +108,7 @@ public class RTMOption {
         this.yearOneStoreCount = new SimpleIntegerProperty(yearOneStoreCount);
         this.spoilsAndFees = new SimpleObjectProperty<>(spoilsAndFees);
         setupListeners();
+        this.product = new SimpleObjectProperty<>();
     }
 
     private void setupListeners() {
@@ -250,6 +256,19 @@ public class RTMOption {
             setFourYearEqGpPerUnit(getGrossProfitPerUnit());
         }
     }
+
+    public Product getProduct() {
+        return product.get();
+    }
+
+    public SimpleObjectProperty<Product> productProperty() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product.set(product);
+    }
+
     public Integer getYearOneStoreCount() {
         return yearOneStoreCount.get();
     }
@@ -308,36 +327,36 @@ public class RTMOption {
     public BigDecimal getOurFreightCost(){
         return getFourYearUnitVolumePerSku().multiply(getFreightOutPerUnit());
     }
-    public BigDecimal getGrossRevenueList(){  //Put list in parameters to calculate
-        return getFourYearUnitVolumePerSku().multiply(new BigDecimal(3.59).setScale(10, RoundingMode.HALF_UP)); // HARDCODED FOR NOW, SHOULD BE LIST PRICE
+    public BigDecimal getGrossRevenueList(){ //retest //Put list in parameters to calculate
+        return getFourYearUnitVolumePerSku().multiply(getProduct().getUnitListCost().setScale(10, RoundingMode.HALF_UP)); // HARDCODED FOR NOW, SHOULD BE LIST PRICE
     }
-    public BigDecimal getFobDiscount(){
+    public BigDecimal getFobDiscount(){ //retest
         if (isFob()){
-            return ((new BigDecimal("3.59")).subtract(new BigDecimal("3.30"))).multiply(getFourYearUnitVolumePerSku()); // HARDCODED FOR NOW: (LIST - FOB)*4 Year Unit VOl /SKu
+            return (getProduct().getUnitListCost()).subtract(getProduct().getUnitFobCost()).multiply(getFourYearUnitVolumePerSku()); // HARDCODED FOR NOW: (LIST - FOB)*4 Year Unit VOl /SKu
         }
         return new BigDecimal("0.0");
     }
     public BigDecimal getGrossRevenueActual(){
         return getGrossRevenueList().subtract(getFobDiscount());
     }
-    public BigDecimal getSpoilsTrade(){  // Put spoils+fees field value in parameter
-        return getGrossRevenueList().multiply(new BigDecimal("0.03"));
+    public BigDecimal getSpoilsTrade(){  // retest // Put spoils+fees field value in parameter
+        return getGrossRevenueList().multiply(getSpoilsAndFees());
     }
-    public BigDecimal getStandardAllowanceTrade(){ //HARDCODED FOR NOW, LIST PRICE NEEDED
+    public BigDecimal getStandardAllowanceTrade(){ //retest //HARDCODED FOR NOW, LIST PRICE NEEDED
         if (isFob()){
-            return ((((new BigDecimal("3.59")).subtract(getFirstReceiver()))
+            return ((((getProduct().getUnitListCost()).subtract(getFirstReceiver()))
                     .multiply(getFourYearUnitVolumePerSku())).subtract(getFobDiscount())).setScale(10, RoundingMode.HALF_UP);
         }
-        BigDecimal zeroValue = (new BigDecimal("3.59")).subtract(getFirstReceiver());
+        BigDecimal zeroValue = (getProduct().getUnitListCost()).subtract(getFirstReceiver());
         zeroValue.multiply(getFourYearUnitVolumePerSku());
         return zeroValue.setScale(10, RoundingMode.HALF_UP);
     }
-    public BigDecimal getAfterSpoilsAndStdAllowanceTrade(){ //HARDCODED FOR NOW, LIST PRICE NEEDED, NET1 GOAL NEEDED
-        return (getFourYearUnitVolumePerSku().multiply((new BigDecimal("3.59")).subtract(new BigDecimal("2.99")))).subtract(getSpoilsTrade()).subtract(getStandardAllowanceTrade());
+    public BigDecimal getAfterSpoilsAndStdAllowanceTrade(){ // retest //HARDCODED FOR NOW, LIST PRICE NEEDED, NET1 GOAL NEEDED
+        return (getFourYearUnitVolumePerSku().multiply((getProduct().getUnitListCost()).subtract(getProduct().getUnitNet1Goal()))).subtract(getSpoilsTrade()).subtract(getStandardAllowanceTrade());
     }
     public BigDecimal getIfFobFreightCredit(){
         if (isFob()){
-            return ((new BigDecimal("3.59")).subtract(new BigDecimal("3.30"))).multiply(getFourYearUnitVolumePerSku());
+            return ((getProduct().getUnitListCost()).subtract(getProduct().getUnitFobCost())).multiply(getFourYearUnitVolumePerSku());
         }
         return new BigDecimal("0.0");
     }
@@ -361,7 +380,7 @@ public class RTMOption {
     }
     // IMPLEMENT COGS AND PASS IT
     public BigDecimal getTotalCogs(){
-        return getFourYearUnitVolumePerSku().multiply(new BigDecimal("2.05")); //HARDCODED FOR NOW SHOULD BE COGS
+        return getFourYearUnitVolumePerSku().multiply(getProduct().getUnitBlendedCogs()); //HARDCODED FOR NOW SHOULD BE COGS
     }
     public BigDecimal getGrossProfit(){
         return getEqualsNet3Rev().subtract(getTotalCogs());
@@ -395,8 +414,7 @@ public class RTMOption {
     public String toString() {
         String stringBuilder = "";
         stringBuilder += "RTMName: " + this.getRTMName() + ", Slotting per Sku:" + this.getSlottingPerSku() +
-                ", Landed Store Cost:" + this.getLandedStoreCost() + "Calcd" + this.getResultingEverydayRetailCalcd();
-
+                "Product:" + this.getProduct().toString() + "Calcd" + this.getResultingEverydayRetailCalcd();
         return stringBuilder;
     }
 
