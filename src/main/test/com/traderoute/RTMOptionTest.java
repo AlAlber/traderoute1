@@ -15,23 +15,27 @@ class RTMOptionTest {
     private RTMOption optionFour;
     private firstTableController controller;
     private Product productOne;
+    private Product productTwo;
 
 
 
     @org.junit.jupiter.api.BeforeEach
     void setUp() {
         optionOne = new RTMOption();
-        optionTwo = new RTMOption("HEllo", new BigDecimal("0.6"), 600,new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"));
+        optionTwo = new RTMOption("HEllo", new BigDecimal("0.6"), new BigDecimal(600),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"));
         optionThree = new RTMOption("Direct-to-Customer",
-                new BigDecimal("0.29"), 7500,
+                new BigDecimal("0.29"), new BigDecimal(7500),
                 new BigDecimal("3.59"), new BigDecimal("0.0"),
                 158, new BigDecimal("40.0"),
                 new BigDecimal("0.03"), new BigDecimal("1.2"),
                 new BigDecimal("5.99"));
-        optionFour = new RTMOption("Direct-to-KeHe", new BigDecimal("0.0"), 3500,new BigDecimal("3.30"),new BigDecimal("4.85"), 158, new BigDecimal("40.0"), new BigDecimal("3.0"), new BigDecimal("1.2"), new BigDecimal("5.99"));
+        optionFour = new RTMOption("Direct-to-KeHe", new BigDecimal("0.0"), new BigDecimal(3500),new BigDecimal("3.30"),new BigDecimal("4.85"), 158, new BigDecimal("40.0"), new BigDecimal("3.0"), new BigDecimal("1.2"), new BigDecimal("5.99"));
         productOne = new Product("Big Time Food Company", "24 oz pickles", new BigDecimal("3.59"), new BigDecimal("0.29"),
                 new BigDecimal("3.30"), new BigDecimal("2.99"), new BigDecimal("2.05"), new BigDecimal("-1.15"));
+        productTwo = new Product("Big Time Food Company", "12 oz pickle juice", new BigDecimal("1.49"), new BigDecimal("0.14"),
+                new BigDecimal("1.35"), new BigDecimal("1.29"), new BigDecimal("0.78"), new BigDecimal("-1.20"));
         optionThree.setProduct(productOne);
+        optionThree.setEstimatedAnnualVolumePerSku(new BigDecimal(9859));
     }
 
     @org.junit.jupiter.api.Test
@@ -77,14 +81,14 @@ class RTMOptionTest {
         optionTwo.setElasticizedEstimatedUnitVelocity(new BigDecimal("0.7161936560640")); //needs exact value otherwise it doesnt work
         optionOne.updateEstimatedAnnualVolumePerSku();
         optionTwo.updateEstimatedAnnualVolumePerSku();
-        Assert.assertEquals(9859, optionOne.getEstimatedAnnualVolumePerSku());
-        Assert.assertEquals(5884, optionTwo.getEstimatedAnnualVolumePerSku());
+        Assert.assertEquals(new BigDecimal(9859.2000000000), optionOne.getEstimatedAnnualVolumePerSku());
+        Assert.assertEquals(new BigDecimal(5884), optionTwo.getEstimatedAnnualVolumePerSku());
     }
 
     @org.junit.jupiter.api.Test
     void testUpdateSlottingPaybackPeriod() {
-        optionOne.setSlottingPerSku(7500);
-        optionTwo.setSlottingPerSku(3500);
+        optionOne.setSlottingPerSku(new BigDecimal(7500));
+        optionTwo.setSlottingPerSku(new BigDecimal(3500));
         optionOne.setWeeklyUSFWAtMin(new BigDecimal("1.2"));
         optionTwo.setWeeklyUSFWAtMin(new BigDecimal("1.2"));
     }
@@ -135,15 +139,14 @@ class RTMOptionTest {
 
     @org.junit.jupiter.api.Test
     void testGetFourYearUnitVolumePerSku() {
-        optionOne.setEstimatedAnnualVolumePerSku(9859);
-        optionTwo.setEstimatedAnnualVolumePerSku(5884);
+        optionOne.setEstimatedAnnualVolumePerSku(new BigDecimal(9859));
+        optionTwo.setEstimatedAnnualVolumePerSku(new BigDecimal(5884));
         Assert.assertEquals(new BigDecimal("39436"), optionOne.getFourYearUnitVolumePerSku());
         Assert.assertEquals(new BigDecimal("23536"),optionTwo.getFourYearUnitVolumePerSku());
     }
 
     @org.junit.jupiter.api.Test
     void testGetOurFreightCost() {
-        optionThree.setEstimatedAnnualVolumePerSku(9859);
         Assert.assertEquals(new BigDecimal("11436.44"), optionThree.getOurFreightCost());
         // Actually expected: 11436.67
 //        Assert.assertEquals(new BigDecimal("1.2"), optionThree.getElasticizedEstimatedUnitVelocity());;
@@ -151,14 +154,14 @@ class RTMOptionTest {
 
     @org.junit.jupiter.api.Test
     void testGetGrossRevenueList() {
-        optionThree.setEstimatedAnnualVolumePerSku(9859);
         Assert.assertEquals(new BigDecimal("141575.2400000000"), optionThree.getGrossRevenueList());
         // Actually expected = 141578.11
+        // remains changes when set to product two
+
     }
 
     @org.junit.jupiter.api.Test
     void testGetFobDiscount() {
-        optionThree.setEstimatedAnnualVolumePerSku(9859);
         Assert.assertEquals(new BigDecimal("0.0"), optionThree.getFobDiscount());
         optionThree.setFreightOutPerUnit(new BigDecimal("0.0"));
         Assert.assertEquals(new BigDecimal("11436.44"), optionThree.getFobDiscount());
@@ -166,7 +169,6 @@ class RTMOptionTest {
 
     @org.junit.jupiter.api.Test
     void testGetSpoilsTrade() {
-        optionThree.setEstimatedAnnualVolumePerSku(9859);
         Assert.assertEquals(new BigDecimal("4247.257200000000"),optionThree.getSpoilsTrade());
         // Actually Expected = 4247.34
     }
@@ -174,28 +176,26 @@ class RTMOptionTest {
 
     @org.junit.jupiter.api.Test
     void testGetStandardAllowanceTrade() {
-        optionThree.setEstimatedAnnualVolumePerSku(9859);
         Assert.assertEquals(new BigDecimal("0.0"), optionThree.getStandardAllowanceTrade().setScale(1, RoundingMode.HALF_UP));
         optionThree.setFreightOutPerUnit(new BigDecimal("0.0"));
         optionThree.setFirstReceiver(new BigDecimal("3.30"));
         Assert.assertEquals(new BigDecimal("0.0"), optionThree.getStandardAllowanceTrade().setScale(1,RoundingMode.HALF_UP));
 //        Assert.assertEquals(new BigDecimal("3.59"),optionThree.getFirstReceiver());
         optionThree.setFirstReceiver(new BigDecimal("3.07"));
-        optionThree.setEstimatedAnnualVolumePerSku(8913);
+        optionThree.setEstimatedAnnualVolumePerSku(new BigDecimal(8913));
         Assert.assertEquals(new BigDecimal("8199.9600000000"), optionThree.getStandardAllowanceTrade());
         //actually expected: 8199.76
+
     }
 
     @org.junit.jupiter.api.Test
     void testGetAfterSpoilsAndStdAllowanceTrade() {
-        optionThree.setEstimatedAnnualVolumePerSku(9859);
         Assert.assertEquals(new BigDecimal("19414.342800000000"), optionThree.getAfterSpoilsAndStdAllowanceTrade());
         //actually expected= 19414.74
     }
 
     @org.junit.jupiter.api.Test
     void testGetIfFobFreightCredit() {
-        optionThree.setEstimatedAnnualVolumePerSku(9859);
         Assert.assertEquals(new BigDecimal("0.0"), optionThree.getIfFobFreightCredit());
         optionThree.setFreightOutPerUnit(new BigDecimal("0.0"));
         Assert.assertEquals(new BigDecimal("11436.44"), optionThree.getIfFobFreightCredit());
@@ -203,82 +203,70 @@ class RTMOptionTest {
 
     @org.junit.jupiter.api.Test
     void testGetEqualsNet1Rev() {
-        optionThree.setEstimatedAnnualVolumePerSku(9859);
         Assert.assertEquals(new BigDecimal("117913.640000000000"), optionThree.getEqualsNet1Rev());
         // Actually expected "117916.03"
     }
 
     @org.junit.jupiter.api.Test
     void getTotalFobAndFreightSpending() {
-        optionThree.setEstimatedAnnualVolumePerSku(9859);
         Assert.assertEquals(new BigDecimal("11436.44"),optionThree.getTotalFobAndFreightSpending());
         //Actuallly expected: 11436.66
     }
 
     @org.junit.jupiter.api.Test
     void getEqualsNet2Rev() {
-        optionThree.setEstimatedAnnualVolumePerSku(9859);
         Assert.assertEquals(new BigDecimal("106477.200000000000"),optionThree.getEqualsNet2Rev());
         //Actually expected: 106479.46
     }
 
     @org.junit.jupiter.api.Test
     void getEqualsNet3Rev() {
-        optionThree.setEstimatedAnnualVolumePerSku(9859);
         Assert.assertEquals(new BigDecimal("98977.200000000000"), optionThree.getEqualsNet3Rev());
         // Actually expected: 98979.36
     }
 
     @org.junit.jupiter.api.Test
     void getNetRev3Rate() {
-        optionThree.setEstimatedAnnualVolumePerSku(9859);
         Assert.assertEquals(new BigDecimal("2.51"), optionThree.getNetRev3Rate().setScale(2,RoundingMode.HALF_UP));
     }
 
     @org.junit.jupiter.api.Test
     void testGetTotalCogs() {
-        optionThree.setEstimatedAnnualVolumePerSku(9859);
         Assert.assertEquals(new BigDecimal("80843.80"),optionThree.getTotalCogs());
         //Actually expected 80845.44
     }
 
     @org.junit.jupiter.api.Test
     void getGrossProfit() {
-        optionThree.setEstimatedAnnualVolumePerSku(9859);
         Assert.assertEquals(new BigDecimal("18133.400000000000"), optionThree.getGrossProfit());
         // Actually expected 18133.92
     }
 
     @org.junit.jupiter.api.Test
     void getGrossProfitPerUnit() {
-        optionThree.setEstimatedAnnualVolumePerSku(9859);
         Assert.assertEquals(new BigDecimal("0.4598184400"), optionThree.getGrossProfitPerUnit());
         // actually expected: 0.46
     }
 
     @org.junit.jupiter.api.Test
     void testGetSlottingPayback() {
-        optionThree.setEstimatedAnnualVolumePerSku(9859);
         Assert.assertEquals(new BigDecimal("1.65441"),optionThree.getSlottingPayback());
         //Actually expected Expected :1.65
     }
 
     @org.junit.jupiter.api.Test
     void getPostSpoilsAndFreightWeCollect() {
-        optionThree.setEstimatedAnnualVolumePerSku(9859);
         Assert.assertEquals(new BigDecimal("125891.542800000000"), optionThree.getPostSpoilsAndFreightWeCollect());
     }
 
     @org.junit.jupiter.api.Test
     void getPostSpoilsAndFreightWeCollectPerUnit() {
-        optionThree.setEstimatedAnnualVolumePerSku(9859);
         Assert.assertEquals(new BigDecimal("3.192300000000"), optionThree.getPostSpoilsAndFreightWeCollectPerUnit());
         //Actually expected: 3.19
     }
 
     @org.junit.jupiter.api.Test
     void getPostSpoilsAndStdAllowancesAvailableTrade() {
-        optionThree.setEstimatedAnnualVolumePerSku(9859);
         Assert.assertEquals(new BigDecimal("0.492300000000"), optionThree.getPostSpoilsAndStdAllowancesAvailableTrade());
         // Actually expected 0.492300000000
     }

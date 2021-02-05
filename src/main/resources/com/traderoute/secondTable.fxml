@@ -1,10 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -34,9 +41,9 @@
                               <Font name="Arial Nova Light" size="36.0" />
                            </font>
                         </Label>
-                        <Label layoutY="67.0" prefHeight="15.0" prefWidth="96.0" style="-fx-background-color: #FFFFFF;" text="Year 1 Store Count" />
-                        <Label layoutY="90.0" prefHeight="15.0" prefWidth="96.0" style="-fx-background-color: #FFFFFF;" text="Everyday GPM %" />
-                        <Label layoutY="111.0" prefHeight="15.0" prefWidth="96.0" style="-fx-background-color: #FFFFFF;" text="Spoils + Fees %" />
+                        <Label layoutY="67.0" prefHeight="15.0" prefWidth="96.0" text="Year 1 Store Count" />
+                        <Label layoutY="90.0" prefHeight="15.0" prefWidth="96.0" text="Everyday GPM %" />
+                        <Label layoutY="111.0" prefHeight="15.0" prefWidth="96.0" text="Spoils + Fees %" />
                         <TextField fx:id="everyDayGPMField" layoutX="100.0" layoutY="89.0" maxHeight="-Infinity" minHeight="-Infinity" onAction="#changeEveryDayGPMCellEvent" prefHeight="17.0" prefWidth="107.0" promptText="0.0" />
                         <TextField fx:id="yearOneStoreCountField" layoutX="100.0" layoutY="66.0" maxHeight="-Infinity" minHeight="-Infinity" onAction="#changeYearOneStoreCount" prefHeight="17.0" prefWidth="107.0" promptText="0.0" />
                         <TextField fx:id="spoilsAndFeesField" layoutX="100.0" layoutY="110.0" maxHeight="-Infinity" minHeight="-Infinity" onAction="#changeSpoilsAndFeesEvent" prefHeight="17.0" prefWidth="107.0" promptText="0.0" />
@@ -47,7 +54,7 @@
                   </AnchorPane>
                   <VBox prefHeight="132.0" prefWidth="217.0">
                      <children>
-                        <ComboBox fx:id="brandCombobox" prefHeight="26.0" prefWidth="215.0" promptText="Please select the product brand">
+                        <ComboBox fx:id="brandCombobox" onAction="#changeBrandComboboxEvent" prefHeight="26.0" prefWidth="215.0" promptText="Please select the product brand">
                            <VBox.margin>
                               <Insets bottom="5.0" />
                            </VBox.margin>
@@ -57,18 +64,18 @@
                               <Insets bottom="5.0" />
                            </VBox.margin>
                         </ComboBox>
-                        <Label fx:id="listLabel" prefHeight="17.0" prefWidth="245.0" style="-fx-background-color: white;" text="List = $" textFill="#f7f7f7">
+                        <Label fx:id="listLabel" prefHeight="17.0" prefWidth="245.0" text="List = $" textFill="#f7f7f7">
                            <VBox.margin>
                               <Insets />
                            </VBox.margin>
                         </Label>
-                        <Label fx:id="fobLabel" prefHeight="18.0" prefWidth="219.0" style="-fx-background-color: white;" text="F.O.B. = $" textFill="#f7f7f7">
+                        <Label fx:id="fobLabel" prefHeight="18.0" prefWidth="219.0" text="F.O.B. = $" textFill="#f7f7f7">
                            <VBox.margin>
                               <Insets />
                            </VBox.margin>
                         </Label>
-                        <Label fx:id="net1GoalLabel" prefHeight="18.0" prefWidth="220.0" style="-fx-background-color: white;" text="Net 1 Goal = $" textFill="#f7f7f7" />
-                        <Label fx:id="elasticityRatioLabel" prefHeight="18.0" prefWidth="219.0" style="-fx-background-color: white;" text="Elasticity Ratio = +1% Price :  % Volume" textFill="#f7f7f7" />
+                        <Label fx:id="net1GoalLabel" prefHeight="18.0" prefWidth="220.0" text="Net 1 Goal = $" textFill="#f7f7f7" />
+                        <Label fx:id="elasticityRatioLabel" prefHeight="18.0" prefWidth="219.0" text="Elasticity Ratio = +1% Price :  % Volume" textFill="#f7f7f7" />
                      </children>
                   </VBox>
                   <ImageView fitHeight="46.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
@@ -76,32 +83,35 @@
                         <Image url="@../../images/burger-menu.png" />
                      </image>
                   </ImageView>
+                  <Button mnemonicParsing="false" text="Route-to-Market" />
+                  <Button mnemonicParsing="false" text="Assortment" />
+                  <Button mnemonicParsing="false" text="Pricing and Promotion" />
                </children>
             </HBox>
-            <TableView fx:id="firstTableView" prefHeight="130.0" prefWidth="1482.0" styleClass="table-row-cell" stylesheets="@../styles/Styles.css">
+            <TableView fx:id="firstTableView" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="130.0" prefWidth="1464.0" styleClass="table-row-cell" stylesheets="@../styles/Styles.css">
                <columns>
-                  <TableColumn fx:id="RTMNameColumn" prefWidth="148.0" resizable="false" text="Route-To-Market Options" />
-                  <TableColumn fx:id="slottingPerSkuColumn" onEditCommit="#changeSlottingPerSkuCellEvent" prefWidth="148.0" resizable="false" text="Slotting Per Sku" />
-                  <TableColumn fx:id="freightOutPerUnitColumn" onEditCommit="#changeFreightOutPerUnitCellEvent" prefWidth="148.0" resizable="false" text="Freight Out Per Unit" />
-                  <TableColumn fx:id="firstReceiverColumn" onEditCommit="#changeFirstReceiverCellEvent" prefWidth="148.0" resizable="false" text="First Receiver Pays" />
-                  <TableColumn fx:id="secondReceiverColumn" onEditCommit="#changeSecondReceiverCellEvent" prefWidth="148.0" resizable="false" text="Second Receiver Pays" />
-                  <TableColumn fx:id="thirdReceiverColumn" onEditCommit="#changeThirdReceiverCellEvent" prefWidth="148.0" resizable="false" text="Third Receiver Pays" />
-                  <TableColumn fx:id="fourthReceiverColumn" onEditCommit="#changeFourthReceiverCellEvent" prefWidth="148.0" resizable="false" text="Fourth Receiver Pays" />
-                  <TableColumn fx:id="landedStoreCostColumn" prefWidth="148.0" resizable="false" text="Landed Store Cost" />
-                  <TableColumn fx:id="resultingEverydayRetailCalcdColumn" prefWidth="148.0" resizable="false" text="Calculated" />
-                  <TableColumn fx:id="resultingEverydayRetailOverrideColumn" onEditCommit="#changeResultingEverydayRetailOverride" prefWidth="148.0" resizable="false" text="Override" />
+                  <TableColumn fx:id="RTMNameColumn" prefWidth="148.0" resizable="false" />
+                  <TableColumn fx:id="slottingPerSkuColumn" onEditCommit="#changeSlottingPerSkuCellEvent" prefWidth="148.0" resizable="false" />
+                  <TableColumn fx:id="freightOutPerUnitColumn" onEditCommit="#changeFreightOutPerUnitCellEvent" prefWidth="148.0" resizable="false" />
+                  <TableColumn fx:id="firstReceiverColumn" onEditCommit="#changeFirstReceiverCellEvent" prefWidth="148.0" resizable="false" />
+                  <TableColumn fx:id="secondReceiverColumn" onEditCommit="#changeSecondReceiverCellEvent" prefWidth="148.0" resizable="false" />
+                  <TableColumn fx:id="thirdReceiverColumn" onEditCommit="#changeThirdReceiverCellEvent" prefWidth="148.0" resizable="false" />
+                  <TableColumn fx:id="fourthReceiverColumn" onEditCommit="#changeFourthReceiverCellEvent" prefWidth="148.0" resizable="false" />
+                  <TableColumn fx:id="landedStoreCostColumn" prefWidth="148.0" resizable="false" />
+                  <TableColumn fx:id="resultingEverydayRetailCalcdColumn" prefWidth="148.0" resizable="false" />
+                  <TableColumn fx:id="resultingEverydayRetailOverrideColumn" onEditCommit="#changeResultingEverydayRetailOverride" prefWidth="148.0" resizable="false" />
                </columns>
                <VBox.margin>
                   <Insets top="40.0" />
                </VBox.margin>
             </TableView>
-            <HBox prefHeight="100.0" prefWidth="200.0">
+            <HBox prefHeight="117.0" prefWidth="1482.0">
                <children>
-                  <AnchorPane prefHeight="100.0" prefWidth="300.0" style="-fx-background-color: #FFFFFF;">
+                  <AnchorPane prefHeight="130.0" prefWidth="154.0" style="-fx-background-color: transparent;">
                      <children>
-                        <VBox prefHeight="130.0" prefWidth="150.0" style="-fx-background-color: #f7f0c3;">
+                        <VBox prefHeight="130.0" prefWidth="150.0" style="-fx-background-color: transparent;">
                            <children>
-                              <Label prefHeight="15.0" prefWidth="141.0" text="FIll in your estimated unit" textFill="WHITE">
+                              <Label prefHeight="15.0" prefWidth="141.0" text="FIll in your estimated unit" textFill="white">
                                  <VBox.margin>
                                     <Insets top="2.0" />
                                  </VBox.margin>
@@ -109,7 +119,7 @@
                                     <Insets left="7.0" />
                                  </padding>
                               </Label>
-                              <Label prefHeight="15.0" prefWidth="142.0" text="velocity U/F/S/W at the min" textFill="WHITE">
+                              <Label prefHeight="15.0" prefWidth="142.0" text="velocity U/F/S/W at the min" textFill="white">
                                  <VBox.margin>
                                     <Insets top="2.0" />
                                  </VBox.margin>
@@ -117,7 +127,7 @@
                                     <Insets left="7.0" />
                                  </padding>
                               </Label>
-                              <Label prefHeight="15.0" prefWidth="147.0" text="resulting everyday retail price" textFill="WHITE">
+                              <Label prefHeight="15.0" prefWidth="147.0" text="resulting everyday retail price" textFill="white">
                                  <VBox.margin>
                                     <Insets top="2.0" />
                                  </VBox.margin>
@@ -125,7 +135,7 @@
                                     <Insets left="7.0" />
                                  </padding>
                               </Label>
-                              <Label fx:id="maxOverrideLabel" prefHeight="15.0" prefWidth="142.0" text="of $" textFill="WHITE">
+                              <Label fx:id="maxOverrideLabel" prefHeight="15.0" prefWidth="142.0" text="of $" textFill="white">
                                  <VBox.margin>
                                     <Insets top="2.0" />
                                  </VBox.margin>
@@ -133,7 +143,7 @@
                                     <Insets left="7.0" />
                                  </padding>
                               </Label>
-                              <Label prefHeight="15.0" prefWidth="142.0" text="and we'll calculate the rest " textFill="WHITE">
+                              <Label prefHeight="15.0" prefWidth="142.0" text="and we'll calculate the rest " textFill="white">
                                  <VBox.margin>
                                     <Insets top="2.0" />
                                  </VBox.margin>
@@ -141,7 +151,7 @@
                                     <Insets left="7.0" />
                                  </padding>
                               </Label>
-                              <Label prefHeight="15.0" prefWidth="142.0" text="for you." textFill="WHITE">
+                              <Label prefHeight="15.0" prefWidth="142.0" text="for you." textFill="white">
                                  <VBox.margin>
                                     <Insets top="2.0" />
                                  </VBox.margin>
@@ -155,21 +165,49 @@
                         </VBox>
                      </children>
                   </AnchorPane>
-                  <TableView fx:id="secondTableView" prefHeight="130.0" prefWidth="1482.0" styleClass="table-row-cell" stylesheets="@../styles/Styles.css">
+                  <TableView fx:id="secondTableView" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="102.0" prefWidth="1310.0" stylesheets="@../styles/Styles.css">
                      <columns>
-                        <TableColumn fx:id="RTMNameColumn2" prefWidth="158.40004272460942" resizable="false" text="Route-To-Market Options" />
-                        <TableColumn fx:id="elasticizedEstimatedUnitVelocityColumn" prefWidth="174.3999481201172" resizable="false" text="Elasticized Estimated Unit Velocity" />
-                        <TableColumn fx:id="estimatedAnnualVolumePerSkuColumn" prefWidth="183.19998168945312" resizable="false" text="Estimated Annual Volume/Sku" />
-                        <TableColumn fx:id="slottingPaybackPeriodColumn" prefWidth="149.60003662109375" resizable="false" text="Slotting Payback Period" />
-                        <TableColumn fx:id="postFreightPostSpoilsWeCollectPerUnitColumn" prefWidth="195.99993896484375" resizable="false" text="Post Freight Post Spoils We Collect" />
-                        <TableColumn fx:id="unspentTradePerUnitColumn" prefWidth="164.00006103515625" resizable="false" text="Unspent Trade Per Unit" />
-                        <TableColumn fx:id="fourYearEqGpPerSkuColumn" prefWidth="162.4000244140625" resizable="false" text="4-Year EQ GP $ Per Sku" />
-                        <TableColumn fx:id="fourYearEqGpPerUnitColumn" prefWidth="144.0" resizable="false" text="4-Year EQ GP $ Per Unit" />
+                        <TableColumn fx:id="RTMNameColumn2" prefWidth="166.0" resizable="false" />
+                        <TableColumn fx:id="elasticizedEstimatedUnitVelocityColumn" prefWidth="166.0" resizable="false" />
+                        <TableColumn fx:id="estimatedAnnualVolumePerSkuColumn" prefWidth="166.0" resizable="false" />
+                        <TableColumn fx:id="slottingPaybackPeriodColumn" prefWidth="166.0" resizable="false" />
+                        <TableColumn fx:id="postFreightPostSpoilsWeCollectPerUnitColumn" prefWidth="166.0" resizable="false" />
+                        <TableColumn fx:id="unspentTradePerUnitColumn" prefWidth="166.0" resizable="false" />
+                        <TableColumn fx:id="fourYearEqGpPerSkuColumn" prefWidth="166.0" resizable="false" />
+                        <TableColumn fx:id="fourYearEqGpPerUnitColumn" prefWidth="166.0" resizable="false" />
                      </columns>
+                     <styleClass>
+                        <String fx:value="table-row-cell" />
+                        <String fx:value="column-header" />
+                     </styleClass>
                   </TableView>
                </children>
             </HBox>
-            <HBox prefHeight="100.0" prefWidth="200.0" />
+            <AnchorPane prefHeight="200.0" prefWidth="200.0">
+               <children>
+                  <TextArea layoutX="1110.0" layoutY="42.0" prefHeight="114.0" prefWidth="350.0" />
+                  <Label fx:id="net1GoalLabel1" layoutX="1110.0" layoutY="3.0" prefHeight="18.0" prefWidth="46.0" style="-fx-font-size: 15;" text="Notes " textFill="#f7f7f7" />
+                  <DatePicker layoutX="930.0" layoutY="43.0" prefHeight="26.0" prefWidth="107.0" />
+                  <DatePicker layoutX="930.0" layoutY="73.0" prefHeight="18.0" prefWidth="107.0" />
+                  <DatePicker layoutX="930.0" layoutY="103.0" prefHeight="18.0" prefWidth="107.0" />
+                  <DatePicker layoutX="930.0" layoutY="133.0" prefHeight="18.0" prefWidth="107.0" />
+                  <TextField layoutX="767.0" layoutY="44.0" />
+                  <TextField layoutX="767.0" layoutY="103.0" />
+                  <TextField layoutX="767.0" layoutY="73.0" />
+                  <TextField layoutX="766.0" layoutY="134.0" />
+                  <BarChart fx:id="landedStoreCostChart" layoutX="465.0" layoutY="-1.0" prefHeight="176.0" prefWidth="263.0">
+                    <xAxis>
+                      <CategoryAxis side="BOTTOM" />
+                    </xAxis>
+                    <yAxis>
+                      <NumberAxis side="LEFT" />
+                    </yAxis>
+                  </BarChart>
+                  <Label fx:id="net1GoalLabel11" layoutX="767.0" layoutY="3.0" prefHeight="22.0" prefWidth="247.0" style="-fx-font-size: 15;" text="Critical Review/Meeting Dates" textFill="#f7f7f7" />
+                  <Label fx:id="net1GoalLabel12" layoutX="766.0" layoutY="27.0" prefHeight="18.0" prefWidth="77.0" style="-fx-font-size: 10;" text="Description" textFill="#f7f7f7" />
+                  <Label fx:id="net1GoalLabel121" layoutX="930.0" layoutY="27.0" prefHeight="18.0" prefWidth="77.0" style="-fx-font-size: 10;" text="Date" textFill="#f7f7f7" />
+               </children>
+            </AnchorPane>
          </children>
          <padding>
             <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />

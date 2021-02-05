@@ -6,9 +6,12 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.paint.Color;
 import javafx.util.Callback;
 import javafx.util.StringConverter;
 import javafx.util.converter.BigDecimalStringConverter;
@@ -31,7 +34,7 @@ public class firstTableController implements Initializable {
     @FXML
     private TableColumn<RTMOption, String> RTMNameColumn;
     @FXML
-    private TableColumn<RTMOption, Integer> slottingPerSkuColumn;
+    private TableColumn<RTMOption, BigDecimal> slottingPerSkuColumn;
     @FXML
     private TableColumn<RTMOption, BigDecimal> freightOutPerUnitColumn;
     @FXML
@@ -53,7 +56,7 @@ public class firstTableController implements Initializable {
     @FXML
     private TableColumn<RTMOption, BigDecimal> elasticizedEstimatedUnitVelocityColumn;
     @FXML
-    private TableColumn<RTMOption, Integer> estimatedAnnualVolumePerSkuColumn;
+    private TableColumn<RTMOption, BigDecimal> estimatedAnnualVolumePerSkuColumn;
     @FXML
     private TableColumn<RTMOption, BigDecimal> slottingPaybackPeriodColumn;
     @FXML
@@ -84,6 +87,8 @@ public class firstTableController implements Initializable {
     @FXML
     private final Label RTMNameColumnLabel = new Label("Route to market options");
     @FXML
+    private final Label RTMNameColumnLabel2 = new Label("Route to market options");
+    @FXML
     private final Label slottingPerSkuLabel = new Label("Slotting Per Sku");
     @FXML
     private final Label freightOutPerUnitLabel = new Label("Freight Out Per Unit");
@@ -98,17 +103,17 @@ public class firstTableController implements Initializable {
     @FXML
     private final Label landedStoreCostLabel = new Label("Landed Store Cost");
     @FXML
-    private final Label resultingEveryDayRetailCalcdLabel = new Label("Resulting Everyday Retail Calculated");
+    private final Label resultingEveryDayRetailCalcdLabel = new Label("Calculated Everyday Retail");
     @FXML
-    private final Label resultingEveryDayRetailOverrideLabel = new Label("Resulting Everyday Retail Override");
+    private final Label resultingEveryDayRetailOverrideLabel = new Label("Override Everyday Retail");
     @FXML
-    private final Label elasticizedEstimatedUnitVelocityLabel = new Label("Elasticized Estimated Annual Volume /Sku ");
+    private final Label elasticizedEstimatedUnitVelocityLabel = new Label("Elasticized Unit Velocity ");
     @FXML
-    private final Label estimatedAnnualVolumePerSkuLabel = new Label("Estimated Annual Volume / Sku ");
+    private final Label estimatedAnnualVolumePerSkuLabel = new Label("Annual Volume Per Sku ");
     @FXML
     private final Label slottingPaybackPeriodLabel = new Label("Slotting Payback Period");
     @FXML
-    private final Label postFreightPostSpoilsWeCollectLabel = new Label("Post Freight Post Spoils We Collect");
+    private final Label postFreightPostSpoilsWeCollectLabel = new Label("Post Freight & Spoils We Collect");
     @FXML
     private final Label unspentTradePerUnitLabel = new Label("Unspent Trade Per Unit");
     @FXML
@@ -170,6 +175,8 @@ public class firstTableController implements Initializable {
 
     @FXML
     private ComboBox<Product> productCombobox;
+    @FXML
+    private ComboBox<Product> brandCombobox;
 
     @FXML
     private Label listLabel;
@@ -180,14 +187,32 @@ public class firstTableController implements Initializable {
     @FXML
     private Label elasticityRatioLabel;
 
+    @FXML
+    private BarChart<?, ?> landedStoreCostChart;
+
+    XYChart.Series landedStoreCostData = new XYChart.Series();
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+
         //Set up cell value factories
         setCellValueFactories();
 
-        //Set up product combobox and make it display product class
-        productCombobox.setItems(getExampleProducts());
+        // Set unique values for brandcombobox and set converters for both brand and productCombobox
+        ObservableList<Product> uniqueBrandNames = FXCollections.observableArrayList();
+        ObservableList<String> uniqueBrandNames1 = FXCollections.observableArrayList();
+        for (Product product: getExampleProducts()){
+            if (!uniqueBrandNames1.contains(product.getBrandName())){
+                uniqueBrandNames1.add(product.getBrandName());
+                uniqueBrandNames.add(product);
+            }
+        }
+        brandCombobox.setItems(uniqueBrandNames);
+        brandCombobox.setConverter(getBrandComboboxConverter());
+
         productCombobox.setConverter(getProductComboboxConverter());
+
 
         // Restrict input fields to only accept text in Integer or Double format
         yearOneStoreCountField.textProperty().addListener(new ChangeListener<String>() {
@@ -242,7 +267,7 @@ public class firstTableController implements Initializable {
                     if (!changing) {
                         try {
                             changing = true;
-                            row.setResultingEverydayRetailOverride(row.getResultingEverydayRetailCalcd());
+                            row.setResultingEverydayRetailOverride(row.getResultingEverydayRetailCalcd().setScale(2,RoundingMode.HALF_UP));
                             maxOverrideLabel.setText("of $" + getMinOverride());
                             firstTableView.refresh();
                         } finally {
@@ -251,6 +276,22 @@ public class firstTableController implements Initializable {
                     }
                 }
             });
+//            row.landedStoreCostProperty().addListener(new ChangeListener<BigDecimal>() {
+//                private boolean changing;
+//
+//                @Override
+//                public void changed(ObservableValue<? extends BigDecimal> observable, BigDecimal oldValue, BigDecimal newValue) {
+//                    if (!changing) {
+//                        try {
+//                            changing = true;
+//                            landedStoreCostData.getData().add(new XYChart.Data(row.getRTMName(), row.getLandedStoreCost()));
+//                            landedStoreCostChart.getData().add(landedStoreCostData);
+//                        } finally {
+//                            changing = false;
+//                        }
+//                    }
+//                }
+//            });
             /*
             Check if resulting everyday retail changed, if it did check the max of the column and assign it to maxOverrideLabel
             */
@@ -278,15 +319,36 @@ public class firstTableController implements Initializable {
     /*
     Product class changed Event
      */
+    public void changeBrandComboboxEvent(ActionEvent event) {
+        Product selectedProduct = brandCombobox.getSelectionModel().getSelectedItem();
+        secondTableView.setItems(firstTableView.getItems());
+        listLabel.setText("List = $");
+        fobLabel.setText("F.O.B. = $");
+        net1GoalLabel.setText("Net 1 Goal = $");
+        elasticityRatioLabel.setText("Elasticity Ratio = +1% Price :  % Volume");
+        ObservableList<Product> correspondingProducts = FXCollections.observableArrayList();
+        //Set up product combobox and make it display product class
+        for (Product product: getExampleProducts()){
+            if (product.getBrandName().equals(selectedProduct.getBrandName())){
+                correspondingProducts.add(product);
+            }
+        }
+        productCombobox.setItems(correspondingProducts);
+    }
+    /*
+    Product class changed Event
+     */
     public void changeProductComboboxEvent(ActionEvent event) {
         Product selectedProduct = productCombobox.getSelectionModel().getSelectedItem();
         listLabel.setText("List = $" + selectedProduct.getUnitListCost());
         fobLabel.setText("F.O.B. = $" + selectedProduct.getUnitFobCost());
         net1GoalLabel.setText("Net 1 Goal = $" + selectedProduct.getUnitNet1Goal());
         elasticityRatioLabel.setText("Elasticity Ratio = +1% Price :"+ selectedProduct.getElasticityMultiple() + "% Volume");
+        secondTableView.setItems(firstTableView.getItems());
         for (RTMOption row : firstTableView.getItems()) {
             row.setProduct(selectedProduct);
         }
+        secondTableView.refresh();
     }
 
     /*
@@ -296,7 +358,7 @@ public class firstTableController implements Initializable {
         BigDecimal smallest = new BigDecimal("100000000000");
         for (RTMOption row : firstTableView.getItems()) {
             BigDecimal currentNumber = row.getResultingEverydayRetailOverride();
-            if (currentNumber.compareTo(smallest) < 0) {
+            if (currentNumber.compareTo(smallest) < 0 && currentNumber.compareTo(new BigDecimal("0.0"))>0) {
                 smallest = currentNumber;
             }
         }
@@ -347,9 +409,10 @@ public class firstTableController implements Initializable {
 
     // Change Slotting Per Sku
     public void changeSlottingPerSkuCellEvent(TableColumn.CellEditEvent editedCell) {
-        secondTableView.setItems(firstTableView.getItems());
         RTMOption RTMOptionSelected = firstTableView.getSelectionModel().getSelectedItem();
-        RTMOptionSelected.setSlottingPerSku(Integer.valueOf(editedCell.getNewValue().toString()));
+        RTMOptionSelected.setSlottingPerSku(new BigDecimal(editedCell.getNewValue().toString()));
+        secondTableView.setItems(firstTableView.getItems());
+        secondTableView.refresh();
     }
 
     // Change Override
@@ -396,8 +459,7 @@ public class firstTableController implements Initializable {
         BigDecimal maxReceivers = selectedOption.getFirstReceiver().max(selectedOption.getSecondReceiver()
                 .max(selectedOption.getThirdReceiver().max(selectedOption.getFourthReceiver())));
         if (maxReceivers.compareTo(new BigDecimal("0.0")) > 0) {
-            selectedOption.setLandedStoreCost(selectedOption.getFirstReceiver().max(selectedOption.getSecondReceiver()
-                    .max(selectedOption.getThirdReceiver().max(selectedOption.getFourthReceiver()))));
+            selectedOption.setLandedStoreCost(maxReceivers);
         }
     }
 
@@ -446,7 +508,7 @@ Return Value from Year One Store Count
     */
     public ObservableList<RTMOption> getRTMOptions() {
         ObservableList<RTMOption> RTMOptions = FXCollections.observableArrayList();
-        RTMOptions.add(new RTMOption("Frank", BigDecimal.valueOf(1.3), 0, BigDecimal.valueOf(0.5),
+        RTMOptions.add(new RTMOption("Direct-to-Customer", BigDecimal.valueOf(1.3), new BigDecimal(0), BigDecimal.valueOf(0.5),
                 BigDecimal.valueOf(0.1), BigDecimal.valueOf(0.3), BigDecimal.valueOf(3.95)));
         RTMOptions.add(new RTMOption());
         return RTMOptions;
@@ -461,6 +523,8 @@ Return Value from Year One Store Count
         products.add(new Product("Big Time Food Company", "12 oz pickle juice", new BigDecimal("1.49"), new BigDecimal("0.14"),
                 new BigDecimal("1.35"), new BigDecimal("1.29"), new BigDecimal("0.78"), new BigDecimal("-1.20")));
         products.add(new Product("Big Time Food Company", "12 oz pickle juice", new BigDecimal("1.49"), new BigDecimal("0.14"),
+                new BigDecimal("1.35"), new BigDecimal("1.29"), new BigDecimal("0.78"), new BigDecimal("-1.20")));
+        products.add(new Product("Small Time Food Company", "12 oz pickle juice", new BigDecimal("1.49"), new BigDecimal("0.14"),
                 new BigDecimal("1.35"), new BigDecimal("1.29"), new BigDecimal("0.78"), new BigDecimal("-1.20")));
         return products;
     }
@@ -499,6 +563,8 @@ Return Value from Year One Store Count
         resultingEveryDayRetailOverrideLabel.setTooltip(resultingEveryDayRetailOverrideTip);
         resultingEverydayRetailOverrideColumn.setGraphic(resultingEveryDayRetailOverrideLabel);
 
+        RTMNameColumn2.setGraphic(RTMNameColumnLabel2);
+
         elasticizedEstimatedUnitVelocityLabel.setTooltip(elasticizedEstimatedUnitVelocityTip);
         elasticizedEstimatedUnitVelocityColumn.setGraphic(elasticizedEstimatedUnitVelocityLabel);
 
@@ -527,7 +593,7 @@ Return Value from Year One Store Count
     public void setCellValueFactories() {
 
         RTMNameColumn.setCellValueFactory(new PropertyValueFactory<RTMOption, String>("RTMName"));
-        slottingPerSkuColumn.setCellValueFactory(new PropertyValueFactory<RTMOption, Integer>("slottingPerSku"));
+        slottingPerSkuColumn.setCellValueFactory(new PropertyValueFactory<RTMOption, BigDecimal>("slottingPerSku"));
         freightOutPerUnitColumn.setCellValueFactory(new PropertyValueFactory<RTMOption, BigDecimal>("freightOutPerUnit"));
         firstReceiverColumn.setCellValueFactory(new PropertyValueFactory<RTMOption, BigDecimal>("firstReceiver"));
         secondReceiverColumn.setCellValueFactory(new PropertyValueFactory<RTMOption, BigDecimal>("secondReceiver"));
@@ -537,7 +603,7 @@ Return Value from Year One Store Count
         resultingEverydayRetailCalcdColumn.setCellValueFactory(new PropertyValueFactory<RTMOption, BigDecimal>("resultingEverydayRetailCalcd"));
         resultingEverydayRetailOverrideColumn.setCellValueFactory(new PropertyValueFactory<RTMOption, BigDecimal>("resultingEverydayRetailOverride"));
         elasticizedEstimatedUnitVelocityColumn.setCellValueFactory(new PropertyValueFactory<RTMOption, BigDecimal>("elasticizedEstimatedUnitVelocity"));
-        estimatedAnnualVolumePerSkuColumn.setCellValueFactory(new PropertyValueFactory<RTMOption, Integer>("estimatedAnnualVolumePerSku"));
+        estimatedAnnualVolumePerSkuColumn.setCellValueFactory(new PropertyValueFactory<RTMOption, BigDecimal>("estimatedAnnualVolumePerSku"));
         slottingPaybackPeriodColumn.setCellValueFactory(new PropertyValueFactory<RTMOption, BigDecimal>("slottingPaybackPeriod"));
         postFreightPostSpoilsWeCollectPerUnitColumn.setCellValueFactory(new PropertyValueFactory<RTMOption, BigDecimal>("postFreightPostSpoilsWeCollectPerUnit"));
         unspentTradePerUnitColumn.setCellValueFactory(new PropertyValueFactory<RTMOption, BigDecimal>("unspentTradePerUnit"));
@@ -552,54 +618,38 @@ Return Value from Year One Store Count
     public void setCellFactories() {
 
         RTMNameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-        slottingPerSkuColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
+        slottingPerSkuColumn.setCellFactory(TextFieldTableCell.forTableColumn(new BigDecimalStringConverter()));
         freightOutPerUnitColumn.setCellFactory(TextFieldTableCell.forTableColumn(new BigDecimalStringConverter()));
         firstReceiverColumn.setCellFactory(TextFieldTableCell.forTableColumn(new BigDecimalStringConverter()));
         secondReceiverColumn.setCellFactory(TextFieldTableCell.forTableColumn(new BigDecimalStringConverter()));
         thirdReceiverColumn.setCellFactory(TextFieldTableCell.forTableColumn(new BigDecimalStringConverter()));
-        fourthReceiverColumn.setCellFactory(TextFieldTableCell.forTableColumn(new BigDecimalStringConverter()));
-        landedStoreCostColumn.setCellFactory(TextFieldTableCell.forTableColumn(new BigDecimalStringConverter()));
-        resultingEverydayRetailCalcdColumn.setCellFactory(tc -> new TableCell<RTMOption, BigDecimal>() {
-            @Override
-            protected void updateItem(BigDecimal resultingEverydayRetailCalcd, boolean empty) {
-                super.updateItem(resultingEverydayRetailCalcd, empty);
-                if (empty) {
-                    setText("Hello");
-                }
-                if (resultingEverydayRetailCalcd == null) {
-                    setText("");
-                } else {
-                    setText("$" + String.format("%,.2f", resultingEverydayRetailCalcd));
-                }
-            }
-        });
+        fourthReceiverColumn.setCellFactory(CustomTextCell.forTableColumn(new BigDecimalStringConverter()));
+        landedStoreCostColumn.setCellFactory(tc->new CustomNonEditCell("$",""));
+        resultingEverydayRetailCalcdColumn.setCellFactory(tc->new CustomNonEditCell("$", ""));
 //                TextFieldTableCell.forTableColumn(new BigDecimalStringConverter()));
         resultingEverydayRetailOverrideColumn.setCellFactory(TextFieldTableCell.forTableColumn(new BigDecimalStringConverter()));
-        elasticizedEstimatedUnitVelocityColumn.setCellFactory(TextFieldTableCell.forTableColumn(new BigDecimalStringConverter()));
-        estimatedAnnualVolumePerSkuColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
-        slottingPaybackPeriodColumn.setCellFactory(TextFieldTableCell.forTableColumn(new BigDecimalStringConverter()));
-        postFreightPostSpoilsWeCollectPerUnitColumn.setCellFactory(TextFieldTableCell.forTableColumn(new BigDecimalStringConverter()));
-        unspentTradePerUnitColumn.setCellFactory(TextFieldTableCell.forTableColumn(new BigDecimalStringConverter()));
-        fourYearEqGpPerSkuColumn.setCellFactory(TextFieldTableCell.forTableColumn(new BigDecimalStringConverter()));
-        fourYearEqGpPerUnitColumn.setCellFactory(TextFieldTableCell.forTableColumn(new BigDecimalStringConverter()));
+        elasticizedEstimatedUnitVelocityColumn.setCellFactory(tc->new CustomNonEditCell(""," U/S/F/W"));
+        estimatedAnnualVolumePerSkuColumn.setCellFactory(tc->new TableCell<>(){
+            @Override
+        protected void updateItem(BigDecimal item, boolean empty) {
+            super.updateItem(item, empty);
+            if (empty) {
+                setText("Hello");
+            }
+            if (item == null) {
+                setText("");
+            } else {
+                setText(String.format("%,.0f", item,0, RoundingMode.HALF_UP) + " Units");
+            }
+        }});
+        slottingPaybackPeriodColumn.setCellFactory(tc->new CustomNonEditCell("", " Years"));
+        postFreightPostSpoilsWeCollectPerUnitColumn.setCellFactory(tc->new CustomNonEditCell("$", " Per Unit"));
+        unspentTradePerUnitColumn.setCellFactory(tc->new CustomNonEditCell("$", " Per Unit"));
+        fourYearEqGpPerSkuColumn.setCellFactory(tc->new CustomNonEditCell("$", " Per Sku"));
+        fourYearEqGpPerUnitColumn.setCellFactory(tc->new CustomNonEditCell("$", " Per Unit"));
     }
 
-//    public Callback<TableColumn<RTMOption, BigDecimal>, TableCell<RTMOption, BigDecimal>> getBigDecimalTextField() {
-//        return tc-> new TableCell<RTMOption, BigDecimal>() {
-//            @Override
-//            protected void updateItem(BigDecimal landedStoreCost, boolean empty) {
-//                super.updateItem(landedStoreCost, empty);
-//                if (empty) {
-//                    setText("Hello");
-//                }
-//                if (landedStoreCost == null) {
-//                    setText("");
-//                } else {
-//                    setText(String.format("%,.2f", landedStoreCost));
-//                }
-//            }
-//        };
-//    }
+
     /*
     Return a filter to use in the double text formatters
      */
@@ -640,23 +690,52 @@ Return Value from Year One Store Count
     Return a converter for product combobox
      */
     public StringConverter<Product> getProductComboboxConverter(){
-        StringConverter<Product> productBoxConverter = new StringConverter<Product>() {
-            @Override
-            public String toString(Product product) {
-                if (product!= null) {
-                    return product.getProductClass();
-                }
-                return null;
-            }
-
-            @Override
-            public Product fromString(String string) {
-                return null;
-            }
-        };
-        return productBoxConverter;
+        return new ComboboxConverter("product");
+    }
+    /*
+    Return a converter for brand combobox
+     */
+    public StringConverter<Product> getBrandComboboxConverter() {
+        return new ComboboxConverter("brand");
     }
 }
+/*
+Create unique callback function for cell factories
+ */
+//    public Callback<TableColumn<RTMOption, BigDecimal>, TableCell<RTMOption, BigDecimal>> getBigDecimalTextField() {
+//        return tc-> new TableCell<RTMOption, BigDecimal>() {
+//            @Override
+//            protected void updateItem(BigDecimal landedStoreCost, boolean empty) {
+//                super.updateItem(landedStoreCost, empty);
+//                if (empty) {
+//                    setText("Hello");
+//                }
+//                if (landedStoreCost == null) {
+//                    setText("");
+//                } else {
+//                    setText(String.format("%,.2f", landedStoreCost));
+//                }
+//            }
+//        };
+//    }
+
+/*
+Create a new tablecell factory
+ */
+//tc -> new TableCell<RTMOption, BigDecimal>() {
+//@Override
+//protected void updateItem(BigDecimal resultingEverydayRetailCalcd, boolean empty) {
+//        super.updateItem(resultingEverydayRetailCalcd, empty);
+//        if (empty) {
+//        setText("Hello");
+//        }
+//        if (resultingEverydayRetailCalcd == null) {
+//        setText("");
+//        } else {
+//        setText("$" + String.format("%,.2f", resultingEverydayRetailCalcd));
+//        }
+//        }
+//        }
 //
 
 // Create a Retailer Specs Object and assign it to all the RTMOptions
