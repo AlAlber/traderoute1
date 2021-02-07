@@ -382,11 +382,20 @@ public class RTMOption {
     }
 
     public String getRTMName() {
+        if (RTMName.get()==null){
+            return new String("");
+        }
         return RTMName.get();
     }
 
     public void setRTMName(String RTMName) {
         this.RTMName = new SimpleStringProperty(RTMName);
+    }
+    public SimpleStringProperty RTMNameProperty(){
+        if (RTMName==null){
+            return new SimpleStringProperty("");
+        }
+        return RTMName;
     }
 
     public BigDecimal getSlottingPerSku() {
@@ -502,14 +511,14 @@ public class RTMOption {
     }
 
     public BigDecimal getResultingEverydayRetailCalcd() {
-        if (resultingEverydayRetailOverride == null) {
-            return new BigDecimal(0.0);
+        if (resultingEverydayRetailCalcd.get() == null) {
+            return new BigDecimal("0.0");
         }
         return resultingEverydayRetailCalcd.get();
     }
 
     public SimpleObjectProperty<BigDecimal> resultingEverydayRetailProperty() {
-        if (landedStoreCost == null) {
+        if (resultingEverydayRetailCalcd == null) {
             return new SimpleObjectProperty<BigDecimal>(new BigDecimal("0.0"));
         }
         return resultingEverydayRetailCalcd;
@@ -586,6 +595,9 @@ public class RTMOption {
     }
 
     public BigDecimal getEstimatedAnnualVolumePerSku() {
+        if (estimatedAnnualVolumePerSku.get()==null){
+            return new BigDecimal("0.0");
+        }
         return estimatedAnnualVolumePerSku.get();
     }
 
@@ -601,6 +613,9 @@ public class RTMOption {
     }
 
     public BigDecimal getSlottingPaybackPeriod() {
+        if (slottingPaybackPeriod.get()==null){
+            return new BigDecimal("0.0");
+        }
         return slottingPaybackPeriod.get();
     }
 
@@ -613,6 +628,9 @@ public class RTMOption {
     }
 
     public BigDecimal getPostFreightPostSpoilsWeCollectPerUnit() {
+        if (postFreightPostSpoilsWeCollectPerUnit.get()==null){
+            return new BigDecimal("0.0");
+        }
         return postFreightPostSpoilsWeCollectPerUnit.get();
     }
 
@@ -625,6 +643,9 @@ public class RTMOption {
     }
 
     public BigDecimal getUnspentTradePerUnit() {
+        if (unspentTradePerUnit.get()==null){
+            return new BigDecimal("0.0");
+        }
         return unspentTradePerUnit.get();
     }
 
@@ -637,6 +658,9 @@ public class RTMOption {
     }
 
     public BigDecimal getFourYearEqGpPerSku() {
+        if (fourYearEqGpPerSku.get()==null){
+            return new BigDecimal("0.0");
+        }
         return fourYearEqGpPerSku.get();
     }
 
@@ -649,6 +673,9 @@ public class RTMOption {
     }
 
     public BigDecimal getFourYearEqGpPerUnit() {
+        if (fourYearEqGpPerUnit.get()==null){
+            return new BigDecimal("0.0");
+        }
         return fourYearEqGpPerUnit.get();
     }
 

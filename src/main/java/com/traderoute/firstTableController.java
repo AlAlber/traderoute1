@@ -11,15 +11,14 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
-import javafx.scene.paint.Color;
-import javafx.util.Callback;
 import javafx.util.StringConverter;
 import javafx.util.converter.BigDecimalStringConverter;
-import javafx.util.converter.IntegerStringConverter;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.function.UnaryOperator;
 import java.util.regex.Pattern;
@@ -189,12 +188,29 @@ public class firstTableController implements Initializable {
 
     @FXML
     private BarChart<?, ?> landedStoreCostChart;
+    @FXML
+    private BarChart<?, ?> resultingEverydayRetailCalcdChart;
+    @FXML
+    private BarChart<?, ?> elasticizedEstimatedUnitVelocityChart;
+    @FXML
+    private BarChart<?, ?> estimatedAnnualVolumeChart;
+    @FXML
+    private BarChart<?, ?> slottingPaybackPeriodChart;
+    @FXML
+    private BarChart<?,?> unspentTradePerUnitChart;
+    @FXML
+    private BarChart<?, ?> postSpoilsPostFreightWeCollectChart;
+    @FXML
+    private BarChart<?, ?> fourYearEqGpPerSkuChart;
+    @FXML
+    private BarChart<?, ?> fourYearEqGpPerUnitChart;
 
-    XYChart.Series landedStoreCostData = new XYChart.Series();
+
+
+    XYChart.Series<String,BigDecimal> landedStoreCostData = new XYChart.Series();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
 
         //Set up cell value factories
         setCellValueFactories();
@@ -210,7 +226,6 @@ public class firstTableController implements Initializable {
         }
         brandCombobox.setItems(uniqueBrandNames);
         brandCombobox.setConverter(getBrandComboboxConverter());
-
         productCombobox.setConverter(getProductComboboxConverter());
 
 
@@ -232,6 +247,18 @@ public class firstTableController implements Initializable {
         firstTableView.setItems(getRTMOptions());
         secondTableView.setItems(firstTableView.getItems());
 
+
+        // Set Bar Chart
+        landedStoreCostChart.setData(FXCollections.observableArrayList(new XYChart.Series[]{getChartData(1)}));
+        resultingEverydayRetailCalcdChart.setData(FXCollections.observableArrayList(new XYChart.Series[]{getChartData(2)}));
+        elasticizedEstimatedUnitVelocityChart.setData(FXCollections.observableArrayList(new XYChart.Series[]{getChartData(3)}));
+        estimatedAnnualVolumeChart.setData(FXCollections.observableArrayList(new XYChart.Series[]{getChartData(4)}));
+        slottingPaybackPeriodChart.setData(FXCollections.observableArrayList(new XYChart.Series[]{getChartData(5)}));
+        postSpoilsPostFreightWeCollectChart.setData(FXCollections.observableArrayList(new XYChart.Series[]{getChartData(6)}));
+        unspentTradePerUnitChart.setData(FXCollections.observableArrayList(new XYChart.Series[]{getChartData(7)}));
+        fourYearEqGpPerSkuChart.setData(FXCollections.observableArrayList(new XYChart.Series[]{getChartData(8)}));
+        fourYearEqGpPerUnitChart.setData(FXCollections.observableArrayList(new XYChart.Series[]{getChartData(9)}));
+
         // Add Labels to list, give them tooltips
         setToolTipsFirstAndSecondTableview();
 
@@ -247,15 +274,48 @@ public class firstTableController implements Initializable {
         setCellFactories();
     }
 
+    public BarChart<?, ?> getLandedStoreCostChart() {
+        return landedStoreCostChart;
+    }
+
     /*
-     Set Up listeners for everyDayGPM and landed store Cost Property
-     */
+         Set Up listeners for everyDayGPM and landed store Cost Property
+         */
     public void setUpListeners() {
         /*
         Check if landedStoreCostProperty changed, if it it did calculate everyday Retail
         */
         for (RTMOption row : firstTableView.getItems()) {
+            row.landedStoreCostProperty().addListener(new ChangeListener<BigDecimal>() {
+                private boolean changing;
 
+                @Override
+                public void changed(ObservableValue<? extends BigDecimal> observable, BigDecimal oldValue, BigDecimal newValue) {
+                    if (!changing) {
+                        try {
+                            changing = true;
+                            updateChart(true,false, false, false, false, false, false, false, false);
+                        } finally {
+                            changing = false;
+                        }
+                    }
+                }
+            });
+            row.RTMNameProperty().addListener(new ChangeListener<String>() {
+                private boolean changing;
+                @Override
+                public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                    if (!changing) {
+                        try {
+                            changing = true;
+                            System.out.println("HHHHHH");
+                            updateChart(true,true,true,true,true,true,true,true,true);
+                        } finally {
+                            changing = false;
+                        }
+                    }
+                }
+            });
             /*
             Set Override to automatically take current value of resulting every day retail calculated
             */
@@ -270,6 +330,7 @@ public class firstTableController implements Initializable {
                             row.setResultingEverydayRetailOverride(row.getResultingEverydayRetailCalcd().setScale(2,RoundingMode.HALF_UP));
                             maxOverrideLabel.setText("of $" + getMinOverride());
                             firstTableView.refresh();
+                            updateChart(false,true,false,false,false,false,false,false,false);
                         } finally {
                             changing = false;
                         }
@@ -316,6 +377,24 @@ public class firstTableController implements Initializable {
             });
         }
     }
+    // COME BACK HERE
+//    public void changeRTMNameEvent(ActionEvent event){
+//        RTMOption RTMOptionSelected = firstTableView.getSelectionModel().getSelectedItem();
+//        RTMOptionSelected.setSecondReceiver(new BigDecimal(editedCell.getNewValue().toString());
+//        barChart.setData(FXCollections.observableArrayList(series));
+//    }
+//    public void updateData(){
+//        // You need to run it in thread
+//        Platform.runLater(() -> {
+//            // Update chart's name
+//            barChart.setTitle(questionName);
+//            // Remove all data
+//            series.getData().clear();
+//            // Add as many data as you want
+//            series.getData().add(new XYChart.Data("xData", yValue));
+//        });
+//    }
+
     /*
     Product class changed Event
      */
@@ -349,6 +428,7 @@ public class firstTableController implements Initializable {
             row.setProduct(selectedProduct);
         }
         secondTableView.refresh();
+        updateChart(false,false,false,false,true,true,true,true,true);
     }
 
     /*
@@ -376,6 +456,7 @@ public class firstTableController implements Initializable {
         }
         firstTableView.refresh();
         secondTableView.refresh();
+        updateChart(false,false,true,true,true,true,true,true,true);
     }
 
     /*
@@ -387,6 +468,7 @@ public class firstTableController implements Initializable {
             row.setYearOneStoreCount(getYearOneStoreCount());
         }
         secondTableView.refresh();
+        updateChart(false,false,false,true,true,true,true,true,true);
     }
 
     /*
@@ -396,6 +478,7 @@ public class firstTableController implements Initializable {
         for (RTMOption row : firstTableView.getItems()) {
             row.setEverydayGPM(this.getEveryDayGPM());
         }
+        updateChart(false,true,false,false,false,false,false,false,false);
     }
 
     /*
@@ -405,6 +488,7 @@ public class firstTableController implements Initializable {
         for (RTMOption row : firstTableView.getItems()) {
             row.setSpoilsAndFees(getSpoilsAndFees().divide((new BigDecimal("100")), 10 , RoundingMode.HALF_UP));
         }
+        updateChart(false,false,false,false,true,true,true,true,true);
     }
 
     // Change Slotting Per Sku
@@ -413,6 +497,7 @@ public class firstTableController implements Initializable {
         RTMOptionSelected.setSlottingPerSku(new BigDecimal(editedCell.getNewValue().toString()));
         secondTableView.setItems(firstTableView.getItems());
         secondTableView.refresh();
+        updateChart(false,false,false,false,true,true,true,true,true);
     }
 
     // Change Override
@@ -426,6 +511,7 @@ public class firstTableController implements Initializable {
     public void changeFreightOutPerUnitCellEvent(TableColumn.CellEditEvent editedCell) {
         RTMOption RTMOptionSelected = firstTableView.getSelectionModel().getSelectedItem();
         RTMOptionSelected.setFreightOutPerUnit(new BigDecimal(editedCell.getNewValue().toString()));
+        updateChart(false,false,false,false,true,true,true,true,true);
     }
     /*
     Calculate max from the receivers
@@ -434,6 +520,7 @@ public class firstTableController implements Initializable {
         RTMOption RTMOptionSelected = firstTableView.getSelectionModel().getSelectedItem();
         RTMOptionSelected.setFirstReceiver(new BigDecimal(editedCell.getNewValue().toString()));
         maxReceivers(RTMOptionSelected);
+        updateChart(false,false,false,false,true,true,true,true,true);
     }
 
     public void changeSecondReceiverCellEvent(TableColumn.CellEditEvent editedCell) {
@@ -502,6 +589,75 @@ Return Value from Year One Store Count
         }
         return new BigDecimal(weeklyUFSWAtMinField.getText());
     }
+    /*
+    Load dummy chart data
+     */
+//    barChart.setData(FXCollections.observableArrayList(series));
+    public XYChart.Series<?,?> updateLandedStoreCostData() {
+        XYChart.Series<String,BigDecimal> barChartData= new XYChart.Series();
+        System.out.println("AAAAAAAAAAAA");
+        for (RTMOption row: firstTableView.getItems()) {
+            barChartData.getData().add(new XYChart.Data(row.getRTMName(), row.getLandedStoreCost()));
+        }
+        return barChartData;
+    }
+    public void updateChart(boolean lSC, boolean rERC, boolean eEUV, boolean eAVS, boolean sPP, boolean pFPS, boolean uTPU, boolean fYEQS, boolean fYEQU){
+        if (lSC) {
+            landedStoreCostChart.getData().clear();
+            landedStoreCostChart.setData(FXCollections.observableArrayList(new XYChart.Series[]{getChartData(1)}));
+        } if (rERC){
+            resultingEverydayRetailCalcdChart.getData().clear();
+            resultingEverydayRetailCalcdChart.setData(FXCollections.observableArrayList(new XYChart.Series[]{getChartData(2)}));
+        } if (eEUV) {
+            elasticizedEstimatedUnitVelocityChart.getData().clear();
+            elasticizedEstimatedUnitVelocityChart.setData(FXCollections.observableArrayList(new XYChart.Series[]{getChartData(3)}));
+        }if (eAVS) {
+            estimatedAnnualVolumeChart.getData().clear();
+            estimatedAnnualVolumeChart.setData(FXCollections.observableArrayList(new XYChart.Series[]{getChartData(4)}));
+        }if (sPP) {
+            slottingPaybackPeriodChart.getData().clear();
+            slottingPaybackPeriodChart.setData(FXCollections.observableArrayList(new XYChart.Series[]{getChartData(5)}));
+        }if (pFPS) {
+            postSpoilsPostFreightWeCollectChart.getData().clear();
+            postSpoilsPostFreightWeCollectChart.setData(FXCollections.observableArrayList(new XYChart.Series[]{getChartData(6)}));
+        }if (uTPU) {
+            unspentTradePerUnitChart.getData().clear();
+            unspentTradePerUnitChart.setData(FXCollections.observableArrayList(new XYChart.Series[]{getChartData(7)}));
+        }if (fYEQS) {
+            fourYearEqGpPerSkuChart.getData().clear();
+            fourYearEqGpPerSkuChart.setData(FXCollections.observableArrayList(new XYChart.Series[]{getChartData(8)}));
+        }if (fYEQU) {
+            fourYearEqGpPerUnitChart.getData().clear();
+            fourYearEqGpPerUnitChart.setData(FXCollections.observableArrayList(new XYChart.Series[]{getChartData(9)}));
+        }
+    }
+
+    //load first values.
+    public XYChart.Series<?,?> getChartData(int i) {
+        XYChart.Series<String, BigDecimal> barChartData = new XYChart.Series();
+        for (RTMOption row : firstTableView.getItems()) {
+            if (i==1) {
+                barChartData.getData().add(new XYChart.Data(row.getRTMName(), row.getLandedStoreCost()));
+            } if (i==2){
+                barChartData.getData().add(new XYChart.Data(row.getRTMName(), row.getResultingEverydayRetailCalcd()));
+            } if (i==3) {
+                barChartData.getData().add(new XYChart.Data(row.getRTMName(), row.getElasticizedEstimatedUnitVelocity()));
+            }if (i==4) {
+                barChartData.getData().add(new XYChart.Data(row.getRTMName(), row.getEstimatedAnnualVolumePerSku()));
+            }if (i==5) {
+                barChartData.getData().add(new XYChart.Data(row.getRTMName(), row.getSlottingPaybackPeriod()));
+            }if (i==6) {
+                barChartData.getData().add(new XYChart.Data(row.getRTMName(), row.getPostFreightPostSpoilsWeCollectPerUnit()));
+            }if (i==7) {
+                barChartData.getData().add(new XYChart.Data(row.getRTMName(), row.getUnspentTradePerUnit()));
+            }if (i==8) {
+                barChartData.getData().add(new XYChart.Data(row.getRTMName(), row.getFourYearEqGpPerSku()));
+            }if (i==9) {
+                barChartData.getData().add(new XYChart.Data(row.getRTMName(), row.getFourYearEqGpPerUnit()));
+            }
+        }
+        return barChartData;
+    }
 
     /*
     Loads dummy table data
@@ -510,7 +666,15 @@ Return Value from Year One Store Count
         ObservableList<RTMOption> RTMOptions = FXCollections.observableArrayList();
         RTMOptions.add(new RTMOption("Direct-to-Customer", BigDecimal.valueOf(1.3), new BigDecimal(0), BigDecimal.valueOf(0.5),
                 BigDecimal.valueOf(0.1), BigDecimal.valueOf(0.3), BigDecimal.valueOf(3.95)));
-        RTMOptions.add(new RTMOption());
+        RTMOption optionTwo = new RTMOption();
+        optionTwo.setRTMName("Option2");
+        RTMOptions.add(optionTwo);
+        RTMOption optionThree = new RTMOption();
+        optionThree.setRTMName("Option3");
+        RTMOptions.add(optionThree);
+        RTMOption optionFour = new RTMOption();
+        optionFour.setRTMName("Option4");
+        RTMOptions.add(optionFour);
         return RTMOptions;
     }
     /*
@@ -699,6 +863,19 @@ Return Value from Year One Store Count
         return new ComboboxConverter("brand");
     }
 }
+/*
+Different bar data iteration attempt
+ */
+
+//            List<BigDecimal> propertyList = new ArrayList<>();
+//            propertyList.add(1, row.getLandedStoreCost());
+//            propertyList.add(2, row.getResultingEverydayRetailCalcd());
+//            propertyList.add(3, row.getElasticizedEstimatedUnitVelocity());
+//            propertyList.add(4, row.getEstimatedAnnualVolumePerSku());
+//            propertyList.add(5, row.getSlottingPaybackPeriod());
+//            propertyList.add(6, row.getPostFreightPostSpoilsWeCollectPerUnit());
+//            propertyList.add(7, row.getFourYearEqGpPerSku());
+//            propertyList.add(8, row.getFourYearEqGpPerUnit());
 /*
 Create unique callback function for cell factories
  */
