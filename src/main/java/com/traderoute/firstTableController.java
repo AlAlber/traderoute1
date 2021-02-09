@@ -14,6 +14,7 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.util.StringConverter;
 import javafx.util.converter.BigDecimalStringConverter;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.net.URL;
@@ -691,6 +692,14 @@ Return Value from Year One Store Count
         products.add(new Product("Small Time Food Company", "12 oz pickle juice", new BigDecimal("1.49"), new BigDecimal("0.14"),
                 new BigDecimal("1.35"), new BigDecimal("1.29"), new BigDecimal("0.78"), new BigDecimal("-1.20")));
         return products;
+    }
+    @FXML
+    private void switchToAssortment(ActionEvent event) throws IOException {
+        App.setRoot("assortment");
+    }
+    @FXML
+    private void switchToPricingPromotion(ActionEvent event) throws IOException {
+        App.setRoot("pricingPromotion");
     }
 
     /*

@@ -46,3 +46,6 @@
     -fx-stroke: transparent;
     -fx-stroke-width: 0;
 }
+.table-row-cell:selected {
+   -fx-background-color: steelblue;
+}

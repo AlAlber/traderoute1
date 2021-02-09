@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" stylesheets="@../styles/Styles.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.traderoute.PricingPromotionController">
+   <children>
+      <VBox prefHeight="820.0" prefWidth="1550.0" style="-fx-background-color: #1E1D1A;">
+         <children>
+            <HBox prefHeight="102.0" prefWidth="1490.0">
+               <children>
+                  <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../images/inner%20trade%20route%20logo.JPG" />
+                     </image>
+                     <HBox.margin>
+                        <Insets right="30.0" />
+                     </HBox.margin>
+                  </ImageView>
+                  <AnchorPane maxHeight="-Infinity" minHeight="-Infinity" prefHeight="132.0" prefWidth="207.0">
+                     <children>
+                        <Label prefHeight="57.0" prefWidth="207.0" style="-fx-background-color: #A79543;" text="AHOLD GIANT (LANDOVER)" textAlignment="CENTER" textFill="#f2efef">
+                           <font>
+                              <Font name="Arial Nova Light" size="36.0" />
+                           </font>
+                        </Label>
+                     </children>
+                     <HBox.margin>
+                        <Insets right="30.0" />
+                     </HBox.margin>
+                  </AnchorPane>
+                  <Button mnemonicParsing="false" onAction="#switchToSecondTable" text="Route-to-Market" />
+                  <Button mnemonicParsing="false" text="Assortment" />
+                  <Button mnemonicParsing="false" text="Pricing and Promotion" />
+               </children>
+            </HBox>
+            <AnchorPane prefHeight="258.0" prefWidth="1502.0">
+               <children>
+                  <TableView fx:id="secondTableView" layoutX="7.0" layoutY="28.0" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="256.0" prefWidth="1423.0" styleClass="table-row-cell" stylesheets="@../styles/Styles.css">
+                     <columns>
+                        <TableColumn fx:id="monthColumn" prefWidth="64.79998779296875" text="Month" />
+                        <TableColumn fx:id="skusInDistributionColumn" prefWidth="64.79998779296875" text="Distribution" />
+                        <TableColumn fx:id="skuCountChangeColumn" minWidth="0.0" prefWidth="52.79998779296875" text="Change" />
+                        <TableColumn fx:id="confidenceColumn" prefWidth="80.00003051757812" text="Confidence %" />
+                        <TableColumn fx:id="slottingInvestmentColumn" prefWidth="64.800048828125" text="Investment" />
+                        <TableColumn fx:id="storeCountColumn" prefWidth="45.5999755859375" text="Count" />
+                        <TableColumn fx:id="promotedRetailColumn" prefWidth="60.79998779296875" text="Retail" />
+                        <TableColumn fx:id="requiredGPM" prefWidth="59.199951171875" text="GPM %" />
+                        <TableColumn fx:id="durationWeeks" prefWidth="55.99993896484375" text="(Weeks)" />
+                        <TableColumn prefWidth="64.79998779296875" text="Multiple" />
+                        <TableColumn fx:id="fixedCosts" prefWidth="48.0" text="Costs" />
+                        <TableColumn fx:id="promoUnitCostOneColumn" prefWidth="68.79998779296875" text="Cost" />
+                        <TableColumn fx:id="promoDiscountOneColumn" prefWidth="71.20001220703125" text="Discount%" />
+                        <TableColumn prefWidth="155.199951171875" text="Commentary Notes" />
+                        <TableColumn prefWidth="60.79998779296875" text="Retail" />
+                        <TableColumn prefWidth="59.199951171875" text="GPM %" />
+                        <TableColumn prefWidth="55.99993896484375" text="(Weeks)" />
+                        <TableColumn prefWidth="64.79998779296875" text="Multiple" />
+                        <TableColumn prefWidth="48.0" text="Costs" />
+                        <TableColumn prefWidth="68.79998779296875" text="Cost" />
+                        <TableColumn prefWidth="71.20001220703125" text="Discount%" />
+                     </columns>
+                  </TableView>
+                  <TableView fx:id="secondTableView1" layoutX="100.0" layoutY="289.0" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="335.0" prefWidth="686.0" styleClass="table-row-cell" stylesheets="@../styles/Styles.css">
+                     <columns>
+                        <TableColumn prefWidth="56.0" text="January" />
+                        <TableColumn prefWidth="56.0" text="February" />
+                        <TableColumn prefWidth="53.600006103515625" text="March" />
+                        <TableColumn prefWidth="58.4000244140625" text="April" />
+                        <TableColumn prefWidth="56.0" text="May" />
+                        <TableColumn prefWidth="56.0" text="June" />
+                        <TableColumn prefWidth="56.0" text="July" />
+                        <TableColumn prefWidth="56.0" text="August" />
+                        <TableColumn prefWidth="56.0" text="September" />
+                        <TableColumn prefWidth="56.0" text="October" />
+                        <TableColumn prefWidth="56.0" text="November" />
+                        <TableColumn prefWidth="56.0" text="December" />
+                     </columns>
+                  </TableView>
+                  <VBox layoutX="1102.0" layoutY="232.0" prefHeight="423.0" prefWidth="100.0" rotate="90.0">
+                     <children>
+                        <Label prefWidth="111.0" text="Skus in Distribution">
+                           <VBox.margin>
+                              <Insets bottom="5.0" />
+                           </VBox.margin>
+                        </Label>
+                        <Label text="Sku-Count Change">
+                           <VBox.margin>
+                              <Insets bottom="5.0" />
+                           </VBox.margin>
+                        </Label>
+                        <Label text="Confidence %">
+                           <VBox.margin>
+                              <Insets bottom="5.0" />
+                           </VBox.margin>
+                        </Label>
+                        <Label text="Store Count">
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                           <padding>
+                              <Insets bottom="20.0" />
+                           </padding>
+                        </Label>
+                        <Label text="Everyday Retail">
+                           <VBox.margin>
+                              <Insets bottom="5.0" />
+                           </VBox.margin>
+                        </Label>
+                        <Label text="Everyday Unit Cost">
+                           <padding>
+                              <Insets bottom="20.0" />
+                           </padding>
+                        </Label>
+                        <Label text="Seasonality Indices">
+                           <padding>
+                              <Insets bottom="5.0" />
+                           </padding>
+                        </Label>
+                        <Label text="Promoted Retail">
+                           <padding>
+                              <Insets bottom="5.0" />
+                           </padding>
+                        </Label>
+                        <Label text="Required GPM%">
+                           <padding>
+                              <Insets bottom="5.0" />
+                           </padding>
+                        </Label>
+                        <Label text="Duration (Weeks)">
+                           <padding>
+                              <Insets bottom="5.0" />
+                           </padding>
+                        </Label>
+                        <Label text="Volume Lift Multiple">
+                           <padding>
+                              <Insets bottom="5.0" />
+                           </padding>
+                        </Label>
+                        <Label text="Fixed Costs">
+                           <padding>
+                              <Insets bottom="5.0" />
+                           </padding>
+                        </Label>
+                        <Label text="Promo Unit Cost">
+                           <padding>
+                              <Insets bottom="5.0" />
+                           </padding>
+                        </Label>
+                        <Label text="Promo Discount %">
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                           <padding>
+                              <Insets bottom="20.0" />
+                           </padding>
+                        </Label>
+                        <Label text="Promotional Commentary/Notes">
+                           <padding>
+                              <Insets bottom="20.0" />
+                           </padding>
+                        </Label>
+                        <Label text="Promoted Retail">
+                           <padding>
+                              <Insets bottom="5.0" />
+                           </padding>
+                        </Label>
+                        <Label text="Required GPM%">
+                           <padding>
+                              <Insets bottom="5.0" />
+                           </padding>
+                        </Label>
+                        <Label text="Duration (Weeks)">
+                           <padding>
+                              <Insets bottom="5.0" />
+                           </padding>
+                        </Label>
+                        <Label text="Volume Lift Multiple">
+                           <padding>
+                              <Insets bottom="5.0" />
+                           </padding>
+                        </Label>
+                        <Label text="Fixed Costs">
+                           <padding>
+                              <Insets bottom="5.0" />
+                           </padding>
+                        </Label>
+                        <Label text="Promo Unit Cost">
+                           <padding>
+                              <Insets bottom="5.0" />
+                           </padding>
+                        </Label>
+                        <Label text="Promo Discount %">
+                           <padding>
+                              <Insets bottom="10.0" />
+                           </padding>
+                        </Label>
+                        <Label text="Promotional Commentary/Notes">
+                           <padding>
+                              <Insets bottom="5.0" />
+                           </padding>
+                        </Label>
+                     </children>
+                  </VBox>
+                  <Label layoutX="76.0" layoutY="14.0" prefHeight="15.0" prefWidth="100.0" text="Skus in" />
+                  <Label layoutX="142.0" layoutY="14.0" prefHeight="15.0" prefWidth="100.0" text="Sku-Count" />
+                  <Label layoutX="275.0" layoutY="14.0" prefHeight="15.0" prefWidth="106.0" text="Slotting " />
+                  <Label layoutX="341.0" layoutY="14.0" prefHeight="15.0" prefWidth="45.0" text="Store " />
+                  <Label layoutX="387.0" layoutY="14.0" text="Promoted " />
+                  <Label layoutX="449.0" layoutY="14.0" text="Required" />
+                  <Label layoutX="511.0" layoutY="14.0" text="Duration " />
+                  <Label layoutX="565.0" layoutY="14.0" text="Volume Lift " />
+                  <Label layoutX="629.0" layoutY="14.0" text="Fixed " />
+                  <Label layoutX="677.0" layoutY="14.0" text="Promo Unit " />
+                  <Label layoutX="743.0" layoutY="14.0" text="Promo" />
+                  <Label layoutX="818.0" layoutY="14.0" text="Promotional " />
+                  <Label layoutX="974.0" layoutY="14.0" text="Promoted " />
+                  <Label layoutX="1036.0" layoutY="14.0" text="Required" />
+                  <Label layoutX="1098.0" layoutY="14.0" text="Duration " />
+                  <Label layoutX="1152.0" layoutY="14.0" text="Volume Lift " />
+                  <Label layoutX="1216.0" layoutY="14.0" text="Fixed " />
+                  <Label layoutX="1264.0" layoutY="14.0" text="Promo Unit " />
+                  <Label layoutX="1330.0" layoutY="14.0" text="Promo" />
+               </children>
+            </AnchorPane>
+         </children>
+         <padding>
+            <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
+         </padding>
+      </VBox>
+   </children>
+</AnchorPane>
