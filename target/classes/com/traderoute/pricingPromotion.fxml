@@ -12,7 +12,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane prefHeight="400.0" prefWidth="600.0" stylesheets="@../styles/Styles.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.traderoute.PricingPromotionController">
    <children>
       <VBox prefHeight="820.0" prefWidth="1550.0" style="-fx-background-color: #1E1D1A;">
@@ -46,42 +45,50 @@
             </HBox>
             <AnchorPane prefHeight="258.0" prefWidth="1502.0">
                <children>
-                  <TableView fx:id="secondTableView" layoutX="787.0" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="256.0" prefWidth="715.0" styleClass="table-row-cell" stylesheets="@../styles/Styles.css">
+                  <TableView fx:id="secondTableView" layoutX="7.0" layoutY="28.0" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="256.0" prefWidth="1423.0" styleClass="table-row-cell" stylesheets="@../styles/Styles.css">
                      <columns>
-                        <TableColumn prefWidth="100.0" text="Skus In Distribution" />
-                        <TableColumn prefWidth="100.0" text="Sku-Count Change" />
-                        <TableColumn prefWidth="79.20004272460938" text="Confidence %" />
-                        <TableColumn prefWidth="101.5999755859375" text="Slotting Investment" />
-                        <TableColumn prefWidth="68.0" text="Store Count" />
-                        <TableColumn prefWidth="86.39996337890625" text="Promoted Retail" />
-                        <TableColumn prefWidth="86.4000244140625" text="Required GPM %" />
-                        <TableColumn prefWidth="90.39996337890625" text="Duration (Weeks)" />
-                        <TableColumn prefWidth="104.800048828125" text="Volume Lift Multiple" />
-                        <TableColumn prefWidth="68.0" text="Fixed Costs" />
-                        <TableColumn prefWidth="89.5999755859375" text="Promo Unit Cost" />
-                        <TableColumn prefWidth="93.5999755859375" text="Promo Discount%" />
-                        <TableColumn prefWidth="160.800048828125" text="Promotional Commentary Notes" />
+                        <TableColumn fx:id="monthColumn" prefWidth="64.79998779296875" text="Month" />
+                        <TableColumn fx:id="skusInDistributionColumn" prefWidth="64.79998779296875" text="Distribution" />
+                        <TableColumn fx:id="skuCountChangeColumn" minWidth="0.0" prefWidth="52.79998779296875" text="Change" />
+                        <TableColumn fx:id="confidenceColumn" prefWidth="80.00003051757812" text="Confidence %" />
+                        <TableColumn fx:id="slottingInvestmentColumn" prefWidth="64.800048828125" text="Investment" />
+                        <TableColumn fx:id="storeCountColumn" prefWidth="45.5999755859375" text="Count" />
+                        <TableColumn fx:id="promotedRetailColumn" prefWidth="60.79998779296875" text="Retail" />
+                        <TableColumn fx:id="requiredGPM" prefWidth="59.199951171875" text="GPM %" />
+                        <TableColumn fx:id="durationWeeks" prefWidth="55.99993896484375" text="(Weeks)" />
+                        <TableColumn prefWidth="64.79998779296875" text="Multiple" />
+                        <TableColumn fx:id="fixedCosts" prefWidth="48.0" text="Costs" />
+                        <TableColumn fx:id="promoUnitCostOneColumn" prefWidth="68.79998779296875" text="Cost" />
+                        <TableColumn fx:id="promoDiscountOneColumn" prefWidth="71.20001220703125" text="Discount%" />
+                        <TableColumn prefWidth="155.199951171875" text="Commentary Notes" />
+                        <TableColumn prefWidth="60.79998779296875" text="Retail" />
+                        <TableColumn prefWidth="59.199951171875" text="GPM %" />
+                        <TableColumn prefWidth="55.99993896484375" text="(Weeks)" />
+                        <TableColumn prefWidth="64.79998779296875" text="Multiple" />
+                        <TableColumn prefWidth="48.0" text="Costs" />
+                        <TableColumn prefWidth="68.79998779296875" text="Cost" />
+                        <TableColumn prefWidth="71.20001220703125" text="Discount%" />
                      </columns>
                   </TableView>
-                  <TableView fx:id="secondTableView1" layoutX="100.0" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="624.0" prefWidth="686.0" styleClass="table-row-cell" stylesheets="@../styles/Styles.css">
+                  <TableView fx:id="pricingPromotionTableOne" layoutX="100.0" layoutY="289.0" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="335.0" prefWidth="686.0" styleClass="table-row-cell" stylesheets="@../styles/Styles.css">
                      <columns>
-                        <TableColumn prefWidth="56.0" text="January" />
-                        <TableColumn prefWidth="56.0" text="February" />
-                        <TableColumn prefWidth="53.600006103515625" text="March" />
-                        <TableColumn prefWidth="58.4000244140625" text="April" />
-                        <TableColumn prefWidth="56.0" text="May" />
-                        <TableColumn prefWidth="56.0" text="June" />
-                        <TableColumn prefWidth="56.0" text="July" />
-                        <TableColumn prefWidth="56.0" text="August" />
-                        <TableColumn prefWidth="56.0" text="September" />
-                        <TableColumn prefWidth="56.0" text="October" />
-                        <TableColumn prefWidth="56.0" text="November" />
-                        <TableColumn prefWidth="56.0" text="December" />
+                        <TableColumn fx:id="januaryColumn" prefWidth="56.0" text="January" />
+                        <TableColumn fx:id="februaryColumn" prefWidth="56.0" text="February" />
+                        <TableColumn fx:id="marchColumn" prefWidth="53.600006103515625" text="March" />
+                        <TableColumn fx:id="aprilColumn" prefWidth="58.4000244140625" text="April" />
+                        <TableColumn fx:id="mayColumn" prefWidth="56.0" text="May" />
+                        <TableColumn fx:id="juneColumn" prefWidth="56.0" text="June" />
+                        <TableColumn fx:id="julyColumn" prefWidth="56.0" text="July" />
+                        <TableColumn fx:id="augustColumn" prefWidth="56.0" text="August" />
+                        <TableColumn fx:id="septemberColumn" prefWidth="56.0" text="September" />
+                        <TableColumn fx:id="octoberColumn" prefWidth="56.0" text="October" />
+                        <TableColumn fx:id="novemberColumn" prefWidth="56.0" text="November" />
+                        <TableColumn fx:id="decemberColumn" prefWidth="56.0" text="December" />
                      </columns>
                   </TableView>
-                  <VBox layoutY="28.0" prefHeight="470.0" prefWidth="100.0">
+                  <VBox layoutX="1102.0" layoutY="232.0" prefHeight="423.0" prefWidth="100.0" rotate="90.0">
                      <children>
-                        <Label text="Skus in Distribution">
+                        <Label prefWidth="111.0" text="Skus in Distribution">
                            <VBox.margin>
                               <Insets bottom="5.0" />
                            </VBox.margin>
@@ -204,6 +211,25 @@
                         </Label>
                      </children>
                   </VBox>
+                  <Label layoutX="76.0" layoutY="14.0" prefHeight="15.0" prefWidth="100.0" text="Skus in" />
+                  <Label layoutX="142.0" layoutY="14.0" prefHeight="15.0" prefWidth="100.0" text="Sku-Count" />
+                  <Label layoutX="275.0" layoutY="14.0" prefHeight="15.0" prefWidth="106.0" text="Slotting " />
+                  <Label layoutX="341.0" layoutY="14.0" prefHeight="15.0" prefWidth="45.0" text="Store " />
+                  <Label layoutX="387.0" layoutY="14.0" text="Promoted " />
+                  <Label layoutX="449.0" layoutY="14.0" text="Required" />
+                  <Label layoutX="511.0" layoutY="14.0" text="Duration " />
+                  <Label layoutX="565.0" layoutY="14.0" text="Volume Lift " />
+                  <Label layoutX="629.0" layoutY="14.0" text="Fixed " />
+                  <Label layoutX="677.0" layoutY="14.0" text="Promo Unit " />
+                  <Label layoutX="743.0" layoutY="14.0" text="Promo" />
+                  <Label layoutX="818.0" layoutY="14.0" text="Promotional " />
+                  <Label layoutX="974.0" layoutY="14.0" text="Promoted " />
+                  <Label layoutX="1036.0" layoutY="14.0" text="Required" />
+                  <Label layoutX="1098.0" layoutY="14.0" text="Duration " />
+                  <Label layoutX="1152.0" layoutY="14.0" text="Volume Lift " />
+                  <Label layoutX="1216.0" layoutY="14.0" text="Fixed " />
+                  <Label layoutX="1264.0" layoutY="14.0" text="Promo Unit " />
+                  <Label layoutX="1330.0" layoutY="14.0" text="Promo" />
                </children>
             </AnchorPane>
          </children>

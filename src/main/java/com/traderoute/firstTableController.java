@@ -826,7 +826,7 @@ Return Value from Year One Store Count
     /*
     Return a filter to use in the double text formatters
      */
-    public UnaryOperator<TextFormatter.Change> getDoubleInputFilter(){
+    public static UnaryOperator<TextFormatter.Change> getDoubleInputFilter(){
         Pattern validEditingState = Pattern.compile("-?(([1-9][0-9]*)|0)?(\\.[0-9]*)?");
             UnaryOperator<TextFormatter.Change> filter = c -> {
                 String text = c.getControlNewText();
@@ -841,7 +841,7 @@ Return Value from Year One Store Count
     /*
     Return a converter to use in the double text formatters
      */
-    public StringConverter<Double> getDoubleInputConverter(){
+    public static StringConverter<Double> getDoubleInputConverter(){
         StringConverter<Double> converter = new StringConverter<>() {
             @Override
             public Double fromString(String s) {

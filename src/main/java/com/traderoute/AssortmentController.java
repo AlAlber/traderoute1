@@ -66,6 +66,9 @@ public class AssortmentController implements Initializable {
     @FXML
     private TextField skuNotesField;
 
+    @FXML
+//    private JFXTextField jfxtest;
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
