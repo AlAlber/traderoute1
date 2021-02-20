@@ -49,3 +49,6 @@
 .table-row-cell:selected {
    -fx-background-color: steelblue;
 }
+.table-row-cell:empty {
+    -fx-background-color: steelblue;
+}

@@ -11,6 +11,15 @@ public class ParameterValueEditingCell extends TableCell<Parameter<?>, Object> {
 //        this.pre=pre;
 //    }
 //    private TextField textField;
+    public ParameterValueEditingCell(){
+        super();
+//        Parameter<?> param = .getItems().get(getIndex());
+//        TableColumn<Parameter<?>,?> column = getTableColumn();
+//        int colIndex = getTableView().getColumns().indexOf(column);
+
+
+    }
+
 
 
     @Override
@@ -19,6 +28,9 @@ public class ParameterValueEditingCell extends TableCell<Parameter<?>, Object> {
         if (empty || item == null) {
             setText(null);
             setGraphic(null);
+            setStyle("\n" +
+                    "    -fx-border-color: transparent;\n" +
+                    "    -fx-table-cell-border-color: transparent;");
         } else {
             Parameter<?> param = getTableView().getItems().get(getIndex());
             TableColumn<Parameter<?>,?> column = getTableColumn();
@@ -28,9 +40,27 @@ public class ParameterValueEditingCell extends TableCell<Parameter<?>, Object> {
                 setGraphic(param.getEditor(colIndex));
             } else {
                 setText(param.getPre() +item.toString());
+                if (param.getJanuary() instanceof String){
+                    if (item.equals("")){
+                        setPrefHeight(60);};
+                    } else {
+                        setStyle("-fx-background-color:  rgb(255,255,255, 0.3);\n" +
+                                "    -fx-background-insets: 0, 0 0 1 0;");
+                    }
+                }
+                if (param.getJanuary() instanceof Number) {
+                    int i = new BigDecimal(item.toString()).compareTo(new BigDecimal("0.0"));
+                    if (i > 0) {
+                        setStyle("-fx-background-color:  rgb(255,255,255, 0.3);\n" +
+                                "    -fx-background-insets: 0, 0 0 1 0;");
+                    }
+                    if (i == 0) {
+                        setStyle("-fx-text-fill:  rgb(255,255,255, 0.3);");
+                    }
+                }
                 setGraphic(null);
             }
-        }
+
     }
 
     @Override
@@ -60,7 +90,7 @@ public class ParameterValueEditingCell extends TableCell<Parameter<?>, Object> {
         ChangeListener<? super Boolean> changeListener = (observable, oldSelection, newSelection) ->
         {
             if (! newSelection) {
-                commitEdit(((TextField)param.getEditor(colIndex)).getText());
+                 commitEdit(((TextField)param.getEditor(colIndex)).getText());
             }
         };
         param.getEditor(colIndex).focusedProperty().addListener(changeListener);

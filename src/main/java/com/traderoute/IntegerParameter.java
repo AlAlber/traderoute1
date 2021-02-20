@@ -65,6 +65,46 @@ public class IntegerParameter extends Parameter<Integer>{
         editor11.textProperty().bindBidirectional(decemberProperty(), new IntegerStringConverter());
         addIntListener(editor11);
     }
+    public IntegerParameter(String name, String pre){
+        super(name, pre);
+        setEditable(true);
+        editor0 = new TextField(getJanuary().toString());
+        editor0.textProperty().bindBidirectional(januaryProperty(), new IntegerStringConverter());
+        addIntListener(editor0);
+        editor1 = new TextField();
+        editor1.textProperty().bindBidirectional(februaryProperty(), new IntegerStringConverter());
+        addIntListener(editor1);
+        editor2 = new TextField();
+        editor2.textProperty().bindBidirectional(marchProperty(), new IntegerStringConverter());
+        addIntListener(editor2);
+        editor3 = new TextField();
+        editor3.textProperty().bindBidirectional(aprilProperty(), new IntegerStringConverter());
+        addIntListener(editor3);
+        editor4 = new TextField();
+        editor4.textProperty().bindBidirectional(mayProperty(), new IntegerStringConverter());
+        addIntListener(editor4);
+        editor5 = new TextField();
+        editor5.textProperty().bindBidirectional(juneProperty(), new IntegerStringConverter());
+        addIntListener(editor5);
+        editor6 = new TextField();
+        editor6.textProperty().bindBidirectional(julyProperty(), new IntegerStringConverter());
+        addIntListener(editor6);
+        editor7 = new TextField();
+        editor7.textProperty().bindBidirectional(augustProperty(), new IntegerStringConverter());
+        addIntListener(editor7);
+        editor8 = new TextField();
+        editor8.textProperty().bindBidirectional(septemberProperty(), new IntegerStringConverter());
+        addIntListener(editor8);
+        editor9 = new TextField();
+        editor9.textProperty().bindBidirectional(octoberProperty(), new IntegerStringConverter());
+        addIntListener(editor9);
+        editor10 = new TextField();
+        editor10.textProperty().bindBidirectional(novemberProperty(), new IntegerStringConverter());
+        addIntListener(editor10);
+        editor11 = new TextField();
+        editor11.textProperty().bindBidirectional(decemberProperty(), new IntegerStringConverter());
+        addIntListener(editor11);
+    }
     public void addIntListener(TextField editor){
         editor.textProperty().addListener(new ChangeListener<String>() {
             private boolean changing;
@@ -85,11 +125,19 @@ public class IntegerParameter extends Parameter<Integer>{
             }
         });
     }
-    public Integer getJanuary(){return january.get();}
+    public Integer getJanuary(){
+        if (january.get() == null) {
+            return 0;
+        }
+        return january.get();
+    }
     public Integer getFebruary(){ return february.get();}
 
     @Override
     public Integer getMarch() {
+        if (january.get() == null) {
+            return 0;
+        }
         return march.get();
     }
 

@@ -20,11 +20,26 @@ public class BigDecimalParameter extends Parameter<BigDecimal>{
     private TextField editor9;
     private TextField editor10;
     private TextField editor11;
+
     public BigDecimalParameter(String name, String pre, BigDecimal january, BigDecimal february,
                                BigDecimal march, BigDecimal april, BigDecimal may, BigDecimal june,
                                BigDecimal july, BigDecimal august, BigDecimal september, BigDecimal october,
                                BigDecimal november, BigDecimal december){
         super(name, pre, january, february,march, april, may, june, july, august, september, october, november, december);
+        bindAndSetTextFormatters();
+    }
+    public BigDecimalParameter(){
+        editor0 = new TextField();
+        super.name ="";
+        super.pre = "";
+        setEditable(false);
+    }
+    public BigDecimalParameter(String name, String pre){
+        super(name, pre);
+        setEditable(true);
+        bindAndSetTextFormatters();
+    }
+    public void bindAndSetTextFormatters(){
         editor0 = new TextField();
         editor1 = new TextField();
         editor2 = new TextField();
@@ -73,58 +88,98 @@ public class BigDecimalParameter extends Parameter<BigDecimal>{
 
         editor11.textProperty().bindBidirectional(decemberProperty(), new BigDecimalStringConverter());
         editor11.setTextFormatter(new TextFormatter(firstTableController.getDoubleInputConverter(), getDecember().doubleValue(), firstTableController.getDoubleInputFilter() ));
+
     }
 
-    public BigDecimal getJanuary(){ return january.get();}
-    public BigDecimal getFebruary(){ return february.get();}
+    public BigDecimal getJanuary() {
+        if (january.get() == null) {
+            return new BigDecimal("0.0");
+        }
+        return january.get();
+    }
+    public BigDecimal getFebruary(){
+        if (february.get() == null) {
+            return new BigDecimal("0.0");
+        }
+        return february.get();}
 
     @Override
     public BigDecimal getMarch() {
+        if (march.get() == null) {
+            return new BigDecimal("0.0");
+        }
         return march.get();
     }
 
     @Override
     public BigDecimal getApril() {
+        if (april.get() == null) {
+            return new BigDecimal("0.0");
+        }
         return april.get();
     }
 
     @Override
     public BigDecimal getMay() {
+        if (may.get() == null) {
+            return new BigDecimal("0.0");
+        }
         return may.get();
     }
 
     @Override
     public BigDecimal getJune() {
+        if (june.get() == null) {
+            return new BigDecimal("0.0");
+        }
         return june.get();
     }
 
     @Override
     public BigDecimal getJuly() {
+        if (july.get() == null) {
+            return new BigDecimal("0.0");
+        }
         return july.get();
     }
 
     @Override
     public BigDecimal getAugust() {
+        if (august.get() == null) {
+            return new BigDecimal("0.0");
+        }
         return august.get();
     }
 
     @Override
     public BigDecimal getSeptember() {
+        if (september.get() == null) {
+            return new BigDecimal("0.0");
+        }
         return september.get();
     }
 
     @Override
     public BigDecimal getOctober() {
+        if (october.get() == null) {
+            return new BigDecimal("0.0");
+        }
         return october.get();
     }
 
     @Override
     public BigDecimal getNovember() {
+        if (november.get() == null) {
+            return new BigDecimal("0.0");
+        }
         return november.get();
     }
 
     @Override
     public BigDecimal getDecember() {
+        if (december.get() == null) {
+            return new BigDecimal("0.0");
+        }
         return december.get();
     }
 
