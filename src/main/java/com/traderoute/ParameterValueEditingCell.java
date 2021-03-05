@@ -17,7 +17,6 @@ public class ParameterValueEditingCell extends TableCell<Parameter<?>, Object> {
 //        TableColumn<Parameter<?>,?> column = getTableColumn();
 //        int colIndex = getTableView().getColumns().indexOf(column);
 
-
     }
 
 
@@ -33,16 +32,17 @@ public class ParameterValueEditingCell extends TableCell<Parameter<?>, Object> {
                     "    -fx-table-cell-border-color: transparent;");
         } else {
             Parameter<?> param = getTableView().getItems().get(getIndex());
-            TableColumn<Parameter<?>,?> column = getTableColumn();
+            TableColumn<Parameter<?>, ?> column = getTableColumn();
             int colIndex = getTableView().getColumns().indexOf(column);
             if (isEditing()) {
                 setText(null);
                 setGraphic(param.getEditor(colIndex));
             } else {
-                setText(param.getPre() +item.toString());
-                if (param.getJanuary() instanceof String){
-                    if (item.equals("")){
-                        setPrefHeight(60);};
+                setText(param.getPre() + item.toString());
+                setGraphic(null);
+                if (param.getJanuary() instanceof String) {
+                    if (item.equals("")) {
+                        setPrefHeight(40);
                     } else {
                         setStyle("-fx-background-color:  rgb(255,255,255, 0.3);\n" +
                                 "    -fx-background-insets: 0, 0 0 1 0;");
@@ -58,20 +58,15 @@ public class ParameterValueEditingCell extends TableCell<Parameter<?>, Object> {
                         setStyle("-fx-text-fill:  rgb(255,255,255, 0.3);");
                     }
                 }
-                setGraphic(null);
             }
-
+        }
     }
 
     @Override
     public void startEdit() {
         Parameter<?> param = getTableRow().getItem();
         TableColumn<Parameter<?>,?> column = getTableColumn();
-        System.out.println(param.toString());
         int colIndex = getTableView().getColumns().indexOf(column);
-//        TableColumn<Parameter<?>,?> cell =  getTableView().getColumns().get(getIndex());
-        System.out.println(colIndex);
-
         ((TextField) param.getEditor(colIndex)).setOnAction(evt -> { // enable ENTER commit
             if (param.getJanuary() instanceof String){
             commitEdit(
@@ -90,7 +85,18 @@ public class ParameterValueEditingCell extends TableCell<Parameter<?>, Object> {
         ChangeListener<? super Boolean> changeListener = (observable, oldSelection, newSelection) ->
         {
             if (! newSelection) {
-                 commitEdit(((TextField)param.getEditor(colIndex)).getText());
+                if (param.getJanuary() instanceof String){
+                    commitEdit(
+                            ((TextField) param.getEditor(colIndex)).getText());
+                };
+                if (param.getJanuary() instanceof BigDecimal){
+                    commitEdit(
+                            new BigDecimal(((TextField) param.getEditor(colIndex)).getText()));
+                }
+                if (param.getJanuary() instanceof Integer){
+                    commitEdit(
+                            Integer.valueOf(((TextField) param.getEditor(colIndex)).getText()));
+                }
             }
         };
         param.getEditor(colIndex).focusedProperty().addListener(changeListener);
@@ -101,8 +107,12 @@ public class ParameterValueEditingCell extends TableCell<Parameter<?>, Object> {
         if (index < 0 || index >= getTableView().getItems().size()) {
             return ;
         }
-        if (! getTableView().getItems().get(index).isEditable()) {
-            return ;
+        if (getTableView().getItems().get(index).getEditor(0).isEditable())
+        if (colIndex!=0 && !getTableView().getItems().get(index).isEditable()) {
+            return;
+        }
+        if (colIndex==0 && ! getTableView().getItems().get(index).getEditor(0).isEditable()){
+            return;
         }
 
         super.startEdit();

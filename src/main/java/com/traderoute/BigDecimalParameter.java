@@ -1,5 +1,6 @@
 package com.traderoute;
 
+import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.Node;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
@@ -24,19 +25,23 @@ public class BigDecimalParameter extends Parameter<BigDecimal>{
     public BigDecimalParameter(String name, String pre, BigDecimal january, BigDecimal february,
                                BigDecimal march, BigDecimal april, BigDecimal may, BigDecimal june,
                                BigDecimal july, BigDecimal august, BigDecimal september, BigDecimal october,
-                               BigDecimal november, BigDecimal december){
-        super(name, pre, january, february,march, april, may, june, july, august, september, october, november, december);
+                               BigDecimal november, BigDecimal december, boolean editable){
+        super(name, pre, january, february,march, april, may, june, july, august, september, october, november, december, editable);
         bindAndSetTextFormatters();
     }
     public BigDecimalParameter(){
         editor0 = new TextField();
-        super.name ="";
+        super.name =new SimpleStringProperty( ""); // Changed name here
         super.pre = "";
         setEditable(false);
     }
     public BigDecimalParameter(String name, String pre){
         super(name, pre);
         setEditable(true);
+        if (getName().equals("Skus In Distribution")){
+            setEditable(false);
+            editor0.setEditable(true);
+        }
         bindAndSetTextFormatters();
     }
     public void bindAndSetTextFormatters(){
@@ -89,6 +94,10 @@ public class BigDecimalParameter extends Parameter<BigDecimal>{
         editor11.textProperty().bindBidirectional(decemberProperty(), new BigDecimalStringConverter());
         editor11.setTextFormatter(new TextFormatter(firstTableController.getDoubleInputConverter(), getDecember().doubleValue(), firstTableController.getDoubleInputFilter() ));
 
+    }
+    @Override
+    public void setMonth(int month, BigDecimal value){
+        super.setMonth(month,value);
     }
 
     public BigDecimal getJanuary() {

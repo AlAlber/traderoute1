@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -16,9 +19,9 @@
    <children>
       <VBox prefHeight="820.0" prefWidth="1550.0" style="-fx-background-color: #1E1D1A;">
          <children>
-            <HBox prefHeight="102.0" prefWidth="1490.0">
+            <HBox minHeight="-Infinity" prefHeight="117.0" prefWidth="1502.0">
                <children>
-                  <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="74.0" fitWidth="170.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../images/inner%20trade%20route%20logo.JPG" />
                      </image>
@@ -41,175 +44,391 @@
                   <Button mnemonicParsing="false" onAction="#switchToSecondTable" text="Route-to-Market" />
                   <Button mnemonicParsing="false" onAction="#switchToAssortment" text="Assortment" />
                   <Button mnemonicParsing="false" text="Pricing and Promotion" />
+                  <Button mnemonicParsing="false" onAction="#hideTable" text="hideTable" />
                </children>
             </HBox>
             <AnchorPane prefHeight="258.0" prefWidth="1502.0">
                <children>
-                  <TableView fx:id="pricingPromotionTableOne" layoutX="112.0" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="742.0" prefWidth="686.0" styleClass="table-row-cell" stylesheets="@../styles/Styles.css">
-                     <columns>
-                        <TableColumn fx:id="januaryColumn" prefWidth="56.0" sortable="false" text="January" />
-                        <TableColumn fx:id="februaryColumn" prefWidth="56.0" sortable="false" text="February" />
-                        <TableColumn fx:id="marchColumn" prefWidth="53.600006103515625" sortable="false" text="March" />
-                        <TableColumn fx:id="aprilColumn" prefWidth="58.4000244140625" sortable="false" text="April" />
-                        <TableColumn fx:id="mayColumn" prefWidth="56.0" sortable="false" text="May" />
-                        <TableColumn fx:id="juneColumn" prefWidth="56.0" sortable="false" text="June" />
-                        <TableColumn fx:id="julyColumn" prefWidth="56.0" sortable="false" text="July" />
-                        <TableColumn fx:id="augustColumn" prefWidth="56.0" sortable="false" text="August" />
-                        <TableColumn fx:id="septemberColumn" prefWidth="56.0" sortable="false" text="September" />
-                        <TableColumn fx:id="octoberColumn" prefWidth="56.0" sortable="false" text="October" />
-                        <TableColumn fx:id="novemberColumn" prefWidth="56.0" sortable="false" text="November" />
-                        <TableColumn fx:id="decemberColumn" prefWidth="56.0" sortable="false" text="December" />
-                     </columns>
-                  </TableView>
-                  <VBox layoutX="14.0" layoutY="26.0" prefHeight="423.0" prefWidth="100.0">
+                  <HBox prefHeight="654.0" prefWidth="1502.0" style="-fx-border-color: #A79543; -fx-border-width: 3;">
                      <children>
-                        <Label prefWidth="111.0" text="Skus in Distribution">
-                           <VBox.margin>
-                              <Insets bottom="10.0" />
-                           </VBox.margin>
-                        </Label>
-                        <Label text="Sku-Count Change">
-                           <VBox.margin>
-                              <Insets bottom="10.0" />
-                           </VBox.margin>
-                        </Label>
-                        <Label text="Confidence %">
-                           <VBox.margin>
-                              <Insets bottom="10.0" />
-                           </VBox.margin>
-                        </Label>
-                        <Label text="Store Count">
-                           <VBox.margin>
+                        <VBox prefHeight="714.0" prefWidth="502.0">
+                           <children>
+                              <AnchorPane fx:id="anchor1" prefHeight="178.0" prefWidth="499.0" style="-fx-border-color: #A79543; -fx-background-color: #3b381a;">
+                                 <children>
+                                    <TableView fx:id="toplineTable0" layoutY="89.0" prefHeight="74.0" prefWidth="162.0" stylesheets="@../styles/Styles.css">
+                                       <columns>
+                                          <TableColumn fx:id="toplineDescriptionColumn0" prefWidth="79.19998168945312" />
+                                          <TableColumn fx:id="toplineValueColumn0" minWidth="6.39996337890625" prefWidth="80.80007934570312" />
+                                       </columns>
+                                       <styleClass>
+                                          <String fx:value="table-row-cell" />
+                                          <String fx:value="noheader" />
+                                       </styleClass>
+                                    </TableView>
+                                    <TableView id="retailerTable0" fx:id="retailerTable0" layoutX="162.0" layoutY="89.0" prefHeight="74.0" prefWidth="162.0" stylesheets="@../styles/Styles.css">
+                                       <columns>
+                                          <TableColumn fx:id="retailerDescriptionColumn0" prefWidth="81.5999755859375" />
+                                          <TableColumn fx:id="retailerValueColumn0" minWidth="6.39996337890625" prefWidth="79.99999084472657" />
+                                       </columns>
+                                       <styleClass>
+                                          <String fx:value="table-row-cell" />
+                                          <String fx:value="noheader" />
+                                       </styleClass>
+                                    </TableView>
+                                    <ComboBox fx:id="rtmBox0" layoutX="6.0" layoutY="29.0" onAction="#changeFirstRtmBoxEvent" prefHeight="26.0" prefWidth="150.0" promptText="Select Market Route" style="-fx-prompt-text-font-size: 5;" AnchorPane.topAnchor="34.0" />
+                                    <Button fx:id="commitButton0" layoutX="422.0" layoutY="101.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="98.0" text="Commit To Forecast" AnchorPane.topAnchor="108.0" />
+                                    <TextField fx:id="weeklyVelocityField0" layoutX="168.0" layoutY="29.0" onAction="#changeWeeklyVelocityEvent" prefHeight="26.0" prefWidth="150.0" promptText="Weekly Velocity U/F/S/W" AnchorPane.topAnchor="34.0" />
+                                    <VBox layoutX="329.0" layoutY="29.0" prefHeight="74.0" prefWidth="98.0" AnchorPane.topAnchor="34.0">
+                                       <children>
+                                          <Label fx:id="everydayLabel0" text="\$0.00 Everyday">
+                                             <VBox.margin>
+                                                <Insets />
+                                             </VBox.margin>
+                                             <padding>
+                                                <Insets bottom="5.0" />
+                                             </padding>
+                                          </Label>
+                                          <Label fx:id="costLabel0" text="\$0.00 Cost">
+                                             <VBox.margin>
+                                                <Insets />
+                                             </VBox.margin>
+                                             <padding>
+                                                <Insets bottom="5.0" />
+                                             </padding>
+                                          </Label>
+                                          <Label fx:id="gpmLabel0" text="0.00% GPM">
+                                             <VBox.margin>
+                                                <Insets />
+                                             </VBox.margin>
+                                             <padding>
+                                                <Insets bottom="5.0" />
+                                             </padding>
+                                          </Label>
+                                       </children>
+                                    </VBox>
+                                    <Label layoutX="6.0" style="-fx-font-size: 20;" text="FY2021 Promotional Planning">
+                                       <font>
+                                          <Font size="13.0" />
+                                       </font>
+                                    </Label>
+                                    <VBox layoutX="422.0" layoutY="28.0" prefHeight="82.0" prefWidth="98.0" AnchorPane.topAnchor="34.0">
+                                       <children>
+                                          <Label prefHeight="15.0" prefWidth="102.0" style="-fx-background-color: green;" text="Planned Net 1 Rate: ">
+                                             <padding>
+                                                <Insets bottom="5.0" />
+                                             </padding>
+                                          </Label>
+                                          <Label fx:id="plannedNet1RateLabel0" prefHeight="30.0" prefWidth="98.0" style="-fx-font-size: 18; -fx-background-color: green;" text="\$0.00">
+                                             <padding>
+                                                <Insets bottom="5.0" />
+                                             </padding>
+                                          </Label>
+                                          <Label fx:id="goalLabel0" prefHeight="15.0" prefWidth="101.0" style="-fx-background-color: green;" text="\$0.00 to Goal" />
+                                       </children>
+                                    </VBox>
+                                    <Button fx:id="editButton0" layoutX="329.0" layoutY="101.0" mnemonicParsing="false" onAction="#clickEditButton" prefHeight="51.0" prefWidth="90.0" text="Edit Promo Plan" AnchorPane.topAnchor="108.0" />
+                                    <Label layoutX="47.0" layoutY="66.0" style="-fx-font-size: 15;" text="Topline">
+                                       <font>
+                                          <Font size="13.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="215.0" layoutY="66.0" style="-fx-font-size: 15;" text="Retailer">
+                                       <font>
+                                          <Font size="13.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </AnchorPane>
+                              <AnchorPane fx:id="anchor2" prefHeight="178.0" prefWidth="499.0" style="-fx-border-color: #A79543; -fx-background-color: #3b381a;">
+                                 <children>
+                                    <TableView fx:id="toplineTable1" layoutY="89.0" prefHeight="74.0" prefWidth="162.0" stylesheets="@../styles/Styles.css">
+                                       <columns>
+                                          <TableColumn fx:id="toplineDescriptionColumn1" prefWidth="79.19998168945312" />
+                                          <TableColumn fx:id="toplineValueColumn1" minWidth="6.39996337890625" prefWidth="80.80007934570312" />
+                                       </columns>
+                                       <styleClass>
+                                          <String fx:value="table-row-cell" />
+                                          <String fx:value="noheader" />
+                                       </styleClass>
+                                    </TableView>
+                                    <TableView fx:id="retailerTable1" layoutX="162.0" layoutY="89.0" prefHeight="74.0" prefWidth="162.0" stylesheets="@../styles/Styles.css">
+                                       <columns>
+                                          <TableColumn fx:id="retailerDescriptionColumn1" prefWidth="81.5999755859375" />
+                                          <TableColumn fx:id="retailerValueColumn1" minWidth="6.39996337890625" prefWidth="79.99999084472657" />
+                                       </columns>
+                                       <styleClass>
+                                          <String fx:value="table-row-cell" />
+                                          <String fx:value="noheader" />
+                                       </styleClass>
+                                    </TableView>
+                                    <ComboBox fx:id="rtmBox1" layoutX="6.0" layoutY="28.0" onAction="#changeFirstRtmBoxEvent" prefHeight="26.0" prefWidth="150.0" promptText="Select Market Route" style="-fx-prompt-text-font-size: 5;" AnchorPane.topAnchor="34.0" />
+                                    <Button fx:id="commitButton1" layoutX="422.0" layoutY="101.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="98.0" text="Commit To Forecast" AnchorPane.topAnchor="108.0" />
+                                    <TextField fx:id="weeklyVelocityField1" layoutX="168.0" layoutY="29.0" prefHeight="26.0" prefWidth="150.0" promptText="Weekly Velocity U/F/S/W" AnchorPane.topAnchor="34.0" />
+                                    <VBox layoutX="329.0" layoutY="29.0" prefHeight="74.0" prefWidth="98.0" AnchorPane.topAnchor="34.0">
+                                       <children>
+                                          <Label fx:id="everydayLabel1" text="\$0.00 Everyday">
+                                             <VBox.margin>
+                                                <Insets />
+                                             </VBox.margin>
+                                             <padding>
+                                                <Insets bottom="5.0" />
+                                             </padding>
+                                          </Label>
+                                          <Label fx:id="costLabel1" text="\$0.00 Cost">
+                                             <VBox.margin>
+                                                <Insets />
+                                             </VBox.margin>
+                                             <padding>
+                                                <Insets bottom="5.0" />
+                                             </padding>
+                                          </Label>
+                                          <Label fx:id="gpmLabel1" text="0.00% GPM">
+                                             <VBox.margin>
+                                                <Insets />
+                                             </VBox.margin>
+                                             <padding>
+                                                <Insets bottom="5.0" />
+                                             </padding>
+                                          </Label>
+                                       </children>
+                                    </VBox>
+                                    <Label layoutX="6.0" style="-fx-font-size: 20;" text="FY2022 Promotional Planning">
+                                       <font>
+                                          <Font size="13.0" />
+                                       </font>
+                                    </Label>
+                                    <VBox layoutX="422.0" layoutY="28.0" prefHeight="82.0" prefWidth="98.0" AnchorPane.topAnchor="34.0">
+                                       <children>
+                                          <Label fx:id="plannedNet1RateLabel1" prefHeight="15.0" prefWidth="102.0" style="-fx-background-color: green;" text="Planned Net 1 Rate: ">
+                                             <padding>
+                                                <Insets bottom="5.0" />
+                                             </padding>
+                                          </Label>
+                                          <Label fx:id="plannedNet1RateLabel1" prefHeight="30.0" prefWidth="98.0" style="-fx-font-size: 18; -fx-background-color: green;" text="\$0.00">
+                                             <padding>
+                                                <Insets bottom="5.0" />
+                                             </padding>
+                                          </Label>
+                                          <Label fx:id="goalLabel1" prefHeight="15.0" prefWidth="101.0" style="-fx-background-color: green;" text="\$0.00 to Goal" />
+                                       </children>
+                                    </VBox>
+                                    <Button fx:id="editButton1" layoutX="329.0" layoutY="101.0" mnemonicParsing="false" onAction="#clickEditButton" prefHeight="51.0" prefWidth="90.0" text="Edit Promo Plan" AnchorPane.topAnchor="108.0" />
+                                    <Label layoutX="54.0" layoutY="66.0" style="-fx-font-size: 15;" text="Topline">
+                                       <font>
+                                          <Font size="13.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="215.0" layoutY="66.0" style="-fx-font-size: 15;" text="Retailer">
+                                       <font>
+                                          <Font size="13.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </AnchorPane>
+                              <AnchorPane prefHeight="178.0" prefWidth="499.0" style="-fx-border-color: #A79543; -fx-background-color: #3b381a;">
+                                 <children>
+                                    <TableView fx:id="toplineTable2" layoutY="89.0" prefHeight="74.0" prefWidth="162.0" stylesheets="@../styles/Styles.css">
+                                       <columns>
+                                          <TableColumn fx:id="toplineDescriptionColumn2" prefWidth="79.19998168945312" />
+                                          <TableColumn fx:id="toplineValueColumn2" minWidth="6.39996337890625" prefWidth="80.80007934570312" />
+                                       </columns>
+                                       <styleClass>
+                                          <String fx:value="table-row-cell" />
+                                          <String fx:value="noheader" />
+                                       </styleClass>
+                                    </TableView>
+                                    <TableView fx:id="retailerTable2" layoutX="162.0" layoutY="89.0" prefHeight="74.0" prefWidth="162.0" stylesheets="@../styles/Styles.css">
+                                       <columns>
+                                          <TableColumn fx:id="retailerDescriptionColumn2" prefWidth="81.5999755859375" />
+                                          <TableColumn fx:id="retailerValueColumn2" minWidth="6.39996337890625" prefWidth="79.99999084472657" />
+                                       </columns>
+                                       <styleClass>
+                                          <String fx:value="table-row-cell" />
+                                          <String fx:value="noheader" />
+                                       </styleClass>
+                                    </TableView>
+                                    <ComboBox fx:id="rtmBox2" layoutX="6.0" layoutY="28.0" onAction="#changeFirstRtmBoxEvent" prefHeight="26.0" prefWidth="150.0" promptText="Select Market Route" style="-fx-prompt-text-font-size: 5;" AnchorPane.topAnchor="34.0" />
+                                    <Button fx:id="commitButton2" layoutX="422.0" layoutY="101.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="98.0" text="Commit To Forecast" AnchorPane.topAnchor="108.0" />
+                                    <TextField fx:id="weeklyVelocityField2" layoutX="168.0" layoutY="29.0" prefHeight="26.0" prefWidth="150.0" promptText="Weekly Velocity U/F/S/W" AnchorPane.topAnchor="34.0" />
+                                    <VBox layoutX="329.0" layoutY="29.0" prefHeight="74.0" prefWidth="98.0" AnchorPane.topAnchor="34.0">
+                                       <children>
+                                          <Label fx:id="everydayLabel2" text="\$0.00 Everyday">
+                                             <VBox.margin>
+                                                <Insets />
+                                             </VBox.margin>
+                                             <padding>
+                                                <Insets bottom="5.0" />
+                                             </padding>
+                                          </Label>
+                                          <Label fx:id="costLabel2" text="\$0.00 Cost">
+                                             <VBox.margin>
+                                                <Insets />
+                                             </VBox.margin>
+                                             <padding>
+                                                <Insets bottom="5.0" />
+                                             </padding>
+                                          </Label>
+                                          <Label fx:id="gpmLabel2" text="0.00% GPM">
+                                             <VBox.margin>
+                                                <Insets />
+                                             </VBox.margin>
+                                             <padding>
+                                                <Insets bottom="5.0" />
+                                             </padding>
+                                          </Label>
+                                       </children>
+                                    </VBox>
+                                    <Label layoutX="6.0" style="-fx-font-size: 20;" text="FY2023 Promotional Planning">
+                                       <font>
+                                          <Font size="13.0" />
+                                       </font>
+                                    </Label>
+                                    <VBox layoutX="422.0" layoutY="28.0" prefHeight="82.0" prefWidth="98.0" AnchorPane.topAnchor="34.0">
+                                       <children>
+                                          <Label fx:id="plannedNet1RateLabel2" prefHeight="15.0" prefWidth="102.0" style="-fx-background-color: green;" text="Planned Net 1 Rate: ">
+                                             <padding>
+                                                <Insets bottom="5.0" />
+                                             </padding>
+                                          </Label>
+                                          <Label prefHeight="30.0" prefWidth="98.0" style="-fx-font-size: 18; -fx-background-color: green;" text="\$0.00">
+                                             <padding>
+                                                <Insets bottom="5.0" />
+                                             </padding>
+                                          </Label>
+                                          <Label fx:id="goalLabel2" prefHeight="15.0" prefWidth="101.0" style="-fx-background-color: green;" text="\$0.00 to Goal" />
+                                       </children>
+                                    </VBox>
+                                    <Button fx:id="editButton2" layoutX="329.0" layoutY="101.0" mnemonicParsing="false" onAction="#clickEditButton" prefHeight="51.0" prefWidth="90.0" text="Edit Promo Plan" AnchorPane.topAnchor="108.0" />
+                                    <Label layoutX="54.0" layoutY="66.0" style="-fx-font-size: 15;" text="Topline">
+                                       <font>
+                                          <Font size="13.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="219.0" layoutY="65.0" style="-fx-font-size: 15;" text="Retailer">
+                                       <font>
+                                          <Font size="13.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </AnchorPane>
+                              <AnchorPane prefHeight="178.0" prefWidth="499.0" style="-fx-border-color: #A79543; -fx-background-color: #3b381a;">
+                                 <children>
+                                    <TableView fx:id="toplineTable3" layoutY="89.0" prefHeight="74.0" prefWidth="162.0" stylesheets="@../styles/Styles.css">
+                                       <columns>
+                                          <TableColumn fx:id="toplineDescriptionColumn3" prefWidth="79.19998168945312" />
+                                          <TableColumn fx:id="toplineValueColumn3" minWidth="6.39996337890625" prefWidth="80.80007934570312" />
+                                       </columns>
+                                       <styleClass>
+                                          <String fx:value="table-row-cell" />
+                                          <String fx:value="noheader" />
+                                       </styleClass>
+                                    </TableView>
+                                    <TableView fx:id="retailerTable3" layoutX="162.0" layoutY="89.0" prefHeight="74.0" prefWidth="162.0" stylesheets="@../styles/Styles.css">
+                                       <columns>
+                                          <TableColumn fx:id="retailerDescriptionColumn3" prefWidth="81.5999755859375" />
+                                          <TableColumn fx:id="retailerValueColumn3" minWidth="6.39996337890625" prefWidth="79.99999084472657" />
+                                       </columns>
+                                       <styleClass>
+                                          <String fx:value="table-row-cell" />
+                                          <String fx:value="noheader" />
+                                       </styleClass>
+                                    </TableView>
+                                    <ComboBox fx:id="rtmBox3" layoutX="6.0" layoutY="28.0" onAction="#changeFirstRtmBoxEvent" prefHeight="26.0" prefWidth="150.0" promptText="Select Market Route" style="-fx-prompt-text-font-size: 5;" AnchorPane.topAnchor="34.0" />
+                                    <Button fx:id="commitButton3" layoutX="422.0" layoutY="101.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="98.0" text="Commit To Forecast" AnchorPane.topAnchor="108.0" />
+                                    <TextField fx:id="weeklyVelocityField3" layoutX="168.0" layoutY="29.0" prefHeight="26.0" prefWidth="150.0" promptText="Weekly Velocity U/F/S/W" AnchorPane.topAnchor="34.0" />
+                                    <VBox layoutX="329.0" layoutY="29.0" prefHeight="74.0" prefWidth="98.0" AnchorPane.topAnchor="34.0">
+                                       <children>
+                                          <Label fx:id="everydayLabel3" text="\$0.00 Everyday">
+                                             <VBox.margin>
+                                                <Insets />
+                                             </VBox.margin>
+                                             <padding>
+                                                <Insets bottom="5.0" />
+                                             </padding>
+                                          </Label>
+                                          <Label fx:id="costLabel3" text="\$0.00 Cost">
+                                             <VBox.margin>
+                                                <Insets />
+                                             </VBox.margin>
+                                             <padding>
+                                                <Insets bottom="5.0" />
+                                             </padding>
+                                          </Label>
+                                          <Label fx:id="gpmLabel3" text="0.00% GPM">
+                                             <VBox.margin>
+                                                <Insets />
+                                             </VBox.margin>
+                                             <padding>
+                                                <Insets bottom="5.0" />
+                                             </padding>
+                                          </Label>
+                                       </children>
+                                    </VBox>
+                                    <Label layoutX="6.0" style="-fx-font-size: 20;" text="FY2024 Promotional Planning">
+                                       <font>
+                                          <Font size="13.0" />
+                                       </font>
+                                    </Label>
+                                    <VBox layoutX="422.0" layoutY="28.0" prefHeight="82.0" prefWidth="98.0" AnchorPane.topAnchor="34.0">
+                                       <children>
+                                          <Label fx:id="plannedNet1RateLabel3" prefHeight="15.0" prefWidth="102.0" style="-fx-background-color: green;" text="Planned Net 1 Rate: ">
+                                             <padding>
+                                                <Insets bottom="5.0" />
+                                             </padding>
+                                          </Label>
+                                          <Label prefHeight="30.0" prefWidth="98.0" style="-fx-font-size: 18; -fx-background-color: green;" text="\$0.00">
+                                             <padding>
+                                                <Insets bottom="5.0" />
+                                             </padding>
+                                          </Label>
+                                          <Label fx:id="goalLabel3" prefHeight="15.0" prefWidth="101.0" style="-fx-background-color: green;" text="\$0.00 to Goal" />
+                                       </children>
+                                    </VBox>
+                                    <Button fx:id="editButton3" layoutX="329.0" layoutY="101.0" mnemonicParsing="false" onAction="#clickEditButton" prefHeight="51.0" prefWidth="90.0" text="Edit Promo Plan" AnchorPane.topAnchor="108.0" />
+                                    <Label layoutX="54.0" layoutY="66.0" style="-fx-font-size: 15;" text="Topline">
+                                       <font>
+                                          <Font size="13.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="215.0" layoutY="66.0" style="-fx-font-size: 15;" text="Retailer">
+                                       <font>
+                                          <Font size="13.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </AnchorPane>
+                           </children>
+                        </VBox>
+                        <TableView fx:id="parameterNameTable" prefHeight="636.0" prefWidth="182.0" style="-fx-border-color: transparent;" styleClass="table-row-cell" stylesheets="@../styles/Styles.css">
+                          <columns>
+                            <TableColumn fx:id="parameterNameColumn" prefWidth="199.20001220703125" />
+                          </columns>
+                           <HBox.margin>
                               <Insets />
-                           </VBox.margin>
-                           <padding>
-                              <Insets bottom="30.0" />
-                           </padding>
-                        </Label>
-                        <Label text="Everyday Retail">
-                           <VBox.margin>
-                              <Insets bottom="5.0" />
-                           </VBox.margin>
-                           <padding>
-                              <Insets bottom="10.0" />
-                           </padding>
-                        </Label>
-                        <Label text="Everyday Unit Cost">
-                           <padding>
-                              <Insets bottom="30.0" />
-                           </padding>
-                        </Label>
-                        <Label text="Seasonality Indices">
-                           <padding>
-                              <Insets bottom="10.0" />
-                           </padding>
-                        </Label>
-                        <Label text="Promoted Retail">
-                           <padding>
-                              <Insets bottom="10.0" />
-                           </padding>
-                        </Label>
-                        <Label text="Required GPM%">
-                           <padding>
-                              <Insets bottom="10.0" />
-                           </padding>
-                        </Label>
-                        <Label text="Duration (Weeks)">
-                           <padding>
-                              <Insets bottom="10.0" />
-                           </padding>
-                        </Label>
-                        <Label text="Volume Lift Multiple">
-                           <padding>
-                              <Insets bottom="10.0" />
-                           </padding>
-                        </Label>
-                        <Label text="Fixed Costs">
-                           <padding>
-                              <Insets bottom="10.0" />
-                           </padding>
-                        </Label>
-                        <Label text="Promo Unit Cost">
-                           <padding>
-                              <Insets bottom="10.0" />
-                           </padding>
-                        </Label>
-                        <Label text="Promo Discount %">
-                           <VBox.margin>
-                              <Insets />
-                           </VBox.margin>
-                           <padding>
-                              <Insets bottom="30.0" />
-                           </padding>
-                        </Label>
-                        <Label text="Promotional Commentary/Notes">
-                           <padding>
-                              <Insets bottom="30.0" />
-                           </padding>
-                        </Label>
-                        <Label text="Promoted Retail">
-                           <VBox.margin>
-                              <Insets />
-                           </VBox.margin>
-                           <padding>
-                              <Insets bottom="10.0" />
-                           </padding>
-                        </Label>
-                        <Label text="Required GPM%">
-                           <VBox.margin>
-                              <Insets />
-                           </VBox.margin>
-                           <padding>
-                              <Insets bottom="10.0" />
-                           </padding>
-                        </Label>
-                        <Label text="Duration (Weeks)">
-                           <VBox.margin>
-                              <Insets />
-                           </VBox.margin>
-                           <padding>
-                              <Insets bottom="10.0" />
-                           </padding>
-                        </Label>
-                        <Label text="Volume Lift Multiple">
-                           <VBox.margin>
-                              <Insets />
-                           </VBox.margin>
-                           <padding>
-                              <Insets bottom="10.0" />
-                           </padding>
-                        </Label>
-                        <Label text="Fixed Costs">
-                           <VBox.margin>
-                              <Insets />
-                           </VBox.margin>
-                           <padding>
-                              <Insets bottom="10.0" />
-                           </padding>
-                        </Label>
-                        <Label text="Promo Unit Cost">
-                           <VBox.margin>
-                              <Insets />
-                           </VBox.margin>
-                           <padding>
-                              <Insets bottom="10.0" />
-                           </padding>
-                        </Label>
-                        <Label text="Promo Discount %">
-                           <VBox.margin>
-                              <Insets />
-                           </VBox.margin>
-                           <padding>
-                              <Insets bottom="10.0" />
-                           </padding>
-                        </Label>
-                        <Label text="Promotional Commentary/Notes">
-                           <padding>
-                              <Insets bottom="5.0" />
-                           </padding>
-                        </Label>
+                           </HBox.margin>
+                        </TableView>
+                        <TableView fx:id="pricingPromotionTableOne" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="732.0" prefWidth="798.0" style="-fx-border-color: transparent;" stylesheets="@../styles/Styles.css">
+                           <columns>
+                              <TableColumn fx:id="januaryColumn" onEditCommit="#changeMonthCellEvent" prefWidth="66.0" sortable="false" text="January" />
+                              <TableColumn fx:id="februaryColumn" onEditCommit="#changeMonthCellEvent" prefWidth="66.0" sortable="false" text="February" />
+                              <TableColumn fx:id="marchColumn" onEditCommit="#changeMonthCellEvent" prefWidth="66.0" sortable="false" text="March" />
+                              <TableColumn fx:id="aprilColumn" onEditCommit="#changeMonthCellEvent" prefWidth="66.0" sortable="false" text="April" />
+                              <TableColumn fx:id="mayColumn" onEditCommit="#changeMonthCellEvent" prefWidth="66.0" sortable="false" text="May" />
+                              <TableColumn fx:id="juneColumn" onEditCommit="#changeMonthCellEvent" prefWidth="66.0" sortable="false" text="June" />
+                              <TableColumn fx:id="julyColumn" onEditCommit="#changeMonthCellEvent" prefWidth="66.0" sortable="false" text="July" />
+                              <TableColumn fx:id="augustColumn" onEditCommit="#changeMonthCellEvent" prefWidth="66.0" sortable="false" text="August" />
+                              <TableColumn fx:id="septemberColumn" onEditCommit="#changeMonthCellEvent" prefWidth="66.0" sortable="false" text="September" />
+                              <TableColumn fx:id="octoberColumn" onEditCommit="#changeMonthCellEvent" prefWidth="66.0" sortable="false" text="October" />
+                              <TableColumn fx:id="novemberColumn" onEditCommit="#changeMonthCellEvent" prefWidth="66.0" sortable="false" text="November" />
+                              <TableColumn fx:id="decemberColumn" onEditCommit="#changeMonthCellEvent" prefWidth="66.0" sortable="false" text="December" />
+                           </columns>
+                           <styleClass>
+                              <String fx:value="table-row-cell" />
+                              <String fx:value="filler1" />
+                           </styleClass>
+                        </TableView>
                      </children>
-                  </VBox>
+                  </HBox>
                </children>
             </AnchorPane>
          </children>

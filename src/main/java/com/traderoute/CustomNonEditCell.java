@@ -21,7 +21,8 @@ public class CustomNonEditCell<Object, BigDecimal> extends TableCell<Object, Big
         }
         if (item == null) {
             setText("");
-        } else {
+        }
+        else {
             setText(dollar + String.format("%,.2f", item) + per);
         }
     }

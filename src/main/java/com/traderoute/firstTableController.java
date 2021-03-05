@@ -1,10 +1,12 @@
 package com.traderoute;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.XYChart;
@@ -13,16 +15,18 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.util.StringConverter;
 import javafx.util.converter.BigDecimalStringConverter;
+import javafx.util.converter.IntegerStringConverter;
 
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 import java.util.function.UnaryOperator;
 import java.util.regex.Pattern;
+
+import static com.traderoute.AssortmentController.convertToDate;
 
 public class firstTableController implements Initializable {
 
@@ -68,6 +72,7 @@ public class firstTableController implements Initializable {
     @FXML
     private TableColumn<RTMOption, BigDecimal> fourYearEqGpPerUnitColumn;
 
+    private SimpleObjectProperty<Retailer> retailer= new SimpleObjectProperty<>(new Retailer("ahold", firstTableController.getRetailerProducts(),firstTableController.getRetailerProducts().get(0) ,  new BigDecimal("40") , 158,new BigDecimal("3.0")));;
 
     @FXML
     private TextField yearOneStoreCountField;
@@ -213,6 +218,7 @@ public class firstTableController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
+
         //Set up cell value factories
         setCellValueFactories();
 
@@ -273,6 +279,15 @@ public class firstTableController implements Initializable {
 
         // Set cell factories
         setCellFactories();
+
+//        Retailer currentRetailer = new Retailer();
+//        this.retailer = new SimpleObjectProperty<Retailer>(currentRetailer);
+//        retailer.get().setRetailerProducts(getRetailerProducts());
+//        getRetailer().setCurrentRetailerProduct(getRetailer().getRetailerProducts().get(0));
+
+        yearOneStoreCountField.textProperty().bindBidirectional(getRetailer().yearOneStoreCountProperty(), new IntegerStringConverter());
+        everyDayGPMField.textProperty().bindBidirectional(getRetailer().everydayGPMProperty(), new BigDecimalStringConverter());
+        spoilsAndFeesField.textProperty().bindBidirectional(getRetailer().spoilsFeesProperty(), new BigDecimalStringConverter());
     }
 
     public BarChart<?, ?> getLandedStoreCostChart() {
@@ -424,10 +439,25 @@ public class firstTableController implements Initializable {
         fobLabel.setText("F.O.B. = $" + selectedProduct.getUnitFobCost());
         net1GoalLabel.setText("Net 1 Goal = $" + selectedProduct.getUnitNet1Goal());
         elasticityRatioLabel.setText("Elasticity Ratio = +1% Price :"+ selectedProduct.getElasticityMultiple() + "% Volume");
-        secondTableView.setItems(firstTableView.getItems());
         for (RTMOption row : firstTableView.getItems()) {
             row.setProduct(selectedProduct);
         }
+        // IDEA FOR LOGIC BEHIND RETAILER PRODUCT
+        ObservableList<RetailerProduct> allRetailerProducts = retailer.get().getRetailerProducts();
+        for (int i = 0; i<allRetailerProducts.size(); i++){
+            if (selectedProduct.equals(allRetailerProducts.get(i).getProduct())){
+                retailer.get().setCurrentRetailerProduct(allRetailerProducts.get(i));
+            }
+            if (i== allRetailerProducts.size()-1){
+                RetailerProduct retailerProductToAdd = new RetailerProduct();
+                retailerProductToAdd.setProduct(selectedProduct);
+                retailerProductToAdd.setRetailer(retailer.get());
+                retailerProductToAdd.setRtmOptions(null); // Add functionality here;
+                retailer.get().setCurrentRetailerProduct(new RetailerProduct());
+            }
+        }
+
+
         secondTableView.refresh();
         updateChart(false,false,false,false,true,true,true,true,true);
     }
@@ -663,10 +693,13 @@ Return Value from Year One Store Count
     /*
     Loads dummy table data
     */
-    public ObservableList<RTMOption> getRTMOptions() {
+    public static ObservableList<RTMOption> getRTMOptions() {
         ObservableList<RTMOption> RTMOptions = FXCollections.observableArrayList();
-        RTMOptions.add(new RTMOption("Direct-to-Customer", BigDecimal.valueOf(1.3), new BigDecimal(0), BigDecimal.valueOf(0.5),
-                BigDecimal.valueOf(0.1), BigDecimal.valueOf(0.3), BigDecimal.valueOf(3.95)));
+        RTMOption testOption = new RTMOption("Direct-to-Customer", new BigDecimal("0.29"),BigDecimal.valueOf(7500), BigDecimal.valueOf(3.59),
+                BigDecimal.valueOf(0.0), BigDecimal.valueOf(0.0), BigDecimal.valueOf(0.0));
+        testOption.setResultingEverydayRetailOverride(new BigDecimal("5.99"));
+        testOption.setLandedStoreCost(new BigDecimal("3.59"));
+        RTMOptions.add(testOption);
         RTMOption optionTwo = new RTMOption();
         optionTwo.setRTMName("Option2");
         RTMOptions.add(optionTwo);
@@ -678,6 +711,21 @@ Return Value from Year One Store Count
         RTMOptions.add(optionFour);
         return RTMOptions;
     }
+    /*
+    Load dummy RetailerProduct
+     */
+    public static ObservableList<RetailerProduct> getRetailerProducts() {
+        ObservableList<RetailerProduct> retailerProducts = FXCollections.observableArrayList();
+        ObservableList<Sku> skus = FXCollections.observableArrayList();
+        ObservableList<Meeting>  meetings = FXCollections.observableArrayList();
+        skus.addAll(new Sku("dill", "current", "great taste"), new Sku("dill", "current", "great taste"), new Sku("dill", "current", "great taste"));
+        meetings.addAll(new Meeting("Review Meeting", "here", convertToDate(LocalDate.of(2022,12,5)), "11:15","will be fun"), new Meeting());
+        retailerProducts.add(new RetailerProduct(new Retailer(), new Product("Big Time Food Company", "24 oz pickles", new BigDecimal("3.59"), new BigDecimal("0.29"),
+                new BigDecimal("3.30"), new BigDecimal("2.99"), new BigDecimal("2.05"), new BigDecimal("-1.15")), getRTMOptions(), skus,meetings));
+        return retailerProducts;
+    }
+
+
     /*
     Loads dummy product data
     */
@@ -695,11 +743,22 @@ Return Value from Year One Store Count
     }
     @FXML
     private void switchToAssortment(ActionEvent event) throws IOException {
-        App.setRoot("assortment");
+//        App.setRoot("assortment");
+        FXMLLoader assortmentLoader = App.createFXMLLoader("assortment");
+        App.setSceneRoot(assortmentLoader.load());
+
+        AssortmentController assortmentController =assortmentLoader.getController();
+        assortmentController.setRetailer(retailer.get());
     }
     @FXML
     private void switchToPricingPromotion(ActionEvent event) throws IOException {
-        App.setRoot("pricingPromotion");
+        FXMLLoader pricingPromotionLoader = App.createFXMLLoader("pricingPromotion");
+        App.setSceneRoot(pricingPromotionLoader.load());
+
+        PricingPromotionController pricingPromotionController =pricingPromotionLoader.getController();
+        System.out.println("Is this seriously being called again");
+        pricingPromotionController.setRetailer(retailer.get());
+        pricingPromotionController.getRtmBox0().setItems(getRetailer().getRetailerProducts().get(0).getRtmOptions());
     }
 
     /*
@@ -863,13 +922,21 @@ Return Value from Year One Store Count
     Return a converter for product combobox
      */
     public StringConverter<Product> getProductComboboxConverter(){
-        return new ComboboxConverter("product");
+        return new ProductboxConverter("product");
     }
     /*
     Return a converter for brand combobox
      */
     public StringConverter<Product> getBrandComboboxConverter() {
-        return new ComboboxConverter("brand");
+        return new ProductboxConverter("brand");
+    }
+
+    public Retailer getRetailer() {
+        return retailer.get();
+    }
+
+    public void setRetailer(Retailer retailer) {
+        this.retailer.set(retailer);
     }
 }
 /*

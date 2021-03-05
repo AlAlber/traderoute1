@@ -1,12 +1,14 @@
 package com.traderoute;
 
 import javafx.beans.binding.Bindings;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.ComboBoxTableCell;
@@ -69,9 +71,13 @@ public class AssortmentController implements Initializable {
     @FXML
 //    private JFXTextField jfxtest;
 
+    private SimpleObjectProperty<Retailer> retailer;
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        this.retailer = new SimpleObjectProperty<>();
+
         setCellValueFactories();
 
         meetingTableView.setItems(getExampleMeetings());
@@ -194,12 +200,23 @@ public class AssortmentController implements Initializable {
     }
     @FXML
     private void switchToSecondTable(ActionEvent event) throws IOException {
-        App.setRoot("secondTable");
+        FXMLLoader secondTableLoader = App.createFXMLLoader("secondTable");
+        App.setSceneRoot(secondTableLoader.load());
+
+        firstTableController firstTableController =secondTableLoader.getController();
+        firstTableController.setRetailer(getRetailer());
     }
+
+
     @FXML
     private void switchToPricingPromotion(ActionEvent event) throws IOException {
-        App.setRoot("pricingPromotion");
+        FXMLLoader pricingPromotionLoader = App.createFXMLLoader("pricingPromotion");
+        App.setSceneRoot(pricingPromotionLoader.load());
+
+        PricingPromotionController pricingPromotionController =pricingPromotionLoader.getController();
+        pricingPromotionController.setRetailer(getRetailer());
     }
+
     public void deleteSkuEvent(ActionEvent event){
         ObservableList<Sku> selectedRows, allSkus;
         allSkus = skuTableView.getItems();
@@ -211,6 +228,10 @@ public class AssortmentController implements Initializable {
         for (Sku sku: selectedRows) {
             allSkus.remove(sku);
         }
+    }
+
+    public Retailer getRetailer() {
+        return retailer.get();
     }
 
     private String getFlavorDescription() {
@@ -256,7 +277,7 @@ public class AssortmentController implements Initializable {
         skus.add(new Sku ("First Sku", "Current", "love this one"));
         return skus;
     }
-    public Date convertToDate(LocalDate dateToConvert) {
+    static Date convertToDate(LocalDate dateToConvert) {
         return java.sql.Date.valueOf(dateToConvert);
     }
 
@@ -282,5 +303,9 @@ public class AssortmentController implements Initializable {
         flavorDescriptionColumn.setCellValueFactory(new PropertyValueFactory<Sku, String>("flavorDescription"));
         statusColumn.setCellValueFactory(cellData -> cellData.getValue().statusProperty());
         skuNotesColumn.setCellValueFactory(new PropertyValueFactory<Sku, String>("skuNotes"));
+    }
+
+    public void setRetailer(Retailer retailer) {
+        this.retailer.set(retailer);
     }
 }

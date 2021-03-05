@@ -39,10 +39,10 @@ public abstract class Parameter<Object> {
 
     protected String pre;
 
-    protected String name ;
+    protected SimpleStringProperty name ;
 
     public Parameter(String name, String pre, Object january, Object february, Object march, Object april, Object may, Object june, Object july, Object august, Object september, Object october, Object november, Object december, boolean editable) {
-        this.name = name ;
+        this.name = new SimpleStringProperty(name);
         this.pre = pre;
 
 
@@ -83,7 +83,7 @@ public abstract class Parameter<Object> {
     public void setPre(String pre) {this.pre= pre;}
 
     public Parameter(){
-        this.name= "";
+        this.name= new SimpleStringProperty("");
         this.pre = "";
         setEditable(false);
     }
@@ -93,7 +93,7 @@ public abstract class Parameter<Object> {
     }
 
     public Parameter(String name, String pre) {
-        this.name = name;
+        this.name = new SimpleStringProperty(name);
         this.pre = pre;
         this.january = new SimpleObjectProperty<>();
         this.february = new SimpleObjectProperty<>();
@@ -147,9 +147,55 @@ public abstract class Parameter<Object> {
         }
         return null;
     }
+    public void setMonth(int month, Object value){
+        if (month==1){
+            setJanuary(value);
+        }
+        if (month ==2){
+            setFebruary(value);
+        }
+        if (month ==3){
+            setMarch(value);
+        }
+        if (month ==4){
+            setApril(value);
+        }
+        if (month ==5){
+            setMay(value);
+        }
+        if (month ==6){
+            setJune(value);
+        }
+        if (month ==7){
+            setJuly(value);
+        }
+        if (month == 8) {
+            setAugust(value);
+        }
+        if (month ==9){
+            setSeptember(value);
+        }
+        if (month ==10){
+            setOctober(value);
+        }
+        if (month ==11){
+            setNovember(value);
+        }
+        if (month ==12){
+            setDecember(value);
+        }
+    }
 
     public String getName() {
-        return name ;
+        return name.get() ;
+    }
+
+    public SimpleStringProperty nameProperty() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name.set(name);
     }
 
     public ObjectProperty<Object> januaryProperty() {

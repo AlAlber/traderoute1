@@ -6,25 +6,22 @@ import javafx.scene.paint.Color;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-public class CustomTextCell<Object, BigDecimal> extends TextFieldTableCell<Object , BigDecimal> {
+public class CustomTextCell<Object, String> extends TextFieldTableCell<Object , String> {
 
-
-    @Override
-    public void updateItem(BigDecimal item, boolean empty) {
+    public void updateItem(String item, boolean empty) {
         super.updateItem(item, empty);
         if (empty) {
             setText("Hello");
         }
         if (item == null) {
             setText("");
-        } else {
-            setText("$" + String.format("%,.2f", item,2, RoundingMode.HALF_UP));
         }
-    }
-    @Override
-    public void commitEdit(BigDecimal var1){
-        super.commitEdit(var1);
-        setText("$"+var1.toString());
+        else {
+            if (item.toString().equals("Promotional Commentary")){
+                setPrefHeight(40);
+            }
+            setText(item.toString());
+        }
     }
 
 //        if(item == null || empty) {

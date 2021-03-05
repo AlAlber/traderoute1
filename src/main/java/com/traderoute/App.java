@@ -15,15 +15,32 @@ public class App extends Application {
 
     private static Scene scene;
 
+
+    public static FXMLLoader fxmlLoader;
+
     @Override
     public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("secondTable"));
+//        System.out.println(getFXMLLoader("secondTable").getController());
+        fxmlLoader = createFXMLLoader("secondTable");
+        scene = new Scene(fxmlLoader.load());
+        System.out.println(fxmlLoader.getController().toString());
         stage.setScene(scene);
         stage.show();
+
     }
+
 
     static void setRoot(String fxml) throws IOException {
         scene.setRoot(loadFXML(fxml));
+    }
+    static void setSceneRoot (Parent loadedFXML) throws IOException {
+        scene.setRoot(loadedFXML);
+    }
+    public static FXMLLoader createFXMLLoader(String fxml) throws IOException{
+        return new FXMLLoader(App.class.getResource(fxml+".fxml"));
+    }
+    public static FXMLLoader getFXMLLoader(){
+        return fxmlLoader;
     }
 
     private static Parent loadFXML(String fxml) throws IOException {

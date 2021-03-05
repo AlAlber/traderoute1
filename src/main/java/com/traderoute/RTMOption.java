@@ -376,8 +376,7 @@ public class RTMOption {
 
     public String toString() {
         String stringBuilder = "";
-        stringBuilder += "RTMName: " + this.getRTMName() + ", Slotting per Sku:" + this.getSlottingPerSku() +
-                "Product:" + this.getProduct().toString() + "Calcd" + this.getResultingEverydayRetailCalcd();
+        stringBuilder += "RTMName: " + this.getRTMName() + ", Slotting per Sku:" + this.getSlottingPerSku() + "Calcd" + this.getResultingEverydayRetailCalcd();
         return stringBuilder;
     }
 
