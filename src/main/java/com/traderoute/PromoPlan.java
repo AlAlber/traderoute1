@@ -18,18 +18,18 @@ public class PromoPlan {
     private SimpleObjectProperty<RTMOption> selectedRtm;
     private SimpleBooleanProperty commited;
     private SimpleIntegerProperty year;
-    private Button editButton;
-    private Button commitButton;
-    private TableView toplineTable;
-    private TableView retailerTable;
-    private TextField weeklyPromoUfswField;
+    private SimpleObjectProperty<Button> editButton;
+    private SimpleObjectProperty<Button> commitButton;
+    private SimpleObjectProperty<TableView> toplineTable;
+    private SimpleObjectProperty<TableView> retailerTable;
+    private SimpleObjectProperty<TextField> weeklyPromoUfswField;
     private Label everydayLabel;
     private Label costLabel;
     private Label gpmLabel;
     private Label plannedNet1RateLabel;
     private Label plannedGoalLabel;
 
-    public PromoPlan(ObservableList<Parameter<?>> parameters, ObservableList<Summary> toplineSummaries, ObservableList<Summary> retailerSummaries, BigDecimal weeklyPromoUfsw, RTMOption selectedRtm, boolean commited, Integer year, ComboBox<RTMOption> rtmBox) {
+    public PromoPlan(ObservableList<Parameter<?>> parameters, ObservableList<Summary> toplineSummaries, ObservableList<Summary> retailerSummaries, BigDecimal weeklyPromoUfsw, RTMOption selectedRtm, boolean commited, Integer year, ComboBox<RTMOption> rtmBox, TextField weeklyPromoUfswField, Button editButton, Button commitButton, TableView toplineTable,TableView retailerTable ) {
         this.parameters = new SimpleObjectProperty<>(parameters);
         this.toplineSummaries = new SimpleObjectProperty<>(toplineSummaries);
         this.retailerSummaries = new SimpleObjectProperty<>(retailerSummaries);
@@ -38,6 +38,11 @@ public class PromoPlan {
         this.commited = new SimpleBooleanProperty(commited);
         this.year = new SimpleIntegerProperty(year);
         this.rtmBox = new SimpleObjectProperty<>(rtmBox);
+        this.weeklyPromoUfswField = new SimpleObjectProperty<>(weeklyPromoUfswField);
+        this.editButton = new SimpleObjectProperty<>(editButton);
+        this.commitButton = new SimpleObjectProperty<>(commitButton);
+        this.retailerTable = new SimpleObjectProperty<>(retailerTable);
+        this.toplineTable = new SimpleObjectProperty<>(toplineTable);
 
 
 //        weeklyPromoUfswField.textProperty().bindBidirectional(weeklyPromoUfswProperty(), new BigDecimalStringConverter());
@@ -55,6 +60,66 @@ public class PromoPlan {
         this.year = new SimpleIntegerProperty(year);
     }
 
+    public Button getEditButton() {
+        return editButton.get();
+    }
+
+    public SimpleObjectProperty<Button> editButtonProperty() {
+        return editButton;
+    }
+
+    public void setEditButton(Button editButton) {
+        this.editButton.set(editButton);
+    }
+
+    public Button getCommitButton() {
+        return commitButton.get();
+    }
+
+    public SimpleObjectProperty<Button> commitButtonProperty() {
+        return commitButton;
+    }
+
+    public void setCommitButton(Button commitButton) {
+        this.commitButton.set(commitButton);
+    }
+
+    public TableView getToplineTable() {
+        return toplineTable.get();
+    }
+
+    public SimpleObjectProperty<TableView> toplineTableProperty() {
+        return toplineTable;
+    }
+
+    public void setToplineTable(TableView toplineTable) {
+        this.toplineTable.set(toplineTable);
+    }
+
+    public TableView getRetailerTable() {
+        return retailerTable.get();
+    }
+
+    public SimpleObjectProperty<TableView> retailerTableProperty() {
+        return retailerTable;
+    }
+
+    public void setRetailerTable(TableView retailerTable) {
+        this.retailerTable.set(retailerTable);
+    }
+
+    public TextField getWeeklyPromoUfswField() {
+        return weeklyPromoUfswField.get();
+    }
+
+    public SimpleObjectProperty<TextField> weeklyPromoUfswFieldProperty() {
+        return weeklyPromoUfswField;
+    }
+
+    public void setWeeklyPromoUfswField(TextField weeklyPromoUfswField) {
+        this.weeklyPromoUfswField.set(weeklyPromoUfswField);
+    }
+
     public ComboBox<RTMOption> getRtmBox() {
         return rtmBox.get();
     }
@@ -65,22 +130,6 @@ public class PromoPlan {
 
     public void setRtmBox(ComboBox<RTMOption> rtmBox) {
         this.rtmBox.set(rtmBox);
-    }
-
-    public Button getEditButton() {
-        return editButton;
-    }
-
-    public void setEditButton(Button editButton) {
-        this.editButton = editButton;
-    }
-
-    public Button getCommitButton() {
-        return commitButton;
-    }
-
-    public void setCommitButton(Button commitButton) {
-        this.commitButton = commitButton;
     }
 
     public int getYear() {

@@ -700,7 +700,11 @@ Return Value from Year One Store Count
         testOption.setResultingEverydayRetailOverride(new BigDecimal("5.99"));
         testOption.setLandedStoreCost(new BigDecimal("3.59"));
         RTMOptions.add(testOption);
-        RTMOption optionTwo = new RTMOption();
+        RTMOption optionTwo = new RTMOption("Direct-to-Customer", new BigDecimal("0.0"),BigDecimal.valueOf(3500), BigDecimal.valueOf(3.07),
+                BigDecimal.valueOf(3.75), BigDecimal.valueOf(0.0), BigDecimal.valueOf(0.0));
+        optionTwo.setResultingEverydayRetailOverride(new BigDecimal("6.49"));
+        optionTwo.setResultingEverydayRetailCalcd(new BigDecimal("6.32"));
+        optionTwo.setLandedStoreCost(new BigDecimal("3.79"));
         optionTwo.setRTMName("Option2");
         RTMOptions.add(optionTwo);
         RTMOption optionThree = new RTMOption();
@@ -758,7 +762,6 @@ Return Value from Year One Store Count
         PricingPromotionController pricingPromotionController =pricingPromotionLoader.getController();
         System.out.println("Is this seriously being called again");
         pricingPromotionController.setRetailer(retailer.get());
-        pricingPromotionController.getRtmBox0().setItems(getRetailer().getRetailerProducts().get(0).getRtmOptions());
     }
 
     /*
