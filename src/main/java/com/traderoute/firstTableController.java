@@ -285,9 +285,12 @@ public class firstTableController implements Initializable {
 //        retailer.get().setRetailerProducts(getRetailerProducts());
 //        getRetailer().setCurrentRetailerProduct(getRetailer().getRetailerProducts().get(0));
 
-        yearOneStoreCountField.textProperty().bindBidirectional(getRetailer().yearOneStoreCountProperty(), new IntegerStringConverter());
-        everyDayGPMField.textProperty().bindBidirectional(getRetailer().everydayGPMProperty(), new BigDecimalStringConverter());
-        spoilsAndFeesField.textProperty().bindBidirectional(getRetailer().spoilsFeesProperty(), new BigDecimalStringConverter());
+//        yearOneStoreCountField.textProperty().bindBidirectional(getRetailer().yearOneStoreCountProperty(), new IntegerStringConverter());
+//        everyDayGPMField.textProperty().bindBidirectional(getRetailer().everydayGPMProperty(), new BigDecimalStringConverter());
+//        spoilsAndFeesField.textProperty().bindBidirectional(getRetailer().spoilsFeesProperty(), new BigDecimalStringConverter());
+
+
+
     }
 
     public BarChart<?, ?> getLandedStoreCostChart() {
@@ -443,19 +446,19 @@ public class firstTableController implements Initializable {
             row.setProduct(selectedProduct);
         }
         // IDEA FOR LOGIC BEHIND RETAILER PRODUCT
-        ObservableList<RetailerProduct> allRetailerProducts = retailer.get().getRetailerProducts();
-        for (int i = 0; i<allRetailerProducts.size(); i++){
-            if (selectedProduct.equals(allRetailerProducts.get(i).getProduct())){
-                retailer.get().setCurrentRetailerProduct(allRetailerProducts.get(i));
-            }
-            if (i== allRetailerProducts.size()-1){
-                RetailerProduct retailerProductToAdd = new RetailerProduct();
-                retailerProductToAdd.setProduct(selectedProduct);
-                retailerProductToAdd.setRetailer(retailer.get());
-                retailerProductToAdd.setRtmOptions(null); // Add functionality here;
-                retailer.get().setCurrentRetailerProduct(new RetailerProduct());
-            }
-        }
+//        ObservableList<RetailerProduct> allRetailerProducts = retailer.get().getRetailerProducts();
+//        for (int i = 0; i<allRetailerProducts.size(); i++){
+//            if (selectedProduct.equals(allRetailerProducts.get(i).getProduct())){
+//                retailer.get().setCurrentRetailerProduct(allRetailerProducts.get(i));
+//            }
+//            if (i== allRetailerProducts.size()-1){
+//                RetailerProduct retailerProductToAdd = new RetailerProduct();
+//                retailerProductToAdd.setProduct(selectedProduct);
+//                retailerProductToAdd.setRetailer(retailer.get());
+//                retailerProductToAdd.setRtmOptions(null); // Add functionality here;
+//                retailer.get().setCurrentRetailerProduct(new RetailerProduct());
+//            }
+//        }
 
 
         secondTableView.refresh();

@@ -80,6 +80,7 @@ public class RTMOption {
         this.product = new SimpleObjectProperty<Product>();
         setupListeners();
 
+
     }
     public RTMOption(String RTMName, BigDecimal freightOutPerUnit, BigDecimal slottingPerSku,
                      BigDecimal firstReceiver,BigDecimal secondReceiver, Integer yearOneStoreCount, BigDecimal everydayGPM,

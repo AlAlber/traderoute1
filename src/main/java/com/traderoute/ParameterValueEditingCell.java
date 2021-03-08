@@ -42,20 +42,31 @@ public class ParameterValueEditingCell extends TableCell<Parameter<?>, Object> {
                 setGraphic(null);
                 if (param.getJanuary() instanceof String) {
                     if (item.equals("")) {
-                        setPrefHeight(40);
+                        setPrefHeight(40); // CAUSING BUG: SEASONALITY INDICE GETS 40 WIDTH OUTTA NOWHERE
                     } else {
                         setStyle("-fx-background-color:  rgb(255,255,255, 0.3);\n" +
                                 "    -fx-background-insets: 0, 0 0 1 0;");
                     }
                 }
                 if (param.getJanuary() instanceof Number) {
-                    int i = new BigDecimal(item.toString()).compareTo(new BigDecimal("0.0"));
-                    if (i > 0) {
-                        setStyle("-fx-background-color:  rgb(255,255,255, 0.3);\n" +
-                                "    -fx-background-insets: 0, 0 0 1 0;");
-                    }
-                    if (i == 0) {
-                        setStyle("-fx-text-fill:  rgb(255,255,255, 0.3);");
+                    int comparator = new BigDecimal(item.toString()).compareTo(new BigDecimal("0.0"));
+                    if (param.getName().startsWith("Total Volume")){
+                        setStyle("-fx-text-fill: #A79543;");
+                    } else if (param.getName().startsWith("Gross Profit")){
+                        if (comparator >=0){
+                            setStyle("-fx-text-fill: green;");
+                        } else {
+                            setStyle("-fx-text-fill: red;");
+                        }
+                    } else {
+                        int i = comparator;
+                        if (i > 0) {
+                            setStyle("-fx-background-color:  rgb(255,255,255, 0.3);\n" +
+                                    "    -fx-background-insets: 0, 0 0 1 0;");
+                        }
+                        if (i == 0) {
+                            setStyle("-fx-text-fill:  rgb(255,255,255, 0.3);");
+                        }
                     }
                 }
             }

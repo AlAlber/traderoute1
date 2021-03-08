@@ -23,7 +23,18 @@ public class CustomNonEditCell<Object, BigDecimal> extends TableCell<Object, Big
             setText("");
         }
         else {
-            setText(dollar + String.format("%,.2f", item) + per);
+            if (getTableView().getItems().get(getIndex()) instanceof Summary) {
+                Summary summary = (Summary) getTableView().getItems().get(getIndex());
+                if (summary.getSummaryType().equals("Total Units")){
+                    setText(String.format("%,.0f", item));
+                } else if (summary.getSummaryType().equals("GPM")){
+                    setText(String.format("%,.2f", item) + "%");
+                } else{
+                    setText(dollar + String.format("%,.2f", item) + per);
+                }
+            }else {
+                setText(dollar + String.format("%,.2f", item) + per);
+            }
         }
     }
 }

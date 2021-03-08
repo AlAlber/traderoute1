@@ -1,6 +1,20 @@
+
+.firstTable .table-row-cell:even {
+    -fx-background-color:  #1E1D1A;
+    -fx-table-cell-border-color: rgb(255,255,255, 0.3);
+    -fx-background-insets: 0, 0 0 1 0;
+    -fx-alignment:CENTER_LEFT
+}
+
+.firstTable .table-row-cell:odd {
+    -fx-background-color:  #2D2A23;
+    -fx-table-cell-border-color: rgb(255,255,255, 0.3);
+    -fx-background-insets: 0, 0 0 1 0;
+    -fx-alignment:CENTER_LEFT
+}
+
 .table-row-cell {
-    -fx-background-color: transparent;
-    -fx-border-color: rgb(255,255,255, 0.3);
+    -fx-background-color:  transparent;
     -fx-table-cell-border-color: rgb(255,255,255, 0.3);
     -fx-background-insets: 0, 0 0 1 0;
     -fx-alignment:CENTER_LEFT
@@ -63,6 +77,17 @@
 .chart {
 -fx-background-color: transparent;
 
+
+}
+.chart-bar {
+    -fx-bar-fill: red;
+    -fx-bar-fill: #A79543;
+}
+.axis {
+    -fx-font-size: 3em;
+    -fx-tick-label-fill: white;
+    -fx-tick-length: 20;
+    -fx-minor-tick-length: 10;
 }
 .chart-plot-background {
     -fx-background-color: transparent;
@@ -74,7 +99,7 @@
     -fx-stroke: #3278fa;
 }
 .chart-alternative-row-fill {
-    -fx-fill: #99bcfd;
+    -fx-fill: #2D2A23;
     -fx-stroke: transparent;
     -fx-stroke-width: 0;
 }
@@ -82,5 +107,6 @@
    -fx-background-color: steelblue;
 }
 .table-row-cell:empty {
-    -fx-background-color: transparent;
+    -fx-background-color:  #1E1D1A;
+    -fx-table-cell-border-color: #1E1D1A;
 }
