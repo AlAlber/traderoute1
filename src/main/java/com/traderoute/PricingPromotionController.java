@@ -1,6 +1,5 @@
 package com.traderoute;
 
-import javafx.application.Platform;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
@@ -11,7 +10,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 
@@ -195,6 +193,17 @@ public class PricingPromotionController implements Initializable {
     @FXML
     private Button editButton3;
 
+    private ObservableList<ComboBox> rtmBoxes= FXCollections.observableArrayList(rtmBox0, rtmBox1, rtmBox2, rtmBox3);
+    private ObservableList<Button> editButtons = FXCollections.observableArrayList(editButton0, editButton1, editButton2, editButton3);
+    private ObservableList<Node> commitButtons = FXCollections.observableArrayList(commitButton0, commitButton1, commitButton2, commitButton3);
+    private ObservableList<Node> weeklyVelocityFields = FXCollections.observableArrayList(weeklyVelocityField0, weeklyVelocityField1,weeklyVelocityField2, weeklyVelocityField3);
+    private ObservableList<Label> everydayLabels = FXCollections.observableArrayList(everydayLabel0, everydayLabel1, everydayLabel2, everydayLabel3);
+    private ObservableList<Label> costLabel = FXCollections.observableArrayList(costLabel0, costLabel1, costLabel2, costLabel3);
+    private ObservableList<Label> gpmLabel = FXCollections.observableArrayList(gpmLabel0,gpmLabel1, gpmLabel2, gpmLabel3);
+    private ObservableList<Label> plannedNet1RateLabel = FXCollections.observableArrayList(plannedNet1RateLabel0, plannedNet1RateLabel1, plannedNet1RateLabel2, plannedNet1RateLabel3);
+    private ObservableList<Label> goalLabel = FXCollections.observableArrayList(goalLabel0, goalLabel1, goalLabel2, goalLabel3);
+
+
 
 
     private BigDecimal oldSkuInDistributionValue;
@@ -204,7 +213,6 @@ public class PricingPromotionController implements Initializable {
     private SimpleObjectProperty<Retailer> retailer;
 //            new SimpleObjectProperty<>(new Retailer("ahold", firstTableController.getRetailerProducts(),firstTableController.getRetailerProducts().get(0) ,  new BigDecimal("40") , 158,new BigDecimal("3.0")));
 
-    private SimpleObjectProperty<RTMOption> firstSelectedRtmOption =new SimpleObjectProperty<>();
 
     private SimpleIntegerProperty currentPromoPlanIndex= new SimpleIntegerProperty(-1);
     private SimpleObjectProperty<ObservableList<PromoPlan>> promoPlans;
@@ -221,16 +229,6 @@ public class PricingPromotionController implements Initializable {
         editButton1.setWrapText(true);
         editButton2.setWrapText(true);
         editButton3.setWrapText(true);
-
-        this.promoPlans= new SimpleObjectProperty<>(getDummyPromoPlans());
-        promoPlans.get().get(0).setEditButton(editButton0);
-        promoPlans.get().get(1).setEditButton(editButton1);
-        promoPlans.get().get(2).setEditButton(editButton2);
-        promoPlans.get().get(3).setEditButton(editButton3);
-
-
-//        editButton1
-
 
         pricingPromotionTableOne.setEditable(true);
         pricingPromotionTableOne.setItems(getParameters());
@@ -341,7 +339,6 @@ public class PricingPromotionController implements Initializable {
 //        PromoPlan defaultPromoPlan = new PromoPlan(1);
 //        defaultPromoPlan.setCommited(false);
 //        this.currentPromoPlan = new SimpleObjectProperty<>();
-//        firstSelectedRtmOption.bindBidirectional();
 
 
         rtmBox0.setConverter(new RtmBoxConverter());
@@ -353,12 +350,50 @@ public class PricingPromotionController implements Initializable {
 
         weeklyVelocityField0.setTextFormatter(new TextFormatter<Double>(firstTableController.getDoubleInputConverter(), 0.0, firstTableController.getDoubleInputFilter()));
 
-        for (int i=0; i<4; i++) {
-            getPromoPlans().get(i).getRtmBox().setDisable(true);
-            getPromoPlans().get(i).getWeeklyPromoUfswField().setDisable(true);
-            getPromoPlans().get(i).getCommitButton().setDisable(true);
-        }
 
+        this.promoPlans= new SimpleObjectProperty<>();
+        retailer = new SimpleObjectProperty<>();
+        retailer.addListener(new ChangeListener<Retailer>() {
+            @Override
+            public void changed(ObservableValue<? extends Retailer> observableValue, Retailer oldRetailer, Retailer newRetailer) {
+
+                promoPlans.set(getDummyPromoPlans());
+
+                promoPlans.get().get(0).setEditButton(editButton0);
+                promoPlans.get().get(1).setEditButton(editButton1);
+                promoPlans.get().get(2).setEditButton(editButton2);
+                promoPlans.get().get(3).setEditButton(editButton3);
+
+                for (int i=0; i<4; i++) {
+                    getPromoPlans().get(i).getRtmBox().setDisable(true);
+                    getPromoPlans().get(i).getWeeklyPromoUfswField().setDisable(true);
+                    getPromoPlans().get(i).getCommitButton().setDisable(true);
+                }
+                if (currentPromoPlanIndex.get()!=-1) {
+                    updatePromoSummaries();
+                    updateMonthlyTotalVolumeAndGrossProfit();
+                }
+
+                rtmBox0.setItems(getRetailer().getRetailerProducts().get(0).getRtmOptions());
+                rtmBox1.setItems(getRetailer().getRetailerProducts().get(0).getRtmOptions());
+                rtmBox2.setItems(getRetailer().getRetailerProducts().get(0).getRtmOptions());
+                rtmBox3.setItems(getRetailer().getRetailerProducts().get(0).getRtmOptions());
+
+
+                weeklyVelocityField0.setText("0.0");
+
+                setCurrentPromoPlanIndex(0);
+
+                retailer.get().currentProductProperty().addListener(new ChangeListener<RetailerProduct>() {
+                    @Override
+                    public void changed(ObservableValue<? extends RetailerProduct> observableValue, RetailerProduct oldRetailer, RetailerProduct newRetailer) {
+                        updatePromoSummaries();
+                        updateMonthlyTotalVolumeAndGrossProfit();
+                        // also update labels in future
+                    }
+                });
+            }
+        });
         currentPromoPlanIndexProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observableValue, Number oldPromoPlanIndex, Number newPromoPlanIndex) {
@@ -386,35 +421,6 @@ public class PricingPromotionController implements Initializable {
                 newPromoPlan.getEditButton().getParent().setStyle("-fx-background-color: transparent");
             }
         });
-        setCurrentPromoPlanIndex(0);
-
-
-        retailer = new SimpleObjectProperty<>();
-        retailer.addListener(new ChangeListener<Retailer>() {
-            @Override
-            public void changed(ObservableValue<? extends Retailer> observableValue, Retailer oldRetailer, Retailer newRetailer) {
-
-                updatePromoSummaries();
-                updateMonthlyTotalVolumeAndGrossProfit();
-
-                rtmBox0.setItems(getRetailer().getRetailerProducts().get(0).getRtmOptions());
-                rtmBox1.setItems(getRetailer().getRetailerProducts().get(0).getRtmOptions());
-                rtmBox2.setItems(getRetailer().getRetailerProducts().get(0).getRtmOptions());
-                rtmBox3.setItems(getRetailer().getRetailerProducts().get(0).getRtmOptions());
-
-
-                weeklyVelocityField0.setText("0.0");
-
-                retailer.get().currentProductProperty().addListener(new ChangeListener<RetailerProduct>() {
-                    @Override
-                    public void changed(ObservableValue<? extends RetailerProduct> observableValue, RetailerProduct oldRetailer, RetailerProduct newRetailer) {
-                        updatePromoSummaries();
-                        updateMonthlyTotalVolumeAndGrossProfit();
-                        // also update labels in future
-                    }
-                });
-            }
-        });
     }
 
     public void clickEditButton (ActionEvent event){
@@ -431,12 +437,12 @@ public class PricingPromotionController implements Initializable {
             PromoPlan promoPlan = getPromoPlans().get(i);
             Button commitButton = promoPlan.getCommitButton();
             if (event.getSource().equals(commitButton)){
-                if (promoPlan.isCommited()){
-                    promoPlan.setCommited(false);
+                if (promoPlan.getCommitted()){
+                    promoPlan.setCommitted(false);
                     commitButton.setText("Commit to Forecast");
                     commitButton.setStyle(null);
                 } else {
-                    promoPlan.setCommited(true);
+                    promoPlan.setCommitted(true);
                     commitButton.setText("Committed to Forecast");
                     commitButton.setStyle("-fx-background-color:green");
                 }
@@ -711,24 +717,11 @@ public class PricingPromotionController implements Initializable {
         }
     }
 
-    public RTMOption getFirstSelectedRtmOption() {
-        return firstSelectedRtmOption.get();
-    }
-
-    public SimpleObjectProperty<RTMOption> firstSelectedRtmOptionProperty() {
-        return firstSelectedRtmOption;
-    }
-
-    public void setFirstSelectedRtmOption(RTMOption firstSelectedRtmOption) {
-        this.firstSelectedRtmOption.set(firstSelectedRtmOption);
-    }
-
     public ObservableList<PromoPlan> getDummyPromoPlans(){
-        ObservableList<PromoPlan> promoPlans = FXCollections.observableArrayList();
-        promoPlans.add(new PromoPlan(getParameters(),getSummaryTable(), getSummaryTable2(),new BigDecimal("0.75"),firstTableController.getRTMOptions().get(1), false, 0, rtmBox0, weeklyVelocityField0, editButton0, commitButton0,toplineTable0,retailerTable0, everydayLabel0, costLabel0, gpmLabel0, plannedNet1RateLabel0, goalLabel0));
-        promoPlans.add(new PromoPlan(getEmptyParameters(), getSummaryTable(), getSummaryTable2(), new BigDecimal("0.0"), firstTableController.getRTMOptions().get(0),false, 1 , rtmBox1, weeklyVelocityField1, editButton1, commitButton1, toplineTable1, retailerTable1, everydayLabel1, costLabel1, gpmLabel1, plannedNet1RateLabel1, goalLabel1));
-        promoPlans.add(new PromoPlan(getEmptyParameters(), getSummaryTable(), getSummaryTable2(), new BigDecimal("0.0"), firstTableController.getRTMOptions().get(0),false, 2 , rtmBox2, weeklyVelocityField2, editButton2, commitButton2, toplineTable2, retailerTable2, everydayLabel2, costLabel2, gpmLabel2, plannedNet1RateLabel2, goalLabel2));
-        promoPlans.add(new PromoPlan(getEmptyParameters(), getSummaryTable(), getSummaryTable2(), new BigDecimal("0.0"), firstTableController.getRTMOptions().get(0),false, 3, rtmBox3, weeklyVelocityField3, editButton3, commitButton3, toplineTable3, retailerTable3, everydayLabel3, costLabel3, gpmLabel3, plannedNet1RateLabel3, goalLabel3));
+        ObservableList<PromoPlan> promoPlans = FXCollections.observableArrayList();promoPlans.add(new PromoPlan(getParameters(),getSummaryTable(), getSummaryTable2(),new BigDecimal("0.0"),retailer.get().getRetailerProducts().get(0).getRtmOptions().get(1), false, rtmBox0, weeklyVelocityField0, editButton0, commitButton0,toplineTable0,retailerTable0, everydayLabel0, costLabel0, gpmLabel0, plannedNet1RateLabel0, goalLabel0));
+        promoPlans.add(new PromoPlan(getEmptyParameters(), getSummaryTable(), getSummaryTable2(), new BigDecimal("0.0"), firstTableController.getRTMOptions().get(0),false , rtmBox1, weeklyVelocityField1, editButton1, commitButton1, toplineTable1, retailerTable1, everydayLabel1, costLabel1, gpmLabel1, plannedNet1RateLabel1, goalLabel1));
+        promoPlans.add(new PromoPlan(getEmptyParameters(), getSummaryTable(), getSummaryTable2(), new BigDecimal("0.0"), firstTableController.getRTMOptions().get(0),false, rtmBox2, weeklyVelocityField2, editButton2, commitButton2, toplineTable2, retailerTable2, everydayLabel2, costLabel2, gpmLabel2, plannedNet1RateLabel2, goalLabel2));
+        promoPlans.add(new PromoPlan(getEmptyParameters(), getSummaryTable(), getSummaryTable2(), new BigDecimal("0.0"), firstTableController.getRTMOptions().get(0),false, rtmBox3, weeklyVelocityField3, editButton3, commitButton3, toplineTable3, retailerTable3, everydayLabel3, costLabel3, gpmLabel3, plannedNet1RateLabel3, goalLabel3));
         return promoPlans;
     }
 
@@ -785,7 +778,7 @@ public class PricingPromotionController implements Initializable {
         parameters.add(new BigDecimalParameter("Fixed Costs 1", "$", new BigDecimal("0.0"),new BigDecimal("0.0") ,new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"), true));
         parameters.add(new BigDecimalParameter("Promo Unit Cost 1", "$", new BigDecimal("0.0"),new BigDecimal("0.0") ,new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"), true));
         parameters.add(new BigDecimalParameter("Promo Discount % 1", "%", new BigDecimal("0.0"),new BigDecimal("0.0") ,new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"), true));
-        parameters.add(new StringParameter("Promotional Commentary", "", "4 Week TPR","" ,"","","","4 Week TPR","4 Week TPR","4 Week TPR","","","","4 Week TPR"));
+        parameters.add(new StringParameter("Promotional Commentary", "", "","" ,"","","","","","","","","",""));
         parameters.add(new BigDecimalParameter("Promoted Retail 2", "$", new BigDecimal("0.0"),new BigDecimal("0.0") ,new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"), true));
         parameters.add(new BigDecimalParameter("Required GPM % 2", "%", new BigDecimal("0.0"),new BigDecimal("0.0") ,new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"), true));
         parameters.add(new IntegerParameter("Duration (weeks) 2", "", 0,0,0,0,0,0,0,0,0,0,0,0));

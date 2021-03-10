@@ -3,9 +3,9 @@ package com.traderoute;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.*;
-import javafx.util.converter.BigDecimalStringConverter;
 
 import java.math.BigDecimal;
 
@@ -16,7 +16,7 @@ public class PromoPlan {
     private SimpleObjectProperty<BigDecimal> weeklyPromoUfsw;
     private SimpleObjectProperty<ComboBox <RTMOption>> rtmBox;
     private SimpleObjectProperty<RTMOption> selectedRtm;
-    private SimpleBooleanProperty commited;
+    private SimpleBooleanProperty committed;
     private SimpleIntegerProperty year;
     private SimpleObjectProperty<Button> editButton;
     private SimpleObjectProperty<Button> commitButton;
@@ -31,7 +31,7 @@ public class PromoPlan {
 
     public PromoPlan(ObservableList<Parameter<?>> parameters, ObservableList<Summary> toplineSummaries,
                      ObservableList<Summary> retailerSummaries, BigDecimal weeklyPromoUfsw, RTMOption selectedRtm,
-                     boolean commited, Integer year, ComboBox<RTMOption> rtmBox, TextField weeklyPromoUfswField,
+                     boolean commited, ComboBox<RTMOption> rtmBox, TextField weeklyPromoUfswField,
                      Button editButton, Button commitButton, TableView toplineTable,TableView retailerTable,
                      Label everydayLabel, Label costLabel, Label gpmLabel, Label plannedNet1RateLabel, Label goalLabel) {
         this.parameters = new SimpleObjectProperty<>(parameters);
@@ -39,8 +39,7 @@ public class PromoPlan {
         this.retailerSummaries = new SimpleObjectProperty<>(retailerSummaries);
         this.weeklyPromoUfsw = new SimpleObjectProperty<>(weeklyPromoUfsw);
         this.selectedRtm = new SimpleObjectProperty<>(selectedRtm);
-        this.commited = new SimpleBooleanProperty(commited);
-        this.year = new SimpleIntegerProperty(year);
+        this.committed = new SimpleBooleanProperty(commited);
         this.rtmBox = new SimpleObjectProperty<>(rtmBox);
         this.weeklyPromoUfswField = new SimpleObjectProperty<>(weeklyPromoUfswField);
         this.editButton = new SimpleObjectProperty<>(editButton);
@@ -56,17 +55,17 @@ public class PromoPlan {
 
 //        weeklyPromoUfswField.textProperty().bindBidirectional(weeklyPromoUfswProperty(), new BigDecimalStringConverter());
         rtmBox.valueProperty().bindBidirectional(selectedRtmProperty());
-
     }
 
+
     public PromoPlan( Integer year) {
-        this.parameters = new SimpleObjectProperty<>();
-        this.toplineSummaries = new SimpleObjectProperty<>();
-        this.retailerSummaries = new SimpleObjectProperty<>();
-        this.weeklyPromoUfsw = new SimpleObjectProperty<>();
-        this.selectedRtm = new SimpleObjectProperty<>();
-        this.commited = new SimpleBooleanProperty();
-        this.year = new SimpleIntegerProperty(year);
+        this.parameters = parametersProperty();
+        this.toplineSummaries = toplineSummariesProperty();
+        this.retailerSummaries = retailerSummariesProperty();
+        this.weeklyPromoUfsw = weeklyPromoUfswProperty();
+        this.selectedRtm = new SimpleObjectProperty<>(); // add controller logic of what to do when RTM is null
+        this.committed = committedProperty();
+        this.year = yearProperty();
     }
 
     public Label getPlannedNet1RateLabel() {
@@ -218,6 +217,9 @@ public class PromoPlan {
     }
 
     public SimpleObjectProperty<ObservableList<Parameter<?>>> parametersProperty() {
+        if (parameters==null){
+            return new SimpleObjectProperty<>(getEmptyParameters());
+        }
         return parameters;
     }
 
@@ -230,6 +232,9 @@ public class PromoPlan {
     }
 
     public SimpleObjectProperty<ObservableList<Summary>> toplineSummariesProperty() {
+        if (toplineSummaries== null){
+            return new SimpleObjectProperty<>(getEmptyToplineSummaries());
+        }
         return toplineSummaries;
     }
 
@@ -242,6 +247,9 @@ public class PromoPlan {
     }
 
     public SimpleObjectProperty<ObservableList<Summary>> retailerSummariesProperty() {
+        if (retailerSummaries==null){
+            return new SimpleObjectProperty<>(getEmptyRetailerSummaries());
+        }
         return retailerSummaries;
     }
 
@@ -254,6 +262,9 @@ public class PromoPlan {
     }
 
     public SimpleObjectProperty<BigDecimal> weeklyPromoUfswProperty() {
+        if (weeklyPromoUfsw==null){
+            return new SimpleObjectProperty<>(new BigDecimal("0.0"));
+        }
         return weeklyPromoUfsw;
     }
 
@@ -273,15 +284,63 @@ public class PromoPlan {
         this.selectedRtm.set(selectedRtm);
     }
 
-    public boolean isCommited() {
-        return commited.get();
+    public boolean getCommitted() {
+        return committed.get();
     }
 
-    public SimpleBooleanProperty commitedProperty() {
-        return commited;
+    public SimpleBooleanProperty committedProperty() {
+        if (committed==null){
+            return new SimpleBooleanProperty(false);
+        }
+        return committed;
     }
 
-    public void setCommited(boolean commited) {
-        this.commited.set(commited);
+    public void setCommitted(boolean committed) {
+        this.committed.set(committed);
+    }
+
+    public ObservableList<Parameter<?>> getEmptyParameters(){
+        ObservableList<Parameter<?>> parameters = FXCollections.observableArrayList();
+        parameters.add(new BigDecimalParameter("Skus In Distribution", "", new BigDecimal("0.0"),new BigDecimal("0.0") ,new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"), false));
+        parameters.add(new IntegerParameter("Sku-Count Change", "", 0,0,0,0,0,0,0,0,0,0,0,0));
+        Parameter confidencePer = new BigDecimalParameter("Confidence %", "%");
+        parameters.add(confidencePer);
+        parameters.add(new BigDecimalParameter("Slotting Investment", "$", new BigDecimal("0.0"),new BigDecimal("0.0") ,new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),true));
+        parameters.add(new IntegerParameter("Store Count", "", 0, 0, 0,0,0,0,0,0,0,0,0,0));
+        parameters.add(new BigDecimalParameter());;
+        parameters.add(new BigDecimalParameter("Everyday Retail", "$", new BigDecimal("0.0"),new BigDecimal("0.0") ,new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),true));
+        parameters.add(new BigDecimalParameter("Everyday Unit Cost", "$", new BigDecimal("0.0"),new BigDecimal("0.0") ,new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),true));
+        parameters.add(new BigDecimalParameter());;
+        parameters.add(new BigDecimalParameter("Seasonality Indices", "",new BigDecimal("0.0"),new BigDecimal("0.0") ,new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),true));
+        parameters.add(new BigDecimalParameter("Promoted Retail 1", "$",new BigDecimal("0.0"),new BigDecimal("0.0") ,new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),true));
+        parameters.add(new BigDecimalParameter("Required GPM % 1", "%", new BigDecimal("0.0"),new BigDecimal("0.0") ,new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"), true));
+        parameters.add(new IntegerParameter("Duration (weeks) 1", "", 0, 0, 0,0,0,0,0,0,0,0,0,0));
+        parameters.add(new BigDecimalParameter("Volume Lift Multiple 1", "",new BigDecimal("0.0"),new BigDecimal("0.0") ,new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"), true));
+        parameters.add(new BigDecimalParameter("Fixed Costs 1", "$", new BigDecimal("0.0"),new BigDecimal("0.0") ,new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"), true));
+        parameters.add(new BigDecimalParameter("Promo Unit Cost 1", "$", new BigDecimal("0.0"),new BigDecimal("0.0") ,new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"), true));
+        parameters.add(new BigDecimalParameter("Promo Discount % 1", "%", new BigDecimal("0.0"),new BigDecimal("0.0") ,new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"), true));
+        parameters.add(new StringParameter("Promotional Commentary", "", "","" ,"","","","","","","","","",""));
+        parameters.add(new BigDecimalParameter("Promoted Retail 2", "$", new BigDecimal("0.0"),new BigDecimal("0.0") ,new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"), true));
+        parameters.add(new BigDecimalParameter("Required GPM % 2", "%", new BigDecimal("0.0"),new BigDecimal("0.0") ,new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"), true));
+        parameters.add(new IntegerParameter("Duration (weeks) 2", "", 0,0,0,0,0,0,0,0,0,0,0,0));
+        parameters.add(new BigDecimalParameter("Volume Lift Multiple 2", "", new BigDecimal("0.0"),new BigDecimal("0.0") ,new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"), true));
+        parameters.add(new BigDecimalParameter("Fixed Costs 2", "$", new BigDecimal("0.0"),new BigDecimal("0.0") ,new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"), true));
+        parameters.add(new BigDecimalParameter("Promo Unit Cost 2", "$", new BigDecimal("0.0"),new BigDecimal("0.0") ,new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"), true));
+        parameters.add(new BigDecimalParameter("Promo Discount % 2", "%", new BigDecimal("0.0"),new BigDecimal("0.0") ,new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"), true));
+        return parameters;
+    }
+    private ObservableList getEmptyToplineSummaries() {
+        ObservableList<Summary> summaries = FXCollections.observableArrayList();
+        summaries.add(new Summary("Gross Sales", new BigDecimal("0.0")));
+        summaries.add(new Summary("Net Sales", new BigDecimal("0.0")));
+        summaries.add(new Summary("Total Units", new BigDecimal("0")));
+        return summaries;
+    }
+    private ObservableList getEmptyRetailerSummaries() {
+        ObservableList<Summary> summaries = FXCollections.observableArrayList();
+        summaries.add(new Summary("Gross Sales", new BigDecimal("0.0")));
+        summaries.add(new Summary("GPM", new BigDecimal("0.0")));
+        summaries.add(new Summary("Avg. Retail", new BigDecimal("0.0")));
+        return summaries;
     }
 }
