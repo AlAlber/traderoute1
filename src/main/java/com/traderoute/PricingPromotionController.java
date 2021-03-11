@@ -13,6 +13,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -192,6 +193,13 @@ public class PricingPromotionController implements Initializable {
     private Button editButton2;
     @FXML
     private Button editButton3;
+
+    private final int manufacturerGrossSalesMethod =0;
+    private final int manufacturerNet1RevMethod =1;
+    private final int totalVolumeMethod = 2;
+    private final int retailerGrossSalesMethod =3;
+    private final int retailerGrossProfitMethod =4;
+
 
     private ObservableList<ComboBox> rtmBoxes= FXCollections.observableArrayList(rtmBox0, rtmBox1, rtmBox2, rtmBox3);
     private ObservableList<Button> editButtons = FXCollections.observableArrayList(editButton0, editButton1, editButton2, editButton3);
@@ -449,79 +457,82 @@ public class PricingPromotionController implements Initializable {
             }
         }
     }
-
+    public BigDecimal getTwelveMonthTotal(int methodToCall){
+        BigDecimal computedValue = new BigDecimal("0.0");
+        for (int i= 1; i<=12; i++) {
+            switch (methodToCall) {
+                case 0:
+                    computedValue = computedValue.add(getManufacturerGrossSalesActual(i));
+                    break;
+                case 1:
+                    computedValue = computedValue.add(getManufacturerNet1Rev(i));
+                    break;
+                case 2:
+                    computedValue = computedValue.add(getTotalVolume(i));
+                    break;
+                case 3:
+                    computedValue = computedValue.add(getRetailerGrossSales(i));
+                    break;
+                case 4:
+                    computedValue= computedValue.add(getRetailerGrossProfit(i));
+                    break;
+                default:
+                    System.out.println("No method corresponds to this int");
+            }
+        }
+        return computedValue;
+    }
     /*
 
      */
     public BigDecimal getSumValue(int value, boolean topline ) {
-        BigDecimal summedValue = new BigDecimal("0.0");
-        for (int i = 1; i <= 12; i++) {
-            switch (value) {
-                case 0:
-                    if (topline){
-                        summedValue = summedValue.add(getManufacturerGrossSalesActual(i));
+        BigDecimal sumValue = new BigDecimal("0.0");
+        switch (value) {
+            case 0:
+                if (topline){
+                    sumValue = getTwelveMonthTotal(manufacturerGrossSalesMethod);
+                } else{
+                    sumValue = getTwelveMonthTotal(retailerGrossSalesMethod);
+                } break;
+            case 1:
+                if (topline) {
+                    sumValue = getTwelveMonthTotal(manufacturerNet1RevMethod);
+                } else {
+                    if (getTwelveMonthTotal(retailerGrossSalesMethod).compareTo(new BigDecimal("0.0"))==0) {
+                        sumValue = new BigDecimal("0.0");
+                    } else{
+                        sumValue = getTwelveMonthTotal(retailerGrossProfitMethod).divide(getTwelveMonthTotal(retailerGrossSalesMethod), 4 , RoundingMode.HALF_UP).multiply(new BigDecimal("100"));
                     }
-                    else{
-                        summedValue = summedValue.add(getRetailerGrossSales(i)).setScale(2, RoundingMode.HALF_UP);
+                } break;
+            case 2:
+                if (topline) {
+                    sumValue = getTwelveMonthTotal(totalVolumeMethod);
+                } else {
+                    if (getTwelveMonthTotal(totalVolumeMethod).compareTo(new BigDecimal("0.0"))==0) {
+                        sumValue= new BigDecimal("0.0");
+                    } else {
+                        sumValue = getTwelveMonthTotal(retailerGrossSalesMethod).divide(getTwelveMonthTotal(totalVolumeMethod), 4, RoundingMode.HALF_UP);
                     }
-                    break;
-                case 1:
-                    if (topline) {
-                        summedValue = summedValue.add(getManufacturerNet1Rev(i));
-                    }
-                    else {
-                        summedValue = summedValue.add(getRetailerGrossProfit(i));
-                    }
-                    break;
-                case 2:
-                    if (topline) {
-                        summedValue = summedValue.add(getTotalVolume(i));
-                    }
-                    break;
-                case 3:
-                    summedValue = summedValue.add(getRetailerGrossSales(i));
-                    break;
-                case 4:
-                    summedValue = summedValue.add(getRetailerGrossProfit(i));
-                    break;
-                case 5:
-                    break;
-            }
-        }
-        // GPM = Gross Profit divided by gross sales
-        if (value==1 && !topline){
-            if (getSumValue(0, false).compareTo(new BigDecimal("0.0"))==0) {
-                return new BigDecimal("0.0");
-            }
-            return summedValue.divide(getSumValue(0, false), 2 , RoundingMode.HALF_UP).multiply(new BigDecimal("100"));
-        }
-        // Avg Retail = Retailer Gross Sales divided by total volume
-        if (value==2 && !topline){
-            if (getSumValue(2, true).compareTo(new BigDecimal("0.0"))==0) {
-                return new BigDecimal("0.0");
-            }
-            return getSumValue(0, false).divide(getSumValue(2, true), 2 , RoundingMode.HALF_UP);
-        }
-        else{
-            return summedValue;
-        }
+                }break;
+            } return sumValue.setScale(4,RoundingMode.HALF_UP);
     }
+
     public void updatePromoSummaries(){
+        PromoPlan currentPromoPlan = getPromoPlans().get(getCurrentPromoPlanIndex());
+        // CHANGE THIS, needs to update with table being updated
+        BigDecimal plannedNet1Rate = new BigDecimal("0.0");
+        if (getSumValue(2, true).compareTo(new BigDecimal("0.0"))>0) {
+            plannedNet1Rate = getSumValue(1, true).divide(getSumValue(2, true), 2, RoundingMode.HALF_UP);
+        }
+        currentPromoPlan.getPlannedNet1RateLabel().setText("$"+ plannedNet1Rate.toString());
+
+        BigDecimal goalDifference = plannedNet1Rate.subtract(getRetailer().getCurrentRetailerProduct().getProduct().getUnitNet1Goal());
+        if (goalDifference.compareTo(new BigDecimal("0.0"))>0){
+            currentPromoPlan.getGoalLabel().getParent().setStyle("-fx-background-color: red");
+        }
+        currentPromoPlan.getGoalLabel().setText("$"+goalDifference.toString()+ " to goal");
+
         for (int i= 0; i<3; i++) {
-            PromoPlan currentPromoPlan = getPromoPlans().get(getCurrentPromoPlanIndex());
-            // CHANGE THIS, needs to update with table being updated
-            BigDecimal plannedNet1Rate = new BigDecimal("0.0");
-            if (getSumValue(2, true).compareTo(new BigDecimal("0.0"))>0) {
-                plannedNet1Rate = getSumValue(1, true).divide(getSumValue(2, true), 2, RoundingMode.HALF_UP);
-            }
-            currentPromoPlan.getPlannedNet1RateLabel().setText("$"+ plannedNet1Rate.toString());
-
-            BigDecimal goalDifference = plannedNet1Rate.subtract(getRetailer().getCurrentRetailerProduct().getProduct().getUnitNet1Goal());
-            if (goalDifference.compareTo(new BigDecimal("0.0"))>0){
-                currentPromoPlan.getGoalLabel().getParent().setStyle("-fx-background-color: red");
-            }
-            currentPromoPlan.getGoalLabel().setText("$"+goalDifference.toString()+ " to goal");
-
             updateTable(getCurrentPromoPlanIndex(), i);
         }
     }
