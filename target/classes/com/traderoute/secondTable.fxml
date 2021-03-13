@@ -82,7 +82,7 @@
                   </ImageView>
                   <Button mnemonicParsing="false" text="Route-to-Market" />
                   <Button mnemonicParsing="false" onAction="#switchToAssortment" text="Assortment" />
-                  <Button mnemonicParsing="false" onAction="#switchToPricingPromotion" text="Pricing and Promotion" />
+                  <Button fx:id="pricingPromotionButton" mnemonicParsing="false" onAction="#switchToPricingPromotion" text="Pricing and Promotion" />
                </children>
             </HBox>
             <TableView fx:id="firstTableView" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="130.0" prefWidth="1464.0" styleClass="firstTable" stylesheets="@../styles/Styles.css">

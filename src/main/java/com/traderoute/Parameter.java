@@ -1,44 +1,23 @@
 package com.traderoute;
 
 import javafx.beans.property.*;
-import javafx.scene.Node;
 import javafx.scene.control.TextField;
-import javafx.util.converter.BigDecimalStringConverter;
-import org.w3c.dom.Text;
-
-import java.math.BigDecimal;
 
 public abstract class Parameter<Object> {
-
-
     private final BooleanProperty editable = new SimpleBooleanProperty();
-
     protected ObjectProperty<Object> january;
-
     protected ObjectProperty<Object> february;
-
     protected ObjectProperty<Object> march;
-
     protected ObjectProperty<Object> april;
-
     protected ObjectProperty<Object> may;
-
     protected ObjectProperty<Object> june;
-
     protected ObjectProperty<Object> july;
-
     protected ObjectProperty<Object> august;
-
     protected ObjectProperty<Object> september;
-
     protected ObjectProperty<Object> october;
-
     protected SimpleObjectProperty<Object> november;
-
     protected SimpleObjectProperty<Object> december;
-
     protected String pre;
-
     protected SimpleStringProperty name ;
 
     public Parameter(String name, String pre, Object january, Object february, Object march, Object april, Object may, Object june, Object july, Object august, Object september, Object october, Object november, Object december, boolean editable) {
@@ -367,5 +346,4 @@ public abstract class Parameter<Object> {
         editableProperty().set(editable);
     }
 
-    public abstract TextField getEditor(int i) ;
 }

@@ -3,31 +3,61 @@ package com.traderoute;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.loadui.testfx.GuiTest;
+import org.loadui.testfx.exceptions.NoNodesFoundException;
+import org.loadui.testfx.utils.FXTestUtils;
 import org.testfx.framework.junit5.ApplicationExtension;
 import org.testfx.framework.junit5.Start;
 import org.testfx.api.FxRobot;
 import org.junit.jupiter.api.Test;
 import smetana.core.CObject;
+import org.loadui.testfx.controls.TableViews;
 
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import org.loadui.testfx.GuiTest;
+
+import java.security.Key;
+import java.util.List;
+import static org.loadui.testfx.GuiTest.find;
+//import static org.loadui.testfx.controls.TableViews.cell;
+//import static org.loadui.testfx.controls.TableViews.row;
 
 @ExtendWith(ApplicationExtension.class)
 public class PricingPromotionControllerTest{
+
+//    public static GuiTest controller;
+
     private ObservableList<RTMOption> rtmOptions;
     private SimpleObjectProperty<Retailer> retailer= new SimpleObjectProperty<>(new Retailer("ahold", firstTableController.getRetailerProducts(),firstTableController.getRetailerProducts().get(0) ,  new BigDecimal("40") , 158,new BigDecimal("3.0")));;
 
+
+//    @BeforeClass
+//    public static void setUpClass() throws InterruptedException, IOException
+//    {
+//        FXTestUtils.launchApp(App.class);
+//        Thread.sleep(2000);
+//        controller = new GuiTest()
+//        {
+//            @Override
+//            protected Parent getRootNode()
+//            {
+//                return App.getStage().getScene().getRoot();
+//            }
+//        };
+//    }
     @Start
     public void start(Stage stage) throws IOException {
 //        System.out.println(getFXMLLoader("secondTable").getController());
@@ -46,6 +76,7 @@ public class PricingPromotionControllerTest{
 
 
     }
+
     @Test
     public void testChangeFirstSelectedRtmOption(FxRobot robot){
         ComboBox rtmBox0 = robot.lookup("#rtmBox0").queryAs(ComboBox.class);
@@ -93,22 +124,170 @@ public class PricingPromotionControllerTest{
     }
 
     @Test
-    public void getEverydayCost() {
+    public void testInputtingOnTableView(FxRobot robot){
+        TableView pricingPromotionTableOne = robot.lookup("#pricingPromotionTableOne").queryTableView();
+        robot.interact(() -> {
+            robot.doubleClickOn(cell("#pricingPromotionTableOne", 2, 2, robot));
+            robot.doubleClickOn(cell("#pricingPromotionTableOne", 2, 2, robot));
+            robot.type(KeyCode.DIGIT0, KeyCode.PERIOD, KeyCode.DIGIT7, KeyCode.DIGIT5); //.type(.type(KeyCode.DIGIT7).type();
+            robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
+        });
+        Assert.assertEquals(((Parameter)pricingPromotionTableOne.getItems().get(2)).getMarch(),new BigDecimal("0.75"));
+
+    }
+
+
+    @Test
+    public void goToPricingPromotion(FxRobot robot) {
+        Button pricingPromotionButton = robot.lookup("#pricingPromotionButton").queryButton();
+        robot.interact(() -> {
+            robot.clickOn(pricingPromotionButton);
+        });
     }
 
     @Test
-    public void getPromoCost() {
+    public void testSkusInPromotionEdit(FxRobot robot) {
+        TableView pricingPromotionTableOne = robot.lookup("#pricingPromotionTableOne").queryTableView();
+        robot.interact(() -> {
+            robot.doubleClickOn(cell("#pricingPromotionTableOne", 0, 0, robot));
+            robot.doubleClickOn(cell("#pricingPromotionTableOne", 0, 0, robot));
+            robot.type(KeyCode.DIGIT7); //.type(.type(KeyCode.DIGIT7).type();
+            robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
+        });
+        // Test that all values before sku count change in july are equal to the input
+        Assertions.assertEquals(new BigDecimal("7.0"), ((Parameter)pricingPromotionTableOne.getItems().get(0)).getJune(), "Values before sku count change in july should be equal to input");
+        Assertions.assertEquals(new BigDecimal("7.0"), ((Parameter)pricingPromotionTableOne.getItems().get(0)).getFebruary(), "Values before sku count change in july should be equal to input");
+        // Values after July should be 1 more because thats where default parameters have sku count change
+        Assertions.assertEquals(new BigDecimal("8.0"), ((Parameter)pricingPromotionTableOne.getItems().get(0)).getJuly(), "Values before sku count change in july should be equal to input");
+        Assertions.assertEquals(new BigDecimal("8.0"), ((Parameter)pricingPromotionTableOne.getItems().get(0)).getDecember(), "Values before sku count change in july should be equal to input");
     }
 
     @Test
-    public void getEverydayRetailWeeks() {
+    public void testAddingOnlySkuCountChangeDoesNothing(FxRobot robot) {
+        TableView pricingPromotionTableOne = robot.lookup("#pricingPromotionTableOne").queryTableView();
+        robot.interact(() -> {
+            robot.doubleClickOn(cell("#pricingPromotionTableOne", 1, 3, robot));
+            robot.doubleClickOn(cell("#pricingPromotionTableOne", 1, 3, robot));
+            robot.type(KeyCode.DIGIT7); //.type(.type(KeyCode.DIGIT7).type();
+            robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
+        });
+        //Check to see values havent changed yet
+        Assertions.assertEquals(new BigDecimal("5.00"), ((Parameter)pricingPromotionTableOne.getItems().get(0)).getJune(), "Values before sku count change in july shouldn't have changed");
+        Assertions.assertEquals(new BigDecimal("6.00"), ((Parameter)pricingPromotionTableOne.getItems().get(0)).getJuly(), "Values after sku count change in july shouldn't have changed");
     }
 
     @Test
-    public void getEveryDayVolume() {
+    public void testAddingOnlyConfidencePerDoesNothing(FxRobot robot) {
+        TableView pricingPromotionTableOne = robot.lookup("#pricingPromotionTableOne").queryTableView();
+        robot.interact(() -> {
+            robot.doubleClickOn(cell("#pricingPromotionTableOne", 2, 3, robot));
+            robot.doubleClickOn(cell("#pricingPromotionTableOne", 2, 3, robot));
+            robot.type(KeyCode.DIGIT7); //.type(.type(KeyCode.DIGIT7).type();
+            robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
+        });
+        //Check to see values havent changed yet
+        Assertions.assertEquals(new BigDecimal("5.00"), ((Parameter)pricingPromotionTableOne.getItems().get(0)).getJune(), "Values before sku count change in july shouldn't have changed");
+        Assertions.assertEquals(new BigDecimal("6.00"), ((Parameter)pricingPromotionTableOne.getItems().get(0)).getJuly(), "Values after sku count change in july shouldn't have changed");
     }
 
     @Test
-    public void getWeeksInPeriod() {
+    public void testAddingSkuCountChangeAndConfidencePer(FxRobot robot) {
+        TableView pricingPromotionTableOne = robot.lookup("#pricingPromotionTableOne").queryTableView();
+
+        ParameterEditCell cell = (ParameterEditCell) cell("#pricingPromotionTableOne", 2, 4, robot);
+        robot.doubleClickOn(cell);
+        robot.doubleClickOn(cell);
+
+        robot.type(KeyCode.DIGIT5,KeyCode.DIGIT0);
+        robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
+
+        robot.doubleClickOn(cell("#pricingPromotionTableOne", 1, 4, robot));
+        robot.doubleClickOn(cell("#pricingPromotionTableOne", 1, 4, robot));
+        robot.type(KeyCode.DIGIT5);
+        robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
+
+        Assertions.assertEquals(new BigDecimal("5.0"), ((Parameter)pricingPromotionTableOne.getItems().get(0)).getApril(), "Values before first sku count change in july shouldn't have changed");
+        Assertions.assertEquals(new BigDecimal("7.50"), ((Parameter)pricingPromotionTableOne.getItems().get(0)).getMay(), "Values after first sku count change in july should have increased by 2.5");
+        Assertions.assertEquals(new BigDecimal("8.50"), ((Parameter)pricingPromotionTableOne.getItems().get(0)).getJuly(), "Values after first sku count change in july should have increased by 2.5");
     }
+    @Test
+    public void testPromoUnitCostChange(FxRobot robot) {
+        TableView pricingPromotionTableOne = robot.lookup("#pricingPromotionTableOne").queryTableView();
+
+        ParameterEditCell promotedRetailCell = (ParameterEditCell) cell("#pricingPromotionTableOne", 10, 8, robot);
+        robot.doubleClickOn(promotedRetailCell);
+        robot.doubleClickOn(promotedRetailCell);
+
+        robot.type(KeyCode.DIGIT5,KeyCode.PERIOD,KeyCode.DIGIT9, KeyCode.DIGIT9);
+        robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
+
+        ParameterEditCell requiredGpmCell = (ParameterEditCell) cell("#pricingPromotionTableOne", 11, 8, robot);
+        robot.doubleClickOn(requiredGpmCell);
+        robot.doubleClickOn(requiredGpmCell);
+        robot.type(KeyCode.DIGIT4, KeyCode.DIGIT0);
+        robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
+
+        //Check to see values havent changed yet
+        Assertions.assertEquals(new BigDecimal("3.594"), ((Parameter)pricingPromotionTableOne.getItems().get(15)).getSeptember(), "Promo Unit cost should have changed to 3.59");
+        Assertions.assertEquals(new BigDecimal("7.7000"), ((Parameter)pricingPromotionTableOne.getItems().get(16)).getSeptember(), "Promo Discount Percentage should have changed to 7.70");
+    }
+    @Test
+    public void testSlottingChangesGrossProfitPlan(FxRobot robot) {
+        TableView pricingPromotionTableOne = robot.lookup("#pricingPromotionTableOne").queryTableView();
+
+        ParameterEditCell confidencePerCell = (ParameterEditCell) cell("#pricingPromotionTableOne", 2, 4, robot);
+        robot.doubleClickOn(confidencePerCell);
+        robot.doubleClickOn(confidencePerCell);
+        robot.type(KeyCode.DIGIT5,KeyCode.DIGIT0);
+        robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
+
+        ParameterEditCell slottingCell = (ParameterEditCell) cell("#pricingPromotionTableOne", 3, 4, robot);
+        robot.doubleClickOn(slottingCell);
+        robot.doubleClickOn(slottingCell);
+        robot.type(KeyCode.DIGIT5,KeyCode.DIGIT0, KeyCode.DIGIT0,KeyCode.DIGIT0);
+        robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
+        Assertions.assertEquals(new BigDecimal("-2500"), ((Parameter)pricingPromotionTableOne.getItems().get(26)).getMay(), "Gross Profit Plan should have changed to -2500.00");
+    }
+    
+
+    static TableView<?> getTableView(String tableSelector, FxRobot robot) {
+        Node node = robot.lookup(tableSelector).queryTableView();
+        if (!(node instanceof TableView)) {
+            throw new NoNodesFoundException(tableSelector + " selected " + node + " which is not a TableView!");
+        } else {
+            return (TableView)node;
+        }
+    }
+
+    protected static TableRow<?> row(String tableSelector, int row, FxRobot robot) {
+        TableView<?> tableView = getTableView(tableSelector, robot);
+
+        ObservableList current;
+        for(current = tableView.getChildrenUnmodifiable(); current.size() == 1; current = ((Parent)current.get(0)).getChildrenUnmodifiable()) {
+        }
+
+        for(current = ((Parent)current.get(1)).getChildrenUnmodifiable(); !(current.get(0) instanceof TableRow); current = ((Parent)current.get(0)).getChildrenUnmodifiable()) {
+        }
+
+        Node node = (Node)current.get(row);
+        if (node instanceof TableRow) {
+            return (TableRow)node;
+        } else {
+            throw new RuntimeException("Expected Group with only TableRows as children");
+        }
+    }
+
+    protected static TableCell<?, ?> cell(String tableSelector, int row, int column, FxRobot robot) {
+        ObservableList current;
+        for(current = row(tableSelector, row, robot).getChildrenUnmodifiable(); current.size() == 1 && !(current.get(0) instanceof TableCell); current = ((Parent)current.get(0)).getChildrenUnmodifiable()) {
+        }
+
+        Node node = (Node)current.get(column);
+        if (node instanceof TableCell) {
+            return (TableCell)node;
+        } else {
+            throw new RuntimeException("Expected TableRowSkin with only TableCells as children");
+        }
+    }
+
 }

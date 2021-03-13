@@ -8,6 +8,7 @@ import java.math.BigDecimal;
 public class CustomNonEditCell<Object, BigDecimal> extends TableCell<Object, BigDecimal> {
     private String per;
     private String dollar;
+
     public CustomNonEditCell(String dollar, String per){
         super();
         this.per = per;
