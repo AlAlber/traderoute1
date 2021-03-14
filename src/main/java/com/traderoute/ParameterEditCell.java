@@ -37,10 +37,8 @@ public class ParameterEditCell extends TableCell<Parameter<?>, Object> {
                 return; //bail on empty rows
             }
             TableColumn<Parameter<?>,?> column = getTableColumn();
-            System.out.println("Da loot ="+ getTableRow().getIndex());  // CHECK ALL THIS WHEN CHANGING THEM ALL TO MYTextField
             int colIndex = getTableView().getColumns().indexOf(column); // BAIL for first line when getting past first value
-            System.out.println("Da loot2 ="+ colIndex);
-            if (getTableRow().getIndex()==0 && colIndex!=0){
+            if (getTableRow().getIndex()==0 && colIndex>1){
                 return;
             }
             createTextField();
@@ -125,6 +123,7 @@ public class ParameterEditCell extends TableCell<Parameter<?>, Object> {
                 setGraphic(null);
                 if (param.getJanuary() instanceof String) {
                     if (item.equals("")) {
+                        setStyle("-fx-background-color:  transparent");
                         setPrefHeight(40); // CAUSING BUG: SEASONALITY INDICE GETS 40 WIDTH OUTTA NOWHERE
                     } else {
                         setStyle("-fx-background-color:  rgb(255,255,255, 0.3);\n" +
@@ -173,7 +172,11 @@ public class ParameterEditCell extends TableCell<Parameter<?>, Object> {
         String text = textField.getText();
         Parameter<?> param = getTableRow().getItem();
         if (param.getJanuary() instanceof Integer){
-            commitEdit(Integer.parseInt(text));
+            if (text.equals("")){
+                commitEdit(0);
+            }else {
+                commitEdit(Integer.parseInt(text));
+            }
         } else if (param.getJanuary() instanceof BigDecimal){
             commitEdit(new BigDecimal(text));
         } else {

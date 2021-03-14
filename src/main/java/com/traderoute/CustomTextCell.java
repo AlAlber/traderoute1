@@ -1,12 +1,13 @@
 package com.traderoute;
 
+import javafx.scene.control.TableCell;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.paint.Color;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-public class CustomTextCell<Object, String> extends TextFieldTableCell<Object , String> {
+public class CustomTextCell<Object, String> extends TableCell<Object , String> {
 
     public void updateItem(String item, boolean empty) {
         super.updateItem(item, empty);

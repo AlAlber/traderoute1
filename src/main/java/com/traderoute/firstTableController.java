@@ -861,7 +861,7 @@ Return Value from Year One Store Count
         firstReceiverColumn.setCellFactory(TextFieldTableCell.forTableColumn(new BigDecimalStringConverter()));
         secondReceiverColumn.setCellFactory(TextFieldTableCell.forTableColumn(new BigDecimalStringConverter()));
         thirdReceiverColumn.setCellFactory(TextFieldTableCell.forTableColumn(new BigDecimalStringConverter()));
-        fourthReceiverColumn.setCellFactory(CustomTextCell.forTableColumn(new BigDecimalStringConverter()));
+        fourthReceiverColumn.setCellFactory(TextFieldTableCell.forTableColumn(new BigDecimalStringConverter()));
         landedStoreCostColumn.setCellFactory(tc->new CustomNonEditCell("$",""));
         resultingEverydayRetailCalcdColumn.setCellFactory(tc->new CustomNonEditCell("$", ""));
 //                TextFieldTableCell.forTableColumn(new BigDecimalStringConverter()));
