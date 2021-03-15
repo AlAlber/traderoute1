@@ -767,6 +767,7 @@ Return Value from Year One Store Count
         pricingPromotionController.setRetailer(retailer.get());
     }
 
+
     /*
     Set Column header tooltips for first and second tableview
     */
@@ -892,7 +893,8 @@ Return Value from Year One Store Count
     Return a filter to use in the double text formatters
      */
     public static UnaryOperator<TextFormatter.Change> getDoubleInputFilter(){
-        Pattern validEditingState = Pattern.compile("-?(([1-9][0-9]*)|0)?(\\.[0-9]*)?");
+        Pattern validEditingState = Pattern.compile("-?(([1-9+][0-9]*)|0)?(\\.[0-9]*)?");
+
             UnaryOperator<TextFormatter.Change> filter = c -> {
                 String text = c.getControlNewText();
                 if (validEditingState.matcher(text).matches()) {

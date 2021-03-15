@@ -1,6 +1,7 @@
 package com.traderoute;
 
 import javafx.scene.control.TableCell;
+import javafx.scene.control.Tooltip;
 import javafx.util.converter.BigDecimalStringConverter;
 
 import java.math.BigDecimal;
@@ -28,10 +29,13 @@ public class CustomNonEditCell<Object, BigDecimal> extends TableCell<Object, Big
                 Summary summary = (Summary) getTableView().getItems().get(getIndex());
                 if (summary.getSummaryType().equals("Total Units")){
                     setText(String.format("%,.0f", item));
+                    setTooltip(new Tooltip(String.format("%,.0f", item)));
                 } else if (summary.getSummaryType().equals("GPM")){
                     setText(String.format("%,.2f", item) + "%");
+                    setTooltip(new Tooltip(String.format("%,.2f", item) + "%"));
                 } else{
                     setText(dollar + String.format("%,.2f", item) + per);
+                    setTooltip(new Tooltip(dollar + String.format("%,.2f", item) + per));
                 }
             }else {
                 setText(dollar + String.format("%,.2f", item) + per);

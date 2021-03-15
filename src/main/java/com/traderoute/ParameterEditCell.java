@@ -11,7 +11,7 @@ import javafx.scene.layout.HBox;
 import javafx.util.Callback;
 import javafx.util.StringConverter;
 import javafx.util.converter.DefaultStringConverter;
-
+import com.traderoute.PricingPromotionController;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.regex.Pattern;
@@ -115,10 +115,17 @@ public class ParameterEditCell extends TableCell<Parameter<?>, Object> {
                 setText(null);
                 setGraphic(textField);
             } else {
+                if (getTableRow().getIndex()==12 || getTableRow().getIndex() == 20){
+                    if ((int)item >(PricingPromotionController.getWeeksInPeriod(getTableView().getColumns().indexOf(getTableColumn())))){
+                        setItem(0);
+                    }
+                }
                 if (param.getPre().equals("%")){
                     setText(getString()+ param.getPre());
+                    setTooltip(new Tooltip(getString()+ param.getPre()));
                 }else {
                     setText(param.getPre() + getString());
+                    setTooltip(new Tooltip(param.getPre() + getString()));
                 }
                 setGraphic(null);
                 if (param.getJanuary() instanceof String) {

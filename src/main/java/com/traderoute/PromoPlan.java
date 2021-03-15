@@ -30,7 +30,7 @@ public class PromoPlan {
     private SimpleObjectProperty<Label> goalLabel;
 
     public PromoPlan(ObservableList<Parameter<?>> parameters, ObservableList<Summary> toplineSummaries,
-                     ObservableList<Summary> retailerSummaries, BigDecimal weeklyPromoUfsw, RTMOption selectedRtm,
+                     ObservableList<Summary> retailerSummaries, BigDecimal weeklyPromoUfsw,
                      boolean commited, ComboBox<RTMOption> rtmBox, TextField weeklyPromoUfswField,
                      Button editButton, Button commitButton, TableView toplineTable,TableView retailerTable,
                      Label everydayLabel, Label costLabel, Label gpmLabel, Label plannedNet1RateLabel, Label goalLabel) {
@@ -38,7 +38,7 @@ public class PromoPlan {
         this.toplineSummaries = new SimpleObjectProperty<>(toplineSummaries);
         this.retailerSummaries = new SimpleObjectProperty<>(retailerSummaries);
         this.weeklyPromoUfsw = new SimpleObjectProperty<>(weeklyPromoUfsw);
-        this.selectedRtm = new SimpleObjectProperty<>(selectedRtm);
+        this.selectedRtm = new SimpleObjectProperty<>();
         this.committed = new SimpleBooleanProperty(commited);
         this.rtmBox = new SimpleObjectProperty<>(rtmBox);
         this.weeklyPromoUfswField = new SimpleObjectProperty<>(weeklyPromoUfswField);
@@ -52,9 +52,14 @@ public class PromoPlan {
         this.plannedNet1RateLabel = new SimpleObjectProperty<>(plannedNet1RateLabel);
         this.goalLabel = new SimpleObjectProperty<>(goalLabel);
 
-
-//        weeklyPromoUfswField.textProperty().bindBidirectional(weeklyPromoUfswProperty(), new BigDecimalStringConverter());
-        rtmBox.valueProperty().bindBidirectional(selectedRtmProperty());
+        this.commitButton.get().setWrapText(true);
+        this.editButton.get().setWrapText(true);
+        this.rtmBox.get().setConverter(new RtmBoxConverter());
+        this.weeklyPromoUfswField.get().setTextFormatter(new TextFormatter<Double>(firstTableController.getDoubleInputConverter(), 0.0, firstTableController.getDoubleInputFilter()));
+        this.weeklyPromoUfswField.get().setTooltip(new Tooltip("Please add the weekly velocity Unit/Flavor/Sku/Week"));
+        this.rtmBox.get().setTooltip(new Tooltip("Please select a Route-to-Market from the ones you configured on the Route to Market Page"));
+        //        weeklyPromoUfswField.textProperty().bindBidirectional(weeklyPromoUfswProperty(), new BigDecimalStringConverter());
+//        rtmBox.valueProperty().bindBidirectional(selectedRtmProperty());
     }
 
 

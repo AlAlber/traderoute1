@@ -62,8 +62,8 @@
                                  <children>
                                     <TableView fx:id="toplineTable0" layoutY="89.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="72.0" prefWidth="162.0" stylesheets="@../styles/Styles.css">
                                        <columns>
-                                          <TableColumn fx:id="toplineDescriptionColumn0" prefWidth="79.19998168945312" />
-                                          <TableColumn fx:id="toplineValueColumn0" minWidth="6.39996337890625" prefWidth="80.80007934570312" />
+                                          <TableColumn fx:id="toplineDescriptionColumn0" prefWidth="70.0" />
+                                          <TableColumn fx:id="toplineValueColumn0" minWidth="6.39996337890625" prefWidth="94.39999389648438" />
                                        </columns>
                                        <styleClass>
                                           <String fx:value="table-row-cell" />
@@ -72,8 +72,8 @@
                                     </TableView>
                                     <TableView id="retailerTable0" fx:id="retailerTable0" layoutX="162.0" layoutY="89.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="72.0" prefWidth="162.0" stylesheets="@../styles/Styles.css">
                                        <columns>
-                                          <TableColumn fx:id="retailerDescriptionColumn0" prefWidth="81.5999755859375" />
-                                          <TableColumn fx:id="retailerValueColumn0" minWidth="6.39996337890625" prefWidth="79.99999084472657" />
+                                          <TableColumn fx:id="retailerDescriptionColumn0" prefWidth="70.0" />
+                                          <TableColumn fx:id="retailerValueColumn0" minWidth="6.39996337890625" prefWidth="94.39999389648438" />
                                        </columns>
                                        <styleClass>
                                           <String fx:value="table-row-cell" />
@@ -148,8 +148,8 @@
                                  <children>
                                     <TableView fx:id="toplineTable1" layoutY="89.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="72.0" prefWidth="162.0" stylesheets="@../styles/Styles.css">
                                        <columns>
-                                          <TableColumn fx:id="toplineDescriptionColumn1" prefWidth="79.19998168945312" />
-                                          <TableColumn fx:id="toplineValueColumn1" minWidth="6.39996337890625" prefWidth="80.80007934570312" />
+                                          <TableColumn fx:id="toplineDescriptionColumn1" prefWidth="70.0" />
+                                          <TableColumn fx:id="toplineValueColumn1" minWidth="6.39996337890625" prefWidth="94.39999389648438" />
                                        </columns>
                                        <styleClass>
                                           <String fx:value="table-row-cell" />
@@ -158,8 +158,8 @@
                                     </TableView>
                                     <TableView fx:id="retailerTable1" layoutX="162.0" layoutY="89.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="72.0" prefWidth="162.0" stylesheets="@../styles/Styles.css">
                                        <columns>
-                                          <TableColumn fx:id="retailerDescriptionColumn1" prefWidth="81.5999755859375" />
-                                          <TableColumn fx:id="retailerValueColumn1" minWidth="6.39996337890625" prefWidth="79.99999084472657" />
+                                          <TableColumn fx:id="retailerDescriptionColumn1" prefWidth="70.0" />
+                                          <TableColumn fx:id="retailerValueColumn1" minWidth="6.39996337890625" prefWidth="94.39999389648438" />
                                        </columns>
                                        <styleClass>
                                           <String fx:value="table-row-cell" />
@@ -234,8 +234,8 @@
                                  <children>
                                     <TableView fx:id="toplineTable2" layoutY="89.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="72.0" prefWidth="162.0" stylesheets="@../styles/Styles.css">
                                        <columns>
-                                          <TableColumn fx:id="toplineDescriptionColumn2" prefWidth="79.19998168945312" />
-                                          <TableColumn fx:id="toplineValueColumn2" minWidth="6.39996337890625" prefWidth="80.80007934570312" />
+                                          <TableColumn fx:id="toplineDescriptionColumn2" prefWidth="70.0" />
+                                          <TableColumn fx:id="toplineValueColumn2" minWidth="6.39996337890625" prefWidth="94.39999389648438" />
                                        </columns>
                                        <styleClass>
                                           <String fx:value="table-row-cell" />
@@ -244,8 +244,8 @@
                                     </TableView>
                                     <TableView fx:id="retailerTable2" layoutX="162.0" layoutY="89.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="72.0" prefWidth="162.0" stylesheets="@../styles/Styles.css">
                                        <columns>
-                                          <TableColumn fx:id="retailerDescriptionColumn2" prefWidth="81.5999755859375" />
-                                          <TableColumn fx:id="retailerValueColumn2" minWidth="6.39996337890625" prefWidth="79.99999084472657" />
+                                          <TableColumn fx:id="retailerDescriptionColumn2" prefWidth="70.0" />
+                                          <TableColumn fx:id="retailerValueColumn2" minWidth="6.39996337890625" prefWidth="94.39999389648438" />
                                        </columns>
                                        <styleClass>
                                           <String fx:value="table-row-cell" />
@@ -320,8 +320,8 @@
                                  <children>
                                     <TableView fx:id="toplineTable3" layoutY="89.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="72.0" prefWidth="162.0" stylesheets="@../styles/Styles.css">
                                        <columns>
-                                          <TableColumn fx:id="toplineDescriptionColumn3" prefWidth="79.19998168945312" />
-                                          <TableColumn fx:id="toplineValueColumn3" minWidth="6.39996337890625" prefWidth="80.80007934570312" />
+                                          <TableColumn fx:id="toplineDescriptionColumn3" prefWidth="70.0" />
+                                          <TableColumn fx:id="toplineValueColumn3" minWidth="6.39996337890625" prefWidth="94.39999389648438" />
                                        </columns>
                                        <styleClass>
                                           <String fx:value="table-row-cell" />
@@ -330,8 +330,8 @@
                                     </TableView>
                                     <TableView fx:id="retailerTable3" layoutX="162.0" layoutY="89.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="72.0" prefWidth="162.0" stylesheets="@../styles/Styles.css">
                                        <columns>
-                                          <TableColumn fx:id="retailerDescriptionColumn3" prefWidth="81.5999755859375" />
-                                          <TableColumn fx:id="retailerValueColumn3" minWidth="6.39996337890625" prefWidth="79.99999084472657" />
+                                          <TableColumn fx:id="retailerDescriptionColumn3" prefWidth="70.0" />
+                                          <TableColumn fx:id="retailerValueColumn3" minWidth="6.39996337890625" prefWidth="94.39999389648438" />
                                        </columns>
                                        <styleClass>
                                           <String fx:value="table-row-cell" />

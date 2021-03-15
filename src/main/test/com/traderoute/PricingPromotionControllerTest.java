@@ -103,7 +103,7 @@ public class PricingPromotionControllerTest{
     void setUp(FxRobot robot) {
          rtmOptions = retailer.get().getRetailerProducts().get(0).getRtmOptions();
          pricingPromotionTableOne = robot.lookup("#pricingPromotionTableOne").queryTableView();
-
+        controller.getPromoPlans().get(0).setSelectedRtm(retailer.get().getRetailerProducts().get(0).getRtmOptions().get(1));
 
     }
 
@@ -339,8 +339,8 @@ public class PricingPromotionControllerTest{
     }
     @Test
     public void testGetEverydayRetailWeeks(){
-        Assertions.assertEquals(new BigDecimal("4.0"), controller.getEverydayRetailWeeks(2));
-        Assertions.assertEquals(new BigDecimal("1.0"), controller.getEverydayRetailWeeks(1));
+        Assertions.assertEquals(4, controller.getEverydayRetailWeeks(2));
+        Assertions.assertEquals(1, controller.getEverydayRetailWeeks(1));
     }
     @Test
     public void testGetEverydayVolume(FxRobot robot){
@@ -348,8 +348,8 @@ public class PricingPromotionControllerTest{
         robot.doubleClickOn(weeklyUFSW);
         robot.type(KeyCode.DIGIT0,KeyCode.PERIOD,KeyCode.DIGIT7,KeyCode.DIGIT5);
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
-        Assertions.assertEquals(new BigDecimal("0.0000"), controller.getEverydayVolume(6));
-        Assertions.assertEquals(new BigDecimal("711.0000"), controller.getEverydayVolume(7));
+        Assertions.assertEquals(new BigDecimal("0.000"), controller.getEverydayVolume(6));
+        Assertions.assertEquals(new BigDecimal("711.000"), controller.getEverydayVolume(7));
     }
     @Test
     public void testGetPromoVolume(FxRobot robot){
