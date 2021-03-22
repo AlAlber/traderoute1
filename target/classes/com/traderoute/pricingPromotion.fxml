@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXTextField?>
 <?import java.lang.String?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -58,7 +59,7 @@
                      <children>
                         <VBox prefHeight="714.0" prefWidth="502.0" style="-fx-border-color: #A79543; -fx-border-width: 3;">
                            <children>
-                              <AnchorPane fx:id="anchor1" prefHeight="178.0" prefWidth="499.0" style="-fx-background-color: #3b381a;">
+                              <AnchorPane fx:id="anchor1" prefHeight="177.0" prefWidth="499.0" style="-fx-background-color: #3b381a;">
                                  <children>
                                     <TableView fx:id="toplineTable0" layoutY="89.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="72.0" prefWidth="162.0" stylesheets="@../styles/Styles.css">
                                        <columns>
@@ -80,9 +81,6 @@
                                           <String fx:value="noheader" />
                                        </styleClass>
                                     </TableView>
-                                    <ComboBox fx:id="rtmBox0" layoutX="6.0" layoutY="29.0" onAction="#changeRtmBoxEvent" prefHeight="26.0" prefWidth="150.0" promptText="Select Market Route" style="-fx-prompt-text-font-size: 5;" AnchorPane.topAnchor="34.0" />
-                                    <Button fx:id="commitButton0" layoutX="422.0" layoutY="101.0" mnemonicParsing="false" onAction="#clickCommitButton" prefHeight="51.0" prefWidth="98.0" text="Commit To Forecast" AnchorPane.topAnchor="108.0" />
-                                    <TextField fx:id="weeklyVelocityField0" layoutX="168.0" layoutY="29.0" onAction="#changeWeeklyVelocityEvent" prefHeight="26.0" prefWidth="150.0" promptText="Weekly Velocity U/F/S/W" AnchorPane.topAnchor="34.0" />
                                     <VBox layoutX="329.0" layoutY="29.0" prefHeight="74.0" prefWidth="98.0" AnchorPane.topAnchor="34.0">
                                        <children>
                                           <Label fx:id="everydayLabel0" text="\$0.00 Everyday">
@@ -131,7 +129,6 @@
                                           <Label fx:id="goalLabel0" prefHeight="6.0" prefWidth="98.0" text="\$0.00 to Goal" />
                                        </children>
                                     </VBox>
-                                    <Button fx:id="editButton0" layoutX="329.0" layoutY="101.0" mnemonicParsing="false" onAction="#clickEditButton" prefHeight="51.0" prefWidth="90.0" text="Edit Promo Plan" AnchorPane.topAnchor="108.0" />
                                     <Label layoutX="47.0" layoutY="66.0" style="-fx-font-size: 15;" text="Topline">
                                        <font>
                                           <Font size="13.0" />
@@ -142,9 +139,13 @@
                                           <Font size="13.0" />
                                        </font>
                                     </Label>
+                                    <JFXTextField fx:id="weeklyVelocityField0" layoutX="168.0" layoutY="34.0" onAction="#changeWeeklyVelocityEvent" prefHeight="26.0" prefWidth="150.0" promptText="Weekly Velocity U/F/S/W" style="-fx-background-color: #ccbe7f; -jfx-unfocus-color: #ccbe7f;" AnchorPane.topAnchor="34.0" />
+                                    <JFXComboBox fx:id="rtmBox0" layoutX="6.0" layoutY="34.0" onAction="#changeRtmBoxEvent" prefHeight="26.0" prefWidth="150.0" promptText="Select Market Route" style="-jfx-unfocus-color: #ccbe7f; -fx-background-color: #ccbe7f; -fx-prompt-text-font-size: 5;" AnchorPane.topAnchor="34.0" />
+                                    <JFXButton fx:id="editButton0" layoutX="329.0" layoutY="108.0" onAction="#clickEditButton" prefHeight="51.0" prefWidth="90.0" style="-fx-background-color: #ccbe7f;" text="Edit Promo Plan" AnchorPane.topAnchor="108.0" />
+                                    <JFXButton fx:id="commitButton0" layoutX="422.0" layoutY="108.0" onAction="#clickCommitButton" prefHeight="51.0" prefWidth="98.0" style="-fx-background-color: #ccbe7f;" text="Commit To Forecast" />
                                  </children>
                               </AnchorPane>
-                              <AnchorPane fx:id="anchor2" prefHeight="178.0" prefWidth="499.0" style="-fx-background-color: #3b381a;">
+                              <AnchorPane fx:id="anchor2" prefHeight="177.0" prefWidth="499.0" style="-fx-background-color: #3b381a;">
                                  <children>
                                     <TableView fx:id="toplineTable1" layoutY="89.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="72.0" prefWidth="162.0" stylesheets="@../styles/Styles.css">
                                        <columns>
@@ -166,9 +167,6 @@
                                           <String fx:value="noheader" />
                                        </styleClass>
                                     </TableView>
-                                    <ComboBox fx:id="rtmBox1" layoutX="6.0" layoutY="28.0" onAction="#changeRtmBoxEvent" prefHeight="26.0" prefWidth="150.0" promptText="Select Market Route" style="-fx-prompt-text-font-size: 5;" AnchorPane.topAnchor="34.0" />
-                                    <Button fx:id="commitButton1" layoutX="422.0" layoutY="101.0" mnemonicParsing="false" onAction="#clickCommitButton" prefHeight="51.0" prefWidth="98.0" text="Commit To Forecast" AnchorPane.topAnchor="108.0" />
-                                    <TextField fx:id="weeklyVelocityField1" layoutX="168.0" layoutY="29.0" onAction="#changeWeeklyVelocityEvent" prefHeight="26.0" prefWidth="150.0" promptText="Weekly Velocity U/F/S/W" AnchorPane.topAnchor="34.0" />
                                     <VBox layoutX="329.0" layoutY="29.0" prefHeight="74.0" prefWidth="98.0" AnchorPane.topAnchor="34.0">
                                        <children>
                                           <Label fx:id="everydayLabel1" text="\$0.00 Everyday">
@@ -217,7 +215,6 @@
                                           <Label fx:id="goalLabel1" prefHeight="15.0" prefWidth="101.0" text="\$0.00 to Goal" />
                                        </children>
                                     </VBox>
-                                    <Button fx:id="editButton1" layoutX="329.0" layoutY="101.0" mnemonicParsing="false" onAction="#clickEditButton" prefHeight="51.0" prefWidth="90.0" text="Edit Promo Plan" AnchorPane.topAnchor="108.0" />
                                     <Label layoutX="54.0" layoutY="66.0" style="-fx-font-size: 15;" text="Topline">
                                        <font>
                                           <Font size="13.0" />
@@ -228,9 +225,13 @@
                                           <Font size="13.0" />
                                        </font>
                                     </Label>
+                                    <JFXTextField fx:id="weeklyVelocityField1" layoutX="168.0" layoutY="34.0" onAction="#changeWeeklyVelocityEvent" prefHeight="26.0" prefWidth="150.0" promptText="Weekly Velocity U/F/S/W" style="-fx-background-color: #ccbe7f; -jfx-unfocus-color: #ccbe7f;" AnchorPane.topAnchor="34.0" />
+                                    <JFXComboBox fx:id="rtmBox1" layoutX="6.0" layoutY="34.0" onAction="#changeRtmBoxEvent" prefHeight="26.0" prefWidth="150.0" promptText="Select Market Route" style="-jfx-unfocus-color: #ccbe7f; -fx-background-color: #ccbe7f; -fx-prompt-text-font-size: 5;" AnchorPane.topAnchor="34.0" />
+                                    <JFXButton fx:id="editButton1" layoutX="329.0" layoutY="118.0" onAction="#clickEditButton" prefHeight="51.0" prefWidth="90.0" style="-fx-background-color: #ccbe7f;" text="Edit Promo Plan" AnchorPane.topAnchor="108.0" />
+                                    <JFXButton fx:id="commitButton1" layoutX="422.0" layoutY="118.0" onAction="#clickCommitButton" prefHeight="51.0" prefWidth="98.0" style="-fx-background-color: #ccbe7f;" text="Commit To Forecast" AnchorPane.topAnchor="108.0" />
                                  </children>
                               </AnchorPane>
-                              <AnchorPane prefHeight="178.0" prefWidth="499.0" style="-fx-background-color: #3b381a;">
+                              <AnchorPane prefHeight="177.0" prefWidth="499.0" style="-fx-background-color: #3b381a;">
                                  <children>
                                     <TableView fx:id="toplineTable2" layoutY="89.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="72.0" prefWidth="162.0" stylesheets="@../styles/Styles.css">
                                        <columns>
@@ -252,9 +253,6 @@
                                           <String fx:value="noheader" />
                                        </styleClass>
                                     </TableView>
-                                    <ComboBox fx:id="rtmBox2" layoutX="6.0" layoutY="28.0" onAction="#changeRtmBoxEvent" prefHeight="26.0" prefWidth="150.0" promptText="Select Market Route" style="-fx-prompt-text-font-size: 5;" AnchorPane.topAnchor="34.0" />
-                                    <Button fx:id="commitButton2" layoutX="422.0" layoutY="101.0" mnemonicParsing="false" onAction="#clickCommitButton" prefHeight="51.0" prefWidth="98.0" text="Commit To Forecast" AnchorPane.topAnchor="108.0" />
-                                    <TextField fx:id="weeklyVelocityField2" layoutX="168.0" layoutY="29.0" onAction="#changeWeeklyVelocityEvent" prefHeight="26.0" prefWidth="150.0" promptText="Weekly Velocity U/F/S/W" AnchorPane.topAnchor="34.0" />
                                     <VBox layoutX="329.0" layoutY="29.0" prefHeight="74.0" prefWidth="98.0" AnchorPane.topAnchor="34.0">
                                        <children>
                                           <Label fx:id="everydayLabel2" text="\$0.00 Everyday">
@@ -303,7 +301,6 @@
                                           <Label fx:id="goalLabel2" prefHeight="15.0" prefWidth="101.0" text="\$0.00 to Goal" />
                                        </children>
                                     </VBox>
-                                    <Button fx:id="editButton2" layoutX="329.0" layoutY="101.0" mnemonicParsing="false" onAction="#clickEditButton" prefHeight="51.0" prefWidth="90.0" text="Edit Promo Plan" AnchorPane.topAnchor="108.0" />
                                     <Label layoutX="54.0" layoutY="66.0" style="-fx-font-size: 15;" text="Topline">
                                        <font>
                                           <Font size="13.0" />
@@ -314,9 +311,13 @@
                                           <Font size="13.0" />
                                        </font>
                                     </Label>
+                                    <JFXTextField fx:id="weeklyVelocityField2" layoutX="168.0" layoutY="34.0" onAction="#changeWeeklyVelocityEvent" prefHeight="26.0" prefWidth="150.0" promptText="Weekly Velocity U/F/S/W" style="-fx-background-color: #ccbe7f; -jfx-unfocus-color: #ccbe7f;" />
+                                    <JFXComboBox fx:id="rtmBox2" layoutX="6.0" layoutY="34.0" onAction="#changeRtmBoxEvent" prefHeight="26.0" prefWidth="150.0" promptText="Select Market Route" style="-jfx-unfocus-color: #ccbe7f; -fx-background-color: #ccbe7f; -fx-prompt-text-font-size: 5;" />
+                                    <JFXButton fx:id="editButton2" layoutX="329.0" layoutY="118.0" onAction="#clickEditButton" prefHeight="51.0" prefWidth="90.0" style="-fx-background-color: #ccbe7f;" text="Edit Promo Plan" AnchorPane.topAnchor="108.0" />
+                                    <JFXButton fx:id="commitButton2" layoutX="422.0" layoutY="118.0" onAction="#clickCommitButton" prefHeight="51.0" prefWidth="98.0" style="-fx-background-color: #ccbe7f;" text="Commit To Forecast" AnchorPane.topAnchor="108.0" />
                                  </children>
                               </AnchorPane>
-                              <AnchorPane prefHeight="178.0" prefWidth="499.0" style="-fx-background-color: #3b381a;">
+                              <AnchorPane prefHeight="177.0" prefWidth="499.0" style="-fx-background-color: #3b381a;">
                                  <children>
                                     <TableView fx:id="toplineTable3" layoutY="89.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="72.0" prefWidth="162.0" stylesheets="@../styles/Styles.css">
                                        <columns>
@@ -338,9 +339,6 @@
                                           <String fx:value="noheader" />
                                        </styleClass>
                                     </TableView>
-                                    <ComboBox fx:id="rtmBox3" layoutX="6.0" layoutY="28.0" onAction="#changeRtmBoxEvent" prefHeight="26.0" prefWidth="150.0" promptText="Select Market Route" style="-fx-prompt-text-font-size: 5;" AnchorPane.topAnchor="34.0" />
-                                    <Button fx:id="commitButton3" layoutX="422.0" layoutY="101.0" mnemonicParsing="false" onAction="#clickCommitButton" prefHeight="51.0" prefWidth="98.0" text="Commit To Forecast" AnchorPane.topAnchor="108.0" />
-                                    <TextField fx:id="weeklyVelocityField3" layoutX="168.0" layoutY="29.0" onAction="#changeWeeklyVelocityEvent" prefHeight="26.0" prefWidth="150.0" promptText="Weekly Velocity U/F/S/W" AnchorPane.topAnchor="34.0" />
                                     <VBox layoutX="329.0" layoutY="29.0" prefHeight="74.0" prefWidth="98.0" AnchorPane.topAnchor="34.0">
                                        <children>
                                           <Label fx:id="everydayLabel3" text="\$0.00 Everyday">
@@ -389,7 +387,6 @@
                                           <Label fx:id="goalLabel3" prefHeight="15.0" prefWidth="101.0" text="\$0.00 to Goal" />
                                        </children>
                                     </VBox>
-                                    <Button fx:id="editButton3" layoutX="329.0" layoutY="101.0" mnemonicParsing="false" onAction="#clickEditButton" prefHeight="51.0" prefWidth="90.0" text="Edit Promo Plan" AnchorPane.topAnchor="108.0" />
                                     <Label layoutX="54.0" layoutY="66.0" style="-fx-font-size: 15;" text="Topline">
                                        <font>
                                           <Font size="13.0" />
@@ -400,11 +397,15 @@
                                           <Font size="13.0" />
                                        </font>
                                     </Label>
+                                    <JFXTextField fx:id="weeklyVelocityField3" layoutX="168.0" layoutY="34.0" onAction="#changeWeeklyVelocityEvent" prefHeight="26.0" prefWidth="150.0" promptText="Weekly Velocity U/F/S/W" style="-fx-background-color: #ccbe7f; -jfx-unfocus-color: #ccbe7f;" />
+                                    <JFXComboBox fx:id="rtmBox3" layoutX="6.0" layoutY="34.0" onAction="#changeRtmBoxEvent" prefHeight="26.0" prefWidth="150.0" promptText="Select Market Route" style="-jfx-unfocus-color: #ccbe7f; -fx-background-color: #ccbe7f; -fx-prompt-text-font-size: 5;" />
+                                    <JFXButton fx:id="editButton3" layoutX="329.0" layoutY="118.0" onAction="#clickEditButton" prefHeight="51.0" prefWidth="90.0" style="-fx-background-color: #ccbe7f;" text="Edit Promo Plan" AnchorPane.topAnchor="108.0" />
+                                    <JFXButton fx:id="commitButton3" layoutX="422.0" layoutY="118.0" onAction="#clickCommitButton" prefHeight="51.0" prefWidth="98.0" style="-fx-background-color: #ccbe7f;" text="Commit To Forecast" AnchorPane.topAnchor="108.0" />
                                  </children>
                               </AnchorPane>
                            </children>
                         </VBox>
-                        <TableView fx:id="pricingPromotionTableOne" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="690.0" prefWidth="975.0" style="-fx-border-color: #A79543; -fx-border-width: 3;" stylesheets="@../styles/Styles.css">
+                        <TableView fx:id="pricingPromotionTableOne" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="695.0" prefWidth="975.0" style="-fx-border-color: #A79543; -fx-border-width: 3;" stylesheets="@../styles/Styles.css">
                            <columns>
                             <TableColumn fx:id="parameterNameColumn" prefWidth="152.0" sortable="false" />
                               <TableColumn fx:id="januaryColumn" onEditCommit="#changeMonthCellEvent" prefWidth="68.0" sortable="false" text="January" />

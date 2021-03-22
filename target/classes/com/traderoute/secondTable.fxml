@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.chart.BarChart?>
 <?import javafx.scene.chart.CategoryAxis?>
@@ -75,14 +76,10 @@
                         <Label fx:id="elasticityRatioLabel" prefHeight="18.0" prefWidth="219.0" text="Elasticity Ratio = +1% Price :  % Volume" textFill="#f7f7f7" />
                      </children>
                   </VBox>
-                  <ImageView fitHeight="46.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../images/burger-menu.png" />
-                     </image>
-                  </ImageView>
                   <Button mnemonicParsing="false" text="Route-to-Market" />
                   <Button mnemonicParsing="false" onAction="#switchToAssortment" text="Assortment" />
                   <Button fx:id="pricingPromotionButton" mnemonicParsing="false" onAction="#switchToPricingPromotion" text="Pricing and Promotion" />
+                  <JFXButton onAction="#switchToRetailerSelection" style="-fx-background-color: white;" text="Return to Selection" />
                </children>
             </HBox>
             <TableView fx:id="firstTableView" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="130.0" prefWidth="1464.0" styleClass="firstTable" stylesheets="@../styles/Styles.css">

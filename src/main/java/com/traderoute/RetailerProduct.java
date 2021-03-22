@@ -9,14 +9,16 @@ public class RetailerProduct {
     private SimpleObjectProperty<ObservableList<RTMOption>> rtmOptions;
     private SimpleObjectProperty<ObservableList<Sku>> skus;
     private SimpleObjectProperty<ObservableList<Meeting>> meetings;
+    private SimpleObjectProperty<ObservableList<PromoPlan>> promoPlans;
 
 
-    public RetailerProduct(Retailer retailer, Product product, ObservableList rtmOptions, ObservableList skus, ObservableList meetings) {
+    public RetailerProduct(Retailer retailer, Product product, ObservableList rtmOptions, ObservableList skus, ObservableList meetings, ObservableList promoPlans) {
         this.retailer = new SimpleObjectProperty<>(retailer);
         this.product = new SimpleObjectProperty<>(product);
         this.rtmOptions = new SimpleObjectProperty<>(rtmOptions);
         this.skus = new SimpleObjectProperty<>(skus);
         this.meetings = new SimpleObjectProperty<>(meetings);
+        this.promoPlans = new SimpleObjectProperty<>(promoPlans);
     }
     public RetailerProduct() {
         this.retailer = new SimpleObjectProperty<>();
@@ -24,6 +26,19 @@ public class RetailerProduct {
         this.rtmOptions = new SimpleObjectProperty<>();
         this.skus = new SimpleObjectProperty<>();
         this.meetings = new SimpleObjectProperty<>();
+        this.promoPlans = new SimpleObjectProperty<>();
+    }
+
+    public ObservableList<PromoPlan> getPromoPlans() {
+        return promoPlans.get();
+    }
+
+    public SimpleObjectProperty<ObservableList<PromoPlan>> promoPlansProperty() {
+        return promoPlans;
+    }
+
+    public void setPromoPlans(ObservableList<PromoPlan> promoPlans) {
+        this.promoPlans.set(promoPlans);
     }
 
     public Retailer getRetailer() {

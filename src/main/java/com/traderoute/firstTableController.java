@@ -17,6 +17,7 @@ import javafx.util.StringConverter;
 import javafx.util.converter.BigDecimalStringConverter;
 import javafx.util.converter.IntegerStringConverter;
 
+import javax.swing.text.html.ImageView;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -29,6 +30,7 @@ import java.util.regex.Pattern;
 import static com.traderoute.AssortmentController.convertToDate;
 
 public class firstTableController implements Initializable {
+
 
     // Assign Values to
     @FXML
@@ -395,6 +397,7 @@ public class firstTableController implements Initializable {
                 }
             });
         }
+
     }
     // COME BACK HERE
 //    public void changeRTMNameEvent(ActionEvent event){
@@ -728,9 +731,10 @@ Return Value from Year One Store Count
         skus.addAll(new Sku("dill", "current", "great taste"), new Sku("dill", "current", "great taste"), new Sku("dill", "current", "great taste"));
         meetings.addAll(new Meeting("Review Meeting", "here", convertToDate(LocalDate.of(2022,12,5)), "11:15","will be fun"), new Meeting());
         retailerProducts.add(new RetailerProduct(new Retailer(), new Product("Big Time Food Company", "24 oz pickles", new BigDecimal("3.59"), new BigDecimal("0.29"),
-                new BigDecimal("3.30"), new BigDecimal("2.99"), new BigDecimal("2.05"), new BigDecimal("-1.15")), getRTMOptions(), skus,meetings));
+                new BigDecimal("3.30"), new BigDecimal("2.99"), new BigDecimal("2.05"), new BigDecimal("-1.15")), getRTMOptions(), skus,meetings, RetailerSelectionController.getDummyPromoPlans()));
         return retailerProducts;
     }
+
 
 
     /*
@@ -756,6 +760,15 @@ Return Value from Year One Store Count
 
         AssortmentController assortmentController =assortmentLoader.getController();
         assortmentController.setRetailer(retailer.get());
+    }
+    @FXML
+    private void switchToRetailerSelection(ActionEvent event) throws IOException {
+//        App.setRoot("assortment");
+        FXMLLoader retailerSelectionLoader = App.createFXMLLoader("retailerSelection");
+        App.setSceneRoot(retailerSelectionLoader.load());
+
+        RetailerSelectionController assortmentController =retailerSelectionLoader.getController();
+//        assortmentController.setRetailer(retailer.get());
     }
     @FXML
     private void switchToPricingPromotion(ActionEvent event) throws IOException {

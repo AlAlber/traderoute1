@@ -14,50 +14,48 @@ public class PromoPlan {
     private SimpleObjectProperty<ObservableList<Summary>> toplineSummaries;
     private SimpleObjectProperty<ObservableList<Summary>> retailerSummaries;
     private SimpleObjectProperty<BigDecimal> weeklyPromoUfsw;
-    private SimpleObjectProperty<ComboBox <RTMOption>> rtmBox;
+//    private SimpleObjectProperty<ComboBox <RTMOption>> rtmBox;
     private SimpleObjectProperty<RTMOption> selectedRtm;
     private SimpleBooleanProperty committed;
     private SimpleIntegerProperty year;
-    private SimpleObjectProperty<Button> editButton;
-    private SimpleObjectProperty<Button> commitButton;
-    private SimpleObjectProperty<TableView> toplineTable;
-    private SimpleObjectProperty<TableView> retailerTable;
-    private SimpleObjectProperty<TextField> weeklyPromoUfswField;
-    private SimpleObjectProperty<Label> everydayLabel;
-    private SimpleObjectProperty<Label> costLabel;
-    private SimpleObjectProperty<Label> gpmLabel;
-    private SimpleObjectProperty<Label> plannedNet1RateLabel;
-    private SimpleObjectProperty<Label> goalLabel;
+//    private SimpleObjectProperty<Button> editButton;
+//    private SimpleObjectProperty<Button> commitButton;
+//    private SimpleObjectProperty<TableView> toplineTable;
+//    private SimpleObjectProperty<TableView> retailerTable;
+//    private SimpleObjectProperty<TextField> weeklyPromoUfswField;
+//    private SimpleObjectProperty<Label> everydayLabel;
+//    private SimpleObjectProperty<Label> costLabel;
+//    private SimpleObjectProperty<Label> gpmLabel;
+//    private SimpleObjectProperty<Label> plannedNet1RateLabel;
+//    private SimpleObjectProperty<Label> goalLabel;
 
     public PromoPlan(ObservableList<Parameter<?>> parameters, ObservableList<Summary> toplineSummaries,
                      ObservableList<Summary> retailerSummaries, BigDecimal weeklyPromoUfsw,
-                     boolean commited, ComboBox<RTMOption> rtmBox, TextField weeklyPromoUfswField,
-                     Button editButton, Button commitButton, TableView toplineTable,TableView retailerTable,
-                     Label everydayLabel, Label costLabel, Label gpmLabel, Label plannedNet1RateLabel, Label goalLabel) {
+                     boolean commited) {
         this.parameters = new SimpleObjectProperty<>(parameters);
         this.toplineSummaries = new SimpleObjectProperty<>(toplineSummaries);
         this.retailerSummaries = new SimpleObjectProperty<>(retailerSummaries);
         this.weeklyPromoUfsw = new SimpleObjectProperty<>(weeklyPromoUfsw);
         this.selectedRtm = new SimpleObjectProperty<>();
         this.committed = new SimpleBooleanProperty(commited);
-        this.rtmBox = new SimpleObjectProperty<>(rtmBox);
-        this.weeklyPromoUfswField = new SimpleObjectProperty<>(weeklyPromoUfswField);
-        this.editButton = new SimpleObjectProperty<>(editButton);
-        this.commitButton = new SimpleObjectProperty<>(commitButton);
-        this.retailerTable = new SimpleObjectProperty<>(retailerTable);
-        this.toplineTable = new SimpleObjectProperty<>(toplineTable);
-        this.everydayLabel = new SimpleObjectProperty<>(everydayLabel);
-        this.costLabel = new SimpleObjectProperty<>(costLabel);
-        this.gpmLabel = new SimpleObjectProperty<>(gpmLabel);
-        this.plannedNet1RateLabel = new SimpleObjectProperty<>(plannedNet1RateLabel);
-        this.goalLabel = new SimpleObjectProperty<>(goalLabel);
+//        this.rtmBox = new SimpleObjectProperty<>(rtmBox);
+//        this.weeklyPromoUfswField = new SimpleObjectProperty<>(weeklyPromoUfswField);
+//        this.editButton = new SimpleObjectProperty<>(editButton);
+//        this.commitButton = new SimpleObjectProperty<>(commitButton);
+//        this.retailerTable = new SimpleObjectProperty<>(retailerTable);
+//        this.toplineTable = new SimpleObjectProperty<>(toplineTable);
+//        this.everydayLabel = new SimpleObjectProperty<>(everydayLabel);
+//        this.costLabel = new SimpleObjectProperty<>(costLabel);
+//        this.gpmLabel = new SimpleObjectProperty<>(gpmLabel);
+//        this.plannedNet1RateLabel = new SimpleObjectProperty<>(plannedNet1RateLabel);
+//        this.goalLabel = new SimpleObjectProperty<>(goalLabel);
 
-        this.commitButton.get().setWrapText(true);
-        this.editButton.get().setWrapText(true);
-        this.rtmBox.get().setConverter(new RtmBoxConverter());
-        this.weeklyPromoUfswField.get().setTextFormatter(new TextFormatter<Double>(firstTableController.getDoubleInputConverter(), 0.0, firstTableController.getDoubleInputFilter()));
-        this.weeklyPromoUfswField.get().setTooltip(new Tooltip("Please add the weekly velocity Unit/Flavor/Sku/Week"));
-        this.rtmBox.get().setTooltip(new Tooltip("Please select a Route-to-Market from the ones you configured on the Route to Market Page"));
+//        this.commitButton.get().setWrapText(true);
+//        this.editButton.get().setWrapText(true);
+//        this.rtmBox.get().setConverter(new RtmBoxConverter());
+//        this.weeklyPromoUfswField.get().setTextFormatter(new TextFormatter<Double>(firstTableController.getDoubleInputConverter(), 0.0, firstTableController.getDoubleInputFilter()));
+//        this.weeklyPromoUfswField.get().setTooltip(new Tooltip("Please add the weekly velocity Unit/Flavor/Sku/Week"));
+//        this.rtmBox.get().setTooltip(new Tooltip("Please select a Route-to-Market from the ones you configured on the Route to Market Page"));
         //        weeklyPromoUfswField.textProperty().bindBidirectional(weeklyPromoUfswProperty(), new BigDecimalStringConverter());
 //        rtmBox.valueProperty().bindBidirectional(selectedRtmProperty());
     }
@@ -73,137 +71,137 @@ public class PromoPlan {
         this.year = yearProperty();
     }
 
-    public Label getPlannedNet1RateLabel() {
-        return plannedNet1RateLabel.get();
-    }
-
-    public SimpleObjectProperty<Label> plannedNet1RateLabelProperty() {
-        return plannedNet1RateLabel;
-    }
-
-    public void setPlannedNet1RateLabel(Label plannedNet1RateLabel) {
-        this.plannedNet1RateLabel.set(plannedNet1RateLabel);
-    }
-
-    public Label getGoalLabel() {
-        return goalLabel.get();
-    }
-
-    public SimpleObjectProperty<Label> goalLabelProperty() {
-        return goalLabel;
-    }
-
-    public void setGoalLabel(Label goalLabel) {
-        this.goalLabel.set(goalLabel);
-    }
-
-    public Label getEverydayLabel() {
-        return everydayLabel.get();
-    }
-
-    public SimpleObjectProperty<Label> everydayLabelProperty() {
-        return everydayLabel;
-    }
-
-    public void setEverydayLabel(Label everydayLabel) {
-        this.everydayLabel.set(everydayLabel);
-    }
-
-    public Label getCostLabel() {
-        return costLabel.get();
-    }
-
-    public SimpleObjectProperty<Label> costLabelProperty() {
-        return costLabel;
-    }
-
-    public void setCostLabel(Label costLabel) {
-        this.costLabel.set(costLabel);
-    }
-
-    public Label getGpmLabel() {
-        return gpmLabel.get();
-    }
-
-    public SimpleObjectProperty<Label> gpmLabelProperty() {
-        return gpmLabel;
-    }
-
-    public void setGpmLabel(Label gpmLabel) {
-        this.gpmLabel.set(gpmLabel);
-    }
-
-    public Button getEditButton() {
-        return editButton.get();
-    }
-
-    public SimpleObjectProperty<Button> editButtonProperty() {
-        return editButton;
-    }
-
-    public void setEditButton(Button editButton) {
-        this.editButton.set(editButton);
-    }
-
-    public Button getCommitButton() {
-        return commitButton.get();
-    }
-
-    public SimpleObjectProperty<Button> commitButtonProperty() {
-        return commitButton;
-    }
-
-    public void setCommitButton(Button commitButton) {
-        this.commitButton.set(commitButton);
-    }
-
-    public TableView getToplineTable() {
-        return toplineTable.get();
-    }
-
-    public SimpleObjectProperty<TableView> toplineTableProperty() {
-        return toplineTable;
-    }
-
-    public void setToplineTable(TableView toplineTable) {
-        this.toplineTable.set(toplineTable);
-    }
-
-    public TableView getRetailerTable() {
-        return retailerTable.get();
-    }
-
-    public SimpleObjectProperty<TableView> retailerTableProperty() {
-        return retailerTable;
-    }
-
-    public void setRetailerTable(TableView retailerTable) {
-        this.retailerTable.set(retailerTable);
-    }
-
-    public TextField getWeeklyPromoUfswField() {
-        return weeklyPromoUfswField.get();
-    }
-
-    public SimpleObjectProperty<TextField> weeklyPromoUfswFieldProperty() {
-        return weeklyPromoUfswField;
-    }
-
-    public void setWeeklyPromoUfswField(TextField weeklyPromoUfswField) {
-        this.weeklyPromoUfswField.set(weeklyPromoUfswField);
-    }
-
-    public ComboBox<RTMOption> getRtmBox() {
-        return rtmBox.get();
-    }
-
-    public SimpleObjectProperty<ComboBox<RTMOption>> rtmBoxProperty() {
-        return rtmBox;
-    }
-
-    public void setRtmBox(ComboBox<RTMOption> rtmBox) {
-        this.rtmBox.set(rtmBox);
-    }
+//    public Label getPlannedNet1RateLabel() {
+//        return plannedNet1RateLabel.get();
+//    }
+//
+//    public SimpleObjectProperty<Label> plannedNet1RateLabelProperty() {
+//        return plannedNet1RateLabel;
+//    }
+//
+//    public void setPlannedNet1RateLabel(Label plannedNet1RateLabel) {
+//        this.plannedNet1RateLabel.set(plannedNet1RateLabel);
+//    }
+//
+//    public Label getGoalLabel() {
+//        return goalLabel.get();
+//    }
+//
+//    public SimpleObjectProperty<Label> goalLabelProperty() {
+//        return goalLabel;
+//    }
+//
+//    public void setGoalLabel(Label goalLabel) {
+//        this.goalLabel.set(goalLabel);
+//    }
+//
+//    public Label getEverydayLabel() {
+//        return everydayLabel.get();
+//    }
+//
+//    public SimpleObjectProperty<Label> everydayLabelProperty() {
+//        return everydayLabel;
+//    }
+//
+//    public void setEverydayLabel(Label everydayLabel) {
+//        this.everydayLabel.set(everydayLabel);
+//    }
+//
+//    public Label getCostLabel() {
+//        return costLabel.get();
+//    }
+//
+//    public SimpleObjectProperty<Label> costLabelProperty() {
+//        return costLabel;
+//    }
+//
+//    public void setCostLabel(Label costLabel) {
+//        this.costLabel.set(costLabel);
+//    }
+//
+//    public Label getGpmLabel() {
+//        return gpmLabel.get();
+//    }
+//
+//    public SimpleObjectProperty<Label> gpmLabelProperty() {
+//        return gpmLabel;
+//    }
+//
+//    public void setGpmLabel(Label gpmLabel) {
+//        this.gpmLabel.set(gpmLabel);
+//    }
+//
+//    public Button getEditButton() {
+//        return editButton.get();
+//    }
+//
+//    public SimpleObjectProperty<Button> editButtonProperty() {
+//        return editButton;
+//    }
+//
+//    public void setEditButton(Button editButton) {
+//        this.editButton.set(editButton);
+//    }
+//
+//    public Button getCommitButton() {
+//        return commitButton.get();
+//    }
+//
+//    public SimpleObjectProperty<Button> commitButtonProperty() {
+//        return commitButton;
+//    }
+//
+//    public void setCommitButton(Button commitButton) {
+//        this.commitButton.set(commitButton);
+//    }
+//
+//    public TableView getToplineTable() {
+//        return toplineTable.get();
+//    }
+//
+//    public SimpleObjectProperty<TableView> toplineTableProperty() {
+//        return toplineTable;
+//    }
+//
+//    public void setToplineTable(TableView toplineTable) {
+//        this.toplineTable.set(toplineTable);
+//    }
+//
+//    public TableView getRetailerTable() {
+//        return retailerTable.get();
+//    }
+//
+//    public SimpleObjectProperty<TableView> retailerTableProperty() {
+//        return retailerTable;
+//    }
+//
+//    public void setRetailerTable(TableView retailerTable) {
+//        this.retailerTable.set(retailerTable);
+//    }
+//
+//    public TextField getWeeklyPromoUfswField() {
+//        return weeklyPromoUfswField.get();
+//    }
+//
+//    public SimpleObjectProperty<TextField> weeklyPromoUfswFieldProperty() {
+//        return weeklyPromoUfswField;
+//    }
+//
+//    public void setWeeklyPromoUfswField(TextField weeklyPromoUfswField) {
+//        this.weeklyPromoUfswField.set(weeklyPromoUfswField);
+//    }
+//
+//    public ComboBox<RTMOption> getRtmBox() {
+//        return rtmBox.get();
+//    }
+//
+//    public SimpleObjectProperty<ComboBox<RTMOption>> rtmBoxProperty() {
+//        return rtmBox;
+//    }
+//
+//    public void setRtmBox(ComboBox<RTMOption> rtmBox) {
+//        this.rtmBox.set(rtmBox);
+//    }
 
     public int getYear() {
         return year.get();

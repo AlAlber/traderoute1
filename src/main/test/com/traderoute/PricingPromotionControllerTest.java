@@ -137,7 +137,7 @@ public class PricingPromotionControllerTest{
         robot.doubleClickOn(textField2);
         robot.doubleClickOn(textField2);
         robot.type(KeyCode.DIGIT7);
-        Assertions.assertEquals("",textField2.getText());
+        Assertions.assertEquals("0.0",textField2.getText());
     }
     @Test
     public void testEditButtonChangesCurrentPromoPlanIndex(FxRobot robot) {
@@ -229,6 +229,7 @@ public class PricingPromotionControllerTest{
         ((BigDecimalParameter) pricingPromotionTableOne.getItems().get(everydayRetailIndex)).setMonth(3, new BigDecimal("6.00"));
         //Check to see values havent changed yet
         Assertions.assertEquals(new BigDecimal("3.60"), ((Parameter)pricingPromotionTableOne.getItems().get(everydayUnitCostIndex)).getMarch(), "Values before sku count change in july shouldn't have changed");
+        // CHECK WITH JOHN IF WE EVEN NEED TO TEST THIS
     }
 
     @Test
@@ -289,6 +290,17 @@ public class PricingPromotionControllerTest{
     }
     @Test
     public void testSlottingChangesGrossProfitPlan(FxRobot robot) {
+        TextField weeklyUFSW = robot.lookup("#weeklyVelocityField0").queryAs(TextField.class);
+        robot.doubleClickOn(weeklyUFSW);
+        robot.type(KeyCode.DIGIT0,KeyCode.PERIOD,KeyCode.DIGIT7,KeyCode.DIGIT5);
+        robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
+
+        ComboBox rtmBox0 =robot.lookup("#rtmBox0").queryAs(ComboBox.class);
+        robot.interact(() -> {
+//            System.out.println(rtmBox.getSelectionModel().getSelectedItem());]
+            rtmBox0.getSelectionModel().select(1);
+
+        });
         ParameterEditCell confidencePerCell = (ParameterEditCell) cell("#pricingPromotionTableOne", 2, 5, robot);
         robot.doubleClickOn(confidencePerCell);
         robot.doubleClickOn(confidencePerCell);
@@ -300,7 +312,10 @@ public class PricingPromotionControllerTest{
         robot.doubleClickOn(slottingCell);
         robot.type(KeyCode.DIGIT5,KeyCode.DIGIT0, KeyCode.DIGIT0,KeyCode.DIGIT0);
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
-        Assertions.assertEquals(new BigDecimal("-2500"), ((Parameter)pricingPromotionTableOne.getItems().get(26)).getMay(), "Gross Profit Plan should have changed to -2500.00");
+
+
+
+        Assertions.assertEquals(new BigDecimal("-317"), ((Parameter)pricingPromotionTableOne.getItems().get(26)).getMay(), "Gross Profit Plan should have changed to -317");
     }
     @Test
     public void testChangingStoreCount(FxRobot robot){
@@ -385,7 +400,7 @@ public class PricingPromotionControllerTest{
         robot.type(KeyCode.DIGIT0,KeyCode.PERIOD,KeyCode.DIGIT7,KeyCode.DIGIT5);
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
         Assertions.assertEquals(new BigDecimal("39336.075000"), controller.getRetailerGrossSales(1));
-        Assertions.assertEquals(new BigDecimal("15381.300000"), controller.getRetailerGrossSales(2));
+        Assertions.assertEquals(new BigDecimal("15381.30000"), controller.getRetailerGrossSales(2));
         Assertions.assertEquals(new BigDecimal("42588.900000"), controller.getRetailerGrossSales(8));
     }
     @Test
@@ -395,8 +410,8 @@ public class PricingPromotionControllerTest{
         robot.type(KeyCode.DIGIT0,KeyCode.PERIOD,KeyCode.DIGIT7,KeyCode.DIGIT5);
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
 
-        Assertions.assertEquals(new BigDecimal("9228.7800000"), controller.getRetailerNetCost(3));
-        Assertions.assertEquals(new BigDecimal("11535.9750000"), controller.getRetailerNetCost(4));
+        Assertions.assertEquals(new BigDecimal("9228.780000"), controller.getRetailerNetCost(3));
+        Assertions.assertEquals(new BigDecimal("11535.975000"), controller.getRetailerNetCost(4));
         Assertions.assertEquals(new BigDecimal("23601.6450000"), controller.getRetailerNetCost(1));
     }
     @Test
@@ -407,7 +422,7 @@ public class PricingPromotionControllerTest{
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
 
         Assertions.assertEquals(new BigDecimal("17035.5600000"), controller.getRetailerGrossProfit(8));
-        Assertions.assertEquals(new BigDecimal("9228.7800000"), controller.getRetailerGrossProfit(10));
+        Assertions.assertEquals(new BigDecimal("9228.780000"), controller.getRetailerGrossProfit(10));
         Assertions.assertEquals(new BigDecimal("17035.5600000"), controller.getRetailerGrossProfit(12));
     }
     @Test
@@ -494,9 +509,9 @@ public class PricingPromotionControllerTest{
         robot.type(KeyCode.DIGIT0,KeyCode.PERIOD,KeyCode.DIGIT7,KeyCode.DIGIT5);
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
 
-        Assertions.assertEquals(new BigDecimal("4421.76"), controller.getTotalTS(1));
-        Assertions.assertEquals(new BigDecimal("779.73"), controller.getTotalTS(2));
-        Assertions.assertEquals(new BigDecimal("974.66"), controller.getTotalTS(4));
+        Assertions.assertEquals(new BigDecimal("4421.75750000"), controller.getTotalTS(1));
+        Assertions.assertEquals(new BigDecimal("779.73000000"), controller.getTotalTS(2));
+        Assertions.assertEquals(new BigDecimal("974.66250000"), controller.getTotalTS(4));
     }
     @Test
     public void testGetManufacturerNet1Rev(FxRobot robot){
@@ -527,9 +542,9 @@ public class PricingPromotionControllerTest{
         robot.type(KeyCode.DIGIT0,KeyCode.PERIOD,KeyCode.DIGIT7,KeyCode.DIGIT5);
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
 
-        Assertions.assertEquals(new BigDecimal("17085.990000"), controller.getManufacturerNet2Rev(1));
-        Assertions.assertEquals(new BigDecimal("7041.270000"), controller.getManufacturerNet2Rev(2));
-        Assertions.assertEquals(new BigDecimal("8801.590000"), controller.getManufacturerNet2Rev(4));
+        Assertions.assertEquals(new BigDecimal("17085.99250000"), controller.getManufacturerNet2Rev(1));
+        Assertions.assertEquals(new BigDecimal("7041.27000000"), controller.getManufacturerNet2Rev(2));
+        Assertions.assertEquals(new BigDecimal("8801.58750000"), controller.getManufacturerNet2Rev(4));
     }
     @Test
     public void testGetManufacturerNet3Rev(FxRobot robot){
