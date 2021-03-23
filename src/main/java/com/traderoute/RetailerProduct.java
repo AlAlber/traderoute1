@@ -4,7 +4,6 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.ObservableList;
 
 public class RetailerProduct {
-    private SimpleObjectProperty<Retailer> retailer;
     private SimpleObjectProperty<Product> product;
     private SimpleObjectProperty<ObservableList<RTMOption>> rtmOptions;
     private SimpleObjectProperty<ObservableList<Sku>> skus;
@@ -12,8 +11,7 @@ public class RetailerProduct {
     private SimpleObjectProperty<ObservableList<PromoPlan>> promoPlans;
 
 
-    public RetailerProduct(Retailer retailer, Product product, ObservableList rtmOptions, ObservableList skus, ObservableList meetings, ObservableList promoPlans) {
-        this.retailer = new SimpleObjectProperty<>(retailer);
+    public RetailerProduct(Product product, ObservableList rtmOptions, ObservableList skus, ObservableList meetings, ObservableList promoPlans) {
         this.product = new SimpleObjectProperty<>(product);
         this.rtmOptions = new SimpleObjectProperty<>(rtmOptions);
         this.skus = new SimpleObjectProperty<>(skus);
@@ -21,7 +19,6 @@ public class RetailerProduct {
         this.promoPlans = new SimpleObjectProperty<>(promoPlans);
     }
     public RetailerProduct() {
-        this.retailer = new SimpleObjectProperty<>();
         this.product = new SimpleObjectProperty<>();
         this.rtmOptions = new SimpleObjectProperty<>();
         this.skus = new SimpleObjectProperty<>();
@@ -39,18 +36,6 @@ public class RetailerProduct {
 
     public void setPromoPlans(ObservableList<PromoPlan> promoPlans) {
         this.promoPlans.set(promoPlans);
-    }
-
-    public Retailer getRetailer() {
-        return retailer.get();
-    }
-
-    public SimpleObjectProperty<Retailer> retailerProperty() {
-        return retailer;
-    }
-
-    public void setRetailer(Retailer retailer) {
-        this.retailer.set(retailer);
     }
 
     public Product getProduct() {

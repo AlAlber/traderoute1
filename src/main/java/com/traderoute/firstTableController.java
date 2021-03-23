@@ -15,9 +15,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.util.StringConverter;
 import javafx.util.converter.BigDecimalStringConverter;
-import javafx.util.converter.IntegerStringConverter;
 
-import javax.swing.text.html.ImageView;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -79,11 +77,11 @@ public class firstTableController implements Initializable {
     @FXML
     private TextField yearOneStoreCountField;
     @FXML
-    private TextField everyDayGPMField;
+    private TextField everydayGpmField;
     @FXML
     private TextField spoilsAndFeesField;
     @FXML
-    private TextField weeklyUFSWAtMinField;
+    private TextField weeklyUfswAtMinField;
 
     @FXML
     private Label maxOverrideLabel;
@@ -181,9 +179,9 @@ public class firstTableController implements Initializable {
             new Tooltip("4-Year Equivalized Gross Profit $ Per Unit");
 
     @FXML
-    private ComboBox<Product> productCombobox;
+    private ComboBox<Product> productClassBox;
     @FXML
-    private ComboBox<Product> brandCombobox;
+    private ComboBox<Product> brandNameBox;
 
     @FXML
     private Label listLabel;
@@ -233,9 +231,9 @@ public class firstTableController implements Initializable {
                 uniqueBrandNames.add(product);
             }
         }
-        brandCombobox.setItems(uniqueBrandNames);
-        brandCombobox.setConverter(getBrandComboboxConverter());
-        productCombobox.setConverter(getProductComboboxConverter());
+        brandNameBox.setItems(uniqueBrandNames);
+        brandNameBox.setConverter(getBrandComboboxConverter());
+        productClassBox.setConverter(getProductComboboxConverter());
 
 
         // Restrict input fields to only accept text in Integer or Double format
@@ -248,9 +246,9 @@ public class firstTableController implements Initializable {
                 }
             }
         });
-        everyDayGPMField.setTextFormatter(new TextFormatter<>(getDoubleInputConverter(), 0.0, getDoubleInputFilter()));
+        everydayGpmField.setTextFormatter(new TextFormatter<>(getDoubleInputConverter(), 0.0, getDoubleInputFilter()));
         spoilsAndFeesField.setTextFormatter(new TextFormatter<>(getDoubleInputConverter(), 0.0, getDoubleInputFilter()));
-        weeklyUFSWAtMinField.setTextFormatter(new TextFormatter<>(getDoubleInputConverter(), 0.0, getDoubleInputFilter()));
+        weeklyUfswAtMinField.setTextFormatter(new TextFormatter<>(getDoubleInputConverter(), 0.0, getDoubleInputFilter()));
 
         //Set dummy data
         firstTableView.setItems(getRTMOptions());
@@ -281,16 +279,6 @@ public class firstTableController implements Initializable {
 
         // Set cell factories
         setCellFactories();
-
-//        Retailer currentRetailer = new Retailer();
-//        this.retailer = new SimpleObjectProperty<Retailer>(currentRetailer);
-//        retailer.get().setRetailerProducts(getRetailerProducts());
-//        getRetailer().setCurrentRetailerProduct(getRetailer().getRetailerProducts().get(0));
-
-//        yearOneStoreCountField.textProperty().bindBidirectional(getRetailer().yearOneStoreCountProperty(), new IntegerStringConverter());
-//        everyDayGPMField.textProperty().bindBidirectional(getRetailer().everydayGPMProperty(), new BigDecimalStringConverter());
-//        spoilsAndFeesField.textProperty().bindBidirectional(getRetailer().spoilsFeesProperty(), new BigDecimalStringConverter());
-
 
 
     }
@@ -340,7 +328,7 @@ public class firstTableController implements Initializable {
             /*
             Set Override to automatically take current value of resulting every day retail calculated
             */
-            row.resultingEverydayRetailProperty().addListener(new ChangeListener<BigDecimal>() {
+            row.resultingEverydayRetailCalcdProperty().addListener(new ChangeListener<BigDecimal>() {
                 private boolean changing;
 
                 @Override
@@ -348,7 +336,7 @@ public class firstTableController implements Initializable {
                     if (!changing) {
                         try {
                             changing = true;
-                            row.setResultingEverydayRetailOverride(row.getResultingEverydayRetailCalcd().setScale(2,RoundingMode.HALF_UP));
+                            row.setResultingEverydayRetailOverride(row.getResultingEverydayRetailCalcd().setScale(10,RoundingMode.HALF_UP));
                             maxOverrideLabel.setText("of $" + getMinOverride());
                             firstTableView.refresh();
                             updateChart(false,true,false,false,false,false,false,false,false);
@@ -421,7 +409,7 @@ public class firstTableController implements Initializable {
     Product class changed Event
      */
     public void changeBrandComboboxEvent(ActionEvent event) {
-        Product selectedProduct = brandCombobox.getSelectionModel().getSelectedItem();
+        Product selectedProduct = brandNameBox.getSelectionModel().getSelectedItem();
         secondTableView.setItems(firstTableView.getItems());
         listLabel.setText("List = $");
         fobLabel.setText("F.O.B. = $");
@@ -434,13 +422,13 @@ public class firstTableController implements Initializable {
                 correspondingProducts.add(product);
             }
         }
-        productCombobox.setItems(correspondingProducts);
+        productClassBox.setItems(correspondingProducts);
     }
     /*
     Product class changed Event
      */
     public void changeProductComboboxEvent(ActionEvent event) {
-        Product selectedProduct = productCombobox.getSelectionModel().getSelectedItem();
+        Product selectedProduct = productClassBox.getSelectionModel().getSelectedItem();
         listLabel.setText("List = $" + selectedProduct.getUnitListCost());
         fobLabel.setText("F.O.B. = $" + selectedProduct.getUnitFobCost());
         net1GoalLabel.setText("Net 1 Goal = $" + selectedProduct.getUnitNet1Goal());
@@ -601,10 +589,10 @@ Return Value from Year One Store Count
     Return Value from EveryDayGPMField
     */
     public BigDecimal getEveryDayGPM() {
-        if (everyDayGPMField.getText() == null) {
+        if (everydayGpmField.getText() == null) {
             return new BigDecimal("0.0");
         }
-        return new BigDecimal(everyDayGPMField.getText());
+        return new BigDecimal(everydayGpmField.getText());
     }
 
     /*
@@ -621,10 +609,10 @@ Return Value from Year One Store Count
     Return Value from EveryDayGPMField
     */
     public BigDecimal getWeeklyUSFWAtMin() {
-        if (weeklyUFSWAtMinField.getText() == null) {
+        if (weeklyUfswAtMinField.getText() == null) {
             return new BigDecimal("0.0");
         }
-        return new BigDecimal(weeklyUFSWAtMinField.getText());
+        return new BigDecimal(weeklyUfswAtMinField.getText());
     }
     /*
     Load dummy chart data
@@ -730,7 +718,7 @@ Return Value from Year One Store Count
         ObservableList<Meeting>  meetings = FXCollections.observableArrayList();
         skus.addAll(new Sku("dill", "current", "great taste"), new Sku("dill", "current", "great taste"), new Sku("dill", "current", "great taste"));
         meetings.addAll(new Meeting("Review Meeting", "here", convertToDate(LocalDate.of(2022,12,5)), "11:15","will be fun"), new Meeting());
-        retailerProducts.add(new RetailerProduct(new Retailer(), new Product("Big Time Food Company", "24 oz pickles", new BigDecimal("3.59"), new BigDecimal("0.29"),
+        retailerProducts.add(new RetailerProduct( new Product("Big Time Food Company", "24 oz pickles", new BigDecimal("3.59"), new BigDecimal("0.29"),
                 new BigDecimal("3.30"), new BigDecimal("2.99"), new BigDecimal("2.05"), new BigDecimal("-1.15")), getRTMOptions(), skus,meetings, RetailerSelectionController.getDummyPromoPlans()));
         return retailerProducts;
     }
@@ -776,7 +764,6 @@ Return Value from Year One Store Count
         App.setSceneRoot(pricingPromotionLoader.load());
 
         PricingPromotionController pricingPromotionController =pricingPromotionLoader.getController();
-        System.out.println("Is this seriously being called again");
         pricingPromotionController.setRetailer(retailer.get());
     }
 

@@ -517,7 +517,7 @@ public class RTMOption {
         return resultingEverydayRetailCalcd.get();
     }
 
-    public SimpleObjectProperty<BigDecimal> resultingEverydayRetailProperty() {
+    public SimpleObjectProperty<BigDecimal> resultingEverydayRetailCalcdProperty() {
         if (resultingEverydayRetailCalcd == null) {
             return new SimpleObjectProperty<BigDecimal>(new BigDecimal("0.0"));
         }

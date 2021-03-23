@@ -2,6 +2,7 @@ package com.traderoute;
 
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -24,8 +25,15 @@ import java.math.BigDecimal;
 import static org.junit.jupiter.api.Assertions.*;
 @ExtendWith(ApplicationExtension.class)
 class firstTableControllerTest {
+    private firstTableController controller;
     private ObservableList<RTMOption> rtmOptions;
     private SimpleObjectProperty<Retailer> retailer= new SimpleObjectProperty<>(new Retailer("ahold", firstTableController.getRetailerProducts(),firstTableController.getRetailerProducts().get(0) ,  new BigDecimal("40") , 158,new BigDecimal("3.0")));;
+    TableView firstTableView;
+    TextField everydayGpmField;
+    TextField yearOneStoreCountField;
+    TextField weeklyUfswAtMinField;
+    ComboBox<Product> productClassBox;
+    ComboBox<Product> brandNameBox;
 
 
     @Start
@@ -34,78 +42,136 @@ class firstTableControllerTest {
         FXMLLoader fxmlLoader = App.createFXMLLoader("secondTable");
         Scene scene = new Scene(fxmlLoader.load());
         System.out.println(fxmlLoader.getController().toString());
-        firstTableController controller = fxmlLoader.getController();
+        controller = fxmlLoader.getController();
         controller.setRetailer(retailer.get());
         stage.setScene(scene);
         stage.show();
-
     }
+
     @org.junit.jupiter.api.BeforeEach
-    void setUp() {
+    void setUp(FxRobot robot) {
         rtmOptions = retailer.get().getRetailerProducts().get(0).getRtmOptions();
+        firstTableView = robot.lookup("#firstTableView").queryTableView();
+        everydayGpmField = robot.lookup("#everydayGpmField").queryAs(TextField.class);
+        yearOneStoreCountField = robot.lookup("#yearOneStoreCountField").queryAs(TextField.class);
+        weeklyUfswAtMinField = robot.lookup("#weeklyUfswAtMinField").queryAs(TextField.class);
+        productClassBox = robot.lookup("#productClassBox").queryComboBox();
+        brandNameBox = robot.lookup("#brandNameBox").queryComboBox();
 
 
     }
 
     @Test
-    public void testChangeFirstSelectedRtmOption(FxRobot robot){
-        ComboBox rtmBox0 = robot.lookup("#rtmBox0").queryAs(ComboBox.class);
-        Label everydayLabel0 = robot.lookup("#everydayLabel0").queryAs(Label.class);
-        Label costLabel0 = robot.lookup("#costLabel0").queryAs(Label.class);
-        Label gpmLabel0 = robot.lookup("#gpmLabel0").queryAs(Label.class);
-        Assertions.assertEquals( "$0.00 Everyday",everydayLabel0.getText() ,"everydayLabel0 text should be $0.00 Everyday");
-        Assertions.assertEquals( "$0.00 Cost", costLabel0.getText(),"costLabel0 text should be $0.00 Cost before click");
-        Assertions.assertEquals("0.00% GPM", gpmLabel0.getText() , "gpmLabel0 text should be 0.00% GPM before click");
-        Assertions.assertEquals(rtmOptions.get(1), rtmBox0.getSelectionModel().getSelectedItem(), "Should be second RTM option before click");
-        robot.interact(() -> {
-//            System.out.println(rtmBox.getSelectionModel().getSelectedItem());]
-            rtmBox0.getSelectionModel().select(0);
-
-        });
-        Assertions.assertEquals(rtmOptions.get(0),rtmBox0.getSelectionModel().getSelectedItem(), "Should have changed to first RTM after clicking different option");
-        Assertions.assertEquals("$5.99 Everyday",everydayLabel0.getText() ,"everydayLabel0 text should be $5.99 Everyday after");
-        Assertions.assertEquals( "$3.59 Cost", costLabel0.getText(),"costLabel0 text should be $3.59 Cost after click");
-        Assertions.assertEquals("40.00% GPM", gpmLabel0.getText() , "gpmLabel0 text should be 40.00% GPM after click");
+    public void testFirstReceiverUpdatesLandedStoreCost(FxRobot robot){
+        robot.doubleClickOn(cell("#firstTableView", 3, 3, robot));
+        robot.write("0.7");
+        robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
+        Assertions.assertEquals(((RTMOption)firstTableView.getItems().get(3)).getFirstReceiver(),new BigDecimal("0.7"));
+        Assertions.assertEquals(((RTMOption)firstTableView.getItems().get(3)).getLandedStoreCost(),new BigDecimal("0.7"));
     }
+    @Test
+    public void testSecondReceiverUpdatesLandedStoreCost(FxRobot robot){
+        robot.doubleClickOn(cell("#firstTableView", 3, 4, robot));
+        robot.write("0.7");
+        robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
+        Assertions.assertEquals(((RTMOption)firstTableView.getItems().get(3)).getSecondReceiver(),new BigDecimal("0.7"));
+        Assertions.assertEquals(((RTMOption)firstTableView.getItems().get(3)).getLandedStoreCost(),new BigDecimal("0.7"));
+    }
+    @Test
+    public void testThirdReceiverUpdatesLandedStoreCost(FxRobot robot){
+        robot.doubleClickOn(cell("#firstTableView", 3, 5, robot));
+        robot.write("0.7");
+        robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
+        Assertions.assertEquals(((RTMOption)firstTableView.getItems().get(3)).getThirdReceiver(),new BigDecimal("0.7"));
+        Assertions.assertEquals(((RTMOption)firstTableView.getItems().get(3)).getLandedStoreCost(),new BigDecimal("0.7"));
+    }
+    @Test
+    public void testFourthReceiverUpdatesLandedStoreCost(FxRobot robot){
+        robot.doubleClickOn(cell("#firstTableView", 3, 6, robot));
+        robot.write("0.7");
+        robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
+        Assertions.assertEquals(((RTMOption)firstTableView.getItems().get(3)).getFourthReceiver(),new BigDecimal("0.7"));
+        Assertions.assertEquals(((RTMOption)firstTableView.getItems().get(3)).getLandedStoreCost(),new BigDecimal("0.7"));
+    }
+
+    @Test
+    public void testReceiversCorrectlyPickMaxLandedStoreCost(FxRobot robot){
+        robot.doubleClickOn(cell("#firstTableView", 3, 6, robot));
+        robot.write("0.7");
+        robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
+        Assertions.assertEquals(((RTMOption)firstTableView.getItems().get(3)).getFourthReceiver(),new BigDecimal("0.7"));
+        Assertions.assertEquals(((RTMOption)firstTableView.getItems().get(3)).getLandedStoreCost(),new BigDecimal("0.7"));
+
+        robot.doubleClickOn(cell("#firstTableView", 3, 5, robot));
+        robot.write("1.1");
+        robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
+        Assertions.assertEquals(((RTMOption)firstTableView.getItems().get(3)).getThirdReceiver(),new BigDecimal("1.1"));
+        Assertions.assertEquals(((RTMOption)firstTableView.getItems().get(3)).getLandedStoreCost(),new BigDecimal("1.1"));
+
+        robot.doubleClickOn(cell("#firstTableView", 3, 3, robot));
+        robot.write("0.9");
+        robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
+        Assertions.assertEquals(((RTMOption)firstTableView.getItems().get(3)).getFirstReceiver(),new BigDecimal("0.9"));
+        Assertions.assertEquals(((RTMOption)firstTableView.getItems().get(3)).getLandedStoreCost(),new BigDecimal("1.1"));
+
+        robot.doubleClickOn(cell("#firstTableView", 3, 4, robot));
+        robot.write("5.0");
+        robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
+        Assertions.assertEquals(((RTMOption)firstTableView.getItems().get(3)).getSecondReceiver(),new BigDecimal("5.0"));
+        Assertions.assertEquals(((RTMOption)firstTableView.getItems().get(3)).getLandedStoreCost(),new BigDecimal("5.0"));
+    }
+
+    @Test
+    public void testMaxReceiverAndEverydayGpmUpdateEverydayRetails(FxRobot robot){
+        robot.doubleClickOn(cell("#firstTableView", 3, 3, robot));
+        robot.write("3.59");
+        robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
+        Assertions.assertEquals(((RTMOption)firstTableView.getItems().get(3)).getFirstReceiver(),new BigDecimal("3.59"));
+        Assertions.assertEquals(((RTMOption)firstTableView.getItems().get(3)).getLandedStoreCost(),new BigDecimal("3.59"));
+
+        robot.doubleClickOn(everydayGpmField);
+        robot.write("40.0");
+        robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
+        Assertions.assertEquals(new BigDecimal("5.9833333333"),((RTMOption)firstTableView.getItems().get(3)).getResultingEverydayRetailCalcd());
+        Assertions.assertEquals(new BigDecimal("5.9833333333"), ((RTMOption)firstTableView.getItems().get(3)).getResultingEverydayRetailOverride());
+    }
+
+    @Test
+    public void testProductSelectionUpdatesLabels(FxRobot robot){
+        robot.interact(() -> {
+            brandNameBox.getSelectionModel().select(0);
+            productClassBox.getSelectionModel().select(0);
+        });
+        Label listLabel = robot.lookup("#listLabel").queryAs(Label.class);
+        Label fobLabel = robot.lookup("#fobLabel").queryAs(Label.class);
+        Label net1GoalLabel = robot.lookup("#net1GoalLabel").queryAs(Label.class);
+        Label elasticityRatioLabel = robot.lookup("#elasticityRatioLabel").queryAs(Label.class);
+        Assertions.assertEquals("List = $3.59", listLabel.getText());
+        Assertions.assertEquals("F.O.B. = $3.30", fobLabel.getText());
+        Assertions.assertEquals("Net 1 Goal = $2.99", net1GoalLabel.getText());
+        Assertions.assertEquals("Elasticity Ratio = +1% Price :-1.15% Volume", elasticityRatioLabel.getText());
+    }
+
+
+
 
     @Test
     public void testChangeWeeklyVelocity(FxRobot robot) {
-        TextField weeklyVelocityField0 = robot.lookup("#weeklyVelocityField0").queryAs(TextField.class);
-        TableView toplineTable0 = robot.lookup("#toplineTable0").queryTableView();
-        TableView retailerTable0 = robot.lookup("#retailerTable0").queryTableView();
-        Assertions.assertEquals(((Summary)toplineTable0.getItems().get(0)).getSummaryValue(), new BigDecimal("0.0"), "Topline table values zero initially");
-        Assertions.assertEquals(((Summary)toplineTable0.getItems().get(1)).getSummaryValue(), new BigDecimal("0.0"), "Topline table values zero initially");
-        Assertions.assertEquals(((Summary)toplineTable0.getItems().get(2)).getSummaryValue(), new BigDecimal("0.0"), "Topline table values zero initially");
-        Assertions.assertEquals(((Summary)retailerTable0.getItems().get(0)).getSummaryValue(), new BigDecimal("0.0"), "Retailer table values zero initially");
-        Assertions.assertEquals(((Summary)retailerTable0.getItems().get(1)).getSummaryValue(), new BigDecimal("0.0"), "Retailer table values zero initially");
-        Assertions.assertEquals(((Summary)retailerTable0.getItems().get(2)).getSummaryValue(), new BigDecimal("0.0"), "Retailer table values zero initially");
         robot.interact(() -> {
-            robot.doubleClickOn(weeklyVelocityField0);
-            robot.type(KeyCode.DIGIT0,KeyCode.PERIOD, KeyCode.DIGIT7, KeyCode.DIGIT5);
-            robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
+            brandNameBox.getSelectionModel().select(0);
+            productClassBox.getSelectionModel().select(0);
+            yearOneStoreCountField.setText("158");
+            everydayGpmField.setText("40.0");
+            yearOneStoreCountField.setText("3.0");
         });
-        Assertions.assertEquals(new BigDecimal("177536.7000"),((Summary)toplineTable0.getItems().get(0)).getSummaryValue(), "Topline table value 0 should be 177536");
-        Assertions.assertEquals(new BigDecimal("162984.5390") , ((Summary)toplineTable0.getItems().get(1)).getSummaryValue(), "Topline table value 1 should be 162985");
-        Assertions.assertEquals(new BigDecimal("53799.0000") , ((Summary)toplineTable0.getItems().get(2)).getSummaryValue(), "Topline table value 2 should 53799");
-        Assertions.assertEquals(new BigDecimal("332565.5100"), ((Summary)retailerTable0.getItems().get(0)).getSummaryValue(), "Retailer table values zero 332566");
-        Assertions.assertEquals(new BigDecimal("40.0000"), ((Summary)retailerTable0.getItems().get(1)).getSummaryValue(), "Retailer table value 1 should be 40.00");
-        Assertions.assertEquals(new BigDecimal("6.1816"), ((Summary)retailerTable0.getItems().get(2)).getSummaryValue(), "Retailer table value 2 should be 6.18");
-
     }
 
     @Test
     public void testInputtingOnTableView(FxRobot robot){
-        TableView firstTableView = robot.lookup("#firstTableView").queryTableView();
-        robot.interact(() -> {
-            robot.doubleClickOn(cell("#firstTableView", 2, 2, robot));
-//            TextField textField = robot.lookup("editor2").queryAs(TextField.class);
-//            robot.clickOn(textField);
-            robot.type(KeyCode.DIGIT0).release(KeyCode.DIGIT0).type(KeyCode.PERIOD).release(KeyCode.PERIOD).type(KeyCode.DIGIT7).release(KeyCode.DIGIT7);
-            robot.write("100000000000");
-            robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
-        });
-        Assert.assertEquals(((RTMOption)firstTableView.getItems().get(2)).getFreightOutPerUnit(),new BigDecimal("0.75"));
-
+        robot.doubleClickOn(cell("#firstTableView", 2, 2, robot));
+        robot.write("0.7");
+        robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
+        Assert.assertEquals(((RTMOption)firstTableView.getItems().get(2)).getFreightOutPerUnit(),new BigDecimal("0.7"));
     }
 
 

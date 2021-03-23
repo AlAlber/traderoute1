@@ -42,7 +42,7 @@
                         <Label layoutY="67.0" prefHeight="15.0" prefWidth="96.0" text="Year 1 Store Count" />
                         <Label layoutY="90.0" prefHeight="15.0" prefWidth="96.0" text="Everyday GPM %" />
                         <Label layoutY="111.0" prefHeight="15.0" prefWidth="96.0" text="Spoils + Fees %" />
-                        <TextField fx:id="everyDayGPMField" layoutX="100.0" layoutY="89.0" maxHeight="-Infinity" minHeight="-Infinity" onAction="#changeEveryDayGPMCellEvent" prefHeight="17.0" prefWidth="107.0" promptText="0.0" />
+                        <TextField fx:id="everydayGpmField" layoutX="100.0" layoutY="89.0" maxHeight="-Infinity" minHeight="-Infinity" onAction="#changeEveryDayGPMCellEvent" prefHeight="17.0" prefWidth="107.0" promptText="0.0" />
                         <TextField fx:id="yearOneStoreCountField" layoutX="100.0" layoutY="66.0" maxHeight="-Infinity" minHeight="-Infinity" onAction="#changeYearOneStoreCount" prefHeight="17.0" prefWidth="107.0" promptText="0.0" />
                         <TextField fx:id="spoilsAndFeesField" layoutX="100.0" layoutY="110.0" maxHeight="-Infinity" minHeight="-Infinity" onAction="#changeSpoilsAndFeesEvent" prefHeight="17.0" prefWidth="107.0" promptText="0.0" />
                      </children>
@@ -52,12 +52,12 @@
                   </AnchorPane>
                   <VBox prefHeight="132.0" prefWidth="217.0">
                      <children>
-                        <ComboBox fx:id="brandCombobox" onAction="#changeBrandComboboxEvent" prefHeight="26.0" prefWidth="215.0" promptText="Please select the product brand">
+                        <ComboBox fx:id="brandNameBox" onAction="#changeBrandComboboxEvent" prefHeight="26.0" prefWidth="215.0" promptText="Please select the product brand">
                            <VBox.margin>
                               <Insets bottom="5.0" />
                            </VBox.margin>
                         </ComboBox>
-                        <ComboBox fx:id="productCombobox" onAction="#changeProductComboboxEvent" prefHeight="26.0" prefWidth="216.0" promptText="Please select the product class">
+                        <ComboBox fx:id="productClassBox" onAction="#changeProductComboboxEvent" prefHeight="26.0" prefWidth="216.0" promptText="Please select the product class">
                            <VBox.margin>
                               <Insets bottom="5.0" />
                            </VBox.margin>
@@ -153,7 +153,7 @@
                                     <Insets left="7.0" />
                                  </padding>
                               </Label>
-                              <TextField fx:id="weeklyUFSWAtMinField" maxHeight="-Infinity" minHeight="-Infinity" onAction="#changeWeeklyUSFWAtMinEvent" prefHeight="18.0" prefWidth="106.0" promptText="0.0" />
+                              <TextField fx:id="weeklyUfswAtMinField" maxHeight="-Infinity" minHeight="-Infinity" onAction="#changeWeeklyUSFWAtMinEvent" prefHeight="18.0" prefWidth="106.0" promptText="0.0" />
                               <AnchorPane prefHeight="200.0" prefWidth="200.0" />
                            </children>
                         </VBox>
