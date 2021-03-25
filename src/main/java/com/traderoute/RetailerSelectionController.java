@@ -197,8 +197,8 @@ public class RetailerSelectionController implements Initializable {
 
     private ObservableList<Retailer> getRetailers(){
         ObservableList<Retailer> retailers = FXCollections.observableArrayList();
-        retailers.add(new Retailer("Ahold Giant",getRetailerProducts(),getRetailerProducts().get(0), new BigDecimal("40"), 158, new BigDecimal("3.0")));
-        retailers.add(new Retailer("Ahold Small",getDifferentRetailerProducts(),getDifferentRetailerProducts().get(1), new BigDecimal("40"), 183, new BigDecimal("3.0")));
+        retailers.add(new Retailer("Ahold Giant",getRetailerProducts(),0, new BigDecimal("40"), 158, new BigDecimal("3.0")));
+        retailers.add(new Retailer("Ahold Small",getDifferentRetailerProducts(),1, new BigDecimal("40"), 183, new BigDecimal("3.0")));
 //        retailers.add(new Retailer());
         return retailers;
     }

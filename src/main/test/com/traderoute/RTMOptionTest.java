@@ -5,8 +5,6 @@ import org.junit.Assert;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 
 class RTMOptionTest {
     private RTMOption optionOne;
@@ -35,7 +33,7 @@ class RTMOptionTest {
         productTwo = new Product("Big Time Food Company", "12 oz pickle juice", new BigDecimal("1.49"), new BigDecimal("0.14"),
                 new BigDecimal("1.35"), new BigDecimal("1.29"), new BigDecimal("0.78"), new BigDecimal("-1.20"));
         optionThree.setProduct(productOne);
-        optionThree.setEstimatedAnnualVolumePerSku(new BigDecimal(9859));
+        optionThree.setAnnualVolumePerSku(new BigDecimal(9859));
     }
 
     @org.junit.jupiter.api.Test
@@ -67,22 +65,22 @@ class RTMOptionTest {
         optionTwo.setMinOverride(new BigDecimal("5.99"));
         optionOne.setWeeklyUSFWAtMin(new BigDecimal("1.2"));
         optionTwo.setWeeklyUSFWAtMin(new BigDecimal("1.2"));
-        optionOne.updateElasticizedEstimatedUnitVelocity();
-        optionTwo.updateElasticizedEstimatedUnitVelocity();
-        Assert.assertEquals(new BigDecimal("1.2"),optionOne.getElasticizedEstimatedUnitVelocity());
-        Assert.assertEquals(new BigDecimal("0.7161936560640"),optionTwo.getElasticizedEstimatedUnitVelocity());
+        optionOne.updateElasticizedUnitVelocity();
+        optionTwo.updateElasticizedUnitVelocity();
+        Assert.assertEquals(new BigDecimal("1.2"),optionOne.getElasticizedUnitVelocity());
+        Assert.assertEquals(new BigDecimal("0.7161936560640"),optionTwo.getElasticizedUnitVelocity());
     }
 
     @org.junit.jupiter.api.Test
     void testUpdateEstimatedAnnualVolumePerSku() {
         optionOne.setYearOneStoreCount(158);
         optionTwo.setYearOneStoreCount(158);
-        optionOne.setElasticizedEstimatedUnitVelocity(new BigDecimal("1.2"));
-        optionTwo.setElasticizedEstimatedUnitVelocity(new BigDecimal("0.7161936560640")); //needs exact value otherwise it doesnt work
+        optionOne.setElasticizedUnitVelocity(new BigDecimal("1.2"));
+        optionTwo.setElasticizedUnitVelocity(new BigDecimal("0.7161936560640")); //needs exact value otherwise it doesnt work
         optionOne.updateEstimatedAnnualVolumePerSku();
         optionTwo.updateEstimatedAnnualVolumePerSku();
-        Assert.assertEquals(new BigDecimal(9859.2000000000), optionOne.getEstimatedAnnualVolumePerSku());
-        Assert.assertEquals(new BigDecimal(5884), optionTwo.getEstimatedAnnualVolumePerSku());
+        Assert.assertEquals(new BigDecimal(9859.2000000000), optionOne.getAnnualVolumePerSku());
+        Assert.assertEquals(new BigDecimal(5884), optionTwo.getAnnualVolumePerSku());
     }
 
     @org.junit.jupiter.api.Test
@@ -139,8 +137,8 @@ class RTMOptionTest {
 
     @org.junit.jupiter.api.Test
     void testGetFourYearUnitVolumePerSku() {
-        optionOne.setEstimatedAnnualVolumePerSku(new BigDecimal(9859));
-        optionTwo.setEstimatedAnnualVolumePerSku(new BigDecimal(5884));
+        optionOne.setAnnualVolumePerSku(new BigDecimal(9859));
+        optionTwo.setAnnualVolumePerSku(new BigDecimal(5884));
         Assert.assertEquals(new BigDecimal("39436"), optionOne.getFourYearUnitVolumePerSku());
         Assert.assertEquals(new BigDecimal("23536"),optionTwo.getFourYearUnitVolumePerSku());
     }
@@ -182,7 +180,7 @@ class RTMOptionTest {
         Assert.assertEquals(new BigDecimal("0.0"), optionThree.getStandardAllowanceTrade().setScale(1,RoundingMode.HALF_UP));
 //        Assert.assertEquals(new BigDecimal("3.59"),optionThree.getFirstReceiver());
         optionThree.setFirstReceiver(new BigDecimal("3.07"));
-        optionThree.setEstimatedAnnualVolumePerSku(new BigDecimal(8913));
+        optionThree.setAnnualVolumePerSku(new BigDecimal(8913));
         Assert.assertEquals(new BigDecimal("8199.9600000000"), optionThree.getStandardAllowanceTrade());
         //actually expected: 8199.76
 

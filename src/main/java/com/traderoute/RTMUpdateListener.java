@@ -3,8 +3,6 @@ package com.traderoute;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 
-import java.math.BigDecimal;
-
 public class RTMUpdateListener<Object> implements ChangeListener<Object> {
         private boolean changing;
         private RTMOption rtmOption;
@@ -21,10 +19,9 @@ public class RTMUpdateListener<Object> implements ChangeListener<Object> {
             try {
                 changing = true;
                 if (updateAllFromSecond){
-                    rtmOption.updateElasticizedEstimatedUnitVelocity();
+                    rtmOption.updateElasticizedUnitVelocity();
                     rtmOption.updateEstimatedAnnualVolumePerSku();
                 }
-                System.out.println("Spoils fees changing works");
                 rtmOption.updateSlottingPaybackPeriod();
                 rtmOption.updatePostFreightPostSpoilsWeCollect();
                 rtmOption.updateUnspentTrade();

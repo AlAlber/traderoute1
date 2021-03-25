@@ -44,7 +44,7 @@
                         <Label layoutY="111.0" prefHeight="15.0" prefWidth="96.0" text="Spoils + Fees %" />
                         <TextField fx:id="everydayGpmField" layoutX="100.0" layoutY="89.0" maxHeight="-Infinity" minHeight="-Infinity" onAction="#changeEveryDayGPMCellEvent" prefHeight="17.0" prefWidth="107.0" promptText="0.0" />
                         <TextField fx:id="yearOneStoreCountField" layoutX="100.0" layoutY="66.0" maxHeight="-Infinity" minHeight="-Infinity" onAction="#changeYearOneStoreCount" prefHeight="17.0" prefWidth="107.0" promptText="0.0" />
-                        <TextField fx:id="spoilsAndFeesField" layoutX="100.0" layoutY="110.0" maxHeight="-Infinity" minHeight="-Infinity" onAction="#changeSpoilsAndFeesEvent" prefHeight="17.0" prefWidth="107.0" promptText="0.0" />
+                        <TextField fx:id="spoilsFeesField" layoutX="100.0" layoutY="110.0" maxHeight="-Infinity" minHeight="-Infinity" onAction="#changeSpoilsAndFeesEvent" prefHeight="17.0" prefWidth="107.0" promptText="0.0" />
                      </children>
                      <HBox.margin>
                         <Insets right="30.0" />

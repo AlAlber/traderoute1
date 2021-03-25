@@ -41,7 +41,7 @@ public class PricingPromotionControllerTest{
 //    public static GuiTest controller;
 
     private ObservableList<RTMOption> rtmOptions;
-    private SimpleObjectProperty<Retailer> retailer= new SimpleObjectProperty<>(new Retailer("ahold", firstTableController.getRetailerProducts(),firstTableController.getRetailerProducts().get(0) ,  new BigDecimal("40") , 158,new BigDecimal("3.0")));;
+    private SimpleObjectProperty<Retailer> retailer= new SimpleObjectProperty<>(new Retailer("ahold", firstTableController.getRetailerProducts(),0 ,  new BigDecimal("40") , 158,new BigDecimal("3.0")));;
     private TableView pricingPromotionTableOne;
 
     private static final int skusInDistributionIndex = 0;

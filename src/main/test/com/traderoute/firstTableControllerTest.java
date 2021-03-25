@@ -1,8 +1,8 @@
 package com.traderoute;
 
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -22,15 +22,15 @@ import org.testfx.framework.junit5.Start;
 import java.io.IOException;
 import java.math.BigDecimal;
 
-import static org.junit.jupiter.api.Assertions.*;
 @ExtendWith(ApplicationExtension.class)
 class firstTableControllerTest {
     private firstTableController controller;
     private ObservableList<RTMOption> rtmOptions;
-    private SimpleObjectProperty<Retailer> retailer= new SimpleObjectProperty<>(new Retailer("ahold", firstTableController.getRetailerProducts(),firstTableController.getRetailerProducts().get(0) ,  new BigDecimal("40") , 158,new BigDecimal("3.0")));;
+    private SimpleObjectProperty<Retailer> retailer= new SimpleObjectProperty<>(new Retailer("ahold", firstTableController.getRetailerProducts(),0 ,  new BigDecimal("40") , 158,new BigDecimal("3.0")));;
     TableView firstTableView;
     TextField everydayGpmField;
     TextField yearOneStoreCountField;
+    TextField spoilsFeesField;
     TextField weeklyUfswAtMinField;
     ComboBox<Product> productClassBox;
     ComboBox<Product> brandNameBox;
@@ -54,10 +54,19 @@ class firstTableControllerTest {
         firstTableView = robot.lookup("#firstTableView").queryTableView();
         everydayGpmField = robot.lookup("#everydayGpmField").queryAs(TextField.class);
         yearOneStoreCountField = robot.lookup("#yearOneStoreCountField").queryAs(TextField.class);
+        spoilsFeesField = robot.lookup("#spoilsFeesField").queryAs(TextField.class);
         weeklyUfswAtMinField = robot.lookup("#weeklyUfswAtMinField").queryAs(TextField.class);
         productClassBox = robot.lookup("#productClassBox").queryComboBox();
         brandNameBox = robot.lookup("#brandNameBox").queryComboBox();
-
+        RTMOption rtmOption1 = new RTMOption();
+        rtmOption1.setRTMName("Option 1");
+        RTMOption rtmOption2 = new RTMOption();
+        rtmOption2.setRTMName("Option 2");
+        RTMOption rtmOption3 = new RTMOption();
+        rtmOption3.setRTMName("Option 3");
+        RTMOption rtmOption4 = new RTMOption();
+        rtmOption4.setRTMName("Option 4");
+        firstTableView.setItems(FXCollections.observableArrayList(rtmOption1, rtmOption2, rtmOption3, rtmOption4));
 
     }
 
@@ -151,6 +160,60 @@ class firstTableControllerTest {
         Assertions.assertEquals("Net 1 Goal = $2.99", net1GoalLabel.getText());
         Assertions.assertEquals("Elasticity Ratio = +1% Price :-1.15% Volume", elasticityRatioLabel.getText());
     }
+    @Test
+    public void testFullWorkflow1(FxRobot robot) {
+        robot.interact(() -> {
+            brandNameBox.getSelectionModel().select(0);
+            productClassBox.getSelectionModel().select(0);
+        });
+        robot.doubleClickOn(yearOneStoreCountField);
+        robot.write("158");
+        robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
+        robot.doubleClickOn(everydayGpmField);
+        robot.write("40.0");
+        robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
+        robot.doubleClickOn(spoilsFeesField);
+        robot.write("3.0");
+        robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
+
+        robot.doubleClickOn(cell("#firstTableView", 3, 0, robot));
+        robot.write("Direct To Customer Model");
+        robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
+        Assertions.assertEquals(((RTMOption)firstTableView.getItems().get(3)).getRTMName(),"Direct To Customer Model");
+        robot.doubleClickOn(cell("#firstTableView", 3, 1, robot));
+        robot.write("7500");
+        robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
+        Assertions.assertEquals(((RTMOption)firstTableView.getItems().get(3)).getSlottingPerSku(),new BigDecimal("7500"));
+        robot.doubleClickOn(cell("#firstTableView", 3, 2, robot));
+        robot.write("0.29");
+        robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
+        Assertions.assertEquals(((RTMOption)firstTableView.getItems().get(3)).getFreightOutPerUnit(),new BigDecimal("0.29"));
+        robot.doubleClickOn(cell("#firstTableView", 3, 3, robot));
+        robot.write("3.59");
+        robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
+        Assertions.assertEquals(((RTMOption)firstTableView.getItems().get(3)).getFirstReceiver(),new BigDecimal("3.59"));
+        Assertions.assertEquals(((RTMOption)firstTableView.getItems().get(3)).getLandedStoreCost(),new BigDecimal("3.59"));
+        Assertions.assertEquals(((RTMOption)firstTableView.getItems().get(3)).getResultingEverydayRetailCalcd(),new BigDecimal("5.9833333333"), "Resulting Calcd should have changed");
+        Assertions.assertEquals(((RTMOption)firstTableView.getItems().get(3)).getResultingEverydayRetailOverride(),new BigDecimal("5.9833333333"), "Resulting Override should have changed");
+//      ^^ ADD THIS LATER ^^
+        robot.doubleClickOn(cell("#firstTableView", 3, 9, robot));
+        robot.write("5.99");
+        robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
+        Assertions.assertEquals(((RTMOption)firstTableView.getItems().get(3)).getResultingEverydayRetailOverride(),new BigDecimal("5.99"));
+
+        robot.doubleClickOn(weeklyUfswAtMinField);
+        robot.write("1.20");
+        robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
+//        Assertions.assertEquals(new BigDecimal("1.20"), ((RTMOption)firstTableView.getItems().get(3)).getWeeklyUSFWAtMin());
+//        ^^KEEPS CHANGING FROM 1.20 to 1.2  or VICE VERSA
+        Assertions.assertEquals(((RTMOption)firstTableView.getItems().get(3)).getElasticizedUnitVelocity(), new BigDecimal("1.2"));
+        Assertions.assertEquals(((RTMOption)firstTableView.getItems().get(3)).getAnnualVolumePerSku(), new BigDecimal("9859.2000000000"));
+        Assertions.assertEquals(((RTMOption)firstTableView.getItems().get(3)).getSlottingPaybackPeriod(), new BigDecimal("1.65436")); // Refactor this in RTM Option
+        Assertions.assertEquals(((RTMOption)firstTableView.getItems().get(3)).getPostFreightPostSpoilsWeCollectPerUnit(), new BigDecimal("3.1923000000")); // Refactor this in RTM Option
+        Assertions.assertEquals(((RTMOption)firstTableView.getItems().get(3)).getUnspentTradePerUnit(), new BigDecimal("0.4923000000"));
+        Assertions.assertEquals(((RTMOption)firstTableView.getItems().get(3)).getFourYearEqGpPerSku(), new BigDecimal("18133.920000000000000000000000000000")); // Refactor this in RTM Option
+        Assertions.assertEquals(((RTMOption)firstTableView.getItems().get(3)).getFourYearEqGpPerUnit(), new BigDecimal("0.4598222980"));
+    }
 
 
 
@@ -165,6 +228,7 @@ class firstTableControllerTest {
             yearOneStoreCountField.setText("3.0");
         });
     }
+
 
     @Test
     public void testInputtingOnTableView(FxRobot robot){

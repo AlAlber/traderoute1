@@ -12,12 +12,12 @@ public class Retailer {
     private SimpleStringProperty retailerName;
     private SimpleObjectProperty<BigDecimal> everydayGPM, spoilsFees;
     private SimpleObjectProperty<Integer> yearOneStoreCount;
-    private SimpleObjectProperty<RetailerProduct> currentRetailerProduct;
+    private SimpleIntegerProperty currentRetailerProductIndex;
     private SimpleObjectProperty<ObservableList<RetailerProduct>> retailerProducts;
 
-    public Retailer(String retailerName, ObservableList<RetailerProduct> retailerProducts,RetailerProduct currentRetailerProduct, BigDecimal everydayGPM, Integer yearOneStoreCount, BigDecimal spoilsFees) {
+    public Retailer(String retailerName, ObservableList<RetailerProduct> retailerProducts,Integer currentRetailerProductIndex, BigDecimal everydayGPM, Integer yearOneStoreCount, BigDecimal spoilsFees) {
         this.retailerName = new SimpleStringProperty(retailerName);
-        this.currentRetailerProduct = new SimpleObjectProperty<>(currentRetailerProduct);
+        this.currentRetailerProductIndex = new SimpleIntegerProperty(currentRetailerProductIndex);
         this.retailerProducts = new SimpleObjectProperty<>(retailerProducts);
         this.everydayGPM = new SimpleObjectProperty(everydayGPM);
         this.yearOneStoreCount = new SimpleObjectProperty(yearOneStoreCount);
@@ -25,7 +25,7 @@ public class Retailer {
     }
     public Retailer() {
         this.retailerName = new SimpleStringProperty();
-        this.currentRetailerProduct = new SimpleObjectProperty<>();
+        this.currentRetailerProductIndex = new SimpleIntegerProperty();
         this.retailerProducts = new SimpleObjectProperty<>();
         this.everydayGPM = new SimpleObjectProperty();
         this.yearOneStoreCount = new SimpleObjectProperty();
@@ -33,16 +33,16 @@ public class Retailer {
     }
 
 
-    public RetailerProduct getCurrentRetailerProduct() {
-        return currentRetailerProduct.get();
+    public Integer getCurrentRetailerProductIndex() {
+        return currentRetailerProductIndex.get();
     }
 
-    public SimpleObjectProperty<RetailerProduct> currentProductProperty() {
-        return currentRetailerProduct;
+    public SimpleIntegerProperty currentRetailerProductIndexProperty() {
+        return currentRetailerProductIndex;
     }
 
-    public void setCurrentRetailerProduct(RetailerProduct currentRetailerProduct) {
-        this.currentRetailerProduct.set(currentRetailerProduct);
+    public void setcurrentRetailerProductIndex(Integer currentRetailerProductIndex) {
+        this.currentRetailerProductIndex.set(currentRetailerProductIndex);
     }
 
     public ObservableList<RetailerProduct> getRetailerProducts() {

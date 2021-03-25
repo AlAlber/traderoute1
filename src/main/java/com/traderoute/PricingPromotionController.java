@@ -202,8 +202,6 @@ public class PricingPromotionController implements Initializable {
     private Button editButton3;
 
 
-
-
     private final int manufacturerGrossSalesMethod =0;
     private final int manufacturerNet1RevMethod =1;
     private final int totalVolumeMethod = 2;
@@ -408,9 +406,9 @@ public class PricingPromotionController implements Initializable {
 
                 setCurrentPromoPlanIndex(0);
 
-                retailer.get().currentProductProperty().addListener(new ChangeListener<RetailerProduct>() {
+                retailer.get().currentRetailerProductIndexProperty().addListener(new ChangeListener<Number>() {
                     @Override
-                    public void changed(ObservableValue<? extends RetailerProduct> observableValue, RetailerProduct oldRetailer, RetailerProduct newRetailer) {
+                    public void changed(ObservableValue<? extends Number> observableValue, Number oldRetailer, Number newRetailer) {
                         updatePromoSummaries();
                         updateMonthlyTotalVolumeAndGrossProfit();
                         // also update labels in future
@@ -555,7 +553,7 @@ public class PricingPromotionController implements Initializable {
             }
             plannedNet1RateLabels.get(getCurrentPromoPlanIndex()).setText("$" + plannedNet1Rate.toString());
 
-            BigDecimal goalDifference = plannedNet1Rate.subtract(getRetailer().getCurrentRetailerProduct().getProduct().getUnitNet1Goal());
+            BigDecimal goalDifference = plannedNet1Rate.subtract(getRetailer().getRetailerProducts().get(getRetailer().getCurrentRetailerProductIndex()).getProduct().getUnitNet1Goal());
             Label goalLabel = goalLabels.get(getCurrentPromoPlanIndex());
             if (goalDifference.compareTo(new BigDecimal("0.0")) > 0) {
                 goalLabel.getParent().setStyle("-fx-background-color: red");
@@ -610,6 +608,7 @@ public class PricingPromotionController implements Initializable {
         updatePromoSummaries();
         updateMonthlyTotalVolumeAndGrossProfit();
     }
+
 
     private ObservableList getSummaryTable() {
         ObservableList<Summary> summaries = FXCollections.observableArrayList();
@@ -913,7 +912,7 @@ public class PricingPromotionController implements Initializable {
         return getRetailerGrossSales(month).subtract(getRetailerNetCost(month));
     }
     public BigDecimal getManufacturerGrossSalesList(int month){
-        return getTotalVolume(month).multiply(getRetailer().getCurrentRetailerProduct().getProduct().getUnitListCost()); //new BigDecimal("3.59") HARDCODED LIST FOR NOW
+        return getTotalVolume(month).multiply(getRetailer().getRetailerProducts().get(getRetailer().getCurrentRetailerProductIndex()).getProduct().getUnitListCost()); //new BigDecimal("3.59") HARDCODED LIST FOR NOW
     }
     public BigDecimal getManufacturerGrossSalesActual(int month){
         return getManufacturerGrossSalesList(month).subtract(getFobDiscounts(month));
@@ -924,7 +923,7 @@ public class PricingPromotionController implements Initializable {
         RTMOption selectedRtm = getPromoPlans().get(getCurrentPromoPlanIndex()).getSelectedRtm();
         if (selectedRtm!=null) {
             if (selectedRtm.isFob()) {// F.O.B
-                Product product = getRetailer().getCurrentRetailerProduct().getProduct();
+                Product product = getRetailer().getRetailerProducts().get(getRetailer().getCurrentRetailerProductIndex()).getProduct();
                 return getTotalVolume(month).multiply((product.getUnitListCost()).subtract(product.getUnitFobCost())); // LISt and FOB -- CHANGED
             }return new BigDecimal("0.0");
         }
@@ -937,7 +936,7 @@ public class PricingPromotionController implements Initializable {
     }
     public BigDecimal getEverydayAllowanceTS(int month){
         RTMOption selectedRtm = getPromoPlans().get(getCurrentPromoPlanIndex()).getSelectedRtm();
-        Product product= getRetailer().getCurrentRetailerProduct().getProduct();
+        Product product= getRetailer().getRetailerProducts().get(getRetailer().getCurrentRetailerProductIndex()).getProduct();
         if (selectedRtm!=null) {
             if (selectedRtm.isFob()) {
                 return getTotalVolume(month).multiply((product.getUnitFobCost()).subtract(selectedRtm.getFirstReceiver()));
@@ -976,7 +975,7 @@ public class PricingPromotionController implements Initializable {
         return getManufacturerNet2Rev(month).subtract(getSlottingGameTheoryd(month));
     }
     public BigDecimal getManufacturerCogs (int month){
-        BigDecimal cogs = getRetailer().getCurrentRetailerProduct().getProduct().getUnitBlendedCogs();
+        BigDecimal cogs = getRetailer().getRetailerProducts().get(getRetailer().getCurrentRetailerProductIndex()).getProduct().getUnitBlendedCogs();
         return cogs.multiply(getTotalVolume(month));
     }
     public BigDecimal getManufacturerGrossProfit (int month){
