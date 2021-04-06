@@ -16,6 +16,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.util.converter.DateStringConverter;
 import javafx.util.converter.DateTimeStringConverter;
+import javafx.util.converter.LocalDateStringConverter;
 
 import java.io.IOException;
 import java.net.URL;
@@ -36,7 +37,7 @@ public class AssortmentController implements Initializable {
     @FXML
     private TableColumn<Meeting, String> timeColumn;
     @FXML
-    private TableColumn<Meeting, Date> dateColumn;
+    private TableColumn<Meeting, LocalDate> dateColumn;
     @FXML
     private TableColumn<Meeting, String> notesColumn;
 
@@ -141,11 +142,15 @@ public class AssortmentController implements Initializable {
         }
         return descriptionField.getText();
     }
-    public Date getDate(){
-        if(convertToDate(datePicker.getValue())==null){
-            return convertToDate(LocalDate.of(2000,10,5));
+    public LocalDate getDate(){
+//        if(convertToDate(datePicker.getValue())==null){
+//            return convertToDate(LocalDate.of(2000,10,5));
+        if(datePicker.getValue()==null){
+            LocalDate date = LocalDate.of(1999, 12, 12);
+            System.out.println("no correct date picked");
+            return date;
         }
-        return convertToDate(datePicker.getValue());
+        return datePicker.getValue();
     }
     public String getTime(){
         if (timeField.getText()==null){
@@ -269,7 +274,7 @@ public class AssortmentController implements Initializable {
 
     public ObservableList<Meeting> getExampleMeetings() {
         ObservableList<Meeting> meetings = FXCollections.observableArrayList();
-        meetings.add(new Meeting ("First Meeting", "At Home", convertToDate(LocalDate.of(2022,12,5)), "17:05", "gonna be cool"));
+        meetings.add(new Meeting ("First Meeting", "At Home", LocalDate.of(2022,12,5), "17:05", "gonna be cool"));
         return meetings;
     }
     public ObservableList<Sku> getExampleSkus() {
@@ -277,14 +282,14 @@ public class AssortmentController implements Initializable {
         skus.add(new Sku ("First Sku", "Current", "love this one"));
         return skus;
     }
-    static Date convertToDate(LocalDate dateToConvert) {
+    private static Date convertToDate(LocalDate dateToConvert) {
         return java.sql.Date.valueOf(dateToConvert);
     }
 
     private void setCellFactories() {
         descriptionColumn.setCellFactory(TextFieldTableCell.forTableColumn());
         locationColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-        dateColumn.setCellFactory(TextFieldTableCell.forTableColumn(new DateStringConverter()));
+        dateColumn.setCellFactory(TextFieldTableCell.forTableColumn(new LocalDateStringConverter()));
         timeColumn.setCellFactory(TextFieldTableCell.forTableColumn());
         notesColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 
@@ -296,7 +301,7 @@ public class AssortmentController implements Initializable {
     private void setCellValueFactories() {
         descriptionColumn.setCellValueFactory(new PropertyValueFactory<Meeting, String>("description"));
         locationColumn.setCellValueFactory(new PropertyValueFactory<Meeting, String>("location"));
-        dateColumn.setCellValueFactory(new PropertyValueFactory<Meeting, Date>("date"));
+        dateColumn.setCellValueFactory(new PropertyValueFactory<Meeting, LocalDate>("date"));
         timeColumn.setCellValueFactory(new PropertyValueFactory<Meeting,String>("time"));
         notesColumn.setCellValueFactory(new PropertyValueFactory<Meeting, String>("notes"));
 
@@ -307,5 +312,10 @@ public class AssortmentController implements Initializable {
 
     public void setRetailer(Retailer retailer) {
         this.retailer.set(retailer);
+        RetailerProduct currentRetailerProduct =retailer.getRetailerProducts().get(retailer.getCurrentRetailerProductIndex());
+        meetingTableView.setItems(currentRetailerProduct.getMeetings());
+        skuTableView.setItems(currentRetailerProduct.getSkus());
+        // implement something for general notes
+
     }
 }

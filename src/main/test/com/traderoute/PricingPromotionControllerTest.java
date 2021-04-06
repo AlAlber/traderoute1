@@ -104,7 +104,7 @@ public class PricingPromotionControllerTest{
          rtmOptions = retailer.get().getRetailerProducts().get(0).getRtmOptions();
          pricingPromotionTableOne = robot.lookup("#pricingPromotionTableOne").queryTableView();
         controller.getPromoPlans().get(0).setSelectedRtm(retailer.get().getRetailerProducts().get(0).getRtmOptions().get(1));
-
+        controller.setCurrentPromoPlanIndex(0);
     }
 
     @Test
@@ -340,22 +340,22 @@ public class PricingPromotionControllerTest{
     }
     @Test
     public void testGetSlottingGameTheoryd(){
-        Assertions.assertEquals(new BigDecimal("3500.0000"), controller.getSlottingGameTheoryd(7));
-        Assertions.assertEquals(new BigDecimal("0.00"), controller.getSlottingGameTheoryd(6));
+        Assertions.assertEquals(new BigDecimal("3500.0000"), controller.getCurrentPromoPlan().getSlottingGameTheoryd(7));
+        Assertions.assertEquals(new BigDecimal("0.00"), controller.getCurrentPromoPlan().getSlottingGameTheoryd(6));
     }
     @Test
     public void testGetEverydayCost(){
-        Assertions.assertEquals(new BigDecimal("3.894"), controller.getEverydayCost(9));
+        Assertions.assertEquals(new BigDecimal("3.894"), controller.getCurrentPromoPlan().getEverydayCost(9));
     }
     @Test
     public void testGetPromoCost(){
-        Assertions.assertEquals(new BigDecimal("3.594"), controller.getPromoCost(7,1));
-        Assertions.assertEquals(new BigDecimal("0.00"), controller.getPromoCost(7,2));
+        Assertions.assertEquals(new BigDecimal("3.594"), controller.getCurrentPromoPlan().getPromoCost(7,1));
+        Assertions.assertEquals(new BigDecimal("0.00"), controller.getCurrentPromoPlan().getPromoCost(7,2));
     }
     @Test
     public void testGetEverydayRetailWeeks(){
-        Assertions.assertEquals(4, controller.getEverydayRetailWeeks(2));
-        Assertions.assertEquals(1, controller.getEverydayRetailWeeks(1));
+        Assertions.assertEquals(4, controller.getCurrentPromoPlan().getEverydayRetailWeeks(2));
+        Assertions.assertEquals(1, controller.getCurrentPromoPlan().getEverydayRetailWeeks(1));
     }
     @Test
     public void testGetEverydayVolume(FxRobot robot){
@@ -363,8 +363,8 @@ public class PricingPromotionControllerTest{
         robot.doubleClickOn(weeklyUFSW);
         robot.type(KeyCode.DIGIT0,KeyCode.PERIOD,KeyCode.DIGIT7,KeyCode.DIGIT5);
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
-        Assertions.assertEquals(new BigDecimal("0.000"), controller.getEverydayVolume(6));
-        Assertions.assertEquals(new BigDecimal("711.000"), controller.getEverydayVolume(7));
+        Assertions.assertEquals(new BigDecimal("0.000"), controller.getCurrentPromoPlan().getEverydayVolume(6));
+        Assertions.assertEquals(new BigDecimal("711.000"), controller.getCurrentPromoPlan().getEverydayVolume(7));
     }
     @Test
     public void testGetPromoVolume(FxRobot robot){
@@ -372,10 +372,10 @@ public class PricingPromotionControllerTest{
         robot.doubleClickOn(weeklyUFSW);
         robot.type(KeyCode.DIGIT0,KeyCode.PERIOD,KeyCode.DIGIT7,KeyCode.DIGIT5);
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
-        Assertions.assertEquals(new BigDecimal("5925.0000"), controller.getPromoVolume(1,1));
-        Assertions.assertEquals(new BigDecimal("0.0000"), controller.getPromoVolume(3,1 ));
-        Assertions.assertEquals(new BigDecimal("7110.0000"), controller.getPromoVolume(7,1 ));
-        Assertions.assertEquals(new BigDecimal("0.0000"), controller.getPromoVolume(7,2 ));
+        Assertions.assertEquals(new BigDecimal("5925.0000"), controller.getCurrentPromoPlan().getPromoVolume(1,1));
+        Assertions.assertEquals(new BigDecimal("0.0000"), controller.getCurrentPromoPlan().getPromoVolume(3,1 ));
+        Assertions.assertEquals(new BigDecimal("7110.0000"), controller.getCurrentPromoPlan().getPromoVolume(7,1 ));
+        Assertions.assertEquals(new BigDecimal("0.0000"), controller.getCurrentPromoPlan().getPromoVolume(7,2 ));
     }
     @Test
     public void testGetTotalVolume(FxRobot robot){
@@ -383,15 +383,15 @@ public class PricingPromotionControllerTest{
         robot.doubleClickOn(weeklyUFSW);
         robot.type(KeyCode.DIGIT0,KeyCode.PERIOD,KeyCode.DIGIT7,KeyCode.DIGIT5);
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
-        Assertions.assertEquals(new BigDecimal("5925.0000"), controller.getTotalVolume(6));
-        Assertions.assertEquals(new BigDecimal("7821.0000"), controller.getTotalVolume(7 ));
-        Assertions.assertEquals(new BigDecimal("7110.0000"), controller.getTotalVolume(8 ));
+        Assertions.assertEquals(new BigDecimal("5925.0000"), controller.getCurrentPromoPlan().getTotalVolume(6));
+        Assertions.assertEquals(new BigDecimal("7821.0000"), controller.getCurrentPromoPlan().getTotalVolume(7 ));
+        Assertions.assertEquals(new BigDecimal("7110.0000"), controller.getCurrentPromoPlan().getTotalVolume(8 ));
     }
     @Test
     public void testGetPromoDiscount(FxRobot robot){
-        Assertions.assertEquals(new BigDecimal("0.0"), controller.getPromoDiscount(5,1));
-        Assertions.assertEquals(new BigDecimal("7.7000"), controller.getPromoDiscount(6,1 ));
-        Assertions.assertEquals(new BigDecimal("0.0"), controller.getPromoDiscount(6,2 ));
+        Assertions.assertEquals(new BigDecimal("0.0"), controller.getCurrentPromoPlan().getPromoDiscount(5,1));
+        Assertions.assertEquals(new BigDecimal("7.7000"), controller.getCurrentPromoPlan().getPromoDiscount(6,1 ));
+        Assertions.assertEquals(new BigDecimal("0.0"), controller.getCurrentPromoPlan().getPromoDiscount(6,2 ));
     }
     @Test
     public void testGetRetailerGrossSales(FxRobot robot){
@@ -399,9 +399,9 @@ public class PricingPromotionControllerTest{
         robot.doubleClickOn(weeklyUFSW);
         robot.type(KeyCode.DIGIT0,KeyCode.PERIOD,KeyCode.DIGIT7,KeyCode.DIGIT5);
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
-        Assertions.assertEquals(new BigDecimal("39336.075000"), controller.getRetailerGrossSales(1));
-        Assertions.assertEquals(new BigDecimal("15381.30000"), controller.getRetailerGrossSales(2));
-        Assertions.assertEquals(new BigDecimal("42588.900000"), controller.getRetailerGrossSales(8));
+        Assertions.assertEquals(new BigDecimal("39336.075000"), controller.getCurrentPromoPlan().getRetailerGrossSales(1));
+        Assertions.assertEquals(new BigDecimal("15381.30000"), controller.getCurrentPromoPlan().getRetailerGrossSales(2));
+        Assertions.assertEquals(new BigDecimal("42588.900000"), controller.getCurrentPromoPlan().getRetailerGrossSales(8));
     }
     @Test
     public void testGetRetailerNetCost(FxRobot robot){
@@ -410,9 +410,9 @@ public class PricingPromotionControllerTest{
         robot.type(KeyCode.DIGIT0,KeyCode.PERIOD,KeyCode.DIGIT7,KeyCode.DIGIT5);
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
 
-        Assertions.assertEquals(new BigDecimal("9228.780000"), controller.getRetailerNetCost(3));
-        Assertions.assertEquals(new BigDecimal("11535.975000"), controller.getRetailerNetCost(4));
-        Assertions.assertEquals(new BigDecimal("23601.6450000"), controller.getRetailerNetCost(1));
+        Assertions.assertEquals(new BigDecimal("9228.780000"), controller.getCurrentPromoPlan().getRetailerNetCost(3));
+        Assertions.assertEquals(new BigDecimal("11535.975000"), controller.getCurrentPromoPlan().getRetailerNetCost(4));
+        Assertions.assertEquals(new BigDecimal("23601.6450000"), controller.getCurrentPromoPlan().getRetailerNetCost(1));
     }
     @Test
     public void testGetRetailerGrossProfit(FxRobot robot){
@@ -421,9 +421,9 @@ public class PricingPromotionControllerTest{
         robot.type(KeyCode.DIGIT0,KeyCode.PERIOD,KeyCode.DIGIT7,KeyCode.DIGIT5);
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
 
-        Assertions.assertEquals(new BigDecimal("17035.5600000"), controller.getRetailerGrossProfit(8));
-        Assertions.assertEquals(new BigDecimal("9228.780000"), controller.getRetailerGrossProfit(10));
-        Assertions.assertEquals(new BigDecimal("17035.5600000"), controller.getRetailerGrossProfit(12));
+        Assertions.assertEquals(new BigDecimal("17035.5600000"), controller.getCurrentPromoPlan().getRetailerGrossProfit(8));
+        Assertions.assertEquals(new BigDecimal("9228.780000"), controller.getCurrentPromoPlan().getRetailerGrossProfit(10));
+        Assertions.assertEquals(new BigDecimal("17035.5600000"), controller.getCurrentPromoPlan().getRetailerGrossProfit(12));
     }
     @Test
     public void testGetManufacturerGrossSalesList(FxRobot robot){
@@ -432,9 +432,9 @@ public class PricingPromotionControllerTest{
         robot.type(KeyCode.DIGIT0,KeyCode.PERIOD,KeyCode.DIGIT7,KeyCode.DIGIT5);
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
 
-        Assertions.assertEquals(new BigDecimal("23397.825000"), controller.getManufacturerGrossSalesList(1));
-        Assertions.assertEquals(new BigDecimal("8508.300000"), controller.getManufacturerGrossSalesList(2));
-        Assertions.assertEquals(new BigDecimal("10635.375000"), controller.getManufacturerGrossSalesList(4));
+        Assertions.assertEquals(new BigDecimal("23397.825000"), controller.getCurrentPromoPlan().getManufacturerGrossSalesList(1));
+        Assertions.assertEquals(new BigDecimal("8508.300000"), controller.getCurrentPromoPlan().getManufacturerGrossSalesList(2));
+        Assertions.assertEquals(new BigDecimal("10635.375000"), controller.getCurrentPromoPlan().getManufacturerGrossSalesList(4));
     }
     @Test
     public void testGetManufacturerGrossSalesActual(FxRobot robot){
@@ -443,9 +443,9 @@ public class PricingPromotionControllerTest{
         robot.type(KeyCode.DIGIT0,KeyCode.PERIOD,KeyCode.DIGIT7,KeyCode.DIGIT5);
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
 
-        Assertions.assertEquals(new BigDecimal("21507.750000"), controller.getManufacturerGrossSalesActual(1));
-        Assertions.assertEquals(new BigDecimal("7821.000000"), controller.getManufacturerGrossSalesActual(2));
-        Assertions.assertEquals(new BigDecimal("9776.250000"), controller.getManufacturerGrossSalesActual(4));
+        Assertions.assertEquals(new BigDecimal("21507.750000"), controller.getCurrentPromoPlan().getManufacturerGrossSalesActual(1));
+        Assertions.assertEquals(new BigDecimal("7821.000000"), controller.getCurrentPromoPlan().getManufacturerGrossSalesActual(2));
+        Assertions.assertEquals(new BigDecimal("9776.250000"), controller.getCurrentPromoPlan().getManufacturerGrossSalesActual(4));
     }
     @Test
     public void testGetFobDiscounts(FxRobot robot){
@@ -454,9 +454,9 @@ public class PricingPromotionControllerTest{
         robot.type(KeyCode.DIGIT0,KeyCode.PERIOD,KeyCode.DIGIT7,KeyCode.DIGIT5);
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
 
-        Assertions.assertEquals(new BigDecimal("1890.075000"), controller.getFobDiscounts(1));
-        Assertions.assertEquals(new BigDecimal("687.300000"), controller.getFobDiscounts(2));
-        Assertions.assertEquals(new BigDecimal("859.125000"), controller.getFobDiscounts(4));
+        Assertions.assertEquals(new BigDecimal("1890.075000"), controller.getCurrentPromoPlan().getFobDiscounts(1));
+        Assertions.assertEquals(new BigDecimal("687.300000"), controller.getCurrentPromoPlan().getFobDiscounts(2));
+        Assertions.assertEquals(new BigDecimal("859.125000"), controller.getCurrentPromoPlan().getFobDiscounts(4));
     }
     @Test
     public void testGetSpoilsFeesTS(FxRobot robot){
@@ -465,9 +465,9 @@ public class PricingPromotionControllerTest{
         robot.type(KeyCode.DIGIT0,KeyCode.PERIOD,KeyCode.DIGIT7,KeyCode.DIGIT5);
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
 
-        Assertions.assertEquals(new BigDecimal("645.23250000"), controller.getSpoilsFeesTS(1));
-        Assertions.assertEquals(new BigDecimal("234.63000000"), controller.getSpoilsFeesTS(2));
-        Assertions.assertEquals(new BigDecimal("293.28750000"), controller.getSpoilsFeesTS(4));
+        Assertions.assertEquals(new BigDecimal("645.23250000"), controller.getCurrentPromoPlan().getSpoilsFeesTS(1));
+        Assertions.assertEquals(new BigDecimal("234.63000000"), controller.getCurrentPromoPlan().getSpoilsFeesTS(2));
+        Assertions.assertEquals(new BigDecimal("293.28750000"), controller.getCurrentPromoPlan().getSpoilsFeesTS(4));
     }
     @Test
     public void testGetEverydayAllowanceTS(FxRobot robot){
@@ -476,9 +476,9 @@ public class PricingPromotionControllerTest{
         robot.type(KeyCode.DIGIT0,KeyCode.PERIOD,KeyCode.DIGIT7,KeyCode.DIGIT5);
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
 
-        Assertions.assertEquals(new BigDecimal("1499.025000"), controller.getEverydayAllowanceTS(1));
-        Assertions.assertEquals(new BigDecimal("545.100000"), controller.getEverydayAllowanceTS(2));
-        Assertions.assertEquals(new BigDecimal("681.375000"), controller.getEverydayAllowanceTS(4));
+        Assertions.assertEquals(new BigDecimal("1499.025000"), controller.getCurrentPromoPlan().getEverydayAllowanceTS(1));
+        Assertions.assertEquals(new BigDecimal("545.100000"), controller.getCurrentPromoPlan().getEverydayAllowanceTS(2));
+        Assertions.assertEquals(new BigDecimal("681.375000"), controller.getCurrentPromoPlan().getEverydayAllowanceTS(4));
     }
     @Test
     public void testGetPromoTS(FxRobot robot){
@@ -487,10 +487,10 @@ public class PricingPromotionControllerTest{
         robot.type(KeyCode.DIGIT0,KeyCode.PERIOD,KeyCode.DIGIT7,KeyCode.DIGIT5);
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
 
-        Assertions.assertEquals(new BigDecimal("1777.5000000"), controller.getPromoTS(1,1));
-        Assertions.assertEquals(new BigDecimal("0.0000000"), controller.getPromoTS(2,1));
-        Assertions.assertEquals(new BigDecimal("2133.0000000"), controller.getPromoTS(7,1));
-        Assertions.assertEquals(new BigDecimal("0.0000000"), controller.getPromoTS(7,2));
+        Assertions.assertEquals(new BigDecimal("1777.5000000"), controller.getCurrentPromoPlan().getPromoTS(1,1));
+        Assertions.assertEquals(new BigDecimal("0.0000000"), controller.getCurrentPromoPlan().getPromoTS(2,1));
+        Assertions.assertEquals(new BigDecimal("2133.0000000"), controller.getCurrentPromoPlan().getPromoTS(7,1));
+        Assertions.assertEquals(new BigDecimal("0.0000000"), controller.getCurrentPromoPlan().getPromoTS(7,2));
     }
     @Test
     public void testFixedCostsTS(FxRobot robot){
@@ -499,8 +499,8 @@ public class PricingPromotionControllerTest{
         robot.type(KeyCode.DIGIT0,KeyCode.PERIOD,KeyCode.DIGIT7,KeyCode.DIGIT5);
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
 
-        Assertions.assertEquals(new BigDecimal("500.0"), controller.getFixedCostsTS(1));
-        Assertions.assertEquals(new BigDecimal("0.0"), controller.getFixedCostsTS(2));
+        Assertions.assertEquals(new BigDecimal("500.0"), controller.getCurrentPromoPlan().getFixedCostsTS(1));
+        Assertions.assertEquals(new BigDecimal("0.0"), controller.getCurrentPromoPlan().getFixedCostsTS(2));
     }
     @Test
     public void testGetTotalTS(FxRobot robot){
@@ -509,9 +509,9 @@ public class PricingPromotionControllerTest{
         robot.type(KeyCode.DIGIT0,KeyCode.PERIOD,KeyCode.DIGIT7,KeyCode.DIGIT5);
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
 
-        Assertions.assertEquals(new BigDecimal("4421.75750000"), controller.getTotalTS(1));
-        Assertions.assertEquals(new BigDecimal("779.73000000"), controller.getTotalTS(2));
-        Assertions.assertEquals(new BigDecimal("974.66250000"), controller.getTotalTS(4));
+        Assertions.assertEquals(new BigDecimal("4421.75750000"), controller.getCurrentPromoPlan().getTotalTS(1));
+        Assertions.assertEquals(new BigDecimal("779.73000000"), controller.getCurrentPromoPlan().getTotalTS(2));
+        Assertions.assertEquals(new BigDecimal("974.66250000"), controller.getCurrentPromoPlan().getTotalTS(4));
     }
     @Test
     public void testGetManufacturerNet1Rev(FxRobot robot){
@@ -520,9 +520,9 @@ public class PricingPromotionControllerTest{
         robot.type(KeyCode.DIGIT0,KeyCode.PERIOD,KeyCode.DIGIT7,KeyCode.DIGIT5);
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
 
-        Assertions.assertEquals(new BigDecimal("18976.06750000"), controller.getManufacturerNet1Rev(1));
-        Assertions.assertEquals(new BigDecimal("7728.57000000"), controller.getManufacturerNet1Rev(2));
-        Assertions.assertEquals(new BigDecimal("9660.71250000"), controller.getManufacturerNet1Rev(4));
+        Assertions.assertEquals(new BigDecimal("18976.06750000"), controller.getCurrentPromoPlan().getManufacturerNet1Rev(1));
+        Assertions.assertEquals(new BigDecimal("7728.57000000"), controller.getCurrentPromoPlan().getManufacturerNet1Rev(2));
+        Assertions.assertEquals(new BigDecimal("9660.71250000"), controller.getCurrentPromoPlan().getManufacturerNet1Rev(4));
     }
     @Test
     public void testGetManufacturerFreightCost(FxRobot robot){
@@ -531,9 +531,9 @@ public class PricingPromotionControllerTest{
         robot.type(KeyCode.DIGIT0,KeyCode.PERIOD,KeyCode.DIGIT7,KeyCode.DIGIT5);
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
 
-        Assertions.assertEquals(new BigDecimal("1890.075000"), controller.getManufacturerFreightCost(1));
-        Assertions.assertEquals(new BigDecimal("687.300000"), controller.getManufacturerFreightCost(2));
-        Assertions.assertEquals(new BigDecimal("859.125000"), controller.getManufacturerFreightCost(4));
+        Assertions.assertEquals(new BigDecimal("1890.075000"), controller.getCurrentPromoPlan().getManufacturerFreightCost(1));
+        Assertions.assertEquals(new BigDecimal("687.300000"), controller.getCurrentPromoPlan().getManufacturerFreightCost(2));
+        Assertions.assertEquals(new BigDecimal("859.125000"), controller.getCurrentPromoPlan().getManufacturerFreightCost(4));
     }
     @Test
     public void testGetManufacturerNet2Rev(FxRobot robot){
@@ -542,9 +542,9 @@ public class PricingPromotionControllerTest{
         robot.type(KeyCode.DIGIT0,KeyCode.PERIOD,KeyCode.DIGIT7,KeyCode.DIGIT5);
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
 
-        Assertions.assertEquals(new BigDecimal("17085.99250000"), controller.getManufacturerNet2Rev(1));
-        Assertions.assertEquals(new BigDecimal("7041.27000000"), controller.getManufacturerNet2Rev(2));
-        Assertions.assertEquals(new BigDecimal("8801.58750000"), controller.getManufacturerNet2Rev(4));
+        Assertions.assertEquals(new BigDecimal("17085.99250000"), controller.getCurrentPromoPlan().getManufacturerNet2Rev(1));
+        Assertions.assertEquals(new BigDecimal("7041.27000000"), controller.getCurrentPromoPlan().getManufacturerNet2Rev(2));
+        Assertions.assertEquals(new BigDecimal("8801.58750000"), controller.getCurrentPromoPlan().getManufacturerNet2Rev(4));
     }
     @Test
     public void testGetManufacturerNet3Rev(FxRobot robot){
@@ -553,9 +553,9 @@ public class PricingPromotionControllerTest{
         robot.type(KeyCode.DIGIT0,KeyCode.PERIOD,KeyCode.DIGIT7,KeyCode.DIGIT5);
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
 
-        Assertions.assertEquals(new BigDecimal("17085.99250000"), controller.getManufacturerNet3Rev(1));
-        Assertions.assertEquals(new BigDecimal("7041.27000000"), controller.getManufacturerNet3Rev(2));
-        Assertions.assertEquals(new BigDecimal("17103.19100000"), controller.getManufacturerNet3Rev(7));
+        Assertions.assertEquals(new BigDecimal("17085.99250000"), controller.getCurrentPromoPlan().getManufacturerNet3Rev(1));
+        Assertions.assertEquals(new BigDecimal("7041.27000000"), controller.getCurrentPromoPlan().getManufacturerNet3Rev(2));
+        Assertions.assertEquals(new BigDecimal("17103.19100000"), controller.getCurrentPromoPlan().getManufacturerNet3Rev(7));
     }
     @Test
     public void testGetManufacturerCogs(FxRobot robot){
@@ -564,9 +564,9 @@ public class PricingPromotionControllerTest{
         robot.type(KeyCode.DIGIT0,KeyCode.PERIOD,KeyCode.DIGIT7,KeyCode.DIGIT5);
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
 
-        Assertions.assertEquals(new BigDecimal("13360.875000"), controller.getManufacturerCogs(1));
-        Assertions.assertEquals(new BigDecimal("4858.500000"), controller.getManufacturerCogs(2));
-        Assertions.assertEquals(new BigDecimal("6073.125000"), controller.getManufacturerCogs(4));
+        Assertions.assertEquals(new BigDecimal("13360.875000"), controller.getCurrentPromoPlan().getManufacturerCogs(1));
+        Assertions.assertEquals(new BigDecimal("4858.500000"), controller.getCurrentPromoPlan().getManufacturerCogs(2));
+        Assertions.assertEquals(new BigDecimal("6073.125000"), controller.getCurrentPromoPlan().getManufacturerCogs(4));
     }
     @Test
     public void testGetManufacturerGrossProfit(FxRobot robot){
@@ -575,16 +575,16 @@ public class PricingPromotionControllerTest{
         robot.type(KeyCode.DIGIT0,KeyCode.PERIOD,KeyCode.DIGIT7,KeyCode.DIGIT5);
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
 
-        Assertions.assertEquals(new BigDecimal("3725.11750000"), controller.getManufacturerGrossProfit(1));
-        Assertions.assertEquals(new BigDecimal("2182.77000000"), controller.getManufacturerGrossProfit(2));
-        Assertions.assertEquals(new BigDecimal("2728.46250000"), controller.getManufacturerGrossProfit(4));
+        Assertions.assertEquals(new BigDecimal("3725.11750000"), controller.getCurrentPromoPlan().getManufacturerGrossProfit(1));
+        Assertions.assertEquals(new BigDecimal("2182.77000000"), controller.getCurrentPromoPlan().getManufacturerGrossProfit(2));
+        Assertions.assertEquals(new BigDecimal("2728.46250000"), controller.getCurrentPromoPlan().getManufacturerGrossProfit(4));
     }
     @Test
     public void testPromoLiftMultiple(FxRobot robot){
-        Assertions.assertEquals(new BigDecimal("2.5"), controller.getPromoLiftMultiple(1,1));
-        Assertions.assertEquals(new BigDecimal("0.0"), controller.getPromoLiftMultiple(2,1));
-        Assertions.assertEquals(new BigDecimal("2.5"), controller.getPromoLiftMultiple(7,1));
-        Assertions.assertEquals(new BigDecimal("0.0"), controller.getPromoLiftMultiple(7,2));
+        Assertions.assertEquals(new BigDecimal("2.5"), controller.getCurrentPromoPlan().getPromoLiftMultiple(1,1));
+        Assertions.assertEquals(new BigDecimal("0.0"), controller.getCurrentPromoPlan().getPromoLiftMultiple(2,1));
+        Assertions.assertEquals(new BigDecimal("2.5"), controller.getCurrentPromoPlan().getPromoLiftMultiple(7,1));
+        Assertions.assertEquals(new BigDecimal("0.0"), controller.getCurrentPromoPlan().getPromoLiftMultiple(7,2));
     }
 
 

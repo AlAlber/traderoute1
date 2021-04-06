@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 public class Retailer {
     private SimpleStringProperty retailerName;
     private SimpleObjectProperty<BigDecimal> everydayGPM, spoilsFees;
-    private SimpleObjectProperty<Integer> yearOneStoreCount;
+    private SimpleIntegerProperty yearOneStoreCount;
     private SimpleIntegerProperty currentRetailerProductIndex;
     private SimpleObjectProperty<ObservableList<RetailerProduct>> retailerProducts;
 
@@ -20,7 +20,7 @@ public class Retailer {
         this.currentRetailerProductIndex = new SimpleIntegerProperty(currentRetailerProductIndex);
         this.retailerProducts = new SimpleObjectProperty<>(retailerProducts);
         this.everydayGPM = new SimpleObjectProperty(everydayGPM);
-        this.yearOneStoreCount = new SimpleObjectProperty(yearOneStoreCount);
+        this.yearOneStoreCount = new SimpleIntegerProperty(yearOneStoreCount);
         this.spoilsFees = new SimpleObjectProperty<>(spoilsFees);
     }
     public Retailer() {
@@ -28,7 +28,7 @@ public class Retailer {
         this.currentRetailerProductIndex = new SimpleIntegerProperty();
         this.retailerProducts = new SimpleObjectProperty<>();
         this.everydayGPM = new SimpleObjectProperty();
-        this.yearOneStoreCount = new SimpleObjectProperty();
+        this.yearOneStoreCount = new SimpleIntegerProperty();
         this.spoilsFees = new SimpleObjectProperty<>();
     }
 
@@ -73,7 +73,7 @@ public class Retailer {
         return yearOneStoreCount.get();
     }
 
-    public SimpleObjectProperty yearOneStoreCountProperty() {
+    public SimpleIntegerProperty yearOneStoreCountProperty() {
         return yearOneStoreCount;
     }
 

@@ -116,7 +116,7 @@ public class ParameterEditCell extends TableCell<Parameter<?>, Object> {
                 setGraphic(textField);
             } else {
                 if (getTableRow().getIndex()==12 || getTableRow().getIndex() == 20){
-                    if ((int)item >(PricingPromotionController.getWeeksInPeriod(getTableView().getColumns().indexOf(getTableColumn())))){
+                    if ((int)item >(PromoPlan.getWeeksInPeriod(getTableView().getColumns().indexOf(getTableColumn())))){
                         setItem(0);
                     }
                 }

@@ -78,7 +78,7 @@ public class RTMOption {
         this.yearOneStoreCount = new SimpleIntegerProperty();
         this.spoilsAndFees = new SimpleObjectProperty<>();
         this.product = new SimpleObjectProperty<Product>();
-        setupListeners();
+//        setupListeners();
 
 
     }
@@ -108,16 +108,16 @@ public class RTMOption {
         this.everydayGPM = new SimpleObjectProperty<>(everydayGPM);
         this.yearOneStoreCount = new SimpleIntegerProperty(yearOneStoreCount);
         this.spoilsAndFees = new SimpleObjectProperty<>(spoilsAndFees);
-        setupListeners();
         this.product = new SimpleObjectProperty<>();
     }
 
-    private void setupListeners() {
+    public void setupListeners() {
         yearOneStoreCountProperty().addListener(new RTMUpdateListener<>(this, true));
         productProperty().addListener(new RTMUpdateListener<>(this, false));
         spoilsAndFeesProperty().addListener(new RTMUpdateListener(this, false));
         slottingPerSkuProperty().addListener(new RTMUpdateListener<>(this, false));
         freightOutPerUnitProperty().addListener(new RTMUpdateListener<>(this, false));
+        resultingEverydayRetailOverrideProperty().addListener(new RTMUpdateListener<>(this, true));
         minOverrideProperty().addListener(new RTMUpdateListener<>(this, true));
         firstReceiverProperty().addListener(new RTMUpdateListener<>(this, true));
         weeklyUSFWAtMinProperty().addListener(new RTMUpdateListener<>(this, true));

@@ -93,7 +93,7 @@
                   <TableColumn fx:id="fourthReceiverColumn" onEditCommit="#changeFourthReceiverCellEvent" prefWidth="148.0" resizable="false" />
                   <TableColumn fx:id="landedStoreCostColumn" prefWidth="148.0" resizable="false" />
                   <TableColumn fx:id="resultingEverydayRetailCalcdColumn" prefWidth="148.0" resizable="false" />
-                  <TableColumn fx:id="resultingEverydayRetailOverrideColumn" onEditCommit="#changeResultingEverydayRetailOverride" prefWidth="148.0" resizable="false" />
+                  <TableColumn fx:id="resultingEverydayRetailOverrideColumn" onEditCommit="#changeOverrideEvent" prefWidth="148.0" resizable="false" />
                </columns>
                <VBox.margin>
                   <Insets top="40.0" />

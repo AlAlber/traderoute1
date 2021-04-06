@@ -8,9 +8,9 @@ import java.util.Date;
 
 public class Meeting {
     private SimpleStringProperty description, location,time,  notes;
-    private SimpleObjectProperty<Date> date;
+    private SimpleObjectProperty<LocalDate> date;
 
-    public Meeting(String description, String location, Date date,String time,  String notes) {
+    public Meeting(String description, String location, LocalDate date,String time,  String notes) {
         this.description = new SimpleStringProperty(description);
         this.location = new SimpleStringProperty(location);
         this.date = new SimpleObjectProperty<>(date);
@@ -78,15 +78,15 @@ public class Meeting {
         this.notes.set(notes);
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date.get();
     }
 
-    public SimpleObjectProperty<Date> dateProperty() {
+    public SimpleObjectProperty<LocalDate> dateProperty() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date.set(date);
     }
 }

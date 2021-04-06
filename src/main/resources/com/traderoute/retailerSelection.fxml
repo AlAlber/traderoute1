@@ -30,9 +30,7 @@
                         <Insets right="30.0" />
                      </HBox.margin>
                   </ImageView>
-                  <Button mnemonicParsing="false" text="Route-to-Market" />
-                  <Button mnemonicParsing="false" onAction="#switchToAssortment" text="Assortment" />
-                  <Button fx:id="pricingPromotionButton" mnemonicParsing="false" onAction="#switchToPricingPromotion" text="Pricing and Promotion" />
+                  <Button fx:id="productClassReportingButton" mnemonicParsing="false" onAction="#switchToProductClassReporting" text="Product Class Reporting" />
                </children>
             </HBox>
             <AnchorPane prefHeight="635.0" prefWidth="1482.0">

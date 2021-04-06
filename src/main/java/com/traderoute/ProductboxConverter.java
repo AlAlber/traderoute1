@@ -2,27 +2,27 @@ package com.traderoute;
 
 import javafx.util.StringConverter;
 
-public class ProductboxConverter extends StringConverter<RetailerProduct>{
+public class ProductboxConverter extends StringConverter<Product>{
     private String type;
     public ProductboxConverter(String type){
         super();
         this.type = type;
     }
         @Override
-        public String toString(RetailerProduct retailerProduct) {
+        public String toString(Product retailerProduct) {
             if (retailerProduct != null) {
                 if (type.equals("product")) {
-                    return retailerProduct.getProduct().getProductClass();
+                    return retailerProduct.getProductClass();
                 }
                 if (type.equals("brand")) {
-                    return retailerProduct.getProduct().getBrandName();
+                    return retailerProduct.getBrandName();
                 }
         }
             return null;
         }
 
         @Override
-        public RetailerProduct fromString(String string) {
+        public Product fromString(String string) {
             return null;
         }
 }

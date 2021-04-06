@@ -25,10 +25,8 @@ import java.util.ResourceBundle;
 import java.util.function.UnaryOperator;
 import java.util.regex.Pattern;
 
-import static com.traderoute.AssortmentController.convertToDate;
 
 public class firstTableController implements Initializable {
-
 
     // Assign Values to
     @FXML
@@ -179,9 +177,9 @@ public class firstTableController implements Initializable {
             new Tooltip("4-Year Equivalized Gross Profit $ Per Unit");
 
     @FXML
-    private ComboBox<RetailerProduct> productClassBox;
+    private ComboBox<Product> productClassBox;
     @FXML
-    private ComboBox<RetailerProduct> brandNameBox;
+    private ComboBox<Product> brandNameBox;
 
     @FXML
     private Label listLabel;
@@ -227,7 +225,7 @@ public class firstTableController implements Initializable {
 
         // Set unique values for brandcombobox and set converters for both brand and productCombobox
 
-        brandNameBox.setItems(getUniqueBrandNames(getRetailer().getRetailerProducts()));
+        brandNameBox.setItems(getUniqueBrandNames(RetailerSelectionController.getExampleProducts()));
         brandNameBox.setConverter(getBrandComboboxConverter());
         productClassBox.setConverter(getProductComboboxConverter());
 
@@ -289,7 +287,7 @@ public class firstTableController implements Initializable {
         Check if landedStoreCostProperty changed, if it it did calculate everyday Retail
         */
         for (RTMOption row : firstTableView.getItems()) {
-//
+            row.setupListeners();
             row.landedStoreCostProperty().addListener(((arg, oldVal, newVal) -> {
                 System.out.println("is this happening");
                 updateChart(true,false, false, false, false, false, false, false, false);
@@ -323,23 +321,23 @@ public class firstTableController implements Initializable {
     /*
     For Brand Name Bo
      */
-    public ObservableList<RetailerProduct> getUniqueBrandNames(ObservableList<RetailerProduct> retailerProducts) {
-        ObservableList<RetailerProduct> uniqueBrandNames = FXCollections.observableArrayList();
+    public static  ObservableList<Product> getUniqueBrandNames(ObservableList<Product> products) {
+        ObservableList<Product> uniqueBrandNames = FXCollections.observableArrayList();
         ObservableList<String> uniqueBrandNameStrings = FXCollections.observableArrayList();
-        for (RetailerProduct retailerProduct : retailerProducts) {
-            if (!uniqueBrandNameStrings.contains(retailerProduct.getProduct().getBrandName())) {
-                uniqueBrandNameStrings.add(retailerProduct.getProduct().getBrandName());
-                uniqueBrandNames.add(retailerProduct);
+        for (Product product : products) {
+            if (!uniqueBrandNameStrings.contains(product.getBrandName())) {
+                uniqueBrandNameStrings.add(product.getBrandName());
+                uniqueBrandNames.add(product);
             }
         }
         return uniqueBrandNames;
     }
-    public ObservableList<RetailerProduct> getCorrespondingProductClasses(ObservableList<RetailerProduct> retailerProducts,RetailerProduct selectedBrandName) {
-        ObservableList<RetailerProduct> correspondingProductClasses = FXCollections.observableArrayList();
+    public static ObservableList<Product> getCorrespondingProductClasses(ObservableList<Product> retailerProducts,Product selectedBrandName) {
+        ObservableList<Product> correspondingProductClasses = FXCollections.observableArrayList();
         //Set up product combobox and make it display product class
-        for (RetailerProduct retailerProduct : retailerProducts) {
-            if (retailerProduct.getProduct().getBrandName().equals(selectedBrandName.getProduct().getBrandName())) {
-                correspondingProductClasses.add(retailerProduct);
+        for (Product product : retailerProducts) {
+            if (product.getBrandName().equals(product.getBrandName())) {
+                correspondingProductClasses.add(product);
             }
         }
         return correspondingProductClasses;
@@ -349,31 +347,86 @@ public class firstTableController implements Initializable {
     Product class changed Event
      */
     public void changeBrandComboboxEvent(ActionEvent event) {
-        RetailerProduct selectedBrandName = brandNameBox.getSelectionModel().getSelectedItem();
+        Product selectedBrandName = brandNameBox.getSelectionModel().getSelectedItem();
         secondTableView.setItems(firstTableView.getItems());
         listLabel.setText("List = $");
         fobLabel.setText("F.O.B. = $");
         net1GoalLabel.setText("Net 1 Goal = $");
         elasticityRatioLabel.setText("Elasticity Ratio = +1% Price :  % Volume");
-        productClassBox.setItems(getCorrespondingProductClasses(retailer.get().getRetailerProducts(), selectedBrandName));
+        productClassBox.setItems(getCorrespondingProductClasses(RetailerSelectionController.getExampleProducts(), selectedBrandName));
     }
     /*
     Product class changed Event
      */
     public void changeProductComboboxEvent(ActionEvent event) {
 
-        RetailerProduct selectedProduct = productClassBox.getSelectionModel().getSelectedItem();
+        Product selectedProduct = productClassBox.getSelectionModel().getSelectedItem();
         if (selectedProduct == null) {
             productClassBox.setPromptText("Now Select a Product Class");
         } else {
-        listLabel.setText("List = $" + selectedProduct.getProduct().getUnitListCost());
-        fobLabel.setText("F.O.B. = $" + selectedProduct.getProduct().getUnitFobCost());
-        net1GoalLabel.setText("Net 1 Goal = $" + selectedProduct.getProduct().getUnitNet1Goal());
-        elasticityRatioLabel.setText("Elasticity Ratio = +1% Price :" + selectedProduct.getProduct().getElasticityMultiple() + "% Volume");
-        for (RTMOption row : firstTableView.getItems()) {
-            row.setProduct(selectedProduct.getProduct());
+            listLabel.setText("List = $" + selectedProduct.getUnitListCost());
+            fobLabel.setText("F.O.B. = $" + selectedProduct.getUnitFobCost());
+            net1GoalLabel.setText("Net 1 Goal = $" + selectedProduct.getUnitNet1Goal());
+            elasticityRatioLabel.setText("Elasticity Ratio = +1% Price :" + selectedProduct.getElasticityMultiple() + "% Volume");
+            for (RTMOption row : firstTableView.getItems()) {
+                row.setProduct(selectedProduct);
+            }
+            updateRetailerProduct(selectedProduct);
         }
     }
+    public int getProductIndex(Product product) {
+        // create addProduct method in product page
+        int productIndex=-1;
+        for (RetailerProduct retailerProduct: getRetailer().getRetailerProducts()){
+            if (retailerProduct.getProduct().equals(product)){
+                productIndex =getRetailer().getRetailerProducts().indexOf(retailerProduct);
+            }
+        }
+        return productIndex;
+        // TEMPORARY
+    }
+
+    public void updateRetailerProduct(Product product){
+        int productIndex= getProductIndex(product);
+        System.out.println("product index ="+ productIndex);
+        retailer.get().setcurrentRetailerProductIndex(productIndex);
+
+        // TEMPORARILY GET PRODUCT INDEX THROUGH RETAILERPRODUCTS
+        System.out.println("product index ="+ productIndex);
+        firstTableView.setItems(getRetailer().getRetailerProducts().get(productIndex).getRtmOptions());
+        secondTableView.setItems(getRetailer().getRetailerProducts().get(productIndex).getRtmOptions());
+        secondTableView.refresh();
+        updateChart(false,false,false,false,true,true,true,true,true);
+//        this.retailer.set(retailer);
+        ObservableList<RetailerProduct> retailerProducts =getRetailer().getRetailerProducts();
+        RetailerProduct currentRetailerProduct = retailerProducts.get(getRetailer().getCurrentRetailerProductIndex());
+        ObservableList<RTMOption> currentRtmOptions = currentRetailerProduct.getRtmOptions();
+        this.firstTableView.setItems(currentRtmOptions);
+        setUpListeners();
+        //CHANGE PRODUCT BOX TO AVE RETAILER OPTION SELECTION INSTEAD OF PRODUCT SELECTION
+        this.secondTableView.setItems(currentRtmOptions);
+
+        listLabel.setText("List = $" + currentRetailerProduct.getProduct().getUnitListCost());
+        fobLabel.setText("F.O.B. = $" + currentRetailerProduct.getProduct().getUnitFobCost());
+        net1GoalLabel.setText("Net 1 Goal = $" + currentRetailerProduct.getProduct().getUnitNet1Goal());
+        elasticityRatioLabel.setText("Elasticity Ratio = +1% Price :" +  currentRetailerProduct.getProduct().getElasticityMultiple() + "% Volume");
+        // Stuff that should be implemented differently
+        this.weeklyUfswAtMinField.setText(currentRtmOptions.get(0).getWeeklyUSFWAtMin().toString());
+        for (RTMOption row: firstTableView.getItems()){
+            row.setProduct(currentRetailerProduct.getProduct());
+            row.setYearOneStoreCount(getRetailer().getYearOneStoreCount());
+            row.setEverydayGPM(getRetailer().getEverydayGPM());
+            row.setSpoilsAndFees(getRetailer().getSpoilsFees().divide((new BigDecimal("100")), 4 , RoundingMode.HALF_UP));
+            maxReceivers(row);
+            row.updateResultingEverydayRetailCald();
+            updateChart(true,true,true,true,true,true,true,true,true );
+        }
+        secondTableView.setVisible(false);
+        secondTableView.setVisible(true);
+        secondTableView.refresh();
+
+
+    };
 
         // IDEA FOR LOGIC BEHIND RETAILER PRODUCT
 //        ObservableList<RetailerProduct> allRetailerProducts = retailer.get().getRetailerProducts();
@@ -391,9 +444,6 @@ public class firstTableController implements Initializable {
 //        }
 
 
-        secondTableView.refresh();
-        updateChart(false,false,false,false,true,true,true,true,true);
-    }
 
     /*
     Return minimum value from override column
@@ -418,8 +468,22 @@ public class firstTableController implements Initializable {
             row.setMinOverride(getMinOverride());
             row.setWeeklyUSFWAtMin(getWeeklyUSFWAtMin());
         }
-//        firstTableView.refresh();
-//        secondTableView.refresh();
+        secondTableView.refresh();
+        updateChart(false,false,true,true,true,true,true,true,true);
+    }
+    /*
+    Get elasticized velocities from weeklyUSFWAtMin Field  and do calculation if possible
+    */
+    public void changeOverrideEvent(TableColumn.CellEditEvent editedCell) {
+        System.out.println("please get here at least");
+        RTMOption RTMOptionSelected = firstTableView.getSelectionModel().getSelectedItem();
+        RTMOptionSelected.setResultingEverydayRetailOverride(new BigDecimal(editedCell.getNewValue().toString()));
+        for (RTMOption row : secondTableView.getItems()) {
+            row.setMinOverride(getMinOverride());
+        }
+        System.out.println(RTMOptionSelected.getRTMName() + ", elasticized= " + RTMOptionSelected.getElasticizedUnitVelocity());
+        System.out.println(RTMOptionSelected.getRTMName() + ", annual Volume= " + RTMOptionSelected.getAnnualVolumePerSku());
+        secondTableView.refresh();
         updateChart(false,false,true,true,true,true,true,true,true);
     }
 
@@ -464,11 +528,6 @@ public class firstTableController implements Initializable {
         updateChart(false,false,false,false,true,true,true,true,true);
     }
 
-    // Change Override
-    public void changeResultingEverydayRetailOverride(TableColumn.CellEditEvent editedCell) {
-        RTMOption RTMOptionSelected = firstTableView.getSelectionModel().getSelectedItem();
-        RTMOptionSelected.setResultingEverydayRetailOverride(new BigDecimal(editedCell.getNewValue().toString()));
-    }
     /*
     Calculate max from the receivers
     */
@@ -618,231 +677,6 @@ Return Value from Year One Store Count
         return getCurrentRtmOptions().get(row);
     }
 
-    // START OF MESS IS HERE
-//    public void updateResultingEverydayRetailCald(int row){
-//        BigDecimal landedStoreCost = getCurrentRtmOptions().get(row).getLandedStoreCost();
-//        BigDecimal everydayGpm = getRetailer().getEverydayGPM();
-//        if (everydayGpm.compareTo(new BigDecimal("0.0"))>0 &&
-//                landedStoreCost.compareTo(new BigDecimal("0.0"))>0){
-//            BigDecimal newValue = (landedStoreCost.multiply(new BigDecimal("100")))
-//                    .divide((everydayGpm.subtract(new BigDecimal("100"))), 4, RoundingMode.HALF_UP).abs();
-//            getSpecificRtmOption(row).setResultingEverydayRetailCalcd(newValue);
-//            getSpecificRtmOption(row).setResultingEverydayRetailOverride(newValue);
-//        }
-//    }
-//    public void updateElasticizedUnitVelocity() {
-//        if (getWeeklyUSFWAtMin().compareTo(new BigDecimal("0.0"))>0 && getMinOverride().compareTo(new BigDecimal("100000000000"))<0
-//                && getMinOverride().compareTo(new BigDecimal("0.0"))>0 && getResultingEverydayRetailOverride().compareTo(new BigDecimal("0.0"))>0) {
-//            if (getMinOverride().compareTo(getResultingEverydayRetailOverride())==0) {
-//                System.out.println("are you getting here");
-//                setElasticizedUnitVelocity(this.getWeeklyUSFWAtMin());
-//            } else {
-//                setElasticizedUnitVelocity(((getResultingEverydayRetailOverride().subtract(getMinOverride()))
-//                        .divide((getMinOverride()), 10, RoundingMode.HALF_UP).multiply(new BigDecimal("-1.15"))
-//                        .multiply(getWeeklyUSFWAtMin())).add(getWeeklyUSFWAtMin()));
-//            }
-//        }
-//    }
-//    public void updateEstimatedAnnualVolumePerSku(){
-//        if (getYearOneStoreCount()>0 &&  getElasticizedUnitVelocity().compareTo(new BigDecimal("0.0"))>0) {
-//            setAnnualVolumePerSku(((new BigDecimal("52").multiply(new BigDecimal(
-//                    getYearOneStoreCount()).multiply(getElasticizedUnitVelocity())))
-//                    .setScale(10, RoundingMode.HALF_UP)));
-//        }
-//    }
-//
-//    public void updateSlottingPaybackPeriod(){
-//        if (getWeeklyUSFWAtMin().compareTo(new BigDecimal("0.0"))>0
-//                && getMinOverride().compareTo(new BigDecimal("0.0"))>0  && getAnnualVolumePerSku().compareTo(new BigDecimal("0.0"))>0) {
-//            if (getSlottingPerSku().compareTo(new BigDecimal("0.0"))==0){
-//                setSlottingPaybackPeriod(new BigDecimal("0.0"));
-//            }
-//            else {
-//                setSlottingPaybackPeriod(getSlottingPayback());
-//            }
-//        }
-//    }
-//    public void updatePostFreightPostSpoilsWeCollect(){
-//        if (getWeeklyUSFWAtMin().compareTo(new BigDecimal("0.0"))>0
-//                && getMinOverride().compareTo(new BigDecimal("0.0"))>0  && getAnnualVolumePerSku().compareTo(new BigDecimal("0.0"))>0) {
-//            setPostFreightPostSpoilsWeCollectPerUnit(getPostSpoilsAndFreightWeCollectPerUnit());
-//        }
-//    }
-//    public void updateUnspentTrade(){
-//        if (getWeeklyUSFWAtMin().compareTo(new BigDecimal("0.0"))>0
-//                && getMinOverride().compareTo(new BigDecimal("0.0"))>0  && getAnnualVolumePerSku().compareTo(new BigDecimal("0.0"))>0) {
-//            setUnspentTradePerUnit(getPostSpoilsAndStdAllowancesAvailableTrade());
-//        }
-//    }
-//    public void updateFourYearEqGpPerSku() {
-//        if (getWeeklyUSFWAtMin().compareTo(new BigDecimal("0.0")) > 0
-//                && getMinOverride().compareTo(new BigDecimal("0.0")) > 0 && getAnnualVolumePerSku().compareTo(new BigDecimal("0.0")) > 0) {
-//            setFourYearEqGpPerSku(getGrossProfit());
-//        }
-//    }
-//    public void updateFourYearEqGpPerUnit() {
-//        if (getWeeklyUSFWAtMin().compareTo(new BigDecimal("0.0")) > 0
-//                && getMinOverride().compareTo(new BigDecimal("0.0")) > 0 && getAnnualVolumePerSku().compareTo(new BigDecimal("0.0")) > 0) {
-//            setFourYearEqGpPerUnit(getGrossProfitPerUnit());
-//        }
-//    }
-//
-//    public Product getProduct() {
-//        return product.get();
-//    }
-//
-//    public SimpleObjectProperty<Product> productProperty() {
-//        if (product==null){
-//            return new SimpleObjectProperty<Product>();
-//        }
-//        return product;
-//    }
-//
-//    public void setProduct(Product product) {
-//        this.product.set(product);
-//    }
-//
-//    public Integer getYearOneStoreCount() {
-//        return yearOneStoreCount.get();
-//    }
-//
-//    public SimpleIntegerProperty yearOneStoreCountProperty() {
-//        if (yearOneStoreCount==null){
-//            return new SimpleIntegerProperty();
-//        }
-//        return yearOneStoreCount;
-//    }
-//
-//    public void setYearOneStoreCount(Integer yearOneStoreCount) {
-//        this.yearOneStoreCount.set(yearOneStoreCount);
-//    }
-//
-//    public BigDecimal getEverydayGPM() {
-//        if (everydayGPM.get()==null){
-//            return new BigDecimal("0.0");
-//        }
-//        return everydayGPM.get();
-//    }
-//
-//    public SimpleObjectProperty<BigDecimal> everydayGPMProperty() {
-//        if (everydayGPM ==null){
-//            return new SimpleObjectProperty<>();
-//        }
-//        return everydayGPM;
-//    }
-//
-//    public void setEverydayGPM(BigDecimal everydayGPM) {
-//        this.everydayGPM.set(everydayGPM);
-//    }
-//
-//    public BigDecimal getSpoilsAndFees() {
-//        return spoilsAndFees.get();
-//    }
-//
-//    public SimpleObjectProperty<BigDecimal> spoilsAndFeesProperty() {
-//        return spoilsAndFees;
-//    }
-//
-//    public void setSpoilsAndFees(BigDecimal spoilsAndFees) {
-//        this.spoilsAndFees.set(spoilsAndFees);
-//    }
-//
-//    public boolean isFob() {
-//        if (getFreightOutPerUnit().compareTo(new BigDecimal(0.0)) > 0) {
-//            return false;
-//        }
-//        return true;
-//    }
-//
-//    public BigDecimal getFourYearUnitVolumePerSku(){
-//        return getAnnualVolumePerSku().multiply(new BigDecimal(4.0));
-//    }
-//    public BigDecimal getOurFreightCost(){
-//        return getFourYearUnitVolumePerSku().multiply(getFreightOutPerUnit());
-//    }
-//    public BigDecimal getGrossRevenueList(){ //retest //Put list in parameters to calculate
-//        return getFourYearUnitVolumePerSku().multiply(getProduct().getUnitListCost().setScale(10, RoundingMode.HALF_UP)); // HARDCODED FOR NOW, SHOULD BE LIST PRICE
-//    }
-//    public BigDecimal getFobDiscount(){ //retest
-//        if (isFob()){
-//            return ((getProduct().getUnitListCost()).subtract(getProduct().getUnitFobCost())).multiply(getFourYearUnitVolumePerSku()); // HARDCODED FOR NOW: (LIST - FOB)*4 Year Unit VOl /SKu
-//        }
-//        return new BigDecimal("0.0");
-//    }
-//    public BigDecimal getGrossRevenueActual(){
-//        return getGrossRevenueList().subtract(getFobDiscount());
-//    }
-//    public BigDecimal getSpoilsTrade(){  // retest // Put spoils+fees field value in parameter
-//        return getGrossRevenueActual().multiply(getSpoilsAndFees());
-//    }
-//    public BigDecimal getStandardAllowanceTrade(){ //retest //HARDCODED FOR NOW, LIST PRICE NEEDED
-//        if (isFob()){
-//            return ((((getProduct().getUnitListCost()).subtract(getFirstReceiver()))
-//                    .multiply(getFourYearUnitVolumePerSku())).subtract(getFobDiscount())).setScale(10, RoundingMode.HALF_UP);
-//        }
-//        BigDecimal zeroValue = (getProduct().getUnitListCost()).subtract(getFirstReceiver());
-//        zeroValue = zeroValue.multiply(getFourYearUnitVolumePerSku());
-//        return zeroValue.setScale(10, RoundingMode.HALF_UP);
-//    }
-//    public BigDecimal getAfterSpoilsAndStdAllowanceTrade(){ // retest //HARDCODED FOR NOW, LIST PRICE NEEDED, NET1 GOAL NEEDED
-//        return (getFourYearUnitVolumePerSku().multiply((getProduct().getUnitListCost()).subtract(getProduct().getUnitNet1Goal()))).subtract(getSpoilsTrade()).subtract(getStandardAllowanceTrade());
-//    }
-//    public BigDecimal getIfFobFreightCredit(){
-//        if (isFob()){
-//            return ((getProduct().getUnitListCost()).subtract(getProduct().getUnitFobCost())).multiply(getFourYearUnitVolumePerSku());
-//        }
-//        return new BigDecimal("0.0");
-//    }
-//    public BigDecimal getEqualsNet1Rev(){
-//        return getGrossRevenueList().subtract(getSpoilsTrade()).subtract(getStandardAllowanceTrade()).subtract(getAfterSpoilsAndStdAllowanceTrade());
-//    }
-//    public BigDecimal getTotalFobAndFreightSpending(){
-//        return getOurFreightCost().add(getFobDiscount());
-//    }
-//    public BigDecimal getEqualsNet2Rev(){
-//        return getEqualsNet1Rev().subtract(getTotalFobAndFreightSpending());
-//    }
-//    public BigDecimal getEqualsNet3Rev(){
-//        return getEqualsNet2Rev().subtract(getSlottingPerSku());
-//    }
-//    public BigDecimal getNetRev3Rate(){
-//        if (getFourYearUnitVolumePerSku().equals(new BigDecimal("0.0"))){
-//            return new BigDecimal ("0.0");
-//        }
-//        return getEqualsNet3Rev().divide((getFourYearUnitVolumePerSku()),10, RoundingMode.HALF_UP).setScale(10,RoundingMode.HALF_UP);
-//    }
-//    // IMPLEMENT COGS AND PASS IT
-//    public BigDecimal getTotalCogs(){
-//        return getFourYearUnitVolumePerSku().multiply(getProduct().getUnitBlendedCogs()); //HARDCODED FOR NOW SHOULD BE COGS
-//    }
-//    public BigDecimal getGrossProfit(){
-//        return getEqualsNet3Rev().subtract(getTotalCogs());
-//    }
-//    public BigDecimal getGrossProfitPerUnit(){
-//        return getGrossProfit().divide((getFourYearUnitVolumePerSku()), 10, RoundingMode.HALF_UP);
-//    }
-//    // IMPLEMENT THIS IN FIRST TABLE CONTROLLER, get the max from gross profit
-////    public BigDecimal getGrossProfitIndex(){
-////        if (getGrossProfit().equals(new BigDecimal("0.0"))){
-////            return new BigDecimal("0.0");
-////        }
-////        return getGrossProfit()
-////    }
-//
-//    public BigDecimal getSlottingPayback(){
-//        return (getSlottingPerSku().divide((getGrossProfitPerUnit()), 10, RoundingMode.HALF_UP)).divide(getAnnualVolumePerSku(), 5, RoundingMode.HALF_UP);
-//    }
-//    // IMPLEMENT GET GROSS PROFIT INDEX
-//    public BigDecimal getPostSpoilsAndFreightWeCollect(){
-//        return getGrossRevenueList().subtract(getSpoilsTrade()).subtract(getOurFreightCost()).subtract(getFobDiscount());
-//    }
-//    public BigDecimal getPostSpoilsAndFreightWeCollectPerUnit(){
-//        return getPostSpoilsAndFreightWeCollect().divide((getFourYearUnitVolumePerSku()), 10, RoundingMode.HALF_UP);
-//    }
-//    public BigDecimal getPostSpoilsAndStdAllowancesAvailableTrade(){
-//        return getAfterSpoilsAndStdAllowanceTrade().divide((getFourYearUnitVolumePerSku()),10 , RoundingMode.HALF_UP);
-//    }
-    // END OF MESSS HERE IN THEORY
 
     /*
     Loads dummy table data
@@ -877,10 +711,18 @@ Return Value from Year One Store Count
         ObservableList<Sku> skus = FXCollections.observableArrayList();
         ObservableList<Meeting>  meetings = FXCollections.observableArrayList();
         skus.addAll(new Sku("dill", "current", "great taste"), new Sku("dill", "current", "great taste"), new Sku("dill", "current", "great taste"));
-        meetings.addAll(new Meeting("Review Meeting", "here", convertToDate(LocalDate.of(2022,12,5)), "11:15","will be fun"), new Meeting());
+        meetings.addAll(new Meeting("Review Meeting", "here", LocalDate.of(2022,12,5), "11:15","will be fun"), new Meeting());
         retailerProducts.add(new RetailerProduct( new Product("Big Time Food Company", "24 oz pickles", new BigDecimal("3.59"), new BigDecimal("0.29"),
-                new BigDecimal("3.30"), new BigDecimal("2.99"), new BigDecimal("2.05"), new BigDecimal("-1.15")), getRTMOptions(), skus,meetings, RetailerSelectionController.getDummyPromoPlans()));
+                new BigDecimal("3.30"), new BigDecimal("2.99"), new BigDecimal("2.05"), new BigDecimal("-1.15")), getRTMOptions(), skus,meetings, getDummyPromoPlans()));
         return retailerProducts;
+    }
+    public static ObservableList<PromoPlan> getDummyPromoPlans(){
+        ObservableList<PromoPlan> promoPlans = FXCollections.observableArrayList();
+        promoPlans.add(new PromoPlan(0));
+        promoPlans.add(new PromoPlan(1));
+        promoPlans.add(new PromoPlan(2));
+        promoPlans.add(new PromoPlan(3));
+        return promoPlans;
     }
 
 
@@ -1089,13 +931,13 @@ Return Value from Year One Store Count
     /*
     Return a converter for product combobox
      */
-    public StringConverter<RetailerProduct> getProductComboboxConverter(){
+    public StringConverter<Product> getProductComboboxConverter(){
         return new ProductboxConverter("product");
     }
     /*
     Return a converter for brand combobox
      */
-    public StringConverter<RetailerProduct> getBrandComboboxConverter() {
+    public StringConverter<Product> getBrandComboboxConverter() {
         return new ProductboxConverter("brand");
     }
 
@@ -1105,30 +947,42 @@ Return Value from Year One Store Count
 
     public void setRetailer(Retailer retailer) {
         this.retailer.set(retailer);
-        ObservableList<RetailerProduct> retailerProducts =retailer.getRetailerProducts();
-        RetailerProduct currentRetailerProduct = retailerProducts.get(retailer.getCurrentRetailerProductIndex());
+        ObservableList<RetailerProduct> retailerProducts =getRetailer().getRetailerProducts();
+        RetailerProduct currentRetailerProduct = retailerProducts.get(getRetailer().getCurrentRetailerProductIndex());
         ObservableList<RTMOption> currentRtmOptions = currentRetailerProduct.getRtmOptions();
-        this.firstTableView.setItems(currentRtmOptions);
-        setUpListeners();
-        //CHANGE PRODUCT BOX TO AVE RETAILER OPTION SELECTION INSTEAD OF PRODUCT SELECTION
-        this.secondTableView.setItems(currentRtmOptions);
+//        this.firstTableView.setItems(currentRtmOptions);
+//        setUpListeners();
+//        //CHANGE PRODUCT BOX TO AVE RETAILER OPTION SELECTION INSTEAD OF PRODUCT SELECTION
+//        this.secondTableView.setItems(currentRtmOptions);
 
-        this.brandNameBox.setItems(getUniqueBrandNames(retailerProducts));
-        this.brandNameBox.valueProperty().setValue(currentRetailerProduct);
-        this.productClassBox.setItems(getCorrespondingProductClasses(retailerProducts,currentRetailerProduct));
-        this.productClassBox.valueProperty().setValue(currentRetailerProduct);
-        this.firstTableView.setItems(currentRtmOptions);
+        updateRetailerProduct(currentRetailerProduct.getProduct());
+        this.brandNameBox.setItems(getUniqueBrandNames(RetailerSelectionController.getExampleProducts()));
+        this.brandNameBox.valueProperty().setValue(currentRetailerProduct.getProduct());
+        this.productClassBox.setItems(getCorrespondingProductClasses(RetailerSelectionController.getExampleProducts(),currentRetailerProduct.getProduct()));
+        this.productClassBox.valueProperty().setValue(currentRetailerProduct.getProduct());
+//        listLabel.setText("List = $" + currentRetailerProduct.getProduct().getUnitListCost());
+//        fobLabel.setText("F.O.B. = $" + currentRetailerProduct.getProduct().getUnitFobCost());
+//        net1GoalLabel.setText("Net 1 Goal = $" + currentRetailerProduct.getProduct().getUnitNet1Goal());
+//        elasticityRatioLabel.setText("Elasticity Ratio = +1% Price :" +  currentRetailerProduct.getProduct().getElasticityMultiple() + "% Volume");
         this.yearOneStoreCountField.setText(String.valueOf(retailer.getYearOneStoreCount()));
         this.everydayGpmField.setText(retailer.getEverydayGPM().toString());
         this.spoilsFeesField.setText(retailer.getSpoilsFees().toString());
         // Stuff that should be implemented differently
-        this.weeklyUfswAtMinField.setText(currentRtmOptions.get(0).getWeeklyUSFWAtMin().toString());
-        for (RTMOption row: firstTableView.getItems()){
-            row.setProduct(currentRetailerProduct.getProduct());
-            row.setYearOneStoreCount(retailer.getYearOneStoreCount());
-            row.setEverydayGPM(retailer.getEverydayGPM());
-            row.setSpoilsAndFees(retailer.getSpoilsFees().divide((new BigDecimal("100")), 4 , RoundingMode.HALF_UP));
-        }
+//        this.weeklyUfswAtMinField.setText(currentRtmOptions.get(0).getWeeklyUSFWAtMin().toString());
+//        for (RTMOption row: firstTableView.getItems()){
+//            row.setProduct(currentRetailerProduct.getProduct());
+//            row.setYearOneStoreCount(getRetailer().getYearOneStoreCount());
+//            row.setEverydayGPM(getRetailer().getEverydayGPM());
+//            row.setSpoilsAndFees(getRetailer().getSpoilsFees().divide((new BigDecimal("100")), 4 , RoundingMode.HALF_UP));
+//            maxReceivers(row);
+//            row.updateResultingEverydayRetailCald();
+//            updateChart(true,true,true,true,true,true,true,true,true );
+//        }
+//        secondTableView.setVisible(false);
+//        secondTableView.setVisible(true);
+//        secondTableView.refresh();
+
+
     }
 }
 /*

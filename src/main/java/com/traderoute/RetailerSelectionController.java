@@ -23,8 +23,6 @@ import java.util.*;
 import javafx.fxml.FXML;
 
 import javafx.scene.control.*;
-
-import static com.traderoute.AssortmentController.convertToDate;
 import static javafx.beans.binding.Bindings.add;
 
 public class RetailerSelectionController implements Initializable {
@@ -74,7 +72,7 @@ public class RetailerSelectionController implements Initializable {
     @FXML
     private TableColumn<Meeting, String> timeColumn;
     @FXML
-    private TableColumn<Meeting, Date> dateColumn;
+    private TableColumn<Meeting, LocalDate> dateColumn;
     @FXML
     private TableColumn<Meeting, String> notesColumn;
 
@@ -122,7 +120,7 @@ public class RetailerSelectionController implements Initializable {
         brandNameColumn.setCellValueFactory(cellData-> cellData.getValue().brandNameProperty());
         productClassColumn.setCellValueFactory(cellData-> cellData.getValue().productClassProperty());
 
-        descriptionColumn.setCellFactory(tc-> new CustomTextCell<>());
+        descriptionColumn.setCellFactory(tc-> new CustomTextCell());
         locationColumn.setCellFactory(tc-> new CustomTextCell<>());
         dateColumn.setCellFactory(tc-> new CustomTextCell<>());
         timeColumn.setCellFactory(tc-> new CustomTextCell<>());
@@ -130,6 +128,7 @@ public class RetailerSelectionController implements Initializable {
 
         brandNameColumn.setCellFactory(tc-> new CustomTextCell<>());
         productClassColumn.setCellFactory(tc-> new CustomTextCell<>());
+
 
 
         retailerList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Retailer>() {
@@ -195,6 +194,8 @@ public class RetailerSelectionController implements Initializable {
         });
     }
 
+
+
     private ObservableList<Retailer> getRetailers(){
         ObservableList<Retailer> retailers = FXCollections.observableArrayList();
         retailers.add(new Retailer("Ahold Giant",getRetailerProducts(),0, new BigDecimal("40"), 158, new BigDecimal("3.0")));
@@ -215,8 +216,17 @@ public class RetailerSelectionController implements Initializable {
             App.setSceneRoot(secondTableLoader.load());
 
             firstTableController firstTableController = secondTableLoader.getController();
+            System.out.println("current Retailer="+ currentRetailer.get().getRetailerName());
             firstTableController.setRetailer(currentRetailer.get());
         }
+    }
+    @FXML
+    private void switchToProductClassReporting(ActionEvent event) throws IOException{
+        FXMLLoader productClassReportingLoader = App.createFXMLLoader("productClassReporting");
+        App.setSceneRoot(productClassReportingLoader.load());
+
+        ProductClassReportingController productClassReportingController = productClassReportingLoader.getController();
+        productClassReportingController.setRetailers(getRetailers());
     }
 
     /*
@@ -224,15 +234,15 @@ public class RetailerSelectionController implements Initializable {
     */
     public static ObservableList<RTMOption> getRTMOptions() {
         ObservableList<RTMOption> RTMOptions = FXCollections.observableArrayList();
-        RTMOption testOption = new RTMOption("Direct-to-Customer", new BigDecimal("0.29"),BigDecimal.valueOf(7500), BigDecimal.valueOf(3.59),
-                BigDecimal.valueOf(0.0), BigDecimal.valueOf(0.0), BigDecimal.valueOf(0.0));
+        RTMOption testOption = new RTMOption("Direct-to-Customer", new BigDecimal("0.29"),new BigDecimal("7500"), new BigDecimal("3.59"),
+                new BigDecimal("0.0"), new BigDecimal ("0.0"), new BigDecimal("0.0"));
         testOption.setResultingEverydayRetailOverride(new BigDecimal("5.99"));
         testOption.setLandedStoreCost(new BigDecimal("3.59"));
         RTMOptions.add(testOption);
         RTMOption optionTwo = new RTMOption("Option2", new BigDecimal("0.0"),BigDecimal.valueOf(3500), BigDecimal.valueOf(3.07),
-                BigDecimal.valueOf(3.75), BigDecimal.valueOf(0.0), BigDecimal.valueOf(0.0));
-        optionTwo.setResultingEverydayRetailOverride(new BigDecimal("6.49"));
+                BigDecimal.valueOf(3.79), BigDecimal.valueOf(0.0), BigDecimal.valueOf(0.0));
         optionTwo.setResultingEverydayRetailCalcd(new BigDecimal("6.32"));
+        optionTwo.setResultingEverydayRetailOverride(new BigDecimal("6.49"));
         optionTwo.setLandedStoreCost(new BigDecimal("3.79"));
         RTMOptions.add(optionTwo);
         RTMOption optionThree = new RTMOption();
@@ -304,10 +314,13 @@ public class RetailerSelectionController implements Initializable {
         ObservableList<RetailerProduct> retailerProducts = FXCollections.observableArrayList();
         ObservableList<Sku> skus = FXCollections.observableArrayList(getExampleSkus().get(0), getExampleSkus().get(1), getExampleSkus().get(2), getExampleSkus().get(3), getExampleSkus().get(4));
         ObservableList<Meeting>  meetings = FXCollections.observableArrayList();
-        skus.addAll(new Sku("dill", "current", "great taste"), new Sku("dill", "current", "great taste"), new Sku("dill", "current", "great taste"));
-        meetings.addAll(new Meeting("Review Meeting", "here", convertToDate(LocalDate.of(2022,12,5)), "11:15","will be fun"), new Meeting());
+        skus.addAll(new Sku("bill", "current", "great taste"), new Sku("jill", "targeted", "great taste"), new Sku("till", "ditributed", "great taste"));
+        meetings.addAll(new Meeting("Review Meeting", "here", LocalDate.of(2022,12,5), "11:15","will be fun"), new Meeting());
         retailerProducts.add(new RetailerProduct(getExampleProducts().get(0), getRTMOptions(), skus,meetings, getDummyPromoPlans()));
         return retailerProducts;
+    }
+    static Date convertToDate(LocalDate dateToConvert) {
+        return java.sql.Date.valueOf(dateToConvert);
     }
     /*
     Load dummy RetailerProduct
@@ -331,7 +344,7 @@ public class RetailerSelectionController implements Initializable {
     /*
     Loads dummy product data
     */
-    public ObservableList<Product> getExampleProducts() {
+    public static ObservableList<Product> getExampleProducts() {
         ObservableList<Product> products = FXCollections.observableArrayList();
         products.add(new Product("Big Time Food Company", "24 oz pickles", new BigDecimal("3.59"), new BigDecimal("0.29"),
                 new BigDecimal("3.30"), new BigDecimal("2.99"), new BigDecimal("2.05"), new BigDecimal("-1.15")));
@@ -348,37 +361,37 @@ public class RetailerSelectionController implements Initializable {
 
     public ObservableList<Meeting> getExampleMeetings() {
         ObservableList<Meeting> meetings = FXCollections.observableArrayList();
-        meetings.add(new Meeting ("First Meeting", "At Home", convertToDate(LocalDate.of(2022,12,5)), "17:05", "gonna be cool"));
-        meetings.add(new Meeting ("Second Meeting", "At Home", convertToDate(LocalDate.of(2021,01,9)), "17:05", "cant wait"));
-        meetings.add(new Meeting ("Third Meeting", "At Home", convertToDate(LocalDate.of(2020,02,13)), "17:05", "another one!"));
-        meetings.add(new Meeting ("Fourth Meeting", "At Home", convertToDate(LocalDate.of(2022,12,10)), "17:05", "be punctual"));
-        meetings.add(new Meeting ("Fifth Meeting", "At Home", convertToDate(LocalDate.of(2022,10,5)), "17:05", "be late"));
-        meetings.add(new Meeting ("Sixth Meeting", "At Home", convertToDate(LocalDate.of(2024,12,5)), "17:05", "call first"));
-        meetings.add(new Meeting ("Seventh Meeting", "At Home", convertToDate(LocalDate.of(2022,12,5)), "17:45", "email first"));
-        meetings.add(new Meeting ("Eigth Meeting", "At Home", convertToDate(LocalDate.of(2022,12,5)), "18:05", "zzz"));
+        meetings.add(new Meeting ("First Meeting", "At Home", LocalDate.of(2022,12,5), "17:05", "gonna be cool"));
+        meetings.add(new Meeting ("Second Meeting", "At Home", LocalDate.of(2021,01,9), "17:05", "cant wait"));
+        meetings.add(new Meeting ("Third Meeting", "At Home", LocalDate.of(2020,02,13), "17:05", "another one!"));
+        meetings.add(new Meeting ("Fourth Meeting", "At Home", LocalDate.of(2022,12,10), "17:05", "be punctual"));
+        meetings.add(new Meeting ("Fifth Meeting", "At Home", LocalDate.of(2022,10,5), "17:05", "be late"));
+        meetings.add(new Meeting ("Sixth Meeting", "At Home", LocalDate.of(2024,12,5), "17:05", "call first"));
+        meetings.add(new Meeting ("Seventh Meeting", "At Home", LocalDate.of(2022,12,5), "17:45", "email first"));
+        meetings.add(new Meeting ("Eigth Meeting", "At Home", LocalDate.of(2022,12,5), "18:05", "zzz"));
 
-        meetings.add(new Meeting ("Ninth Meeting", "Atnot Home", convertToDate(LocalDate.of(2029,10,5)), "17:05", "be late"));
-        meetings.add(new Meeting ("Tenth Meeting", "Atnto Home", convertToDate(LocalDate.of(2022,12,5)), "17:25", "call first"));
-        meetings.add(new Meeting ("Eleventh Meeting", "Ate Home", convertToDate(LocalDate.of(2022,12,10)), "17:45", "email first"));
-        meetings.add(new Meeting ("Twelveth Meeting", "At v Home", convertToDate(LocalDate.of(2021,1,1)), "18:05", "zzz"));
+        meetings.add(new Meeting ("Ninth Meeting", "Atnot Home", LocalDate.of(2029,10,5), "17:05", "be late"));
+        meetings.add(new Meeting ("Tenth Meeting", "Atnto Home", LocalDate.of(2022,12,5), "17:25", "call first"));
+        meetings.add(new Meeting ("Eleventh Meeting", "Ate Home", LocalDate.of(2022,12,10), "17:45", "email first"));
+        meetings.add(new Meeting ("Twelveth Meeting", "At v Home", LocalDate.of(2021,1,1), "18:05", "zzz"));
         return meetings;
     }
     public ObservableList<Sku> getExampleSkus() {
         ObservableList<Sku> skus = FXCollections.observableArrayList();
-        skus.add(new Sku ("First Sku", "Current", "love this one"));
-        skus.add(new Sku ("Second Sku", "Current", "Not my favorite"));
-        skus.add(new Sku ("Third Sku", "Discontinued", "Hate it"));
-        skus.add(new Sku ("Fourth Sku", "Targeted", "Hate it"));
-        skus.add(new Sku ("Fifth Sku", "Targeted", "Hate it"));
-        skus.add(new Sku ("Sixth Sku", "Discontinued", "Hate it"));
-        skus.add(new Sku ("Seventh Sku", "Current", "Hate it"));
-        skus.add(new Sku ("Eighth Sku", "Current", "Hate it"));
-        skus.add(new Sku ("Ninth Sku", "Current", "Hate it"));
+        skus.add(new Sku ("First Sku", "current", "love this one"));
+        skus.add(new Sku ("Second Sku", "current", "Not my favorite"));
+        skus.add(new Sku ("Third Sku", "discontinued", "Hate it"));
+        skus.add(new Sku ("Fourth Sku", "targeted", "Hate it"));
+        skus.add(new Sku ("Fifth Sku", "targeted", "Hate it"));
+        skus.add(new Sku ("Sixth Sku", "discontinued", "Hate it"));
+        skus.add(new Sku ("Seventh Sku", "current", "Hate it"));
+        skus.add(new Sku ("Eighth Sku", "current", "Hate it"));
+        skus.add(new Sku ("Ninth Sku", "current", "Hate it"));
 
-        skus.add(new Sku ("Tentth Sku", "Discontinued", "Hate it"));
-        skus.add(new Sku ("Twelvth Sku", "Current", ". it"));
-        skus.add(new Sku ("13th Sku", "Current", "Lov it"));
-        skus.add(new Sku ("14th Sku", "Current", "got it"));
+        skus.add(new Sku ("Tentth Sku", "discontinued", "Hate it"));
+        skus.add(new Sku ("Twelvth Sku", "current", ". it"));
+        skus.add(new Sku ("13th Sku", "current", "Lov it"));
+        skus.add(new Sku ("14th Sku", "current", "got it"));
         return skus;
     }
 
@@ -398,26 +411,26 @@ public class RetailerSelectionController implements Initializable {
     }
     public static ObservableList<PromoPlan> getDummyPromoPlans(){
         ObservableList<PromoPlan> promoPlans = FXCollections.observableArrayList();
-        promoPlans.add(new PromoPlan(getParameters(), getToplineSummaries(), getRetailerSummaries(),new BigDecimal("0.0"), true));
-        promoPlans.add(new PromoPlan(getEmptyParameters(), getToplineSummaries(), getRetailerSummaries(), new BigDecimal("0.0"),false ));
-        promoPlans.add(new PromoPlan(getEmptyParameters(), getToplineSummaries(), getRetailerSummaries(), new BigDecimal("0.0"),false));
-        promoPlans.add(new PromoPlan(getEmptyParameters(), getToplineSummaries(), getRetailerSummaries(), new BigDecimal("0.0"),false));
+        promoPlans.add(new PromoPlan(getParameters(), getToplineSummaries(), getRetailerSummaries(),new BigDecimal("0.75"), getRTMOptions().get(1), false));
+        promoPlans.add(new PromoPlan(getParameters(), getToplineSummaries(), getRetailerSummaries(), new BigDecimal("0.75"),getRTMOptions().get(0) ,false ));
+        promoPlans.add(new PromoPlan(getEmptyParameters(), getToplineSummaries(), getRetailerSummaries(), new BigDecimal("0.0"),getRTMOptions().get(2) ,false));
+        promoPlans.add(new PromoPlan(getEmptyParameters(), getToplineSummaries(), getRetailerSummaries(), new BigDecimal("0.0"),getRTMOptions().get(0) ,false));
         return promoPlans;
     }
     public static ObservableList<PromoPlan> getDifferentDummyPromoPlans(){
         ObservableList<PromoPlan> promoPlans = FXCollections.observableArrayList();
-        promoPlans.add(new PromoPlan(getDifferentParameters(), getToplineSummaries(), getRetailerSummaries(),new BigDecimal("0.0"), false));
-        promoPlans.add(new PromoPlan(getEmptyParameters(), getToplineSummaries(), getRetailerSummaries(), new BigDecimal("0.0"),true ));
-        promoPlans.add(new PromoPlan(getEmptyParameters(), getToplineSummaries(), getRetailerSummaries(), new BigDecimal("0.0"),false));
-        promoPlans.add(new PromoPlan(getEmptyParameters(), getToplineSummaries(), getRetailerSummaries(), new BigDecimal("0.0"),false));
+        promoPlans.add(new PromoPlan( getDifferentParameters(), getToplineSummaries(), getRetailerSummaries(),new BigDecimal("0.8"), getDifferentRTMOptions().get(0) ,false));
+        promoPlans.add(new PromoPlan( getEmptyParameters(), getToplineSummaries(), getRetailerSummaries(), new BigDecimal("0.0"),getDifferentRTMOptions().get(1) ,true ));
+        promoPlans.add(new PromoPlan( getEmptyParameters(), getToplineSummaries(), getRetailerSummaries(), new BigDecimal("0.10"),getDifferentRTMOptions().get(1) ,false));
+        promoPlans.add(new PromoPlan( getEmptyParameters(), getToplineSummaries(), getRetailerSummaries(), new BigDecimal("0.0"),getDifferentRTMOptions().get(2) ,false));
         return promoPlans;
     }
     public static ObservableList<PromoPlan> getDifferentDummyPromoPlans2(){
         ObservableList<PromoPlan> promoPlans = FXCollections.observableArrayList();
-        promoPlans.add(new PromoPlan(getDifferentParameters(), getToplineSummaries(), getRetailerSummaries(),new BigDecimal("0.0"), false));
-        promoPlans.add(new PromoPlan(getParameters(), getToplineSummaries(), getRetailerSummaries(), new BigDecimal("0.0"),true ));
-        promoPlans.add(new PromoPlan(getParameters(), getToplineSummaries(), getRetailerSummaries(), new BigDecimal("0.0"),false));
-        promoPlans.add(new PromoPlan(getEmptyParameters(), getToplineSummaries(), getRetailerSummaries(), new BigDecimal("0.0"),false));
+        promoPlans.add(new PromoPlan(getParameters(), getToplineSummaries(), getRetailerSummaries(),new BigDecimal("9.0"),getDifferentRTMOptions2().get(1), false));
+        promoPlans.add(new PromoPlan(getDifferentParameters(), getToplineSummaries(), getRetailerSummaries(), new BigDecimal("0.0"),getDifferentRTMOptions2().get(3), true ));
+        promoPlans.add(new PromoPlan(getParameters(), getToplineSummaries(), getRetailerSummaries(), new BigDecimal("0.00001"),getDifferentRTMOptions2().get(0),false));
+        promoPlans.add(new PromoPlan(getEmptyParameters(), getToplineSummaries(), getRetailerSummaries(), new BigDecimal("0.090"),getDifferentRTMOptions2().get(2),false));
         return promoPlans;
     }
 

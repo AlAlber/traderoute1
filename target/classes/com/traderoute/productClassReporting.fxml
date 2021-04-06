@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXCheckBox?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import java.lang.String?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Group?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox prefHeight="800.0" prefWidth="1530.0" style="-fx-background-color: #1E1D1A;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.traderoute.ProductClassReportingController">
+   <children>
+      <HBox prefHeight="126.0" prefWidth="1482.0">
+         <children>
+            <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../images/inner%20trade%20route%20logo.JPG" />
+               </image>
+               <HBox.margin>
+                  <Insets right="30.0" />
+               </HBox.margin>
+            </ImageView>
+            <VBox prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <JFXComboBox fx:id="brandNameBox" onAction="#changeBrandComboboxEvent" prefHeight="26.0" prefWidth="176.0">
+                     <VBox.margin>
+                        <Insets bottom="20.0" />
+                     </VBox.margin>
+                  </JFXComboBox>
+                  <JFXComboBox fx:id="productClassBox" onAction="#changeProductComboboxEvent" prefHeight="26.0" prefWidth="174.0">
+                     <VBox.margin>
+                        <Insets bottom="20.0" />
+                     </VBox.margin>
+                  </JFXComboBox>
+                  <JFXCheckBox fx:id="committedOnlyBox" onAction="#changeCommitted" text="Only Committed Forecasts?">
+                     <VBox.margin>
+                        <Insets bottom="20.0" />
+                     </VBox.margin>
+                  </JFXCheckBox>
+               </children>
+            </VBox>
+            <VBox prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <JFXCheckBox fx:id="yearBox0" onAction="#changeYearBox" text="2021 Fiscal year">
+                     <VBox.margin>
+                        <Insets bottom="10.0" />
+                     </VBox.margin>
+                  </JFXCheckBox>
+                  <JFXCheckBox fx:id="yearBox1" onAction="#changeYearBox" text="2022 Fiscal year">
+                     <VBox.margin>
+                        <Insets bottom="10.0" />
+                     </VBox.margin>
+                  </JFXCheckBox>
+                  <JFXCheckBox fx:id="yearBox2" onAction="#changeYearBox" text="2023 Fiscal year">
+                     <VBox.margin>
+                        <Insets bottom="10.0" />
+                     </VBox.margin>
+                  </JFXCheckBox>
+                  <JFXCheckBox fx:id="yearBox3" onAction="#changeYearBox" text="2024 Fiscal year">
+                     <VBox.margin>
+                        <Insets bottom="10.0" />
+                     </VBox.margin>
+                  </JFXCheckBox>
+               </children>
+               <HBox.margin>
+                  <Insets left="40.0" />
+               </HBox.margin>
+            </VBox>
+            <Group />
+         </children>
+      </HBox>
+      <AnchorPane prefHeight="620.0" prefWidth="1481.0">
+         <children>
+            <ScrollPane prefHeight="620.0" prefWidth="1481.0">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="614.0" prefWidth="1818.0">
+                     <children>
+                        <TableView fx:id="productClassReportingTable" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="614.0" prefWidth="1482.0" style="-fx-border-color: #A79543; -fx-border-width: 3;" stylesheets="@../styles/Styles.css">
+                           <columns>
+                              <TableColumn fx:id="retailerNameColumn" prefWidth="130.0" sortable="false" />
+                              <TableColumn fx:id="committedColumn" prefWidth="60.0" sortable="false" text="in Forecast?" />
+                              <TableColumn fx:id="storeCountColumn" prefWidth="63.200042724609375" sortable="false" text="Store Count" />
+                              <TableColumn prefWidth="15.0" sortable="false" />
+                              <TableColumn fx:id="totalVolumetricsColumn" prefWidth="95.0" sortable="false" text="Total" />
+                              <TableColumn fx:id="everydayVolumetricsColumn" prefWidth="95.0" sortable="false" text="Everyday" />
+                              <TableColumn fx:id="promotedVolumetricsColumn" prefWidth="95.0" sortable="false" text="Promoted" />
+                              <TableColumn prefWidth="15.0" sortable="false" />
+                              <TableColumn fx:id="grossRevenueColumn" prefWidth="95.0" sortable="false" text="Gross $" />
+                              <TableColumn fx:id="tradeRevenueColumn" prefWidth="95.0" sortable="false" text="Trade $" />
+                              <TableColumn fx:id="net1RevenueColumn" prefWidth="95.0" sortable="false" text="Net 1 $" />
+                              <TableColumn minWidth="0.0" prefWidth="15.0" sortable="false" />
+                              <TableColumn fx:id="net1PodColumn" prefWidth="95.0" sortable="false" text="Net 1$/Pod" />
+                              <TableColumn fx:id="net1RateColumn" prefWidth="95.0" sortable="false" text="Net1 $ Rate" />
+                              <TableColumn minWidth="7.2000732421875" prefWidth="15.0" sortable="false" />
+                              <TableColumn fx:id="pointsOfDistributionColumn" prefWidth="95.0" sortable="false" text="Points Of Distribution" />
+                              <TableColumn fx:id="averageSkusColumn" prefWidth="95.0" sortable="false" text="Average SKUs" />
+                              <TableColumn fx:id="averageSellingPriceColumn" prefWidth="95.0" sortable="false" text="Average Selling Price" />
+                              <TableColumn fx:id="weeklyVelocityUfswColumn" prefWidth="95.0" sortable="false" text="Weekly Velocity U/F/S/W" />
+                              <TableColumn prefWidth="15.0" sortable="false" />
+                              <TableColumn fx:id="selectedRtmColumn" prefWidth="150.0" sortable="false" text="Current FY Route to Market" />
+                           </columns>
+                           <styleClass>
+                              <String fx:value="table-row-cell" />
+                              <String fx:value="filler1" />
+                              <String fx:value="firstTable" />
+                           </styleClass>
+                        </TableView>
+                     </children>
+                  </AnchorPane>
+              </content>
+            </ScrollPane>
+         </children>
+      </AnchorPane>
+   </children>
+   <padding>
+      <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
+   </padding>
+</VBox>
