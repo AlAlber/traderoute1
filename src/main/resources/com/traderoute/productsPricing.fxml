@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Group?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox prefHeight="800.0" prefWidth="1530.0" style="-fx-background-color: #1E1D1A;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.traderoute.ProductClassReportingController">
+   <children>
+      <HBox prefHeight="126.0" prefWidth="1482.0">
+         <children>
+            <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../images/inner%20trade%20route%20logo.JPG" />
+               </image>
+               <HBox.margin>
+                  <Insets right="30.0" />
+               </HBox.margin>
+            </ImageView>
+            <Group />
+         </children>
+      </HBox>
+      <AnchorPane prefHeight="620.0" prefWidth="1481.0">
+         <children>
+            <TableView fx:id="productsPricingTable" prefHeight="614.0" prefWidth="1482.0" style="-fx-border-color: #A79543; -fx-border-width: 3;" stylesheets="@../styles/Styles.css">
+               <columns>
+                  <TableColumn fx:id="brandNameColumn" prefWidth="140.0" sortable="false" text="Brand" />
+                  <TableColumn fx:id="productClassColumn" prefWidth="140.0" sortable="false" text="Product Class" />
+                  <TableColumn fx:id="listCostColumn" prefWidth="100.0" sortable="false" text="Unit List Cost" />
+                  <TableColumn fx:id="baseFreightColumn" prefWidth="100.0" sortable="false" text="Unit Base Freight" />
+                  <TableColumn fx:id="fobCostColumn" prefWidth="100.0" sortable="false" text="Unit F.O.B. Cost" />
+                  <TableColumn fx:id="net1GoalColumn" prefWidth="100.0" sortable="false" text="Unit Net1 Goal" />
+                  <TableColumn fx:id="blendedCogsColumn" prefWidth="100.0" sortable="false" text="Unit Blended COGS" />
+                  <TableColumn prefWidth="16.79998779296875" sortable="false" />
+                  <TableColumn fx:id="elasticityMultipleColumn" prefWidth="139.20001220703125" sortable="false" text="Neg Price Elasticity Multiple" />
+                  <TableColumn minWidth="0.0" prefWidth="19.20001220703125" sortable="false" />
+                  <TableColumn fx:id="janColumn" prefWidth="36.0" sortable="false" text="Jan" />
+                  <TableColumn fx:id="febColumn" prefWidth="33.60003662109375" sortable="false" text="Feb" />
+                  <TableColumn fx:id="marColumn" minWidth="7.2000732421875" prefWidth="38.39990234375" sortable="false" text="Mar" />
+                  <TableColumn fx:id="aprColumn" prefWidth="27.199951171875" sortable="false" text="Apr" />
+                  <TableColumn fx:id="mayColumn" prefWidth="34.40008544921875" sortable="false" text="May" />
+                  <TableColumn fx:id="junColumn" prefWidth="35.19989013671875" sortable="false" text="Jun" />
+                  <TableColumn fx:id="julColumn" prefWidth="27.199951171875" sortable="false" text="Jul" />
+                  <TableColumn fx:id="augColumn" prefWidth="30.4000244140625" sortable="false" text="Aug" />
+                  <TableColumn fx:id="sepColumn" prefWidth="30.0" sortable="false" text="Sep" />
+                  <TableColumn fx:id="octColumn" prefWidth="30.0" sortable="false" text="Oct" />
+                  <TableColumn fx:id="novColumn" prefWidth="30.0" sortable="false" text="Nov" />
+                  <TableColumn fx:id="decColumn" prefWidth="30.0" sortable="false" text="Dec" />
+                  <TableColumn fx:id="specificationColumn" prefWidth="140.0" sortable="false" text="Edit Specifications" />
+               </columns>
+               <styleClass>
+                  <String fx:value="table-row-cell" />
+                  <String fx:value="filler1" />
+                  <String fx:value="firstTable" />
+                  <String fx:value="reporting" />
+               </styleClass>
+            </TableView>
+         </children>
+      </AnchorPane>
+   </children>
+   <padding>
+      <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
+   </padding>
+</VBox>

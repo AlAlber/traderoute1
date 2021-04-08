@@ -15,7 +15,7 @@ import java.util.List;
 public class ProductClassReport {
     private SimpleStringProperty retailerName;
     private SimpleBooleanProperty committed;
-    private SimpleIntegerProperty storeCount, pointsOfDistribution;
+    private SimpleIntegerProperty  pointsOfDistribution, storeCount;
     private SimpleObjectProperty<BigDecimal>  totalVolumetrics,
             everydayVolumetrics,promotedVolumetrics, grossRevenue,
             tradeRevenue, net1Revenue, net1Pod, net1Rate, averageSkus,
@@ -42,7 +42,7 @@ public class ProductClassReport {
             this.committed = new SimpleBooleanProperty(promoPlan.getCommitted());
         }
 
-        this.storeCount = getRetailer().yearOneStoreCountProperty();
+        this.storeCount = new SimpleIntegerProperty(getRetailer().getYearOneStoreCount());
         BigDecimal totalVolumetrics1= new BigDecimal("0.0");
         BigDecimal everydayVolumetrics1 = new BigDecimal("0.0");
         BigDecimal promotedVolumetrics1= new BigDecimal("0.0");
@@ -89,7 +89,7 @@ public class ProductClassReport {
                               BigDecimal promotedVolumetrics, BigDecimal grossRevenue, BigDecimal tradeRevenue,
                               BigDecimal net1Revenue, BigDecimal averageSellingPrice, BigDecimal weeklyVelocityUfsw,
                               Integer pointsOfDistribution, BigDecimal net1Pod, BigDecimal net1Rate, BigDecimal averageSkus,
-                              String selectedRtm){
+                              String selectedRtm, ObservableList<Integer> skuTotals){
         this.retailerName = new SimpleStringProperty(retailerName);
         this.committed= new SimpleBooleanProperty(committed);
         this.storeCount = new SimpleIntegerProperty(storeCount);
@@ -108,7 +108,6 @@ public class ProductClassReport {
         this.net1Rate = new SimpleObjectProperty(net1Rate);
         this.averageSkus = new SimpleObjectProperty(averageSkus);
         this.selectedRtm = new SimpleStringProperty(selectedRtm);
-
     };
     public void updateAll(){
         BigDecimal totalVolumetrics1= new BigDecimal("0.0");
@@ -292,7 +291,7 @@ public class ProductClassReport {
         this.committed.set(committed);
     }
 
-    public int getStoreCount() {
+    public Integer getStoreCount() {
         return storeCount.get();
     }
 

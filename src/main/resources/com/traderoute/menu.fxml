@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #1E1D1A;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.traderoute.MenuController">
+   <children>
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="200.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../images/inner%20trade%20route%20logo.JPG" />
+         </image>
+      </ImageView>
+      <VBox layoutX="206.0" layoutY="124.0" prefHeight="200.0" prefWidth="187.0">
+         <children>
+            <JFXButton maxWidth="1.7976931348623157E308" onAction="#switchToCustomerMenu" style="-fx-background-color: #ccbe7f;" text="Customer Menu">
+               <VBox.margin>
+                  <Insets bottom="10.0" />
+               </VBox.margin>
+            </JFXButton>
+            <JFXButton maxWidth="1.7976931348623157E308" style="-fx-background-color: #ccbe7f;" text="Customer Marketing Roadmap">
+               <VBox.margin>
+                  <Insets bottom="10.0" />
+               </VBox.margin>
+            </JFXButton>
+            <JFXButton maxWidth="1.7976931348623157E308" onAction="#switchToProductClassReporting" style="-fx-background-color: #ccbe7f;" text="Product Class Reporting">
+               <VBox.margin>
+                  <Insets bottom="10.0" />
+               </VBox.margin>
+            </JFXButton>
+            <JFXButton maxWidth="1.7976931348623157E308" style="-fx-background-color: #ccbe7f;" text="Sales Pro Formas">
+               <VBox.margin>
+                  <Insets bottom="10.0" />
+               </VBox.margin>
+            </JFXButton>
+            <JFXButton maxWidth="1.7976931348623157E308" onAction="#switchToProductsAndPricing" style="-fx-background-color: #ccbe7f;" text="Products and Pricing">
+               <VBox.margin>
+                  <Insets bottom="10.0" />
+               </VBox.margin>
+            </JFXButton>
+            <JFXButton maxWidth="1.7976931348623157E308" style="-fx-background-color: #ccbe7f;" text="Calendar">
+               <VBox.margin>
+                  <Insets bottom="10.0" />
+               </VBox.margin>
+            </JFXButton>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

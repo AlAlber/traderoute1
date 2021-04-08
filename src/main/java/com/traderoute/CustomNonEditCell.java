@@ -25,6 +25,9 @@ public class CustomNonEditCell<Object, BigDecimal> extends TableCell<Object, Big
             setText("");
         }
         else {
+            if (getTableRow().getIndex()==0 && getTableRow().getItem() instanceof ProductClassReport){
+                setStyle("-fx-background-color: rgb(105,105,105,0.5)");
+            }
             if (getTableView().getItems().get(getIndex()) instanceof Summary) {
                 Summary summary = (Summary) getTableView().getItems().get(getIndex());
                 if (summary.getSummaryType().equals("Total Units")){

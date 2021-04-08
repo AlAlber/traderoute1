@@ -22,6 +22,9 @@ public class CustomNonEditCellInt<Object, Integer> extends TableCell<Object, Int
             setText("");
         }
         else {
+            if (getTableRow().getIndex()==0 && getTableRow().getItem() instanceof ProductClassReport){
+                setStyle("-fx-background-color: rgb(105,105,105,0.5)");
+            }
                 setText(dollar + String.valueOf( item) + per);
             }
         }

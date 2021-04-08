@@ -81,7 +81,7 @@ public class AssortmentController implements Initializable {
 
         setCellValueFactories();
 
-        meetingTableView.setItems(getExampleMeetings());
+        meetingTableView.setItems(getExampleMeetings()); //TODO change to retailerproduct.getMeetings
         meetingTableView.setEditable(true);
         dateColumn.setEditable(false);
 

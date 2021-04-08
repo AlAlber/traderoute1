@@ -20,7 +20,7 @@
    <children>
       <VBox prefHeight="800.0" prefWidth="1530.0" style="-fx-background-color: #1E1D1A;">
          <children>
-            <HBox prefHeight="126.0" prefWidth="1482.0">
+            <HBox prefHeight="70.0" prefWidth="1556.0">
                <children>
                   <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -45,31 +45,31 @@
                               <Label fx:id="retailerNameLabel" alignment="CENTER" contentDisplay="CENTER" style="-fx-font-size: 30;" text="Retailer Name" />
                            </children>
                         </StackPane>
-                        <Label fx:id="yearOneStoreCountLabel" text="Year 1 Store Count =">
-                           <VBox.margin>
-                              <Insets bottom="15.0" />
-                           </VBox.margin>
-                        </Label>
-                        <Label fx:id="everydayGpmLabel" text="Everyday GPM =">
-                           <VBox.margin>
-                              <Insets bottom="15.0" />
-                           </VBox.margin>
-                        </Label>
-                        <Label fx:id="spoilsFeesLabel" text="Spoils &amp; Fees =">
-                           <VBox.margin>
-                              <Insets bottom="15.0" />
-                           </VBox.margin>
-                        </Label>
-                        <Label fx:id="totalPromoPlansLabel" text="Total Product Classes with promotional plans =">
-                           <VBox.margin>
-                              <Insets bottom="15.0" />
-                           </VBox.margin>
-                        </Label>
-                        <Label fx:id="totalCommittedPromoPlansLabel" text="Total Product Classes with committed promotional plans =">
-                           <VBox.margin>
-                              <Insets bottom="15.0" />
-                           </VBox.margin>
-                        </Label>
+                        <StackPane prefHeight="28.0" prefWidth="1018.0">
+                           <children>
+                              <Label fx:id="yearOneStoreCountLabel" style="-fx-font-size: 12;" text="Year 1 Store Count =" />
+                           </children>
+                        </StackPane>
+                        <StackPane prefHeight="28.0" prefWidth="1018.0">
+                           <children>
+                              <Label fx:id="everydayGpmLabel" style="-fx-font-size: 12;" text="Everyday GPM =" />
+                           </children>
+                        </StackPane>
+                        <StackPane prefHeight="28.0" prefWidth="1018.0">
+                           <children>
+                              <Label fx:id="spoilsFeesLabel" style="-fx-font-size: 12;" text="Spoils &amp; Fees =" />
+                           </children>
+                        </StackPane>
+                        <StackPane prefHeight="28.0" prefWidth="1018.0">
+                           <children>
+                              <Label fx:id="totalPromoPlansLabel" style="-fx-font-size: 12;" text="Total Product Classes with promotional plans =" />
+                           </children>
+                        </StackPane>
+                        <StackPane prefHeight="28.0" prefWidth="1018.0">
+                           <children>
+                              <Label fx:id="totalCommittedPromoPlansLabel" style="-fx-font-size: 12;" text="Total Product Classes with committed promotional plans =" />
+                           </children>
+                        </StackPane>
                         <StackPane prefHeight="39.0" prefWidth="1018.0">
                            <children>
                               <Label alignment="CENTER" contentDisplay="CENTER" style="-fx-font-size: 15;" text="UPCOMING MEETINGS" />
@@ -100,7 +100,7 @@
                         </AnchorPane>
                         <AnchorPane prefHeight="32.0" prefWidth="1018.0">
                            <children>
-                              <JFXButton fx:id="editRetailerButton" layoutX="1029.0" layoutY="3.0" onAction="#switchToSecondTable" prefHeight="46.0" prefWidth="119.0" style="-fx-background-color: white;" text="Edit Retailer" />
+                              <JFXButton fx:id="editRetailerButton" layoutX="514.0" onAction="#switchToSecondTable" prefHeight="46.0" prefWidth="119.0" style="-fx-background-color: white;" text="Edit Retailer" />
                            </children>
                         </AnchorPane>
                      </children>

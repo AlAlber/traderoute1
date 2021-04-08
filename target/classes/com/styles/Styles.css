@@ -12,6 +12,19 @@
     -fx-background-insets: 0, 0 0 1 0;
     -fx-alignment:CENTER_LEFT
 }
+.list-view .list-cell:odd {
+    -fx-background-color:  #2D2A23;
+    -fx-text-fill: white;
+
+}
+.list-view:focused .list-cell:filled:focused:selected {
+    -fx-background-color: steelblue;
+}
+
+.list-view .list-cell:even {
+    -fx-background-color:  #1E1D1A;
+    -fx-text-fill: white;
+}
 
 .table-row-cell {
     -fx-background-color:  transparent;
@@ -63,6 +76,15 @@
     -fx-min-height: 0;
     -fx-pref-height: 0;
     -fx-max-height: 0;
+}
+.reporting .scroll-bar * {
+    -fx-min-width: 10;
+    -fx-pref-width: 10;
+    -fx-max-width: 10;
+
+    -fx-min-height: 10;
+    -fx-pref-height: 10;
+    -fx-max-height: 10;
 }
 .combo-box .text-field {
     -fx-font-size: 5;

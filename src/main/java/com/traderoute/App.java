@@ -24,7 +24,7 @@ public class App extends Application {
     @Override
     public void start(Stage stage) throws IOException {
 //        System.out.println(getFXMLLoader("secondTable").getController());
-        fxmlLoader = createFXMLLoader("secondTable");
+        fxmlLoader = createFXMLLoader("menu");
         scene = new Scene(fxmlLoader.load());
         System.out.println(fxmlLoader.getController().toString());
         stage.setScene(scene);

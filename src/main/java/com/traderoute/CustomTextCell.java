@@ -9,6 +9,7 @@ import java.math.RoundingMode;
 
 public class CustomTextCell<Object, String> extends TableCell<Object , String> {
 
+
     public void updateItem(String item, boolean empty) {
         super.updateItem(item, empty);
         if (empty) {
@@ -18,10 +19,16 @@ public class CustomTextCell<Object, String> extends TableCell<Object , String> {
             setText("");
         }
         else {
+
+
             if (item.toString().equals("Promotional Commentary")){
                 setPrefHeight(40);
             }
             setText(item.toString());
+            if (getTableRow().getIndex()==0 && getTableRow().getItem() instanceof ProductClassReport){
+                setStyle("-fx-background-color: rgb(105,105,105,0.5)");
+            }
+
         }
     }
 

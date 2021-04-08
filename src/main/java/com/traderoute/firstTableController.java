@@ -225,7 +225,7 @@ public class firstTableController implements Initializable {
 
         // Set unique values for brandcombobox and set converters for both brand and productCombobox
 
-        brandNameBox.setItems(getUniqueBrandNames(RetailerSelectionController.getExampleProducts()));
+        brandNameBox.setItems(getUniqueBrandNames(MenuController.getExampleProducts()));
         brandNameBox.setConverter(getBrandComboboxConverter());
         productClassBox.setConverter(getProductComboboxConverter());
 
@@ -353,7 +353,7 @@ public class firstTableController implements Initializable {
         fobLabel.setText("F.O.B. = $");
         net1GoalLabel.setText("Net 1 Goal = $");
         elasticityRatioLabel.setText("Elasticity Ratio = +1% Price :  % Volume");
-        productClassBox.setItems(getCorrespondingProductClasses(RetailerSelectionController.getExampleProducts(), selectedBrandName));
+        productClassBox.setItems(getCorrespondingProductClasses(MenuController.getExampleProducts(), selectedBrandName));
     }
     /*
     Product class changed Event
@@ -713,7 +713,7 @@ Return Value from Year One Store Count
         skus.addAll(new Sku("dill", "current", "great taste"), new Sku("dill", "current", "great taste"), new Sku("dill", "current", "great taste"));
         meetings.addAll(new Meeting("Review Meeting", "here", LocalDate.of(2022,12,5), "11:15","will be fun"), new Meeting());
         retailerProducts.add(new RetailerProduct( new Product("Big Time Food Company", "24 oz pickles", new BigDecimal("3.59"), new BigDecimal("0.29"),
-                new BigDecimal("3.30"), new BigDecimal("2.99"), new BigDecimal("2.05"), new BigDecimal("-1.15")), getRTMOptions(), skus,meetings, getDummyPromoPlans()));
+                new BigDecimal("3.30"), new BigDecimal("2.99"), new BigDecimal("2.05"), new BigDecimal("-1.15"), new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0")), getRTMOptions(), skus,meetings, getDummyPromoPlans()));
         return retailerProducts;
     }
     public static ObservableList<PromoPlan> getDummyPromoPlans(){
@@ -733,13 +733,13 @@ Return Value from Year One Store Count
     public ObservableList<Product> getExampleProducts() {
         ObservableList<Product> products = FXCollections.observableArrayList();
         products.add(new Product("Big Time Food Company", "24 oz pickles", new BigDecimal("3.59"), new BigDecimal("0.29"),
-                new BigDecimal("3.30"), new BigDecimal("2.99"), new BigDecimal("2.05"), new BigDecimal("-1.15")));
+                new BigDecimal("3.30"), new BigDecimal("2.99"), new BigDecimal("2.05"), new BigDecimal("-1.15"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0")));
         products.add(new Product("Big Time Food Company", "12 oz pickle juice", new BigDecimal("1.49"), new BigDecimal("0.14"),
-                new BigDecimal("1.35"), new BigDecimal("1.29"), new BigDecimal("0.78"), new BigDecimal("-1.20")));
+                new BigDecimal("1.35"), new BigDecimal("1.29"), new BigDecimal("0.78"), new BigDecimal("-1.20"), new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0")));
         products.add(new Product("Big Time Food Company", "12 oz pickle juice", new BigDecimal("1.49"), new BigDecimal("0.14"),
-                new BigDecimal("1.35"), new BigDecimal("1.29"), new BigDecimal("0.78"), new BigDecimal("-1.20")));
+                new BigDecimal("1.35"), new BigDecimal("1.29"), new BigDecimal("0.78"), new BigDecimal("-1.20"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0")));
         products.add(new Product("Small Time Food Company", "12 oz pickle juice", new BigDecimal("1.49"), new BigDecimal("0.14"),
-                new BigDecimal("1.35"), new BigDecimal("1.29"), new BigDecimal("0.78"), new BigDecimal("-1.20")));
+                new BigDecimal("1.35"), new BigDecimal("1.29"), new BigDecimal("0.78"), new BigDecimal("-1.20"), new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0")));
         return products;
     }
     @FXML
@@ -956,9 +956,9 @@ Return Value from Year One Store Count
 //        this.secondTableView.setItems(currentRtmOptions);
 
         updateRetailerProduct(currentRetailerProduct.getProduct());
-        this.brandNameBox.setItems(getUniqueBrandNames(RetailerSelectionController.getExampleProducts()));
+        this.brandNameBox.setItems(getUniqueBrandNames(MenuController.getExampleProducts()));
         this.brandNameBox.valueProperty().setValue(currentRetailerProduct.getProduct());
-        this.productClassBox.setItems(getCorrespondingProductClasses(RetailerSelectionController.getExampleProducts(),currentRetailerProduct.getProduct()));
+        this.productClassBox.setItems(getCorrespondingProductClasses(MenuController.getExampleProducts(),currentRetailerProduct.getProduct()));
         this.productClassBox.valueProperty().setValue(currentRetailerProduct.getProduct());
 //        listLabel.setText("List = $" + currentRetailerProduct.getProduct().getUnitListCost());
 //        fobLabel.setText("F.O.B. = $" + currentRetailerProduct.getProduct().getUnitFobCost());
