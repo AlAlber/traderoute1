@@ -1,5 +1,6 @@
 package com.traderoute;
 
+import com.traderoute.data.RTMOption;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 

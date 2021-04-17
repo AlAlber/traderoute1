@@ -1,8 +1,8 @@
 package com.traderoute;
 
+import com.traderoute.controllers.MenuController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -14,7 +14,7 @@ import java.io.IOException;
  */
 public class App extends Application {
 
-    private static Scene scene;
+    public static Scene scene;
 
 
     public static FXMLLoader fxmlLoader;
@@ -23,10 +23,11 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-//        System.out.println(getFXMLLoader("secondTable").getController());
         fxmlLoader = createFXMLLoader("menu");
         scene = new Scene(fxmlLoader.load());
-        System.out.println(fxmlLoader.getController().toString());
+
+        MenuController controller = fxmlLoader.getController();
+        controller.setHostServices(getHostServices());
         stage.setScene(scene);
         stage.show();
 
@@ -37,10 +38,10 @@ public class App extends Application {
     }
 
 
-    static void setRoot(String fxml) throws IOException {
+    public static void setRoot(String fxml) throws IOException {
         scene.setRoot(loadFXML(fxml));
     }
-    static void setSceneRoot (Parent loadedFXML) throws IOException {
+    public static void setSceneRoot (Parent loadedFXML) throws IOException {
         scene.setRoot(loadedFXML);
     }
     public static FXMLLoader createFXMLLoader(String fxml) throws IOException{

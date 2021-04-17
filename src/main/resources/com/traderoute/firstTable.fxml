@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="780.0" prefWidth="1530.0" stylesheets="@../styles/Styles.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.traderoute.firstTableController">
+<AnchorPane prefHeight="780.0" prefWidth="1530.0" stylesheets="@../styles/Styles.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.traderoute.controllers.firstTableController">
    <children>
       <VBox prefHeight="800.0" prefWidth="1530.0">
          <children>

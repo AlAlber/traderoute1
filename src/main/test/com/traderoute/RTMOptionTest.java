@@ -1,6 +1,9 @@
 package com.traderoute;
 
-import javafx.collections.FXCollections;
+import com.traderoute.controllers.MenuController;
+import com.traderoute.controllers.firstTableController;
+import com.traderoute.data.Product;
+import com.traderoute.data.RTMOption;
 import org.junit.Assert;
 
 import java.math.BigDecimal;
@@ -30,9 +33,15 @@ class RTMOptionTest {
                 new BigDecimal("5.99"));
         optionFour = new RTMOption("Direct-to-KeHe", new BigDecimal("0.0"), new BigDecimal(3500),new BigDecimal("3.30"),new BigDecimal("4.85"), 158, new BigDecimal("40.0"), new BigDecimal("3.0"), new BigDecimal("1.2"), new BigDecimal("5.99"));
         productOne = new Product("Big Time Food Company", "24 oz pickles", new BigDecimal("3.59"), new BigDecimal("0.29"),
-                new BigDecimal("3.30"), new BigDecimal("2.99"), new BigDecimal("2.05"), new BigDecimal("-1.15"), new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"));
+                new BigDecimal("3.30"), new BigDecimal("2.99"), new BigDecimal("2.05"), new BigDecimal("-1.15"),
+                new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),
+                new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),
+                new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"), MenuController.getExtendedSkus());
         productTwo = new Product("Big Time Food Company", "12 oz pickle juice", new BigDecimal("1.49"), new BigDecimal("0.14"),
-                new BigDecimal("1.35"), new BigDecimal("1.29"), new BigDecimal("0.78"), new BigDecimal("-1.20"), new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"));
+                new BigDecimal("1.35"), new BigDecimal("1.29"), new BigDecimal("0.78"), new BigDecimal("-1.20"),
+                new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),
+                new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),
+                new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"), MenuController.getExtendedSkus());
         optionThree.setProduct(productOne);
         optionThree.setAnnualVolumePerSku(new BigDecimal(9859));
     }

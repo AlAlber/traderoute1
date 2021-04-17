@@ -1,5 +1,6 @@
 package com.traderoute;
 
+import com.traderoute.data.Product;
 import javafx.util.StringConverter;
 
 public class ProductboxConverter extends StringConverter<Product>{

@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXCheckBox?>
 <?import com.jfoenix.controls.JFXComboBox?>
 <?import java.lang.String?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Group?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.image.Image?>
@@ -13,7 +15,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox prefHeight="800.0" prefWidth="1530.0" style="-fx-background-color: #1E1D1A;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.traderoute.ProductClassReportingController">
+<VBox fx:id="mainVbox" prefHeight="800.0" prefWidth="1530.0" style="-fx-background-color: #1E1D1A;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.traderoute.controllers.ProductClassReportingController">
    <children>
       <HBox prefHeight="126.0" prefWidth="1482.0">
          <children>
@@ -72,6 +74,24 @@
                </HBox.margin>
             </VBox>
             <Group />
+            <Label style="-fx-background-color: #ccbe7f; -fx-font-size: 20;" text="   Product Class Reporting   ">
+               <HBox.margin>
+                  <Insets left="30.0" />
+               </HBox.margin>
+            </Label>
+            <VBox prefHeight="130.0" prefWidth="102.0">
+               <children>
+                  <JFXButton onAction="#switchToMenu" style="-fx-background-color: #ccbe7f;" text="Return to Menu" />
+                  <JFXButton fx:id="pdfButton" prefHeight="26.0" prefWidth="101.0" style="-fx-background-color: #ccbe7f;" text="Generate PDF">
+                     <VBox.margin>
+                        <Insets top="70.0" />
+                     </VBox.margin>
+                  </JFXButton>
+               </children>
+               <HBox.margin>
+                  <Insets left="550.0" />
+               </HBox.margin>
+            </VBox>
          </children>
       </HBox>
       <AnchorPane prefHeight="620.0" prefWidth="1481.0">

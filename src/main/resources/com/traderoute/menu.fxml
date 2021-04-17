@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #1E1D1A;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.traderoute.MenuController">
+<AnchorPane fx:id="mainAnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #1E1D1A;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.traderoute.controllers.MenuController">
    <children>
       <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="200.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -31,7 +31,7 @@
                   <Insets bottom="10.0" />
                </VBox.margin>
             </JFXButton>
-            <JFXButton maxWidth="1.7976931348623157E308" style="-fx-background-color: #ccbe7f;" text="Sales Pro Formas">
+            <JFXButton maxWidth="1.7976931348623157E308" onAction="#switchToSalesProSelection" style="-fx-background-color: #ccbe7f;" text="Sales Pro Formas">
                <VBox.margin>
                   <Insets bottom="10.0" />
                </VBox.margin>
@@ -41,7 +41,7 @@
                   <Insets bottom="10.0" />
                </VBox.margin>
             </JFXButton>
-            <JFXButton maxWidth="1.7976931348623157E308" style="-fx-background-color: #ccbe7f;" text="Calendar">
+            <JFXButton maxWidth="1.7976931348623157E308" onAction="#switchToCalendar" style="-fx-background-color: #ccbe7f;" text="Calendar">
                <VBox.margin>
                   <Insets bottom="10.0" />
                </VBox.margin>

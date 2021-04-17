@@ -1,5 +1,9 @@
 package com.traderoute;
 
+import com.traderoute.controllers.firstTableController;
+import com.traderoute.data.Product;
+import com.traderoute.data.RTMOption;
+import com.traderoute.data.Retailer;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -38,10 +42,8 @@ class firstTableControllerTest {
 
     @Start
     public void start(Stage stage) throws IOException {
-//        System.out.println(getFXMLLoader("secondTable").getController());
         FXMLLoader fxmlLoader = App.createFXMLLoader("secondTable");
         Scene scene = new Scene(fxmlLoader.load());
-        System.out.println(fxmlLoader.getController().toString());
         controller = fxmlLoader.getController();
         controller.setRetailer(retailer.get());
         stage.setScene(scene);

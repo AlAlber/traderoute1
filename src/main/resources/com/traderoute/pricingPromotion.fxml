@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXComboBox?>
-<?import com.jfoenix.controls.JFXTextField?>
 <?import java.lang.String?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
@@ -16,7 +14,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" stylesheets="@../styles/Styles.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.traderoute.PricingPromotionController">
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ComboBox?>
+<AnchorPane prefHeight="400.0" prefWidth="600.0" stylesheets="@../styles/Styles.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.traderoute.controllers.PricingPromotionController">
    <children>
       <VBox fx:id="mainVbox" prefHeight="820.0" prefWidth="1550.0" style="-fx-background-color: #1E1D1A;">
          <children>
@@ -139,10 +139,10 @@
                                           <Font size="13.0" />
                                        </font>
                                     </Label>
-                                    <JFXTextField fx:id="weeklyVelocityField0" layoutX="168.0" layoutY="34.0" onAction="#changeWeeklyVelocityEvent" prefHeight="26.0" prefWidth="150.0" promptText="Weekly Velocity U/F/S/W" style="-fx-background-color: #ccbe7f; -jfx-unfocus-color: #ccbe7f;" AnchorPane.topAnchor="34.0" />
-                                    <JFXComboBox fx:id="rtmBox0" layoutX="6.0" layoutY="34.0" onAction="#changeRtmBoxEvent" prefHeight="26.0" prefWidth="150.0" promptText="Select Market Route" style="-jfx-unfocus-color: #ccbe7f; -fx-background-color: #ccbe7f; -fx-prompt-text-font-size: 5;" AnchorPane.topAnchor="34.0" />
-                                    <JFXButton fx:id="editButton0" layoutX="329.0" layoutY="108.0" onAction="#clickEditButton" prefHeight="51.0" prefWidth="90.0" style="-fx-background-color: #ccbe7f;" text="Edit Promo Plan" AnchorPane.topAnchor="108.0" />
-                                    <JFXButton fx:id="commitButton0" layoutX="422.0" layoutY="108.0" onAction="#clickCommitButton" prefHeight="51.0" prefWidth="98.0" style="-fx-background-color: #ccbe7f;" text="Commit To Forecast" />
+                                    <TextField fx:id="weeklyVelocityField0" layoutX="168.0" layoutY="34.0" onAction="#changeWeeklyVelocityEvent" prefHeight="26.0" prefWidth="150.0" promptText="Weekly Velocity U/F/S/W" style="-fx-background-color: #ccbe7f;" AnchorPane.topAnchor="34.0" />
+                                    <ComboBox fx:id="rtmBox0" layoutX="6.0" layoutY="34.0" onAction="#changeRtmBoxEvent" prefHeight="26.0" prefWidth="150.0" promptText="Select Market Route" style=" -fx-background-color: #ccbe7f; -fx-prompt-text-font-size: 5;" AnchorPane.topAnchor="34.0" />
+                                    <Button fx:id="editButton0" layoutX="329.0" layoutY="108.0" onAction="#clickEditButton" prefHeight="51.0" prefWidth="90.0" style="-fx-background-color: #ccbe7f;" text="Edit Promo Plan" AnchorPane.topAnchor="108.0" />
+                                    <Button fx:id="commitButton0" layoutX="422.0" layoutY="108.0" onAction="#clickCommitButton" prefHeight="51.0" prefWidth="98.0" style="-fx-background-color: #ccbe7f;" text="Commit To Forecast" />
                                  </children>
                               </AnchorPane>
                               <AnchorPane fx:id="anchor2" prefHeight="177.0" prefWidth="499.0" style="-fx-background-color: #3b381a;">
@@ -225,10 +225,10 @@
                                           <Font size="13.0" />
                                        </font>
                                     </Label>
-                                    <JFXTextField fx:id="weeklyVelocityField1" layoutX="168.0" layoutY="34.0" onAction="#changeWeeklyVelocityEvent" prefHeight="26.0" prefWidth="150.0" promptText="Weekly Velocity U/F/S/W" style="-fx-background-color: #ccbe7f; -jfx-unfocus-color: #ccbe7f;" AnchorPane.topAnchor="34.0" />
-                                    <JFXComboBox fx:id="rtmBox1" layoutX="6.0" layoutY="34.0" onAction="#changeRtmBoxEvent" prefHeight="26.0" prefWidth="150.0" promptText="Select Market Route" style="-jfx-unfocus-color: #ccbe7f; -fx-background-color: #ccbe7f; -fx-prompt-text-font-size: 5;" AnchorPane.topAnchor="34.0" />
-                                    <JFXButton fx:id="editButton1" layoutX="329.0" layoutY="118.0" onAction="#clickEditButton" prefHeight="51.0" prefWidth="90.0" style="-fx-background-color: #ccbe7f;" text="Edit Promo Plan" AnchorPane.topAnchor="108.0" />
-                                    <JFXButton fx:id="commitButton1" layoutX="422.0" layoutY="118.0" onAction="#clickCommitButton" prefHeight="51.0" prefWidth="98.0" style="-fx-background-color: #ccbe7f;" text="Commit To Forecast" AnchorPane.topAnchor="108.0" />
+                                    <TextField fx:id="weeklyVelocityField1" layoutX="168.0" layoutY="34.0" onAction="#changeWeeklyVelocityEvent" prefHeight="26.0" prefWidth="150.0" promptText="Weekly Velocity U/F/S/W" style="-fx-background-color: #ccbe7f; " AnchorPane.topAnchor="34.0" />
+                                    <ComboBox fx:id="rtmBox1" layoutX="6.0" layoutY="34.0" onAction="#changeRtmBoxEvent" prefHeight="26.0" prefWidth="150.0" promptText="Select Market Route" style=" -fx-background-color: #ccbe7f; -fx-prompt-text-font-size: 5;" AnchorPane.topAnchor="34.0" />
+                                    <Button fx:id="editButton1" layoutX="329.0" layoutY="118.0" onAction="#clickEditButton" prefHeight="51.0" prefWidth="90.0" style="-fx-background-color: #ccbe7f;" text="Edit Promo Plan" AnchorPane.topAnchor="108.0" />
+                                    <Button fx:id="commitButton1" layoutX="422.0" layoutY="118.0" onAction="#clickCommitButton" prefHeight="51.0" prefWidth="98.0" style="-fx-background-color: #ccbe7f;" text="Commit To Forecast" AnchorPane.topAnchor="108.0" />
                                  </children>
                               </AnchorPane>
                               <AnchorPane prefHeight="177.0" prefWidth="499.0" style="-fx-background-color: #3b381a;">
@@ -311,10 +311,10 @@
                                           <Font size="13.0" />
                                        </font>
                                     </Label>
-                                    <JFXTextField fx:id="weeklyVelocityField2" layoutX="168.0" layoutY="34.0" onAction="#changeWeeklyVelocityEvent" prefHeight="26.0" prefWidth="150.0" promptText="Weekly Velocity U/F/S/W" style="-fx-background-color: #ccbe7f; -jfx-unfocus-color: #ccbe7f;" />
-                                    <JFXComboBox fx:id="rtmBox2" layoutX="6.0" layoutY="34.0" onAction="#changeRtmBoxEvent" prefHeight="26.0" prefWidth="150.0" promptText="Select Market Route" style="-jfx-unfocus-color: #ccbe7f; -fx-background-color: #ccbe7f; -fx-prompt-text-font-size: 5;" />
-                                    <JFXButton fx:id="editButton2" layoutX="329.0" layoutY="118.0" onAction="#clickEditButton" prefHeight="51.0" prefWidth="90.0" style="-fx-background-color: #ccbe7f;" text="Edit Promo Plan" AnchorPane.topAnchor="108.0" />
-                                    <JFXButton fx:id="commitButton2" layoutX="422.0" layoutY="118.0" onAction="#clickCommitButton" prefHeight="51.0" prefWidth="98.0" style="-fx-background-color: #ccbe7f;" text="Commit To Forecast" AnchorPane.topAnchor="108.0" />
+                                    <TextField fx:id="weeklyVelocityField2" layoutX="168.0" layoutY="34.0" onAction="#changeWeeklyVelocityEvent" prefHeight="26.0" prefWidth="150.0" promptText="Weekly Velocity U/F/S/W" style="-fx-background-color: #ccbe7f;" />
+                                    <ComboBox fx:id="rtmBox2" layoutX="6.0" layoutY="34.0" onAction="#changeRtmBoxEvent" prefHeight="26.0" prefWidth="150.0" promptText="Select Market Route" style=" -fx-background-color: #ccbe7f; -fx-prompt-text-font-size: 5;" />
+                                    <Button fx:id="editButton2" layoutX="329.0" layoutY="118.0" onAction="#clickEditButton" prefHeight="51.0" prefWidth="90.0" style="-fx-background-color: #ccbe7f;" text="Edit Promo Plan" AnchorPane.topAnchor="108.0" />
+                                    <Button fx:id="commitButton2" layoutX="422.0" layoutY="118.0" onAction="#clickCommitButton" prefHeight="51.0" prefWidth="98.0" style="-fx-background-color: #ccbe7f;" text="Commit To Forecast" AnchorPane.topAnchor="108.0" />
                                  </children>
                               </AnchorPane>
                               <AnchorPane prefHeight="177.0" prefWidth="499.0" style="-fx-background-color: #3b381a;">
@@ -397,10 +397,10 @@
                                           <Font size="13.0" />
                                        </font>
                                     </Label>
-                                    <JFXTextField fx:id="weeklyVelocityField3" layoutX="168.0" layoutY="34.0" onAction="#changeWeeklyVelocityEvent" prefHeight="26.0" prefWidth="150.0" promptText="Weekly Velocity U/F/S/W" style="-fx-background-color: #ccbe7f; -jfx-unfocus-color: #ccbe7f;" />
-                                    <JFXComboBox fx:id="rtmBox3" layoutX="6.0" layoutY="34.0" onAction="#changeRtmBoxEvent" prefHeight="26.0" prefWidth="150.0" promptText="Select Market Route" style="-jfx-unfocus-color: #ccbe7f; -fx-background-color: #ccbe7f; -fx-prompt-text-font-size: 5;" />
-                                    <JFXButton fx:id="editButton3" layoutX="329.0" layoutY="118.0" onAction="#clickEditButton" prefHeight="51.0" prefWidth="90.0" style="-fx-background-color: #ccbe7f;" text="Edit Promo Plan" AnchorPane.topAnchor="108.0" />
-                                    <JFXButton fx:id="commitButton3" layoutX="422.0" layoutY="118.0" onAction="#clickCommitButton" prefHeight="51.0" prefWidth="98.0" style="-fx-background-color: #ccbe7f;" text="Commit To Forecast" AnchorPane.topAnchor="108.0" />
+                                    <TextField fx:id="weeklyVelocityField3" layoutX="168.0" layoutY="34.0" onAction="#changeWeeklyVelocityEvent" prefHeight="26.0" prefWidth="150.0" promptText="Weekly Velocity U/F/S/W" style="-fx-background-color: #ccbe7f; " />
+                                    <ComboBox fx:id="rtmBox3" layoutX="6.0" layoutY="34.0" onAction="#changeRtmBoxEvent" prefHeight="26.0" prefWidth="150.0" promptText="Select Market Route" style=" -fx-background-color: #ccbe7f; -fx-prompt-text-font-size: 5;" />
+                                    <Button fx:id="editButton3" layoutX="329.0" layoutY="118.0" onAction="#clickEditButton" prefHeight="51.0" prefWidth="90.0" style="-fx-background-color: #ccbe7f;" text="Edit Promo Plan" AnchorPane.topAnchor="108.0" />
+                                    <Button fx:id="commitButton3" layoutX="422.0" layoutY="118.0" onAction="#clickCommitButton" prefHeight="51.0" prefWidth="98.0" style="-fx-background-color: #ccbe7f;" text="Commit To Forecast" AnchorPane.topAnchor="108.0" />
                                  </children>
                               </AnchorPane>
                            </children>

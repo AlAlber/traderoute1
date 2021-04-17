@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import java.lang.String?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox fx:id="mainVbox" prefHeight="800.0" prefWidth="1530.0" style="-fx-background-color: #1E1D1A;" stylesheets="@../styles/Styles.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.traderoute.controllers.SalesProFormaController">
+   <children>
+      <AnchorPane prefHeight="69.0" prefWidth="1481.0">
+         <children>
+            <Button layoutX="1367.0" layoutY="1.0" onAction="#switchToMenu" style="-fx-background-color: #ccbe7f;" text="Return to Menu" />
+            <Label layoutX="647.0" layoutY="-1.0" prefHeight="30.0" prefWidth="186.0" style="-fx-background-color: #ccbe7f; -fx-font-size: 20;" text="   Sales Pro Forma" />
+            <ImageView fitHeight="59.0" fitWidth="121.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../images/inner%20trade%20route%20logo.JPG" />
+               </image>
+            </ImageView>
+            <VBox layoutX="136.0" prefHeight="56.0" prefWidth="260.0">
+               <children>
+                  <Label prefHeight="15.0" prefWidth="161.0" text="FY2021 SALES FORECAST">
+                     <VBox.margin>
+                        <Insets bottom="15.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Label prefHeight="15.0" prefWidth="196.0" text="All Customers" />
+                  <Label prefHeight="15.0" prefWidth="196.0" text="All Product Classes" />
+               </children>
+            </VBox>
+            <JFXButton fx:id="pdfButton" layoutX="1366.0" layoutY="34.0" prefHeight="26.0" prefWidth="101.0" style="-fx-background-color: #ccbe7f;" text="Generate PDF" />
+         </children>
+      </AnchorPane>
+      <ScrollPane prefHeight="686.0" prefWidth="1481.0">
+         <content>
+            <VBox prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #1E1D1A;">
+               <children>
+                  <TableView fx:id="p1Table" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="142.0" prefWidth="1478.0" style="-fx-border-color: #A79543; -fx-border-width: 3;" stylesheets="@../styles/Styles.css">
+                     <columns>
+                        <TableColumn fx:id="p1ParameterNameColumn" prefWidth="200.0" sortable="false" text="Part 1: Distribution" />
+                        <TableColumn fx:id="p1TotalsColumn" prefWidth="155.0" sortable="false" text="Totals" />
+                        <TableColumn fx:id="p1JanuaryColumn" prefWidth="93.0" sortable="false" text="January" />
+                        <TableColumn fx:id="p1FebruaryColumn" prefWidth="93.0" sortable="false" text="February" />
+                        <TableColumn fx:id="p1MarchColumn" prefWidth="93.0" sortable="false" text="March" />
+                        <TableColumn fx:id="p1AprilColumn" prefWidth="93.0" sortable="false" text="April" />
+                        <TableColumn fx:id="p1MayColumn" prefWidth="93.0" sortable="false" text="May" />
+                        <TableColumn fx:id="p1JuneColumn" prefWidth="93.0" sortable="false" text="June" />
+                        <TableColumn fx:id="p1JulyColumn" prefWidth="93.0" sortable="false" text="July" />
+                        <TableColumn fx:id="p1AugustColumn" prefWidth="93.0" sortable="false" text="August" />
+                        <TableColumn fx:id="p1SeptemberColumn" prefWidth="93.0" sortable="false" text="September" />
+                        <TableColumn fx:id="p1OctoberColumn" prefWidth="93.0" sortable="false" text="October" />
+                        <TableColumn fx:id="p1NovemberColumn" prefWidth="93.0" sortable="false" text="November" />
+                        <TableColumn fx:id="p1DecemberColumn" prefWidth="93.0" sortable="false" text="December" />
+                     </columns>
+                     <styleClass>
+                        <String fx:value="table-row-cell" />
+                        <String fx:value="filler1" />
+                     </styleClass>
+                  </TableView>
+                  <TableView fx:id="p2Table" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="146.0" prefWidth="1478.0" style="-fx-border-color: #A79543; -fx-border-width: 3;" stylesheets="@../styles/Styles.css">
+                     <columns>
+                        <TableColumn fx:id="p2ParameterNameColumn" prefWidth="200.0" sortable="false" text="Part 2: Volumetrics" />
+                        <TableColumn fx:id="p2TotalsColumn" prefWidth="155.0" sortable="false" text="Totals" />
+                        <TableColumn fx:id="p2JanuaryColumn" prefWidth="93.0" sortable="false" text="January" />
+                        <TableColumn fx:id="p2FebruaryColumn" prefWidth="93.0" sortable="false" text="February" />
+                        <TableColumn fx:id="p2MarchColumn" prefWidth="93.0" sortable="false" text="March" />
+                        <TableColumn fx:id="p2AprilColumn" prefWidth="93.0" sortable="false" text="April" />
+                        <TableColumn fx:id="p2MayColumn" prefWidth="93.0" sortable="false" text="May" />
+                        <TableColumn fx:id="p2JuneColumn" prefWidth="93.0" sortable="false" text="June" />
+                        <TableColumn fx:id="p2JulyColumn" prefWidth="93.0" sortable="false" text="July" />
+                        <TableColumn fx:id="p2AugustColumn" prefWidth="93.0" sortable="false" text="August" />
+                        <TableColumn fx:id="p2SeptemberColumn" prefWidth="93.0" sortable="false" text="September" />
+                        <TableColumn fx:id="p2OctoberColumn" prefWidth="93.0" sortable="false" text="October" />
+                        <TableColumn fx:id="p2NovemberColumn" prefWidth="93.0" sortable="false" text="November" />
+                        <TableColumn fx:id="p2DecemberColumn" prefWidth="93.0" sortable="false" text="December" />
+                     </columns>
+                     <styleClass>
+                        <String fx:value="table-row-cell" />
+                        <String fx:value="filler1" />
+                     </styleClass>
+                  </TableView>
+                  <TableView fx:id="p3Table" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="168.0" prefWidth="1478.0" style="-fx-border-color: #A79543; -fx-border-width: 3;" stylesheets="@../styles/Styles.css">
+                     <columns>
+                        <TableColumn fx:id="p3ParameterNameColumn" prefWidth="200.0" sortable="false" text="Part 3: Customer Financials" />
+                        <TableColumn fx:id="p3TotalsColumn" prefWidth="155.0" sortable="false" text="Totals" />
+                        <TableColumn fx:id="p3JanuaryColumn" prefWidth="93.0" sortable="false" text="January" />
+                        <TableColumn fx:id="p3FebruaryColumn" prefWidth="93.0" sortable="false" text="February" />
+                        <TableColumn fx:id="p3MarchColumn" prefWidth="93.0" sortable="false" text="March" />
+                        <TableColumn fx:id="p3AprilColumn" prefWidth="93.0" sortable="false" text="April" />
+                        <TableColumn fx:id="p3MayColumn" prefWidth="93.0" sortable="false" text="May" />
+                        <TableColumn fx:id="p3JuneColumn" prefWidth="93.0" sortable="false" text="June" />
+                        <TableColumn fx:id="p3JulyColumn" prefWidth="93.0" sortable="false" text="July" />
+                        <TableColumn fx:id="p3AugustColumn" prefWidth="93.0" sortable="false" text="August" />
+                        <TableColumn fx:id="p3SeptemberColumn" prefWidth="93.0" sortable="false" text="September" />
+                        <TableColumn fx:id="p3OctoberColumn" prefWidth="93.0" sortable="false" text="October" />
+                        <TableColumn fx:id="p3NovemberColumn" prefWidth="93.0" sortable="false" text="November" />
+                        <TableColumn fx:id="p3DecemberColumn" prefWidth="93.0" sortable="false" text="December" />
+                     </columns>
+                     <styleClass>
+                        <String fx:value="table-row-cell" />
+                        <String fx:value="filler1" />
+                     </styleClass>
+                  </TableView>
+                  <TableView fx:id="p4Table" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="440.0" prefWidth="1478.0" style="-fx-border-color: #A79543; -fx-border-width: 3;" stylesheets="@../styles/Styles.css">
+                     <columns>
+                        <TableColumn fx:id="p4ParameterNameColumn" prefWidth="200.0" sortable="false" text="Part 4: Manufacturer Financials" />
+                        <TableColumn fx:id="p4TotalsColumn" prefWidth="155.0" sortable="false" text="Totals" />
+                        <TableColumn fx:id="p4JanuaryColumn" prefWidth="93.0" sortable="false" text="January" />
+                        <TableColumn fx:id="p4FebruaryColumn" prefWidth="93.0" sortable="false" text="February" />
+                        <TableColumn fx:id="p4MarchColumn" prefWidth="93.0" sortable="false" text="March" />
+                        <TableColumn fx:id="p4AprilColumn" prefWidth="93.0" sortable="false" text="April" />
+                        <TableColumn fx:id="p4MayColumn" prefWidth="93.0" sortable="false" text="May" />
+                        <TableColumn fx:id="p4JuneColumn" prefWidth="93.0" sortable="false" text="June" />
+                        <TableColumn fx:id="p4JulyColumn" prefWidth="93.0" sortable="false" text="July" />
+                        <TableColumn fx:id="p4AugustColumn" prefWidth="93.0" sortable="false" text="August" />
+                        <TableColumn fx:id="p4SeptemberColumn" prefWidth="93.0" sortable="false" text="September" />
+                        <TableColumn fx:id="p4OctoberColumn" prefWidth="93.0" sortable="false" text="October" />
+                        <TableColumn fx:id="p4NovemberColumn" prefWidth="93.0" sortable="false" text="November" />
+                        <TableColumn fx:id="p4DecemberColumn" prefWidth="93.0" sortable="false" text="December" />
+                     </columns>
+                     <styleClass>
+                        <String fx:value="table-row-cell" />
+                        <String fx:value="filler1" />
+                     </styleClass>
+                  </TableView>
+                  <TableView fx:id="p5Table" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="80.0" prefWidth="1478.0" style="-fx-border-color: #A79543; -fx-border-width: 3;" stylesheets="@../styles/Styles.css">
+                     <columns>
+                        <TableColumn fx:id="p5ParameterNameColumn" prefWidth="200.0" sortable="false" text="Part 5: Net 1 Revenue Rate" />
+                        <TableColumn fx:id="p5TotalsColumn" prefWidth="155.0" sortable="false" text="Totals" />
+                        <TableColumn fx:id="p5JanuaryColumn" prefWidth="93.0" sortable="false" text="January" />
+                        <TableColumn fx:id="p5FebruaryColumn" prefWidth="93.0" sortable="false" text="February" />
+                        <TableColumn fx:id="p5MarchColumn" prefWidth="93.0" sortable="false" text="March" />
+                        <TableColumn fx:id="p5AprilColumn" prefWidth="93.0" sortable="false" text="April" />
+                        <TableColumn fx:id="p5MayColumn" prefWidth="93.0" sortable="false" text="May" />
+                        <TableColumn fx:id="p5JuneColumn" prefWidth="93.0" sortable="false" text="June" />
+                        <TableColumn fx:id="p5JulyColumn" prefWidth="93.0" sortable="false" text="July" />
+                        <TableColumn fx:id="p5AugustColumn" prefWidth="93.0" sortable="false" text="August" />
+                        <TableColumn fx:id="p5SeptemberColumn" prefWidth="93.0" sortable="false" text="September" />
+                        <TableColumn fx:id="p5OctoberColumn" prefWidth="93.0" sortable="false" text="October" />
+                        <TableColumn fx:id="p5NovemberColumn" prefWidth="93.0" sortable="false" text="November" />
+                        <TableColumn fx:id="p5DecemberColumn" prefWidth="93.0" sortable="false" text="December" />
+                     </columns>
+                     <styleClass>
+                        <String fx:value="table-row-cell" />
+                        <String fx:value="filler1" />
+                     </styleClass>
+                  </TableView>
+               </children>
+            </VBox>
+         </content>
+      </ScrollPane>
+   </children>
+   <padding>
+      <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
+   </padding>
+</VBox>

@@ -1,5 +1,6 @@
 package com.traderoute;
 
+import com.traderoute.data.RTMOption;
 import javafx.util.StringConverter;
 
 public class RtmBoxConverter extends StringConverter<RTMOption> {

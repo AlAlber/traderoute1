@@ -1,5 +1,9 @@
 package com.traderoute;
 
+import com.traderoute.cells.ParameterEditCell;
+import com.traderoute.controllers.PricingPromotionController;
+import com.traderoute.controllers.firstTableController;
+import com.traderoute.data.*;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
@@ -8,29 +12,20 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import org.junit.Assert;
-import org.junit.BeforeClass;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.loadui.testfx.GuiTest;
 import org.loadui.testfx.exceptions.NoNodesFoundException;
-import org.loadui.testfx.utils.FXTestUtils;
 import org.testfx.framework.junit5.ApplicationExtension;
 import org.testfx.framework.junit5.Start;
 import org.testfx.api.FxRobot;
 import org.junit.jupiter.api.Test;
-import smetana.core.CObject;
-import org.loadui.testfx.controls.TableViews;
 
 
 import java.io.IOException;
 import java.math.BigDecimal;
-import org.loadui.testfx.GuiTest;
 
-import java.security.Key;
-import java.util.List;
 import static org.loadui.testfx.GuiTest.find;
 //import static org.loadui.testfx.controls.TableViews.cell;
 //import static org.loadui.testfx.controls.TableViews.row;
@@ -89,10 +84,8 @@ public class PricingPromotionControllerTest{
 //    }
     @Start
     public void start(Stage stage) throws IOException {
-//        System.out.println(getFXMLLoader("secondTable").getController());
         FXMLLoader fxmlLoader = App.createFXMLLoader("pricingPromotion");
         Scene scene = new Scene(fxmlLoader.load());
-        System.out.println(fxmlLoader.getController().toString());
         controller = fxmlLoader.getController();
         controller.setRetailer(retailer.get());
         stage.setScene(scene);
