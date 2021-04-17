@@ -1,6 +1,6 @@
-package com.traderoute;
+package com.traderoute.controllers;
 
-import com.traderoute.controllers.firstTableController;
+import com.traderoute.App;
 import com.traderoute.data.Product;
 import com.traderoute.data.RTMOption;
 import com.traderoute.data.Retailer;
@@ -27,10 +27,10 @@ import java.io.IOException;
 import java.math.BigDecimal;
 
 @ExtendWith(ApplicationExtension.class)
-class firstTableControllerTest {
-    private firstTableController controller;
+class RTMPlanningControllerTest {
+    private RTMPlanningController controller;
     private ObservableList<RTMOption> rtmOptions;
-    private SimpleObjectProperty<Retailer> retailer= new SimpleObjectProperty<>(new Retailer("ahold", firstTableController.getRetailerProducts(),0 ,  new BigDecimal("40") , 158,new BigDecimal("3.0")));;
+    private SimpleObjectProperty<Retailer> retailer= new SimpleObjectProperty<>(new Retailer("ahold", RTMPlanningController.getRetailerProducts(),0 ,  new BigDecimal("40") , 158,new BigDecimal("3.0")));;
     TableView firstTableView;
     TextField everydayGpmField;
     TextField yearOneStoreCountField;
@@ -38,6 +38,7 @@ class firstTableControllerTest {
     TextField weeklyUfswAtMinField;
     ComboBox<Product> productClassBox;
     ComboBox<Product> brandNameBox;
+    final String  tableString = "#rtmPlanningTable1";
 
 
     @Start
@@ -53,7 +54,7 @@ class firstTableControllerTest {
     @org.junit.jupiter.api.BeforeEach
     void setUp(FxRobot robot) {
         rtmOptions = retailer.get().getRetailerProducts().get(0).getRtmOptions();
-        firstTableView = robot.lookup("#firstTableView").queryTableView();
+        firstTableView = robot.lookup(tableString).queryTableView();
         everydayGpmField = robot.lookup("#everydayGpmField").queryAs(TextField.class);
         yearOneStoreCountField = robot.lookup("#yearOneStoreCountField").queryAs(TextField.class);
         spoilsFeesField = robot.lookup("#spoilsFeesField").queryAs(TextField.class);
@@ -74,7 +75,7 @@ class firstTableControllerTest {
 
     @Test
     public void testFirstReceiverUpdatesLandedStoreCost(FxRobot robot){
-        robot.doubleClickOn(cell("#firstTableView", 3, 3, robot));
+        robot.doubleClickOn(cell(tableString, 3, 3, robot));
         robot.write("0.7");
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
         Assertions.assertEquals(((RTMOption)firstTableView.getItems().get(3)).getFirstReceiver(),new BigDecimal("0.7"));
@@ -82,7 +83,7 @@ class firstTableControllerTest {
     }
     @Test
     public void testSecondReceiverUpdatesLandedStoreCost(FxRobot robot){
-        robot.doubleClickOn(cell("#firstTableView", 3, 4, robot));
+        robot.doubleClickOn(cell(tableString, 3, 4, robot));
         robot.write("0.7");
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
         Assertions.assertEquals(((RTMOption)firstTableView.getItems().get(3)).getSecondReceiver(),new BigDecimal("0.7"));
@@ -90,7 +91,7 @@ class firstTableControllerTest {
     }
     @Test
     public void testThirdReceiverUpdatesLandedStoreCost(FxRobot robot){
-        robot.doubleClickOn(cell("#firstTableView", 3, 5, robot));
+        robot.doubleClickOn(cell(tableString, 3, 5, robot));
         robot.write("0.7");
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
         Assertions.assertEquals(((RTMOption)firstTableView.getItems().get(3)).getThirdReceiver(),new BigDecimal("0.7"));
@@ -98,7 +99,7 @@ class firstTableControllerTest {
     }
     @Test
     public void testFourthReceiverUpdatesLandedStoreCost(FxRobot robot){
-        robot.doubleClickOn(cell("#firstTableView", 3, 6, robot));
+        robot.doubleClickOn(cell(tableString, 3, 6, robot));
         robot.write("0.7");
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
         Assertions.assertEquals(((RTMOption)firstTableView.getItems().get(3)).getFourthReceiver(),new BigDecimal("0.7"));
@@ -107,25 +108,25 @@ class firstTableControllerTest {
 
     @Test
     public void testReceiversCorrectlyPickMaxLandedStoreCost(FxRobot robot){
-        robot.doubleClickOn(cell("#firstTableView", 3, 6, robot));
+        robot.doubleClickOn(cell(tableString, 3, 6, robot));
         robot.write("0.7");
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
         Assertions.assertEquals(((RTMOption)firstTableView.getItems().get(3)).getFourthReceiver(),new BigDecimal("0.7"));
         Assertions.assertEquals(((RTMOption)firstTableView.getItems().get(3)).getLandedStoreCost(),new BigDecimal("0.7"));
 
-        robot.doubleClickOn(cell("#firstTableView", 3, 5, robot));
+        robot.doubleClickOn(cell(tableString, 3, 5, robot));
         robot.write("1.1");
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
         Assertions.assertEquals(((RTMOption)firstTableView.getItems().get(3)).getThirdReceiver(),new BigDecimal("1.1"));
         Assertions.assertEquals(((RTMOption)firstTableView.getItems().get(3)).getLandedStoreCost(),new BigDecimal("1.1"));
 
-        robot.doubleClickOn(cell("#firstTableView", 3, 3, robot));
+        robot.doubleClickOn(cell(tableString, 3, 3, robot));
         robot.write("0.9");
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
         Assertions.assertEquals(((RTMOption)firstTableView.getItems().get(3)).getFirstReceiver(),new BigDecimal("0.9"));
         Assertions.assertEquals(((RTMOption)firstTableView.getItems().get(3)).getLandedStoreCost(),new BigDecimal("1.1"));
 
-        robot.doubleClickOn(cell("#firstTableView", 3, 4, robot));
+        robot.doubleClickOn(cell(tableString, 3, 4, robot));
         robot.write("5.0");
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
         Assertions.assertEquals(((RTMOption)firstTableView.getItems().get(3)).getSecondReceiver(),new BigDecimal("5.0"));
@@ -134,7 +135,7 @@ class firstTableControllerTest {
 
     @Test
     public void testMaxReceiverAndEverydayGpmUpdateEverydayRetails(FxRobot robot){
-        robot.doubleClickOn(cell("#firstTableView", 3, 3, robot));
+        robot.doubleClickOn(cell(tableString, 3, 3, robot));
         robot.write("3.59");
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
         Assertions.assertEquals(((RTMOption)firstTableView.getItems().get(3)).getFirstReceiver(),new BigDecimal("3.59"));
@@ -143,7 +144,7 @@ class firstTableControllerTest {
         robot.doubleClickOn(everydayGpmField);
         robot.write("40.0");
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
-        Assertions.assertEquals(new BigDecimal("5.9833333333"),((RTMOption)firstTableView.getItems().get(3)).getResultingEverydayRetailCalcd());
+        Assertions.assertEquals(new BigDecimal("5.9833333333"),((RTMOption)firstTableView.getItems().get(3)).getEverydayRetailCalcd());
         Assertions.assertEquals(new BigDecimal("5.9833333333"), ((RTMOption)firstTableView.getItems().get(3)).getResultingEverydayRetailOverride());
     }
 
@@ -178,27 +179,27 @@ class firstTableControllerTest {
         robot.write("3.0");
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
 
-        robot.doubleClickOn(cell("#firstTableView", 3, 0, robot));
+        robot.doubleClickOn(cell(tableString, 3, 0, robot));
         robot.write("Direct To Customer Model");
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
         Assertions.assertEquals(((RTMOption)firstTableView.getItems().get(3)).getRTMName(),"Direct To Customer Model");
-        robot.doubleClickOn(cell("#firstTableView", 3, 1, robot));
+        robot.doubleClickOn(cell(tableString, 3, 1, robot));
         robot.write("7500");
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
         Assertions.assertEquals(((RTMOption)firstTableView.getItems().get(3)).getSlottingPerSku(),new BigDecimal("7500"));
-        robot.doubleClickOn(cell("#firstTableView", 3, 2, robot));
+        robot.doubleClickOn(cell(tableString, 3, 2, robot));
         robot.write("0.29");
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
         Assertions.assertEquals(((RTMOption)firstTableView.getItems().get(3)).getFreightOutPerUnit(),new BigDecimal("0.29"));
-        robot.doubleClickOn(cell("#firstTableView", 3, 3, robot));
+        robot.doubleClickOn(cell(tableString, 3, 3, robot));
         robot.write("3.59");
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
         Assertions.assertEquals(((RTMOption)firstTableView.getItems().get(3)).getFirstReceiver(),new BigDecimal("3.59"));
         Assertions.assertEquals(((RTMOption)firstTableView.getItems().get(3)).getLandedStoreCost(),new BigDecimal("3.59"));
-        Assertions.assertEquals(((RTMOption)firstTableView.getItems().get(3)).getResultingEverydayRetailCalcd(),new BigDecimal("5.9833333333"), "Resulting Calcd should have changed");
+        Assertions.assertEquals(((RTMOption)firstTableView.getItems().get(3)).getEverydayRetailCalcd(),new BigDecimal("5.9833333333"), "Resulting Calcd should have changed");
         Assertions.assertEquals(((RTMOption)firstTableView.getItems().get(3)).getResultingEverydayRetailOverride(),new BigDecimal("5.9833333333"), "Resulting Override should have changed");
 //      ^^ ADD THIS LATER ^^
-        robot.doubleClickOn(cell("#firstTableView", 3, 9, robot));
+        robot.doubleClickOn(cell(tableString, 3, 9, robot));
         robot.write("5.99");
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
         Assertions.assertEquals(((RTMOption)firstTableView.getItems().get(3)).getResultingEverydayRetailOverride(),new BigDecimal("5.99"));
@@ -234,7 +235,7 @@ class firstTableControllerTest {
 
     @Test
     public void testInputtingOnTableView(FxRobot robot){
-        robot.doubleClickOn(cell("#firstTableView", 2, 2, robot));
+        robot.doubleClickOn(cell(tableString, 2, 2, robot));
         robot.write("0.7");
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
         Assert.assertEquals(((RTMOption)firstTableView.getItems().get(2)).getFreightOutPerUnit(),new BigDecimal("0.7"));

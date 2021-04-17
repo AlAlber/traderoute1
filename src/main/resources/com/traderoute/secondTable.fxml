@@ -18,7 +18,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="780.0" prefWidth="1530.0" stylesheets="@../styles/Styles.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.traderoute.controllers.firstTableController">
+<AnchorPane prefHeight="780.0" prefWidth="1530.0" stylesheets="@../styles/Styles.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.traderoute.controllers.RTMPlanningController">
    <children>
       <VBox prefHeight="800.0" prefWidth="1530.0" style="-fx-background-color: #1E1D1A;">
          <children>
@@ -82,18 +82,18 @@
                   <JFXButton onAction="#switchToRetailerSelection" style="-fx-background-color: white;" text="Return to Selection" />
                </children>
             </HBox>
-            <TableView fx:id="firstTableView" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="130.0" prefWidth="1464.0" styleClass="firstTable" stylesheets="@../styles/Styles.css">
+            <TableView fx:id="rtmPlanningTable1" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="130.0" prefWidth="1464.0" styleClass="firstTable" stylesheets="@../styles/Styles.css">
                <columns>
-                  <TableColumn fx:id="RTMNameColumn" prefWidth="148.0" resizable="false" />
-                  <TableColumn fx:id="slottingPerSkuColumn" onEditCommit="#changeSlottingPerSkuCellEvent" prefWidth="148.0" resizable="false" />
-                  <TableColumn fx:id="freightOutPerUnitColumn" onEditCommit="#changeFreightOutPerUnitCellEvent" prefWidth="148.0" resizable="false" />
-                  <TableColumn fx:id="firstReceiverColumn" onEditCommit="#changeFirstReceiverCellEvent" prefWidth="148.0" resizable="false" />
+                  <TableColumn fx:id="rtmNameCol1" prefWidth="148.0" resizable="false" />
+                  <TableColumn fx:id="slottingPerSkuCol" onEditCommit="#changeSlottingPerSkuCellEvent" prefWidth="148.0" resizable="false" />
+                  <TableColumn fx:id="freightOutPerUnitCol" onEditCommit="#changeFreightOutPerUnitCellEvent" prefWidth="148.0" resizable="false" />
+                  <TableColumn fx:id="firstReceiverCol" onEditCommit="#changeFirstReceiverCellEvent" prefWidth="148.0" resizable="false" />
                   <TableColumn fx:id="secondReceiverColumn" onEditCommit="#changeSecondReceiverCellEvent" prefWidth="148.0" resizable="false" />
                   <TableColumn fx:id="thirdReceiverColumn" onEditCommit="#changeThirdReceiverCellEvent" prefWidth="148.0" resizable="false" />
                   <TableColumn fx:id="fourthReceiverColumn" onEditCommit="#changeFourthReceiverCellEvent" prefWidth="148.0" resizable="false" />
                   <TableColumn fx:id="landedStoreCostColumn" prefWidth="148.0" resizable="false" />
-                  <TableColumn fx:id="resultingEverydayRetailCalcdColumn" prefWidth="148.0" resizable="false" />
-                  <TableColumn fx:id="resultingEverydayRetailOverrideColumn" onEditCommit="#changeOverrideEvent" prefWidth="148.0" resizable="false" />
+                  <TableColumn fx:id="everydayRetailCalcdCol" prefWidth="148.0" resizable="false" />
+                  <TableColumn fx:id="everydayRetailOverrideCol" onEditCommit="#changeOverrideEvent" prefWidth="148.0" resizable="false" />
                </columns>
                <VBox.margin>
                   <Insets top="40.0" />
@@ -159,13 +159,13 @@
                         </VBox>
                      </children>
                   </AnchorPane>
-                  <TableView fx:id="secondTableView" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="102.0" prefWidth="1310.0" styleClass="firstTable" stylesheets="@../styles/Styles.css">
+                  <TableView fx:id="rtmPlanningTable2" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="102.0" prefWidth="1310.0" styleClass="firstTable" stylesheets="@../styles/Styles.css">
                      <columns>
-                        <TableColumn fx:id="RTMNameColumn2" prefWidth="166.0" resizable="false" />
-                        <TableColumn fx:id="elasticizedEstimatedUnitVelocityColumn" prefWidth="166.0" resizable="false" />
-                        <TableColumn fx:id="estimatedAnnualVolumePerSkuColumn" prefWidth="166.0" resizable="false" />
+                        <TableColumn fx:id="rtmNameColumn2" prefWidth="166.0" resizable="false" />
+                        <TableColumn fx:id="elasticizedUnitVelocityColumn" prefWidth="166.0" resizable="false" />
+                        <TableColumn fx:id="annualVolumePerSkuColumn" prefWidth="166.0" resizable="false" />
                         <TableColumn fx:id="slottingPaybackPeriodColumn" prefWidth="166.0" resizable="false" />
-                        <TableColumn fx:id="postFreightPostSpoilsWeCollectPerUnitColumn" prefWidth="166.0" resizable="false" />
+                        <TableColumn fx:id="postFreightPostSpoilsPerUnitCol" prefWidth="166.0" resizable="false" />
                         <TableColumn fx:id="unspentTradePerUnitColumn" prefWidth="166.0" resizable="false" />
                         <TableColumn fx:id="fourYearEqGpPerSkuColumn" prefWidth="166.0" resizable="false" />
                         <TableColumn fx:id="fourYearEqGpPerUnitColumn" prefWidth="166.0" resizable="false" />
@@ -183,7 +183,7 @@
                       <NumberAxis side="LEFT" />
                     </yAxis>
                   </BarChart>
-                  <BarChart fx:id="resultingEverydayRetailCalcdChart" animated="false" legendVisible="false" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="369.0" prefWidth="161.0" title="Resulting Everyday Retail">
+                  <BarChart fx:id="everydayRetailCalcdChart" animated="false" legendVisible="false" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="369.0" prefWidth="161.0" title="Resulting Everyday Retail">
                      <xAxis>
                         <CategoryAxis side="BOTTOM" />
                      </xAxis>
@@ -191,7 +191,7 @@
                         <NumberAxis side="LEFT" />
                      </yAxis>
                   </BarChart>
-                  <BarChart fx:id="elasticizedEstimatedUnitVelocityChart" animated="false" legendVisible="false" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="369.0" prefWidth="161.0" title="Elasticized Unit Velocity">
+                  <BarChart fx:id="elasticizedUnitVelocityChart" animated="false" legendVisible="false" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="369.0" prefWidth="161.0" title="Elasticized Unit Velocity">
                      <xAxis>
                         <CategoryAxis side="BOTTOM" />
                      </xAxis>
@@ -199,7 +199,7 @@
                         <NumberAxis side="LEFT" />
                      </yAxis>
                   </BarChart>
-                  <BarChart fx:id="estimatedAnnualVolumeChart" animated="false" legendVisible="false" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="369.0" prefWidth="161.0" title="Annual Volume Per Sku">
+                  <BarChart fx:id="annualVolumePerSkuChart" animated="false" legendVisible="false" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="369.0" prefWidth="161.0" title="Annual Volume Per Sku">
                      <xAxis>
                         <CategoryAxis side="BOTTOM" />
                      </xAxis>
@@ -215,7 +215,7 @@
                         <NumberAxis side="LEFT" />
                      </yAxis>
                   </BarChart>
-                  <BarChart fx:id="postSpoilsPostFreightWeCollectChart" animated="false" legendVisible="false" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="369.0" prefWidth="161.0" title="Post Spoils &amp; Freight We Collect Per Unit">
+                  <BarChart fx:id="postSpoilsPostFreightChart" animated="false" legendVisible="false" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="369.0" prefWidth="161.0" title="Post Spoils &amp; Freight We Collect Per Unit">
                      <xAxis>
                         <CategoryAxis side="BOTTOM" />
                      </xAxis>

@@ -2,7 +2,7 @@ package com.traderoute;
 
 import com.traderoute.cells.ParameterEditCell;
 import com.traderoute.controllers.PricingPromotionController;
-import com.traderoute.controllers.firstTableController;
+import com.traderoute.controllers.RTMPlanningController;
 import com.traderoute.data.*;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.ObservableList;
@@ -36,7 +36,7 @@ public class PricingPromotionControllerTest{
 //    public static GuiTest controller;
 
     private ObservableList<RTMOption> rtmOptions;
-    private SimpleObjectProperty<Retailer> retailer= new SimpleObjectProperty<>(new Retailer("ahold", firstTableController.getRetailerProducts(),0 ,  new BigDecimal("40") , 158,new BigDecimal("3.0")));;
+    private SimpleObjectProperty<Retailer> retailer= new SimpleObjectProperty<>(new Retailer("ahold", RTMPlanningController.getRetailerProducts(),0 ,  new BigDecimal("40") , 158,new BigDecimal("3.0")));;
     private TableView pricingPromotionTableOne;
 
     private static final int skusInDistributionIndex = 0;

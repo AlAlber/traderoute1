@@ -209,7 +209,7 @@ public class AssortmentController implements Initializable {
         FXMLLoader secondTableLoader = App.createFXMLLoader("secondTable");
         App.setSceneRoot(secondTableLoader.load());
 
-        firstTableController firstTableController =secondTableLoader.getController();
+        RTMPlanningController firstTableController =secondTableLoader.getController();
         firstTableController.setRetailer(getRetailer());
     }
 

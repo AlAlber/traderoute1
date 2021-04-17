@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="780.0" prefWidth="1530.0" stylesheets="@../styles/Styles.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.traderoute.controllers.firstTableController">
+<AnchorPane prefHeight="780.0" prefWidth="1530.0" stylesheets="@../styles/Styles.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.traderoute.controllers.RTMPlanningController">
    <children>
       <VBox prefHeight="800.0" prefWidth="1530.0">
          <children>
@@ -39,30 +39,30 @@
                   <Insets bottom="-2.0" left="2.0" />
                </VBox.margin>
             </HBox>
-            <TableView fx:id="firstTableView" prefHeight="217.0" prefWidth="1496.0" styleClass="table-row-cell" stylesheets="@../styles/Styles.css">
+            <TableView fx:id="rtmPlanningTable1" prefHeight="217.0" prefWidth="1496.0" styleClass="table-row-cell" stylesheets="@../styles/Styles.css">
               <columns>
-                <TableColumn fx:id="RTMNameColumn" prefWidth="87.0" resizable="false" text="Route-To-">
+                <TableColumn fx:id="rtmNameCol1" prefWidth="87.0" resizable="false" text="Route-To-">
                      <columns>
                         <TableColumn prefWidth="75.0" text="Market Option" />
                      </columns>
                   </TableColumn>
-                <TableColumn fx:id="slottingPerSkuColumn" prefWidth="87.0" resizable="false" text="Sku" />
-                  <TableColumn fx:id="freightOutPerUnitColumn" prefWidth="87.0" resizable="false" text="Per Unit" />
-                  <TableColumn fx:id="firstReceiverColumn" prefWidth="87.0" resizable="false" text="Pays" />
+                <TableColumn fx:id="slottingPerSkuCol" prefWidth="87.0" resizable="false" text="Sku" />
+                  <TableColumn fx:id="freightOutPerUnitCol" prefWidth="87.0" resizable="false" text="Per Unit" />
+                  <TableColumn fx:id="firstReceiverCol" prefWidth="87.0" resizable="false" text="Pays" />
                   <TableColumn fx:id="secondReceiverColumn" prefWidth="87.0" resizable="false" text="Pays" />
                   <TableColumn fx:id="thirdReceiverColumn" prefWidth="87.0" resizable="false" text="Pays" />
                   <TableColumn fx:id="fourthReceiverColumn" prefWidth="82.39996337890625" resizable="false" text="Pays" />
-                  <TableColumn fx:id="resultingEverydayRetailCalcdColumn" prefWidth="72.800048828125" resizable="false" text="Calculated">
+                  <TableColumn fx:id="everydayRetailCalcdCol" prefWidth="72.800048828125" resizable="false" text="Calculated">
                      <columns>
                         <TableColumn prefWidth="75.0" text="Column X" />
                      </columns>
                   </TableColumn>
-                  <TableColumn fx:id="resultingEverydayRetailOverrideColumn" prefWidth="69.60003662109375" resizable="false" text="Override" />
+                  <TableColumn fx:id="everydayRetailOverrideCol" prefWidth="69.60003662109375" resizable="false" text="Override" />
                   <TableColumn fx:id="weeklyVelocityUfswColumn" prefWidth="86.39996337890625" resizable="false" text="U/F/S/W" />
-                  <TableColumn fx:id="elasticizedEstimatedUnitVelocityColumn" prefWidth="100.79998779296875" resizable="false" text="Estimated U/F/S/W" />
-                  <TableColumn fx:id="estimatedAnnualVolumePerSkuColumn" prefWidth="87.9998779296875" resizable="false" text="Volume/Sku" />
+                  <TableColumn fx:id="elasticizedUnitVelocityColumn" prefWidth="100.79998779296875" resizable="false" text="Estimated U/F/S/W" />
+                  <TableColumn fx:id="annualVolumePerSkuColumn" prefWidth="87.9998779296875" resizable="false" text="Volume/Sku" />
                   <TableColumn fx:id="slottingPaybackPeriodColumn" prefWidth="88.0001220703125" resizable="false" text="Period" />
-                  <TableColumn fx:id="postFreightPostSpoilsWeCollectPerUnitColumn" prefWidth="113.599853515625" resizable="false" text="Post Spoils We Collect" />
+                  <TableColumn fx:id="postFreightPostSpoilsPerUnitCol" prefWidth="113.599853515625" resizable="false" text="Post Spoils We Collect" />
                   <TableColumn fx:id="unspentTradePerUnitColumn" prefWidth="81.60009765625" resizable="false" text="Unit" />
                   <TableColumn fx:id="fourYearEqGpPerSkuColumn" prefWidth="88.0" resizable="false" text="Per Sku" />
                   <TableColumn fx:id="fourYearEqGpPerUnitColumn" prefWidth="95.199951171875" resizable="false" text="Per Unit" />

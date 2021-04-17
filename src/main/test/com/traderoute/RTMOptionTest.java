@@ -1,7 +1,7 @@
 package com.traderoute;
 
 import com.traderoute.controllers.MenuController;
-import com.traderoute.controllers.firstTableController;
+import com.traderoute.controllers.RTMPlanningController;
 import com.traderoute.data.Product;
 import com.traderoute.data.RTMOption;
 import org.junit.Assert;
@@ -15,7 +15,7 @@ class RTMOptionTest {
     private RTMOption optionTwo;
     private RTMOption optionThree;
     private RTMOption optionFour;
-    private firstTableController controller;
+    private RTMPlanningController controller;
     private Product productOne;
     private Product productTwo;
 
@@ -52,19 +52,19 @@ class RTMOptionTest {
         optionOne.setEverydayGPM(null);
         optionOne.setLandedStoreCost(new BigDecimal("3.95"));
         optionOne.updateResultingEverydayRetailCald();
-        Assert.assertEquals(null, optionOne.getResultingEverydayRetailCalcd());
+        Assert.assertEquals(null, optionOne.getEverydayRetailCalcd());
         // everydayGPm 40, landed Store Cost 3.95
         optionOne.setEverydayGPM(new BigDecimal("40"));
         optionOne.updateResultingEverydayRetailCald();
-        Assert.assertEquals(new BigDecimal("6.58"),optionOne.getResultingEverydayRetailCalcd());
+        Assert.assertEquals(new BigDecimal("6.58"),optionOne.getEverydayRetailCalcd());
        // landed store cost null, everydayGPM 40 -- no change
         optionOne.setLandedStoreCost(null);
         optionOne.updateResultingEverydayRetailCald();
-        Assert.assertEquals(new BigDecimal("6.58"), optionOne.getResultingEverydayRetailCalcd());
+        Assert.assertEquals(new BigDecimal("6.58"), optionOne.getEverydayRetailCalcd());
         // everyday GPM null, landedStore Cost null -- no change
         optionOne.setEverydayGPM(null);
         optionOne.updateResultingEverydayRetailCald();
-        Assert.assertEquals(new BigDecimal("6.58"), optionOne.getResultingEverydayRetailCalcd());
+        Assert.assertEquals(new BigDecimal("6.58"), optionOne.getEverydayRetailCalcd());
     }
 
     @org.junit.jupiter.api.Test

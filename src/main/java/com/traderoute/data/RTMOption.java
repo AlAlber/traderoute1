@@ -1,7 +1,6 @@
 package com.traderoute.data;
 
 import com.traderoute.RTMUpdateListener;
-import com.traderoute.data.Product;
 import javafx.beans.property.*;
 
 
@@ -355,7 +354,7 @@ public class RTMOption {
 
     public String toString() {
         String stringBuilder = "";
-        stringBuilder += "RTMName: " + this.getRTMName() + ", Slotting per Sku:" + this.getSlottingPerSku() + "Calcd" + this.getResultingEverydayRetailCalcd();
+        stringBuilder += "RTMName: " + this.getRTMName() + ", Slotting per Sku:" + this.getSlottingPerSku() + "Calcd" + this.getEverydayRetailCalcd();
         return stringBuilder;
     }
 
@@ -491,7 +490,7 @@ public class RTMOption {
         this.landedStoreCost.set(landedStoreCost);
     }
 
-    public BigDecimal getResultingEverydayRetailCalcd() {
+    public BigDecimal getEverydayRetailCalcd() {
         if (resultingEverydayRetailCalcd.get() == null) {
             return new BigDecimal("0.0");
         }

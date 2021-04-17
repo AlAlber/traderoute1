@@ -306,7 +306,7 @@ public class PricingPromotionController implements Initializable {
             commitButtons.get(i).setWrapText(true);
             editButtons.get(i).setWrapText(true);
             rtmBoxes.get(i).setConverter(new RtmBoxConverter());
-            weeklyVelocityFields.get(i).setTextFormatter(new TextFormatter<Double>(firstTableController.getDoubleInputConverter(), 0.0, firstTableController.getDoubleInputFilter()));
+            weeklyVelocityFields.get(i).setTextFormatter(new TextFormatter<Double>(RTMPlanningController.getDoubleInputConverter(), 0.0, RTMPlanningController.getDoubleInputFilter()));
             weeklyVelocityFields.get(i).setTooltip(new Tooltip("Please add the weekly velocity Unit/Flavor/Sku/Week"));
             rtmBoxes.get(i).setTooltip(new Tooltip("Please select a Route-to-Market from the ones you configured on the Route to Market Page"));
         }
@@ -1086,7 +1086,7 @@ public class PricingPromotionController implements Initializable {
         FXMLLoader secondTableLoader = App.createFXMLLoader("secondTable");
         App.setSceneRoot(secondTableLoader.load());
 
-        firstTableController firstTableController =secondTableLoader.getController();
+        RTMPlanningController firstTableController =secondTableLoader.getController();
         firstTableController.setRetailer(getRetailer());
     }
     @FXML

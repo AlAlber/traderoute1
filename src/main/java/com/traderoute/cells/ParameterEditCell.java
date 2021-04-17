@@ -2,7 +2,7 @@ package com.traderoute.cells;
 
 import com.traderoute.data.Parameter;
 import com.traderoute.data.PromoPlan;
-import com.traderoute.controllers.firstTableController;
+import com.traderoute.controllers.RTMPlanningController;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.Event;
@@ -43,7 +43,7 @@ public class ParameterEditCell extends TableCell<Parameter<?>, Object> {
                 return;
             }
             if (param.getJanuary() instanceof BigDecimal) {
-                textField.setTextFormatter(new TextFormatter(firstTableController.getDoubleInputConverter(), Double.valueOf(textField.getText()), firstTableController.getDoubleInputFilter()));
+                textField.setTextFormatter(new TextFormatter(RTMPlanningController.getDoubleInputConverter(), Double.valueOf(textField.getText()), RTMPlanningController.getDoubleInputFilter()));
             } else if (param.getJanuary() instanceof Integer){
                 textField.textProperty().addListener(new ChangeListener<String>() {
                     private boolean changing;

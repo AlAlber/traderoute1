@@ -2,7 +2,7 @@
   <profile version="1.0">
     <option name="myName" value="Project Default" />
     <inspection_tool class="CheckStyle" enabled="true" level="WARNING" enabled_by_default="true">
-      <scope name="Project Files" level="TYPO" enabled="true" />
+      <scope name="Project Files" level="WEAK WARNING" enabled="true" />
     </inspection_tool>
     <inspection_tool class="JUnit5Converter" enabled="true" level="WARNING" enabled_by_default="true" />
   </profile>

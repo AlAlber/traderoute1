@@ -1,6 +1,6 @@
 package com.traderoute.cells;
 
-import com.traderoute.controllers.firstTableController;
+import com.traderoute.controllers.RTMPlanningController;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.Event;
@@ -46,7 +46,7 @@ public class NumberEditCell<Object, Number> extends TableCell<Object, Number>{
                     return;
                 }
                 if (getItem() instanceof BigDecimal) {
-                    textField.setTextFormatter(new TextFormatter(firstTableController.getDoubleInputConverter(), Double.valueOf(textField.getText()), firstTableController.getDoubleInputFilter()));
+                    textField.setTextFormatter(new TextFormatter(RTMPlanningController.getDoubleInputConverter(), Double.valueOf(textField.getText()), RTMPlanningController.getDoubleInputFilter()));
                 }
                 else if (getItem() instanceof Integer){
                     textField.textProperty().addListener(new ChangeListener<String>() {

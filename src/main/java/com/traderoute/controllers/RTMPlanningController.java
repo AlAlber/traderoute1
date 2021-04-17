@@ -26,73 +26,208 @@ import java.time.LocalDate;
 import java.util.ResourceBundle;
 import java.util.function.UnaryOperator;
 import java.util.regex.Pattern;
+//<a href="#{@link}">{@link URL}</a>
 
+/**
+ *On this page a user can type in information about their Product for a
+ * a specific Retailer. In the brandNameBox a user may select the brand name of
+ * a specific Product and then select the product class. On this page the user enters
+ * Product specific information about a Retailer in the yearOneStoreCountField,
+ * everydayGpmField and spoilsFeesField, which can later be displayed in the
+ * Product Class Reporting page.
+ *
+ * The tables consist of RTMOption Objects which allow the user to input information, first
+ * the name of the of the Route-To-Market option(ex. Direct-To-Customer, where user directly transports
+ * their goods to a Retailer), then the Slotting Investment, freight cost per unit, how much the first
+ * Receiver pays per unit(for ex. KeHE), second, third, fourth if they exist. The table automatically
+ * calculates the Landed Store Cost from these 4 columns and if possible calculates the resulting everyday
+ * retail price and a suggestion for the overridden retail price which the Retailer usually will round
+ * to 0.09(ex. if resulting everyday retail calc'd= 6.43 -> resulting everyday override= 6.49).
+ * Once the user enters a rough estimate of the weekly velocity Unit/Flavor/Sku/Week, the second
+ * table can calculate unit velocities at different retail prices through the price elasticity
+ * index entered by the user on the Products Pricing page. The rest of the calculations are explained
+ * in method docs. The graphs compare all the RTMOption for specific fields.
+ *
+ * @author Alex Alber
+ */
+public class RTMPlanningController implements Initializable {
 
-public class firstTableController implements Initializable {
-
-    // Assign Values to
+    /**
+     * First Route-To-Market Planning Table, mostly editable
+     */
     @FXML
-    private TableView<RTMOption> secondTableView;
+    private TableView<RTMOption> rtmPlanningTable1;
+    /**
+     * Column for the name of the Route-To-Market (Editable).
+     */
     @FXML
-    private TableView<RTMOption> firstTableView;
+    private TableColumn<RTMOption, String> rtmNameCol1;
+    /**
+     * Column for the slotting investment with this RTMOption (Editable) .
+     */
     @FXML
-    private TableColumn<RTMOption, String> RTMNameColumn;
+    private TableColumn<RTMOption, BigDecimal> slottingPerSkuCol;
+    /**
+     * Column for the freight cost per unit with this RTMOption (Editable).
+     */
     @FXML
-    private TableColumn<RTMOption, BigDecimal> slottingPerSkuColumn;
+    private TableColumn<RTMOption, BigDecimal> freightOutPerUnitCol;
+    /**
+     * Column for the cost the first receiver pays with this RTMOption
+     * (Editable).
+     */
     @FXML
-    private TableColumn<RTMOption, BigDecimal> freightOutPerUnitColumn;
-    @FXML
-    private TableColumn<RTMOption, BigDecimal> firstReceiverColumn;
+    private TableColumn<RTMOption, BigDecimal> firstReceiverCol;
+    /**
+     * Column for the cost the second receiver pays with this RTMOption
+     * (Editable).
+     */
     @FXML
     private TableColumn<RTMOption, BigDecimal> secondReceiverColumn;
+
+    /**
+     * Column for the cost the third receiver pays with this RTMOption
+     * (Editable).
+     */
     @FXML
     private TableColumn<RTMOption, BigDecimal> thirdReceiverColumn;
+
+    /**
+     * Column for the cost the fourth receiver pays with this RTMOption
+     * (Editable).
+     */
     @FXML
     private TableColumn<RTMOption, BigDecimal> fourthReceiverColumn;
+
+    /**
+     * Column for the landed Store Cost of this product with this
+     * RTMOption (Not Editable).
+     */
     @FXML
     private TableColumn<RTMOption, BigDecimal> landedStoreCostColumn;
+
+    /**
+     * Column for the resulting Everyday Retail Cost of this product
+     * with this RTMOption (Not Editable).
+     */
     @FXML
-    private TableColumn<RTMOption, BigDecimal> resultingEverydayRetailCalcdColumn;
+    private TableColumn<RTMOption, BigDecimal> everydayRetailCalcdCol;
+
+    /**
+     * Column for the resulting Everyday Retail Override where user
+     * can input the final price of the product, likely rounded to X.X9
+     * (Editable).
+     */
     @FXML
-    private TableColumn<RTMOption, BigDecimal> resultingEverydayRetailOverrideColumn;
+    private TableColumn<RTMOption, BigDecimal> everydayRetailOverrideCol;
+
+    /**
+     * Second planning table with RTMOption items (ALL NOT EDITABLE).
+     */
     @FXML
-    private TableColumn<RTMOption, String> RTMNameColumn2;
+    private TableView<RTMOption> rtmPlanningTable2;
+
+    /**
+     * Second RTM Option Name column.
+     */
     @FXML
-    private TableColumn<RTMOption, BigDecimal> elasticizedEstimatedUnitVelocityColumn;
+    private TableColumn<RTMOption, String> rtmNameColumn2;
+
+    /**
+     * Elasticized unit velocity, where unit velocities are adjusted based on
+     * the price elasticity of the product.
+     */
     @FXML
-    private TableColumn<RTMOption, BigDecimal> estimatedAnnualVolumePerSkuColumn;
+    private TableColumn<RTMOption, BigDecimal> elasticizedUnitVelocityColumn;
+
+    /**
+     * Column for the Annual Volume Sold Per Sku based on unit Velocity on year
+     * one store count.
+     */
+    @FXML
+    private TableColumn<RTMOption, BigDecimal> annualVolumePerSkuColumn;
+
+    /**
+     * Column showing the expected time period it will take to receive back
+     * the slotting investment.
+     */
     @FXML
     private TableColumn<RTMOption, BigDecimal> slottingPaybackPeriodColumn;
+
+    /**
+     * Column showing how much the user collects after accounting for spoils,
+     * fees and freight cost.
+     */
     @FXML
-    private TableColumn<RTMOption, BigDecimal> postFreightPostSpoilsWeCollectPerUnitColumn;
+    private TableColumn<RTMOption, BigDecimal> postFreightPostSpoilsPerUnitCol;
+
+    /**
+     * Column showing how much unspent trade money is available per unit
+     * with this RTMOption.
+     */
     @FXML
     private TableColumn<RTMOption, BigDecimal> unspentTradePerUnitColumn;
+    /**
+     * Column showing equivalized gross profit per sku in four years with
+     * this RTMOption.
+     */
     @FXML
     private TableColumn<RTMOption, BigDecimal> fourYearEqGpPerSkuColumn;
+    /**
+     * Column showing equivalized gross profit per unit in four years with
+     * this RTMOption.
+     */
     @FXML
     private TableColumn<RTMOption, BigDecimal> fourYearEqGpPerUnitColumn;
+    /**
+     * Retailer is main object between scenes, right now still has default
+      * value. //TODO
+     */
+    private SimpleObjectProperty<Retailer> retailer = new SimpleObjectProperty<>();
 
-    private SimpleObjectProperty<Retailer> retailer= new SimpleObjectProperty<>(new Retailer("ahold", firstTableController.getRetailerProducts(),0,  new BigDecimal("40") , 158,new BigDecimal("3.0")));;
-
+    //
+//                    new Retailer("ahold",
+//                                 RTMPlanningController.getRetailerProducts(),
+//                            0, new BigDecimal("40"),
+//                            158, new BigDecimal("3.0"))
+    /**
+     * TextField to insert Store Count of this RetailerProduct (specific Product being sold by retailer)
+     * in first year.
+     */
     @FXML
     private TextField yearOneStoreCountField;
+    /**
+     * TextField to insert Everyday Gross Profit Margin Percentage of
+     * RetailerProduct.
+     */
     @FXML
     private TextField everydayGpmField;
+
+    /**
+     * TextField to insert percentage of Spoils and Fees of RetailerProduct.
+     */
     @FXML
     private TextField spoilsFeesField;
+
+    /**
+     * TextField to insert the Weekly Velocity U/F/S/W of product at the minimum price
+     * in the everyday retail override column.
+     */
     @FXML
     private TextField weeklyUfswAtMinField;
-
+    /**
+     * Label that denotes the max of the retail override column.
+     */
     @FXML
     private Label maxOverrideLabel;
 
-    /*
-    Initialization for tooltips
+    /**
+     * Labels for column headers.
      */
     @FXML
-    private final Label RTMNameColumnLabel = new Label("Route to market options");
+    private final Label rtmNameColumnLabel = new Label("Route to market options");
     @FXML
-    private final Label RTMNameColumnLabel2 = new Label("Route to market options");
+    private final Label rtmNameColumnLabel2 = new Label("Route to market options");
     @FXML
     private final Label slottingPerSkuLabel = new Label("Slotting Per Sku");
     @FXML
@@ -126,8 +261,11 @@ public class firstTableController implements Initializable {
     @FXML
     private final Label fourYearEqGpPerUnitLabel = new Label("4-Year EQ GP $ Per Unit");
 
+    /**
+     * Tooltips to be added to Column Header Labels.
+     */
     @FXML
-    private final Tooltip RTMNameColumnTip =
+    private final Tooltip rtmNameColumnTip =
             new Tooltip("Please enter the most likely 'route-to-market' options to get the product to the market.");
     @FXML
     private final Tooltip slottingPerSkuTip =
@@ -178,48 +316,84 @@ public class firstTableController implements Initializable {
     private final Tooltip fourYearEqGpPerUnitTip =
             new Tooltip("4-Year Equivalized Gross Profit $ Per Unit");
 
-    @FXML
-    private ComboBox<Product> productClassBox;
+    /**
+     * Combobox where user can select the brand name of a Product.
+     */
     @FXML
     private ComboBox<Product> brandNameBox;
+    /**
+     * ComboBox where user can select brand name specific product classes.
+     */
+    @FXML
+    private ComboBox<Product> productClassBox;
 
+
+    /**
+     * Displays unit list cost of the selected Product.
+     * (General Product information is inserted on Product pricing
+     * page by user)
+     */
     @FXML
     private Label listLabel;
+    /**
+     * Displays unit F.O.B. cost of the selected Product.
+     */
     @FXML
     private Label fobLabel;
+    /**
+     * Displays unit net1 goal of the selected Product.
+     */
     @FXML
     private Label net1GoalLabel;
+    /**
+     * Displays the elasticity ratio of the selected Product.
+     */
     @FXML
     private Label elasticityRatioLabel;
 
+    /**
+     * BarCharts to display relevant table data. X-Axis has
+     * RTM Option Name, Y-Axis the respective value.
+     */
     @FXML
     private BarChart<?, ?> landedStoreCostChart;
     @FXML
-    private BarChart<?, ?> resultingEverydayRetailCalcdChart;
+    private BarChart<?, ?> everydayRetailCalcdChart;
     @FXML
-    private BarChart<?, ?> elasticizedEstimatedUnitVelocityChart;
+    private BarChart<?, ?> elasticizedUnitVelocityChart;
     @FXML
-    private BarChart<?, ?> estimatedAnnualVolumeChart;
+    private BarChart<?, ?> annualVolumePerSkuChart;
     @FXML
     private BarChart<?, ?> slottingPaybackPeriodChart;
     @FXML
-    private BarChart<?,?> unspentTradePerUnitChart;
+    private BarChart<?, ?> unspentTradePerUnitChart;
     @FXML
-    private BarChart<?, ?> postSpoilsPostFreightWeCollectChart;
+    private BarChart<?, ?> postSpoilsPostFreightChart;
     @FXML
     private BarChart<?, ?> fourYearEqGpPerSkuChart;
     @FXML
     private BarChart<?, ?> fourYearEqGpPerUnitChart;
 
-    private SimpleObjectProperty<RetailerProduct> currentRetailerProduct;
-    private SimpleObjectProperty<ObservableList<RTMOption>> currentRtmOptions;
-
-
-
-    XYChart.Series<String,BigDecimal> landedStoreCostData = new XYChart.Series();
-
+    /**
+     * Called when new page is created from FXML.
+     * - Sets Cell Value factories to reflect RTM Option data.
+     * - Sets unique item brand names to brandnamebox
+     * - Assigns Converters to brandNameBox, productClassBox
+     * - Makes year One Store Count accept only Integers.
+     * - Assigns TextFormatter with converter and input filter for
+     * number values in double format (ex. 0.00) in everydayGpmField,
+     * spoilsFeesField, weeklyUfswAtMinField.
+     * - sets default RTMOption items for both tables.
+     * - sets data to charts.
+     * - Sets editable and non-editable Columns and Tables.
+     * - Adds listeners to rows for chart updates.
+     * - Sets Cell Factories, which determine how Column cells are displayed
+     * for both tables.
+     * @param url default javafx param in initialize method.
+     * @param resourceBundle default javafx param in initialize method.
+     */
     @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
+    public void initialize(final URL url, final ResourceBundle resourceBundle) {
 
 
         //Set up cell value factories
@@ -233,42 +407,57 @@ public class firstTableController implements Initializable {
 
 
         // Restrict input fields to only accept text in Integer or Double format
-        yearOneStoreCountField.textProperty().addListener(new ChangeListener<String>() {
+        yearOneStoreCountField.textProperty().addListener(
+            new ChangeListener<String>() {
             @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue,
-                                String newValue) {
+            public void changed(final ObservableValue<? extends String>
+                observable, final String oldValue, final String newValue) {
                 if (!newValue.matches("\\d*")) {
-                    yearOneStoreCountField.setText(newValue.replaceAll("[^\\d]", ""));
+                    yearOneStoreCountField.setText(newValue
+                            .replaceAll("[^\\d]", ""));
                 }
             }
         });
-        everydayGpmField.setTextFormatter(new TextFormatter<>(getDoubleInputConverter(), 0.0, getDoubleInputFilter()));
-        spoilsFeesField.setTextFormatter(new TextFormatter<>(getDoubleInputConverter(), 0.0, getDoubleInputFilter()));
-        weeklyUfswAtMinField.setTextFormatter(new TextFormatter<>(getDoubleInputConverter(), 0.0, getDoubleInputFilter()));
+        everydayGpmField.setTextFormatter(new TextFormatter<>(
+                getDoubleInputConverter(), 0.0, getDoubleInputFilter()));
+        spoilsFeesField.setTextFormatter(new TextFormatter<>(
+                getDoubleInputConverter(), 0.0, getDoubleInputFilter()));
+        weeklyUfswAtMinField.setTextFormatter(new TextFormatter<>(
+                getDoubleInputConverter(), 0.0, getDoubleInputFilter()));
 
         //Set dummy data
-        firstTableView.setItems(getRTMOptions());
-        secondTableView.setItems(firstTableView.getItems());
+        rtmPlanningTable1.setItems(getRTMOptions());
+        rtmPlanningTable2.setItems(rtmPlanningTable1.getItems());
 
 
         // Set Bar Chart
-        landedStoreCostChart.setData(FXCollections.observableArrayList(new XYChart.Series[]{getChartData(1)}));
-        resultingEverydayRetailCalcdChart.setData(FXCollections.observableArrayList(new XYChart.Series[]{getChartData(2)}));
-        elasticizedEstimatedUnitVelocityChart.setData(FXCollections.observableArrayList(new XYChart.Series[]{getChartData(3)}));
-        estimatedAnnualVolumeChart.setData(FXCollections.observableArrayList(new XYChart.Series[]{getChartData(4)}));
-        slottingPaybackPeriodChart.setData(FXCollections.observableArrayList(new XYChart.Series[]{getChartData(5)}));
-        postSpoilsPostFreightWeCollectChart.setData(FXCollections.observableArrayList(new XYChart.Series[]{getChartData(6)}));
-        unspentTradePerUnitChart.setData(FXCollections.observableArrayList(new XYChart.Series[]{getChartData(7)}));
-        fourYearEqGpPerSkuChart.setData(FXCollections.observableArrayList(new XYChart.Series[]{getChartData(8)}));
-        fourYearEqGpPerUnitChart.setData(FXCollections.observableArrayList(new XYChart.Series[]{getChartData(9)}));
+        landedStoreCostChart.setData(FXCollections.observableArrayList(
+                new XYChart.Series[]{getChartData(1)}));
+        everydayRetailCalcdChart.setData(FXCollections.observableArrayList(
+                new XYChart.Series[]{getChartData(2)}));
+        elasticizedUnitVelocityChart.setData(FXCollections.observableArrayList(
+                new XYChart.Series[]{getChartData(3)}));
+        annualVolumePerSkuChart.setData(FXCollections.observableArrayList(
+                new XYChart.Series[]{getChartData(4)}));
+        slottingPaybackPeriodChart.setData(FXCollections.observableArrayList(
+                new XYChart.Series[]{getChartData(5)}));
+        postSpoilsPostFreightChart.setData(FXCollections.observableArrayList(
+                new XYChart.Series[]{getChartData(6)}));
+        unspentTradePerUnitChart.setData(FXCollections.observableArrayList(
+                new XYChart.Series[]{getChartData(7)}));
+        fourYearEqGpPerSkuChart.setData(FXCollections.observableArrayList(
+                new XYChart.Series[]{getChartData(8)}));
+        fourYearEqGpPerUnitChart.setData(FXCollections.observableArrayList(
+                new XYChart.Series[]{getChartData(9)}));
 
         // Add Labels to list, give them tooltips
-        setToolTipsFirstAndSecondTableview();
+        setToolTipsTable1And2();
 
         //Set editable columns
-        firstTableView.setEditable(true);
+        rtmPlanningTable1.setEditable(true);
         landedStoreCostColumn.setEditable(false);
-        resultingEverydayRetailCalcdColumn.setEditable(false);
+        everydayRetailCalcdCol.setEditable(false);
+
 
         //Set up event listerners
         setUpListeners();
@@ -288,7 +477,7 @@ public class firstTableController implements Initializable {
         /*
         Check if landedStoreCostProperty changed, if it it did calculate everyday Retail
         */
-        for (RTMOption row : firstTableView.getItems()) {
+        for (RTMOption row : rtmPlanningTable1.getItems()) {
             row.setupListeners();
             row.landedStoreCostProperty().addListener(((arg, oldVal, newVal) -> {
                 System.out.println("is this happening");
@@ -311,11 +500,11 @@ public class firstTableController implements Initializable {
             */
             row.resultingEverydayRetailOverrideProperty().addListener(((arg, oldVal, newVal) -> {
                 row.setMinOverride(getMinOverride());
-                firstTableView.refresh();
+                rtmPlanningTable1.refresh();
                 row.updateElasticizedUnitVelocity();
                 maxOverrideLabel.setText("of $" + getMinOverride());
                 System.out.println("Why is this no longer happening?");
-                firstTableView.refresh();
+                rtmPlanningTable1.refresh();
             }));
         }
     }
@@ -350,7 +539,7 @@ public class firstTableController implements Initializable {
      */
     public void changeBrandComboboxEvent(ActionEvent event) {
         Product selectedBrandName = brandNameBox.getSelectionModel().getSelectedItem();
-        secondTableView.setItems(firstTableView.getItems());
+        rtmPlanningTable2.setItems(rtmPlanningTable1.getItems());
         listLabel.setText("List = $");
         fobLabel.setText("F.O.B. = $");
         net1GoalLabel.setText("Net 1 Goal = $");
@@ -370,7 +559,7 @@ public class firstTableController implements Initializable {
             fobLabel.setText("F.O.B. = $" + selectedProduct.getUnitFobCost());
             net1GoalLabel.setText("Net 1 Goal = $" + selectedProduct.getUnitNet1Goal());
             elasticityRatioLabel.setText("Elasticity Ratio = +1% Price :" + selectedProduct.getElasticityMultiple() + "% Volume");
-            for (RTMOption row : firstTableView.getItems()) {
+            for (RTMOption row : rtmPlanningTable1.getItems()) {
                 row.setProduct(selectedProduct);
             }
             updateRetailerProduct(selectedProduct);
@@ -393,18 +582,18 @@ public class firstTableController implements Initializable {
         retailer.get().setcurrentRetailerProductIndex(productIndex);
 
         // TEMPORARILY GET PRODUCT INDEX THROUGH RETAILERPRODUCTS
-        firstTableView.setItems(getRetailer().getRetailerProducts().get(productIndex).getRtmOptions());
-        secondTableView.setItems(getRetailer().getRetailerProducts().get(productIndex).getRtmOptions());
-        secondTableView.refresh();
+        rtmPlanningTable1.setItems(getRetailer().getRetailerProducts().get(productIndex).getRtmOptions());
+        rtmPlanningTable2.setItems(getRetailer().getRetailerProducts().get(productIndex).getRtmOptions());
+        rtmPlanningTable2.refresh();
         updateChart(false,false,false,false,true,true,true,true,true);
 //        this.retailer.set(retailer);
         ObservableList<RetailerProduct> retailerProducts =getRetailer().getRetailerProducts();
         RetailerProduct currentRetailerProduct = retailerProducts.get(getRetailer().getCurrentRetailerProductIndex());
         ObservableList<RTMOption> currentRtmOptions = currentRetailerProduct.getRtmOptions();
-        this.firstTableView.setItems(currentRtmOptions);
+        this.rtmPlanningTable1.setItems(currentRtmOptions);
         setUpListeners();
         //CHANGE PRODUCT BOX TO AVE RETAILER OPTION SELECTION INSTEAD OF PRODUCT SELECTION
-        this.secondTableView.setItems(currentRtmOptions);
+        this.rtmPlanningTable2.setItems(currentRtmOptions);
 
         listLabel.setText("List = $" + currentRetailerProduct.getProduct().getUnitListCost());
         fobLabel.setText("F.O.B. = $" + currentRetailerProduct.getProduct().getUnitFobCost());
@@ -412,7 +601,7 @@ public class firstTableController implements Initializable {
         elasticityRatioLabel.setText("Elasticity Ratio = +1% Price :" +  currentRetailerProduct.getProduct().getElasticityMultiple() + "% Volume");
         // Stuff that should be implemented differently
         this.weeklyUfswAtMinField.setText(currentRtmOptions.get(0).getWeeklyUSFWAtMin().toString());
-        for (RTMOption row: firstTableView.getItems()){
+        for (RTMOption row: rtmPlanningTable1.getItems()){
             row.setProduct(currentRetailerProduct.getProduct());
             row.setYearOneStoreCount(getRetailer().getYearOneStoreCount());
             row.setEverydayGPM(getRetailer().getEverydayGPM());
@@ -421,9 +610,9 @@ public class firstTableController implements Initializable {
             row.updateResultingEverydayRetailCald();
             updateChart(true,true,true,true,true,true,true,true,true );
         }
-        secondTableView.setVisible(false);
-        secondTableView.setVisible(true);
-        secondTableView.refresh();
+        rtmPlanningTable2.setVisible(false);
+        rtmPlanningTable2.setVisible(true);
+        rtmPlanningTable2.refresh();
 
 
     };
@@ -450,7 +639,7 @@ public class firstTableController implements Initializable {
      */
     public BigDecimal getMinOverride() {
         BigDecimal smallest = new BigDecimal("100000000000");
-        for (RTMOption row : firstTableView.getItems()) {
+        for (RTMOption row : rtmPlanningTable1.getItems()) {
             BigDecimal currentNumber = row.getResultingEverydayRetailOverride();
             if (currentNumber.compareTo(smallest) < 0 && currentNumber.compareTo(new BigDecimal("0.0"))>0) {
                 smallest = currentNumber;
@@ -463,12 +652,12 @@ public class firstTableController implements Initializable {
     Get elasticized velocities from weeklyUSFWAtMin Field  and do calculation if possible
     */
     public void changeWeeklyUSFWAtMinEvent(ActionEvent event) {
-        secondTableView.setItems(firstTableView.getItems());
-        for (RTMOption row : secondTableView.getItems()) {
+        rtmPlanningTable2.setItems(rtmPlanningTable1.getItems());
+        for (RTMOption row : rtmPlanningTable2.getItems()) {
             row.setMinOverride(getMinOverride());
             row.setWeeklyUSFWAtMin(getWeeklyUSFWAtMin());
         }
-        secondTableView.refresh();
+        rtmPlanningTable2.refresh();
         updateChart(false,false,true,true,true,true,true,true,true);
     }
     /*
@@ -476,14 +665,14 @@ public class firstTableController implements Initializable {
     */
     public void changeOverrideEvent(TableColumn.CellEditEvent editedCell) {
         System.out.println("please get here at least");
-        RTMOption RTMOptionSelected = firstTableView.getSelectionModel().getSelectedItem();
+        RTMOption RTMOptionSelected = rtmPlanningTable1.getSelectionModel().getSelectedItem();
         RTMOptionSelected.setResultingEverydayRetailOverride(new BigDecimal(editedCell.getNewValue().toString()));
-        for (RTMOption row : secondTableView.getItems()) {
+        for (RTMOption row : rtmPlanningTable2.getItems()) {
             row.setMinOverride(getMinOverride());
         }
         System.out.println(RTMOptionSelected.getRTMName() + ", elasticized= " + RTMOptionSelected.getElasticizedUnitVelocity());
         System.out.println(RTMOptionSelected.getRTMName() + ", annual Volume= " + RTMOptionSelected.getAnnualVolumePerSku());
-        secondTableView.refresh();
+        rtmPlanningTable2.refresh();
         updateChart(false,false,true,true,true,true,true,true,true);
     }
 
@@ -491,11 +680,11 @@ public class firstTableController implements Initializable {
     Get estimated annual volume/sku
     */
     public void changeYearOneStoreCount(ActionEvent event) {
-        secondTableView.setItems(firstTableView.getItems());
-        for (RTMOption row : secondTableView.getItems()) {
+        rtmPlanningTable2.setItems(rtmPlanningTable1.getItems());
+        for (RTMOption row : rtmPlanningTable2.getItems()) {
             row.setYearOneStoreCount(getYearOneStoreCount());
         }
-        secondTableView.refresh();
+        rtmPlanningTable2.refresh();
         updateChart(false,false,false,true,true,true,true,true,true);
     }
 
@@ -503,7 +692,7 @@ public class firstTableController implements Initializable {
     Set EverydayGPm and do calculation if possible
     */
     public void changeEveryDayGPMCellEvent(ActionEvent event) {
-        for (RTMOption row : firstTableView.getItems()) {
+        for (RTMOption row : rtmPlanningTable1.getItems()) {
             row.setEverydayGPM(this.getEveryDayGPM());
         }
         updateChart(false,true,false,false,false,false,false,false,false);
@@ -513,7 +702,7 @@ public class firstTableController implements Initializable {
     Set EverydayGPm and do calculation if possible
     */
     public void changeSpoilsAndFeesEvent(ActionEvent event) {
-        for (RTMOption row : firstTableView.getItems()) {
+        for (RTMOption row : rtmPlanningTable1.getItems()) {
             row.setSpoilsAndFees(getSpoilsAndFees().divide((new BigDecimal("100")), 4 , RoundingMode.HALF_UP));
         }
         updateChart(false,false,false,false,true,true,true,true,true);
@@ -521,10 +710,10 @@ public class firstTableController implements Initializable {
 
     // Change Slotting Per Sku
     public void changeSlottingPerSkuCellEvent(TableColumn.CellEditEvent editedCell) {
-        RTMOption RTMOptionSelected = firstTableView.getSelectionModel().getSelectedItem();
+        RTMOption RTMOptionSelected = rtmPlanningTable1.getSelectionModel().getSelectedItem();
         RTMOptionSelected.setSlottingPerSku(new BigDecimal(editedCell.getNewValue().toString()));
-        secondTableView.setItems(firstTableView.getItems());
-        secondTableView.refresh();
+        rtmPlanningTable2.setItems(rtmPlanningTable1.getItems());
+        rtmPlanningTable2.refresh();
         updateChart(false,false,false,false,true,true,true,true,true);
     }
 
@@ -532,7 +721,7 @@ public class firstTableController implements Initializable {
     Calculate max from the receivers
     */
     public void changeFreightOutPerUnitCellEvent(TableColumn.CellEditEvent editedCell) {
-        RTMOption RTMOptionSelected = firstTableView.getSelectionModel().getSelectedItem();
+        RTMOption RTMOptionSelected = rtmPlanningTable1.getSelectionModel().getSelectedItem();
         RTMOptionSelected.setFreightOutPerUnit(new BigDecimal(editedCell.getNewValue().toString()));
         updateChart(false,false,false,false,true,true,true,true,true);
     }
@@ -540,27 +729,27 @@ public class firstTableController implements Initializable {
     Calculate max from the receivers
     */
     public void changeFirstReceiverCellEvent(TableColumn.CellEditEvent editedCell) {
-        RTMOption RTMOptionSelected = firstTableView.getSelectionModel().getSelectedItem();
+        RTMOption RTMOptionSelected = rtmPlanningTable1.getSelectionModel().getSelectedItem();
         RTMOptionSelected.setFirstReceiver(new BigDecimal(editedCell.getNewValue().toString()));
         maxReceivers(RTMOptionSelected);
         updateChart(false,false,false,false,true,true,true,true,true);
     }
 
     public void changeSecondReceiverCellEvent(TableColumn.CellEditEvent editedCell) {
-        RTMOption RTMOptionSelected = firstTableView.getSelectionModel().getSelectedItem();
+        RTMOption RTMOptionSelected = rtmPlanningTable1.getSelectionModel().getSelectedItem();
         RTMOptionSelected.setSecondReceiver(new BigDecimal(editedCell.getNewValue().toString()));
         maxReceivers(RTMOptionSelected);
     }
 
     public void changeThirdReceiverCellEvent(TableColumn.CellEditEvent editedCell) {
-        RTMOption RTMOptionSelected = firstTableView.getSelectionModel().getSelectedItem();
+        RTMOption RTMOptionSelected = rtmPlanningTable1.getSelectionModel().getSelectedItem();
         RTMOptionSelected.setThirdReceiver(new BigDecimal(editedCell.getNewValue().toString()));
         maxReceivers(RTMOptionSelected);
         ;
     }
 
     public void changeFourthReceiverCellEvent(TableColumn.CellEditEvent editedCell) {
-        RTMOption RTMOptionSelected = firstTableView.getSelectionModel().getSelectedItem();
+        RTMOption RTMOptionSelected = rtmPlanningTable1.getSelectionModel().getSelectedItem();
         RTMOptionSelected.setFourthReceiver(new BigDecimal(editedCell.getNewValue().toString()));
         maxReceivers(RTMOptionSelected);
     }
@@ -618,20 +807,20 @@ Return Value from Year One Store Count
             landedStoreCostChart.getData().clear();
             landedStoreCostChart.setData(FXCollections.observableArrayList(new XYChart.Series[]{getChartData(1)}));
         } if (rERC){
-            resultingEverydayRetailCalcdChart.getData().clear();
-            resultingEverydayRetailCalcdChart.setData(FXCollections.observableArrayList(new XYChart.Series[]{getChartData(2)}));
+            everydayRetailCalcdChart.getData().clear();
+            everydayRetailCalcdChart.setData(FXCollections.observableArrayList(new XYChart.Series[]{getChartData(2)}));
         } if (eEUV) {
-            elasticizedEstimatedUnitVelocityChart.getData().clear();
-            elasticizedEstimatedUnitVelocityChart.setData(FXCollections.observableArrayList(new XYChart.Series[]{getChartData(3)}));
+            elasticizedUnitVelocityChart.getData().clear();
+            elasticizedUnitVelocityChart.setData(FXCollections.observableArrayList(new XYChart.Series[]{getChartData(3)}));
         }if (eAVS) {
-            estimatedAnnualVolumeChart.getData().clear();
-            estimatedAnnualVolumeChart.setData(FXCollections.observableArrayList(new XYChart.Series[]{getChartData(4)}));
+            annualVolumePerSkuChart.getData().clear();
+            annualVolumePerSkuChart.setData(FXCollections.observableArrayList(new XYChart.Series[]{getChartData(4)}));
         }if (sPP) {
             slottingPaybackPeriodChart.getData().clear();
             slottingPaybackPeriodChart.setData(FXCollections.observableArrayList(new XYChart.Series[]{getChartData(5)}));
         }if (pFPS) {
-            postSpoilsPostFreightWeCollectChart.getData().clear();
-            postSpoilsPostFreightWeCollectChart.setData(FXCollections.observableArrayList(new XYChart.Series[]{getChartData(6)}));
+            postSpoilsPostFreightChart.getData().clear();
+            postSpoilsPostFreightChart.setData(FXCollections.observableArrayList(new XYChart.Series[]{getChartData(6)}));
         }if (uTPU) {
             unspentTradePerUnitChart.getData().clear();
             unspentTradePerUnitChart.setData(FXCollections.observableArrayList(new XYChart.Series[]{getChartData(7)}));
@@ -645,36 +834,59 @@ Return Value from Year One Store Count
     }
 
     //load first values.
-    public XYChart.Series<?,?> getChartData(int i) {
+
+    /**
+     *
+     * @param chartNumber 1 of 9 chart numbers from left to right.
+     * @return XYChart.Series<?, ?> chartData for BarChart.
+     */
+    public XYChart.Series<?, ?> getChartData(final int chartNumber) {
         XYChart.Series<String, BigDecimal> barChartData = new XYChart.Series();
-        for (RTMOption row : firstTableView.getItems()) {
-            if (i==1) {
-                barChartData.getData().add(new XYChart.Data(row.getRTMName(), row.getLandedStoreCost()));
-            } if (i==2){
-                barChartData.getData().add(new XYChart.Data(row.getRTMName(), row.getResultingEverydayRetailCalcd()));
-            } if (i==3) {
-                barChartData.getData().add(new XYChart.Data(row.getRTMName(), row.getElasticizedUnitVelocity()));
-            }if (i==4) {
-                barChartData.getData().add(new XYChart.Data(row.getRTMName(), row.getAnnualVolumePerSku()));
-            }if (i==5) {
-                barChartData.getData().add(new XYChart.Data(row.getRTMName(), row.getSlottingPaybackPeriod()));
-            }if (i==6) {
-                barChartData.getData().add(new XYChart.Data(row.getRTMName(), row.getPostFreightPostSpoilsWeCollectPerUnit()));
-            }if (i==7) {
-                barChartData.getData().add(new XYChart.Data(row.getRTMName(), row.getUnspentTradePerUnit()));
-            }if (i==8) {
-                barChartData.getData().add(new XYChart.Data(row.getRTMName(), row.getFourYearEqGpPerSku()));
-            }if (i==9) {
-                barChartData.getData().add(new XYChart.Data(row.getRTMName(), row.getFourYearEqGpPerUnit()));
+        for (RTMOption row : rtmPlanningTable1.getItems()) {
+            switch (chartNumber) {
+                case 1:
+                    barChartData.getData().add(new XYChart.Data(
+                            row.getRTMName(), row.getLandedStoreCost()));
+                    break;
+                case 2:
+                    barChartData.getData().add(new XYChart.Data(
+                            row.getRTMName(), row.getEverydayRetailCalcd()));
+                    break;
+                case 3:
+                    barChartData.getData().add(new XYChart.Data(
+                            row.getRTMName(), row.getElasticizedUnitVelocity()));
+                    break;
+                case 4:
+                    barChartData.getData().add(new XYChart.Data(
+                            row.getRTMName(), row.getAnnualVolumePerSku()));
+                    break;
+                case 5:
+                    barChartData.getData().add(new XYChart.Data(
+                            row.getRTMName(), row.getSlottingPaybackPeriod()));
+                    break;
+                case 6:
+                    barChartData.getData().add(new XYChart.Data(
+                            row.getRTMName(),
+                            row.getPostFreightPostSpoilsWeCollectPerUnit()));
+                    break;
+                case 7:
+                    barChartData.getData().add(new XYChart.Data(
+                            row.getRTMName(), row.getUnspentTradePerUnit()));
+                    break;
+                case 8:
+                    barChartData.getData().add(new XYChart.Data(
+                            row.getRTMName(), row.getFourYearEqGpPerSku()));
+                    break;
+                case 9:
+                    barChartData.getData().add(new XYChart.Data(
+                            row.getRTMName(), row.getFourYearEqGpPerUnit()));
+                    break;
+                default:
+                    System.out.println("ERROR: no such barchart");
+                    break;
             }
-        }
+            }
         return barChartData;
-    }
-    public ObservableList<RTMOption> getCurrentRtmOptions(){
-       return currentRtmOptions.get();
-    }
-    public RTMOption getSpecificRtmOption(int row){
-        return getCurrentRtmOptions().get(row);
     }
 
 
@@ -725,66 +937,51 @@ Return Value from Year One Store Count
         return promoPlans;
     }
 
-
-
-    /*
-    Loads dummy product data
-    */
-//    public ObservableList<Product> getExampleProducts() {
-//        ObservableList<Product> products = FXCollections.observableArrayList();
-//        products.add(new Product("Big Time Food Company", "24 oz pickles", new BigDecimal("3.59"), new BigDecimal("0.29"),
-//                new BigDecimal("3.30"), new BigDecimal("2.99"), new BigDecimal("2.05"), new BigDecimal("-1.15"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0")));
-//        products.add(new Product("Big Time Food Company", "12 oz pickle juice", new BigDecimal("1.49"), new BigDecimal("0.14"),
-//                new BigDecimal("1.35"), new BigDecimal("1.29"), new BigDecimal("0.78"), new BigDecimal("-1.20"), new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0")));
-//        products.add(new Product("Big Time Food Company", "12 oz pickle juice", new BigDecimal("1.49"), new BigDecimal("0.14"),
-//                new BigDecimal("1.35"), new BigDecimal("1.29"), new BigDecimal("0.78"), new BigDecimal("-1.20"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0")));
-//        products.add(new Product("Small Time Food Company", "12 oz pickle juice", new BigDecimal("1.49"), new BigDecimal("0.14"),
-//                new BigDecimal("1.35"), new BigDecimal("1.29"), new BigDecimal("0.78"), new BigDecimal("-1.20"), new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0")));
-//        return products;
-//    }
     @FXML
-    private void switchToAssortment(ActionEvent event) throws IOException {
+    private void switchToAssortment(final ActionEvent event) throws IOException {
 //        App.setRoot("assortment");
         FXMLLoader assortmentLoader = App.createFXMLLoader("assortment");
         App.setSceneRoot(assortmentLoader.load());
 
-        AssortmentController assortmentController =assortmentLoader.getController();
+        AssortmentController assortmentController = assortmentLoader.getController();
         assortmentController.setRetailer(retailer.get());
     }
     @FXML
-    private void switchToRetailerSelection(ActionEvent event) throws IOException {
-//        App.setRoot("assortment");
-        FXMLLoader retailerSelectionLoader = App.createFXMLLoader("retailerSelection");
+    private void switchToRetailerSelection(final ActionEvent event) throws IOException {
+        FXMLLoader retailerSelectionLoader = App
+                .createFXMLLoader("retailerSelection");
         App.setSceneRoot(retailerSelectionLoader.load());
-
-        RetailerSelectionController assortmentController =retailerSelectionLoader.getController();
-//        assortmentController.setRetailer(retailer.get());
+        RetailerSelectionController assortmentController =
+                retailerSelectionLoader.getController();
+        assortmentController.setRetailer(retailer.get());
     }
     @FXML
-    private void switchToPricingPromotion(ActionEvent event) throws IOException {
-        FXMLLoader pricingPromotionLoader = App.createFXMLLoader("pricingPromotion");
+    private void switchToPricingPromotion(final ActionEvent event)
+            throws IOException {
+        FXMLLoader pricingPromotionLoader = App
+                .createFXMLLoader("pricingPromotion");
         App.setSceneRoot(pricingPromotionLoader.load());
 
-        PricingPromotionController pricingPromotionController =pricingPromotionLoader.getController();
+        PricingPromotionController pricingPromotionController =
+                pricingPromotionLoader.getController();
         pricingPromotionController.setRetailer(retailer.get());
     }
-
-
-    /*
-    Set Column header tooltips for first and second tableview
-    */
-    public void setToolTipsFirstAndSecondTableview() {
-        RTMNameColumnLabel.setTooltip(RTMNameColumnTip);
-        RTMNameColumn.setGraphic(RTMNameColumnLabel);
+    /**
+     * Set Column header labels and tooltips for first and second planning
+     * table.
+     */
+    public void setToolTipsTable1And2() {
+        rtmNameColumnLabel.setTooltip(rtmNameColumnTip);
+        rtmNameCol1.setGraphic(rtmNameColumnLabel);
 
         freightOutPerUnitLabel.setTooltip(freightOutPerUnitTip);
-        freightOutPerUnitColumn.setGraphic(freightOutPerUnitLabel);
+        freightOutPerUnitCol.setGraphic(freightOutPerUnitLabel);
 
         slottingPerSkuLabel.setTooltip(slottingPerSkuTip);
-        slottingPerSkuColumn.setGraphic(slottingPerSkuLabel);
+        slottingPerSkuCol.setGraphic(slottingPerSkuLabel);
 
         firstReceiverLabel.setTooltip(firstReceiverTip);
-        firstReceiverColumn.setGraphic(firstReceiverLabel);
+        firstReceiverCol.setGraphic(firstReceiverLabel);
 
         secondReceiverLabel.setTooltip(secondReceiverTip);
         secondReceiverColumn.setGraphic(secondReceiverLabel);
@@ -799,24 +996,24 @@ Return Value from Year One Store Count
         landedStoreCostColumn.setGraphic(landedStoreCostLabel);
 
         resultingEveryDayRetailCalcdLabel.setTooltip(resultingEveryDayRetailCalcdTip);
-        resultingEverydayRetailCalcdColumn.setGraphic(resultingEveryDayRetailCalcdLabel);
+        everydayRetailCalcdCol.setGraphic(resultingEveryDayRetailCalcdLabel);
 
         resultingEveryDayRetailOverrideLabel.setTooltip(resultingEveryDayRetailOverrideTip);
-        resultingEverydayRetailOverrideColumn.setGraphic(resultingEveryDayRetailOverrideLabel);
+        everydayRetailOverrideCol.setGraphic(resultingEveryDayRetailOverrideLabel);
 
-        RTMNameColumn2.setGraphic(RTMNameColumnLabel2);
+        rtmNameColumn2.setGraphic(rtmNameColumnLabel2);
 
         elasticizedEstimatedUnitVelocityLabel.setTooltip(elasticizedEstimatedUnitVelocityTip);
-        elasticizedEstimatedUnitVelocityColumn.setGraphic(elasticizedEstimatedUnitVelocityLabel);
+        elasticizedUnitVelocityColumn.setGraphic(elasticizedEstimatedUnitVelocityLabel);
 
         estimatedAnnualVolumePerSkuLabel.setTooltip(estimatedAnnualVolumePerSkuTip);
-        estimatedAnnualVolumePerSkuColumn.setGraphic(estimatedAnnualVolumePerSkuLabel);
+        annualVolumePerSkuColumn.setGraphic(estimatedAnnualVolumePerSkuLabel);
 
         slottingPaybackPeriodLabel.setTooltip(slottingPaybackPeriodTip);
         slottingPaybackPeriodColumn.setGraphic(slottingPaybackPeriodLabel);
 
         postFreightPostSpoilsWeCollectLabel.setTooltip(postFreightPostSpoilsWeCollectTip);
-        postFreightPostSpoilsWeCollectPerUnitColumn.setGraphic(postFreightPostSpoilsWeCollectLabel);
+        postFreightPostSpoilsPerUnitCol.setGraphic(postFreightPostSpoilsWeCollectLabel);
 
         unspentTradePerUnitLabel.setTooltip(unspentTradePerUnitTip);
         unspentTradePerUnitColumn.setGraphic(unspentTradePerUnitLabel);
@@ -828,49 +1025,66 @@ Return Value from Year One Store Count
         fourYearEqGpPerUnitColumn.setGraphic(fourYearEqGpPerUnitLabel);
     }
 
-    /*
-    Set up cellValue factories
-    */
+    /**
+     * Set up cellValue factories, which look for properties of RTMOption
+     * item in the table.
+     */
     public void setCellValueFactories() {
-
-        RTMNameColumn.setCellValueFactory(cellData -> cellData.getValue().rtmNameProperty());
-        slottingPerSkuColumn.setCellValueFactory(cellData -> cellData.getValue().slottingPerSkuProperty());
-        freightOutPerUnitColumn.setCellValueFactory(cellData -> cellData.getValue().freightOutPerUnitProperty());
-        firstReceiverColumn.setCellValueFactory(cellData -> cellData.getValue().firstReceiverProperty());
-        secondReceiverColumn.setCellValueFactory(cellData -> cellData.getValue().secondReceiverProperty());
-        thirdReceiverColumn.setCellValueFactory(cellData -> cellData.getValue().thirdReceiverProperty());
-        fourthReceiverColumn.setCellValueFactory(cellData -> cellData.getValue().fourthReceiverProperty());
-        landedStoreCostColumn.setCellValueFactory(cellData -> cellData.getValue().landedStoreCostProperty());
-        resultingEverydayRetailCalcdColumn.setCellValueFactory(cellData -> cellData.getValue().resultingEverydayRetailCalcdProperty());
-        resultingEverydayRetailOverrideColumn.setCellValueFactory(cellData -> cellData.getValue().resultingEverydayRetailOverrideProperty());
-        elasticizedEstimatedUnitVelocityColumn.setCellValueFactory(cellData -> cellData.getValue().elasticizedUnitVelocityProperty());
-        estimatedAnnualVolumePerSkuColumn.setCellValueFactory(cellData -> cellData.getValue().annualVolumePerSkuProperty());
-        slottingPaybackPeriodColumn.setCellValueFactory(cellData -> cellData.getValue().slottingPaybackPeriodProperty());
-        postFreightPostSpoilsWeCollectPerUnitColumn.setCellValueFactory(cellData -> cellData.getValue().postFreightPostSpoilsWeCollectPerUnitProperty());
-        unspentTradePerUnitColumn.setCellValueFactory(cellData -> cellData.getValue().unspentTradePerUnitProperty());
-        fourYearEqGpPerSkuColumn.setCellValueFactory(cellData -> cellData.getValue().fourYearEqGpPerSkuProperty());
-        fourYearEqGpPerUnitColumn.setCellValueFactory(cellData -> cellData.getValue().fourYearEqGpPerUnitProperty());
-        RTMNameColumn2.setCellValueFactory(cellData -> cellData.getValue().rtmNameProperty());
+        rtmNameCol1.setCellValueFactory(cellData -> cellData.getValue()
+                .rtmNameProperty());
+        slottingPerSkuCol.setCellValueFactory(cellData -> cellData.getValue()
+                .slottingPerSkuProperty());
+        freightOutPerUnitCol.setCellValueFactory(cellData -> cellData.getValue()
+                .freightOutPerUnitProperty());
+        firstReceiverCol.setCellValueFactory(cellData -> cellData.getValue()
+                .firstReceiverProperty());
+        secondReceiverColumn.setCellValueFactory(cellData -> cellData.getValue()
+                .secondReceiverProperty());
+        thirdReceiverColumn.setCellValueFactory(cellData -> cellData.getValue()
+                .thirdReceiverProperty());
+        fourthReceiverColumn.setCellValueFactory(cellData -> cellData
+                .getValue().fourthReceiverProperty());
+        landedStoreCostColumn.setCellValueFactory(cellData -> cellData
+                .getValue().landedStoreCostProperty());
+        everydayRetailCalcdCol.setCellValueFactory(cellData -> cellData
+                .getValue().resultingEverydayRetailCalcdProperty());
+        everydayRetailOverrideCol.setCellValueFactory(cellData -> cellData.getValue().resultingEverydayRetailOverrideProperty());
+        elasticizedUnitVelocityColumn.setCellValueFactory(cellData -> cellData
+                .getValue().elasticizedUnitVelocityProperty());
+        annualVolumePerSkuColumn.setCellValueFactory(cellData -> cellData
+                .getValue().annualVolumePerSkuProperty());
+        slottingPaybackPeriodColumn.setCellValueFactory(cellData -> cellData
+                .getValue().slottingPaybackPeriodProperty());
+        postFreightPostSpoilsPerUnitCol.setCellValueFactory(cellData -> cellData
+                .getValue().postFreightPostSpoilsWeCollectPerUnitProperty());
+        unspentTradePerUnitColumn.setCellValueFactory(cellData -> cellData
+                .getValue().unspentTradePerUnitProperty());
+        fourYearEqGpPerSkuColumn.setCellValueFactory(cellData -> cellData
+                .getValue().fourYearEqGpPerSkuProperty());
+        fourYearEqGpPerUnitColumn.setCellValueFactory(cellData -> cellData
+                .getValue().fourYearEqGpPerUnitProperty());
+        rtmNameColumn2.setCellValueFactory(cellData -> cellData.getValue()
+                .rtmNameProperty());
     }
 
-    /*
-    Set Cell Factories for first and second Table View
-    */
+    /**
+     * 
+     */
     public void setCellFactories() {
 
-        RTMNameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-        slottingPerSkuColumn.setCellFactory(TextFieldTableCell.forTableColumn(new BigDecimalStringConverter()));
-        freightOutPerUnitColumn.setCellFactory(TextFieldTableCell.forTableColumn(new BigDecimalStringConverter()));
-        firstReceiverColumn.setCellFactory(TextFieldTableCell.forTableColumn(new BigDecimalStringConverter()));
+        rtmNameCol1.setCellFactory(TextFieldTableCell.forTableColumn());
+        slottingPerSkuCol.setCellFactory(TextFieldTableCell.forTableColumn(new BigDecimalStringConverter()));
+        freightOutPerUnitCol.setCellFactory(TextFieldTableCell.forTableColumn(new BigDecimalStringConverter()));
+        firstReceiverCol.setCellFactory(TextFieldTableCell.forTableColumn(new BigDecimalStringConverter()));
         secondReceiverColumn.setCellFactory(TextFieldTableCell.forTableColumn(new BigDecimalStringConverter()));
         thirdReceiverColumn.setCellFactory(TextFieldTableCell.forTableColumn(new BigDecimalStringConverter()));
         fourthReceiverColumn.setCellFactory(TextFieldTableCell.forTableColumn(new BigDecimalStringConverter()));
         landedStoreCostColumn.setCellFactory(tc->new CustomNonEditCell("$",""));
-        resultingEverydayRetailCalcdColumn.setCellFactory(tc->new CustomNonEditCell("$", ""));
+        everydayRetailCalcdCol.setCellFactory(tc->new CustomNonEditCell("$", ""));
 //                TextFieldTableCell.forTableColumn(new BigDecimalStringConverter()));
-        resultingEverydayRetailOverrideColumn.setCellFactory(TextFieldTableCell.forTableColumn(new BigDecimalStringConverter()));
-        elasticizedEstimatedUnitVelocityColumn.setCellFactory(tc->new CustomNonEditCell(""," U/S/F/W"));
-        estimatedAnnualVolumePerSkuColumn.setCellFactory(tc->new TableCell<>(){
+        everydayRetailOverrideCol.setCellFactory(TextFieldTableCell.forTableColumn(new BigDecimalStringConverter()));
+        elasticizedUnitVelocityColumn.setCellFactory(tc->new CustomNonEditCell(""," U/S/F/W"));
+        annualVolumePerSkuColumn.setCellFactory(tc->new TableCell<>(){
             @Override
         protected void updateItem(BigDecimal item, boolean empty) {
             super.updateItem(item, empty);
@@ -884,7 +1098,7 @@ Return Value from Year One Store Count
             }
         }});
         slottingPaybackPeriodColumn.setCellFactory(tc->new CustomNonEditCell("", " Years"));
-        postFreightPostSpoilsWeCollectPerUnitColumn.setCellFactory(tc->new CustomNonEditCell("$", " Per Unit"));
+        postFreightPostSpoilsPerUnitCol.setCellFactory(tc->new CustomNonEditCell("$", " Per Unit"));
         unspentTradePerUnitColumn.setCellFactory(tc->new CustomNonEditCell("$", " Per Unit"));
         fourYearEqGpPerSkuColumn.setCellFactory(tc->new CustomNonEditCell("$", " Per Sku"));
         fourYearEqGpPerUnitColumn.setCellFactory(tc->new CustomNonEditCell("$", " Per Unit"));

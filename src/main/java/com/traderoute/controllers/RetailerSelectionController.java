@@ -86,6 +86,7 @@ public class RetailerSelectionController implements Initializable {
 
 
     private SimpleObjectProperty<Retailer> currentRetailer = new SimpleObjectProperty<>();
+    private Retailer retailer;
 
 
     @Override
@@ -223,7 +224,7 @@ public class RetailerSelectionController implements Initializable {
             FXMLLoader secondTableLoader = App.createFXMLLoader("secondTable");
             App.setSceneRoot(secondTableLoader.load());
 
-            firstTableController firstTableController = secondTableLoader.getController();
+            RTMPlanningController firstTableController = secondTableLoader.getController();
             firstTableController.setRetailer(currentRetailer.get());
         }
     }
@@ -242,4 +243,11 @@ public class RetailerSelectionController implements Initializable {
     }
 
 
+    public void setRetailer(Retailer retailer) {
+        this.retailer = retailer;
+    }
+
+    public Retailer getRetailer() {
+        return retailer;
+    }
 }
