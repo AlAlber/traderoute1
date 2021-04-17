@@ -12,7 +12,7 @@ public class RTMOption {
     private SimpleIntegerProperty yearOneStoreCount;
     private SimpleObjectProperty<BigDecimal> slottingPerSku, freightOutPerUnit, firstReceiver,
             secondReceiver, thirdReceiver, fourthReceiver, landedStoreCost,
-            resultingEverydayRetailCalcd, resultingEverydayRetailOverride,
+            everydayRetailCalcd, resultingEverydayRetailOverride,
             elasticizedUnitVelocity, slottingPaybackPeriod,
             postFreightPostSpoilsWeCollectPerUnit, unspentTradePerUnit, fourYearEqGpPerSku, fourYearEqGpPerUnit,
             minOverride,weeklyUSFWAtMin, everydayGPM, spoilsAndFees, annualVolumePerSku;
@@ -27,7 +27,7 @@ public class RTMOption {
         this.thirdReceiver = new SimpleObjectProperty<BigDecimal>();
         this.fourthReceiver = new SimpleObjectProperty<BigDecimal>();
         this.landedStoreCost = new SimpleObjectProperty<BigDecimal>();
-        this.resultingEverydayRetailCalcd = new SimpleObjectProperty<BigDecimal>();
+        this.everydayRetailCalcd = new SimpleObjectProperty<BigDecimal>();
         this.resultingEverydayRetailOverride = new SimpleObjectProperty<BigDecimal>();
         this.minOverride = new SimpleObjectProperty<>();
         this.weeklyUSFWAtMin = new SimpleObjectProperty<>();
@@ -61,7 +61,7 @@ public class RTMOption {
         this.thirdReceiver = new SimpleObjectProperty<BigDecimal>(thirdReceiver);
         this.fourthReceiver = new SimpleObjectProperty<BigDecimal>(fourthReceiver);
         this.landedStoreCost = new SimpleObjectProperty<BigDecimal>();
-        this.resultingEverydayRetailCalcd = new SimpleObjectProperty<BigDecimal>();
+        this.everydayRetailCalcd = new SimpleObjectProperty<BigDecimal>();
         this.resultingEverydayRetailOverride = new SimpleObjectProperty<BigDecimal>();
         this.elasticizedUnitVelocity = new SimpleObjectProperty<BigDecimal>();
         this.annualVolumePerSku = new SimpleObjectProperty<>();
@@ -92,7 +92,7 @@ public class RTMOption {
         this.thirdReceiver = new SimpleObjectProperty<BigDecimal>();
         this.fourthReceiver = new SimpleObjectProperty<BigDecimal>();
         this.landedStoreCost = new SimpleObjectProperty<BigDecimal>();
-        this.resultingEverydayRetailCalcd = new SimpleObjectProperty<BigDecimal>();
+        this.everydayRetailCalcd = new SimpleObjectProperty<BigDecimal>();
         this.resultingEverydayRetailOverride = new SimpleObjectProperty<BigDecimal>();
         this.elasticizedUnitVelocity = new SimpleObjectProperty<BigDecimal>();
         this.annualVolumePerSku = new SimpleObjectProperty<>();
@@ -135,7 +135,7 @@ public class RTMOption {
                 getLandedStoreCost().compareTo(new BigDecimal("0.0"))>0){
             BigDecimal newValue = (getLandedStoreCost().multiply(new BigDecimal("100")))
                     .divide((getEverydayGPM().subtract(new BigDecimal("100"))), 10, RoundingMode.HALF_UP).abs();
-            setResultingEverydayRetailCalcd(newValue);
+            setEverydayRetailCalcd(newValue);
             setResultingEverydayRetailOverride(newValue);
         }
     }
@@ -491,21 +491,21 @@ public class RTMOption {
     }
 
     public BigDecimal getEverydayRetailCalcd() {
-        if (resultingEverydayRetailCalcd.get() == null) {
+        if (everydayRetailCalcd.get() == null) {
             return new BigDecimal("0.0");
         }
-        return resultingEverydayRetailCalcd.get();
+        return everydayRetailCalcd.get();
     }
 
-    public SimpleObjectProperty<BigDecimal> resultingEverydayRetailCalcdProperty() {
-        if (resultingEverydayRetailCalcd == null) {
+    public SimpleObjectProperty<BigDecimal> everydayRetailCalcdProperty() {
+        if (everydayRetailCalcd == null) {
             return new SimpleObjectProperty<BigDecimal>(new BigDecimal("0.0"));
         }
-        return resultingEverydayRetailCalcd;
+        return everydayRetailCalcd;
     }
 
-    public void setResultingEverydayRetailCalcd(BigDecimal resultingEverydayRetailCalcd) {
-        this.resultingEverydayRetailCalcd.set(resultingEverydayRetailCalcd);
+    public void setEverydayRetailCalcd(BigDecimal everydayRetailCalcd) {
+        this.everydayRetailCalcd.set(everydayRetailCalcd);
     }
 
     public BigDecimal getResultingEverydayRetailOverride() {
