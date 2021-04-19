@@ -244,6 +244,7 @@ public class RetailerSelectionController implements Initializable {
 
 
     public void setRetailer(Retailer retailer) {
+
         this.retailer = retailer;
     }
 

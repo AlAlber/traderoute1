@@ -124,6 +124,7 @@ public class MenuController implements Initializable {
         ObservableList<Retailer> retailers = FXCollections.observableArrayList();
         retailers.add(new Retailer("Ahold Giant",getRetailerProducts(),0, new BigDecimal("40"), 158, new BigDecimal("3.0")));
         retailers.add(new Retailer("Ahold Small",getDifferentRetailerProducts(),1, new BigDecimal("40"), 183, new BigDecimal("3.0")));
+        retailers.add(new Retailer("New Retailer",getTestRetailerProducts(),1, new BigDecimal("40"), 183, new BigDecimal("3.0")));
 //        retailers.add(new Retailer());
         return retailers;
     }
@@ -150,6 +151,18 @@ public class MenuController implements Initializable {
         optionFour.setRTMName("Option4");
         RTMOptions.add(optionFour);
         return RTMOptions;
+    }
+    public static ObservableList<RTMOption> getTestRTMOptions() {
+        RTMOption rtmOption1 = new RTMOption();
+        rtmOption1.setRTMName("Option 1");
+        rtmOption1.setFirstReceiver(new BigDecimal("3.59"));
+        RTMOption rtmOption2 = new RTMOption();
+        rtmOption2.setRTMName("Option 2");
+        RTMOption rtmOption3 = new RTMOption();
+        rtmOption3.setRTMName("Option 3");
+        RTMOption rtmOption4 = new RTMOption();
+        rtmOption4.setRTMName("Option 4");
+        return FXCollections.observableArrayList(rtmOption1, rtmOption2, rtmOption3, rtmOption4);
     }
     /*
     Loads dummy table data
@@ -216,6 +229,21 @@ public class MenuController implements Initializable {
         retailerProducts.add(new RetailerProduct(getExampleProducts().get(0), getRTMOptions(), skus,meetings, getDummyPromoPlans()));
         return retailerProducts;
     }
+
+    /**
+     * Only difference so far is that RTM Optiosn are getTestRTMOptions
+     *
+     * @return
+     */
+    public ObservableList<RetailerProduct> getTestRetailerProducts() {
+        ObservableList<RetailerProduct> retailerProducts = FXCollections.observableArrayList();
+        ObservableList<Sku> skus = FXCollections.observableArrayList(getExampleSkus().get(0), getExampleSkus().get(1), getExampleSkus().get(2), getExampleSkus().get(3), getExampleSkus().get(4));
+        ObservableList<Meeting>  meetings = FXCollections.observableArrayList();
+        meetings.addAll(new Meeting("Review Meeting", "here", LocalDate.of(2022,12,5), "11:15","will be fun"), new Meeting());
+        retailerProducts.add(new RetailerProduct(getExampleProducts().get(0), getTestRTMOptions(), skus,meetings, getDummyPromoPlans()));
+        return retailerProducts;
+    }
+
     static Date convertToDate(LocalDate dateToConvert) {
         return java.sql.Date.valueOf(dateToConvert);
     }

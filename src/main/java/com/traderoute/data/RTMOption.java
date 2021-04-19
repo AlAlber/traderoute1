@@ -131,6 +131,7 @@ public class RTMOption {
         }));
     }
     public void updateResultingEverydayRetailCald(){
+        System.out.println("is this being done");
         if (getEverydayGPM().compareTo(new BigDecimal("0.0"))>0 &&
                 getLandedStoreCost().compareTo(new BigDecimal("0.0"))>0){
             BigDecimal newValue = (getLandedStoreCost().multiply(new BigDecimal("100")))

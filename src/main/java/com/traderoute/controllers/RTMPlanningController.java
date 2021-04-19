@@ -25,6 +25,9 @@ import java.time.LocalDate;
 import java.util.*;
 import java.util.function.UnaryOperator;
 import java.util.regex.Pattern;
+
+import static javafx.collections.FXCollections.*;
+import static javafx.scene.chart.XYChart.*;
 //<a href="#{@link}">{@link URL}</a>
 
 /**
@@ -399,27 +402,40 @@ public class RTMPlanningController implements Initializable {
     private Label elasticityRatioLabel;
 
     /**
+     * Indexes for each chart to determine which to update
+     */
+    private final int landedStoreCostChartIndex = 0;
+    private final int everydayRetailCalcdChartIndex = 1;
+    private final int elasticizedUnitVelocityChartIndex = 2;
+    private final int annualVolumePerSkuChartIndex = 3;
+    private final int slottingPaybackPeriodChartIndex = 4;
+    private final int postSpoilsPostFreightChartIndex = 5;
+    private final int unspentTradePerUnitChartIndex = 6;
+    private final int fourYearEqGpPerSkuChartIndex = 7;
+    private final int fourYearEqGpPerUnitChartIndex = 8;
+
+    /**
      * BarCharts to display relevant table data. X-Axis has
      * RTM Option Name, Y-Axis the respective value.
      */
     @FXML
-    private BarChart<?, ?> landedStoreCostChart;
+    private BarChart<String, BigDecimal> landedStoreCostChart;
     @FXML
-    private BarChart<?, ?> everydayRetailCalcdChart;
+    private BarChart<String, BigDecimal> everydayRetailCalcdChart;
     @FXML
-    private BarChart<?, ?> elasticizedUnitVelocityChart;
+    private BarChart<String, BigDecimal> elasticizedUnitVelocityChart;
     @FXML
-    private BarChart<?, ?> annualVolumePerSkuChart;
+    private BarChart<String, BigDecimal> annualVolumePerSkuChart;
     @FXML
-    private BarChart<?, ?> slottingPaybackPeriodChart;
+    private BarChart<String, BigDecimal> slottingPaybackPeriodChart;
     @FXML
-    private BarChart<?, ?> unspentTradePerUnitChart;
+    private BarChart<String, BigDecimal> unspentTradePerUnitChart;
     @FXML
-    private BarChart<?, ?> postSpoilsPostFreightChart;
+    private BarChart<String, BigDecimal> postSpoilsPostFreightChart;
     @FXML
-    private BarChart<?, ?> fourYearEqGpPerSkuChart;
+    private BarChart<String, BigDecimal> fourYearEqGpPerSkuChart;
     @FXML
-    private BarChart<?, ?> fourYearEqGpPerUnitChart;
+    private BarChart<String, BigDecimal> fourYearEqGpPerUnitChart;
 
     /**
      * Called when new page is created from FXML.
@@ -479,24 +495,24 @@ public class RTMPlanningController implements Initializable {
 
 
         // Set Bar Chart
-        landedStoreCostChart.setData(FXCollections.observableArrayList(
-                new XYChart.Series[]{getChartData(1)}));
-        everydayRetailCalcdChart.setData(FXCollections.observableArrayList(
-                new XYChart.Series[]{getChartData(2)}));
-        elasticizedUnitVelocityChart.setData(FXCollections.observableArrayList(
-                new XYChart.Series[]{getChartData(3)}));
-        annualVolumePerSkuChart.setData(FXCollections.observableArrayList(
-                new XYChart.Series[]{getChartData(4)}));
-        slottingPaybackPeriodChart.setData(FXCollections.observableArrayList(
-                new XYChart.Series[]{getChartData(5)}));
-        postSpoilsPostFreightChart.setData(FXCollections.observableArrayList(
-                new XYChart.Series[]{getChartData(6)}));
-        unspentTradePerUnitChart.setData(FXCollections.observableArrayList(
-                new XYChart.Series[]{getChartData(7)}));
-        fourYearEqGpPerSkuChart.setData(FXCollections.observableArrayList(
-                new XYChart.Series[]{getChartData(8)}));
-        fourYearEqGpPerUnitChart.setData(FXCollections.observableArrayList(
-                new XYChart.Series[]{getChartData(9)}));
+        landedStoreCostChart.setData(observableArrayList(
+                new Series[]{getChartData(0)}));
+        everydayRetailCalcdChart.setData(observableArrayList(
+                new Series[]{getChartData(1)}));
+        elasticizedUnitVelocityChart.setData(observableArrayList(
+                new Series[]{getChartData(2)}));
+        annualVolumePerSkuChart.setData(observableArrayList(
+                new Series[]{getChartData(3)}));
+        slottingPaybackPeriodChart.setData(observableArrayList(
+                new Series[]{getChartData(4)}));
+        postSpoilsPostFreightChart.setData(observableArrayList(
+                new Series[]{getChartData(5)}));
+        unspentTradePerUnitChart.setData(observableArrayList(
+                new Series[]{getChartData(6)}));
+        fourYearEqGpPerSkuChart.setData(observableArrayList(
+                new Series[]{getChartData(7)}));
+        fourYearEqGpPerUnitChart.setData(observableArrayList(
+                new Series[]{getChartData(8)}));
 
         // Add Labels to list, give them tooltips
         setToolTipsTable1And2();
@@ -526,21 +542,33 @@ public class RTMPlanningController implements Initializable {
             row.setupListeners();
             row.landedStoreCostProperty().addListener((
                 (arg, oldVal, newVal) -> {
-                updateChart(true, false, false,
-                        false, false, false, false,
-                        false, false);
+                    updateChart(observableArrayList(landedStoreCostChart));
+//                updateChart(true, false, false,
+//                        false, false, false, false,
+//                        false, false);
             }));
             row.RTMNameProperty().addListener(((arg, oldVal, newVal) -> {
-                updateChart(true, true, true,
-                        true, true, true,
-                        true, true, true);
+                ArrayList<Integer> chartsToUpdate= new ArrayList<>();
+                for (int i = 0; i < 9; i++) {
+                   chartsToUpdate.add(i);
+                }
+                updateChart(observableArrayList(landedStoreCostChart,
+                        everydayRetailCalcdChart,elasticizedUnitVelocityChart,
+                        annualVolumePerSkuChart,slottingPaybackPeriodChart,
+                        postSpoilsPostFreightChart, unspentTradePerUnitChart,
+                        fourYearEqGpPerSkuChart,fourYearEqGpPerUnitChart));
+//                        updateChart(new ArrayList<>(landedStoreCostChartIndex));
+//                        true, true, true,
+//                        true, true, true,
+//                        true, true, true);
             }));
             row.everydayRetailCalcdProperty().
                     addListener(((arg, oldVal, newVal) -> {
                 maxOverrideLabel.setText("of $" + getMinOverride());
-                updateChart(false, true, false,
-                        false, false, false, false,
-                        false, false);
+                updateChart(observableArrayList(everydayRetailCalcdChart));
+//                updateChart(false, true, false,
+//                        false, false, false, false,
+//                        false, false);
             }));
             row.resultingEverydayRetailOverrideProperty()
                     .addListener(((arg, oldVal, newVal) -> {
@@ -563,9 +591,9 @@ public class RTMPlanningController implements Initializable {
     public static  ObservableList<Product> getUniqueBrandNames(
             final ObservableList<Product> products) {
         ObservableList<Product> uniqueBrandNames =
-                FXCollections.observableArrayList();
+                observableArrayList();
         ObservableList<String> uniqueBrandNameStrs =
-                FXCollections.observableArrayList();
+                observableArrayList();
         for (Product product : products) {
             if (!uniqueBrandNameStrs.contains(product.getBrandName())) {
                 uniqueBrandNameStrs.add(product.getBrandName());
@@ -583,7 +611,7 @@ public class RTMPlanningController implements Initializable {
     public static ObservableList<Product> getCorrectProductClasses(
             final ObservableList<Product> products) {
         ObservableList<Product> correspondingProductClasses =
-                FXCollections.observableArrayList();
+                observableArrayList();
         //Set up product combobox and make it display product class
         for (Product product : products) {
             if (product.getBrandName().equals(product.getBrandName())) {
@@ -609,6 +637,7 @@ public class RTMPlanningController implements Initializable {
                 getCorrectProductClasses(
                         MenuController.getExampleProducts());
         productClassBox.setItems(productsWithBrandName);
+        // Change this to get the retailerProduct
     }
     /**
     * A different option was chosen from the product combo box now
@@ -674,8 +703,12 @@ public class RTMPlanningController implements Initializable {
         rtmPlanningTable2.setItems(getRetailer().getRetailerProducts()
                 .get(productIndex).getRtmOptions());
         rtmPlanningTable2.refresh();
-        updateChart(false, false, false, false,
-                true, true, true, true, true);
+        setUpListeners();
+//        updateChart(observableArrayList(slottingPaybackPeriodChart,
+//                postSpoilsPostFreightChart, unspentTradePerUnitChart,
+//                fourYearEqGpPerSkuChart, fourYearEqGpPerUnitChart));
+//        updateChart(false, false, false, false,
+//                true, true, true, true, true);
 //        this.retailer.set(retailer);
         ObservableList<RetailerProduct> retailerProducts =
                 getRetailer().getRetailerProducts();
@@ -711,9 +744,15 @@ public class RTMPlanningController implements Initializable {
                             .HALF_UP));
             maxReceivers(row);
             row.updateResultingEverydayRetailCald();
-            updateChart(true, true, true, true, true,
-                    true, true, true, true);
+
+//            updateChart(true, true, true, true, true,
+//                    true, true, true, true);
         }
+        updateChart(observableArrayList(landedStoreCostChart,
+                everydayRetailCalcdChart, elasticizedUnitVelocityChart,
+                annualVolumePerSkuChart, slottingPaybackPeriodChart,
+                postSpoilsPostFreightChart, unspentTradePerUnitChart,
+                fourYearEqGpPerSkuChart, fourYearEqGpPerUnitChart));
         rtmPlanningTable2.setVisible(false);
         rtmPlanningTable2.setVisible(true);
         rtmPlanningTable2.refresh();
@@ -747,8 +786,14 @@ public class RTMPlanningController implements Initializable {
             row.setWeeklyUSFWAtMin(getWeeklyUSFWAtMin());
         }
         rtmPlanningTable2.refresh();
-        updateChart(false, false, true, true,
-                true, true, true, true, true);
+
+        updateChart(observableArrayList(
+                elasticizedUnitVelocityChart,annualVolumePerSkuChart,
+                slottingPaybackPeriodChart, postSpoilsPostFreightChart,
+                unspentTradePerUnitChart, fourYearEqGpPerSkuChart,
+                fourYearEqGpPerUnitChart));
+//        updateChart(false, false, true, true,
+//                true, true, true, true, true);
     }
     /**
     * Get elasticized velocities from weeklyUSFWAtMin Field  and do
@@ -771,8 +816,13 @@ public class RTMPlanningController implements Initializable {
                 + ", annual Volume= " + rtmOptionSelected
                 .getAnnualVolumePerSku());
         rtmPlanningTable2.refresh();
-        updateChart(false, false, true, true,
-                true, true, true, true, true);
+        updateChart(observableArrayList(
+                elasticizedUnitVelocityChart,annualVolumePerSkuChart,
+                slottingPaybackPeriodChart, postSpoilsPostFreightChart,
+                unspentTradePerUnitChart, fourYearEqGpPerSkuChart,
+                fourYearEqGpPerUnitChart));
+//        updateChart(false, false, true, true,
+//                true, true, true, true, true);
     }
 
     /**
@@ -785,8 +835,12 @@ public class RTMPlanningController implements Initializable {
             row.setYearOneStoreCount(getYearOneStoreCount());
         }
         rtmPlanningTable2.refresh();
-        updateChart(false, false, false, true,
-                true, true, true, true, true);
+        updateChart(observableArrayList(annualVolumePerSkuChart,
+                slottingPaybackPeriodChart, postSpoilsPostFreightChart,
+                unspentTradePerUnitChart, fourYearEqGpPerSkuChart,
+                fourYearEqGpPerUnitChart));
+//        updateChart(false, false, false, true,
+//                true, true, true, true, true);
     }
     /**
     * //TODO Set RetailerProduct EverydayGpm.
@@ -796,8 +850,10 @@ public class RTMPlanningController implements Initializable {
         for (RTMOption row : rtmPlanningTable1.getItems()) {
             row.setEverydayGPM(this.getEveryDayGpm());
         }
-        updateChart(false, true, false, false,
-                false, false, false, false, false);
+        updateChart(observableArrayList(
+                everydayRetailCalcdChart));
+//        updateChart(false, true, false, false,
+//                false, false, false, false, false);
     }
     /**
      * //TODO Set RetailerProduct Spoils Fees.
@@ -810,8 +866,11 @@ public class RTMPlanningController implements Initializable {
                     .divide((new BigDecimal("100")), divisionScale, RoundingMode
                             .HALF_UP));
         }
-        updateChart(false, false, false, false,
-                true, true, true, true, true);
+        updateChart(observableArrayList(slottingPaybackPeriodChart,
+                postSpoilsPostFreightChart, unspentTradePerUnitChart,
+                fourYearEqGpPerSkuChart, fourYearEqGpPerUnitChart));
+//        updateChart(false, false, false, false,
+//                true, true, true, true, true);
     }
     /**
      * Slotting per Sku input registered from tableview cell, update
@@ -826,9 +885,12 @@ public class RTMPlanningController implements Initializable {
                 new BigDecimal(editedCell.getNewValue().toString()));
         rtmPlanningTable2.setItems(rtmPlanningTable1.getItems());
         rtmPlanningTable2.refresh();
-        updateChart(false, false, false,
-                false, true, true, true,
-                true, true);
+        updateChart(observableArrayList(slottingPaybackPeriodChart,
+                postSpoilsPostFreightChart, unspentTradePerUnitChart,
+                fourYearEqGpPerSkuChart, fourYearEqGpPerUnitChart));
+//        updateChart(false, false, false,
+//                false, true, true, true,
+//                true, true);
     }
 
     /**
@@ -843,10 +905,16 @@ public class RTMPlanningController implements Initializable {
                 .getSelectionModel().getSelectedItem();
         rtmOptionSelected.setFreightOutPerUnit(
                 new BigDecimal(editedCell.getNewValue().toString()));
-        updateChart(false, false, false,
-                false, true, true, true,
-                true, true);
+
+        updateChart(observableArrayList(slottingPaybackPeriodChart,
+                        postSpoilsPostFreightChart, unspentTradePerUnitChart,
+                        fourYearEqGpPerSkuChart, fourYearEqGpPerUnitChart));
+//        updateChart(false, false, false,
+//                false, true, true, true,
+//                true, true);
     }
+
+
     /**
      * First Receiver Pays (Money that first Receiver (ex. KeHE)
      * pays per unit) input registered from tableview cell, set
@@ -860,8 +928,9 @@ public class RTMPlanningController implements Initializable {
         rtmOptionSelected.setFirstReceiver(
                 new BigDecimal(editedCell.getNewValue().toString()));
         maxReceivers(rtmOptionSelected);
-        updateChart(false, false, false, false,
-                true, true, true, true, true);
+        updateChart(observableArrayList(slottingPaybackPeriodChart,
+                        postSpoilsPostFreightChart, unspentTradePerUnitChart,
+                        fourYearEqGpPerSkuChart, fourYearEqGpPerUnitChart));
     }
     /**
      * Second Receiver Pays (Money that second Receiver (ex. KeHE)
@@ -960,61 +1029,94 @@ public class RTMPlanningController implements Initializable {
         }
         return new BigDecimal(weeklyUfswAtMinField.getText());
     }
+    /**
+     *
+     * @return
+     */
+    public ArrayList<Boolean> createNewBooleanList(final ArrayList<Integer> chartsToUpdate) {
+        ArrayList<Boolean> list = new ArrayList<Boolean>(Arrays.asList(new Boolean[9]));
+        Collections.fill(list, false);
+        for (Integer chartToUpdateIndex: chartsToUpdate) {
+            list.set(chartToUpdateIndex, true);
+        }
+        return list;
+    }
 
     /**
-     * Updates selected bar charts.
+     *
+     * @param chartNumber chart to update, equal to one of the
+     *                    static indexes.
+     * @param chartToUpdate chart that should be updated
+     * @param chartsToUpdate Boolean array containing all charts
+     *                      which should be updated. Only update a
+     *                       chart if the index in the List is not
+     *                       true.
      */
-    public void updateChart(final boolean lSC,
-                            final boolean eRC, final boolean eUV,
-                            final boolean aVS, final boolean sPP,
-                            final boolean pFPS, final boolean uTPU,
-                            final boolean fYEQS, final boolean fYEQU){
-        if (lSC) {
-            landedStoreCostChart.getData().clear();
-            landedStoreCostChart.setData(
-                    FXCollections.observableArrayList(
-                            new XYChart.Series[]{getChartData(1)}));
-        } if (eRC){
-            everydayRetailCalcdChart.getData().clear();
-            everydayRetailCalcdChart.setData(
-                    FXCollections.observableArrayList(
-                            new XYChart.Series[]{getChartData(2)}));
-        } if (eUV) {
-            elasticizedUnitVelocityChart.getData().clear();
-            elasticizedUnitVelocityChart.setData(
-                    FXCollections.observableArrayList(
-                            new XYChart.Series[]{getChartData(3)}));
-        }if (aVS) {
-            annualVolumePerSkuChart.getData().clear();
-            annualVolumePerSkuChart.setData(
-                    FXCollections.observableArrayList(
-                            new XYChart.Series[]{getChartData(4)}));
-        }if (sPP) {
-            slottingPaybackPeriodChart.getData().clear();
-            slottingPaybackPeriodChart.setData(
-                    FXCollections.observableArrayList(
-                            new XYChart.Series[]{getChartData(5)}));
-        }if (pFPS) {
-            postSpoilsPostFreightChart.getData().clear();
-            postSpoilsPostFreightChart.setData(
-                    FXCollections.observableArrayList(
-                            new XYChart.Series[]{getChartData(6)}));
-        }if (uTPU) {
-            unspentTradePerUnitChart.getData().clear();
-            unspentTradePerUnitChart.setData(
-                    FXCollections.observableArrayList(
-                            new XYChart.Series[]{getChartData(7)}));
-        }if (fYEQS) {
-            fourYearEqGpPerSkuChart.getData().clear();
-            fourYearEqGpPerSkuChart.setData(
-                    FXCollections.observableArrayList(
-                            new XYChart.Series[]{getChartData(8)}));
-        }if (fYEQU) {
-            fourYearEqGpPerUnitChart.getData().clear();
-            fourYearEqGpPerUnitChart.setData(
-                    FXCollections.observableArrayList(
-                            new XYChart.Series[]{getChartData(9)}));
-        }
+    private void updateSingleChart(final int chartNumber,
+                                   final BarChart<?, ?> chartToUpdate,
+                                   final ObservableList<BarChart<?,?>> chartsToUpdate) {
+//        if (chartsToUpdate.contains(chartNumber)) {
+//            System.out.println("failing or herrrrr");
+//            if (chartToUpdate != null) {
+//                chartToUpdate.getData().clear();
+//            } else {
+//                System.out.println(chartNumber);
+//            }
+//            System.out.println("failing herrrr");
+            chartToUpdate.setData(
+                    observableArrayList(
+                            new Series[]{
+                                    getChartData(chartNumber)}));
+//        }
+    }
+    /**
+     * Updates selected bar charts.
+     * @param chartsToUpdate a list of all charts that should be updated;
+     */
+    public void updateChart(
+            final ObservableList<BarChart<?, ?>> chartsToUpdate) {
+//        for (int chartNumber = 0; chartNumber < chartsToUpdate.size();
+//             chartNumber++) {
+            if (chartsToUpdate.contains(landedStoreCostChart)) {
+                updateSingleChart(landedStoreCostChartIndex,
+                        landedStoreCostChart, chartsToUpdate);
+            }
+            if (chartsToUpdate.contains(everydayRetailCalcdChart)) {
+                updateSingleChart(everydayRetailCalcdChartIndex,
+                        everydayRetailCalcdChart, chartsToUpdate);
+            }
+            if (chartsToUpdate.contains(elasticizedUnitVelocityChart)) {
+                updateSingleChart(elasticizedUnitVelocityChartIndex,
+                        elasticizedUnitVelocityChart, chartsToUpdate);
+            }
+            if (chartsToUpdate.contains(annualVolumePerSkuChart)) {
+                updateSingleChart(annualVolumePerSkuChartIndex,
+                        annualVolumePerSkuChart, chartsToUpdate);
+            }
+            if (chartsToUpdate.contains(slottingPaybackPeriodChart)) {
+                updateSingleChart(slottingPaybackPeriodChartIndex,
+                        slottingPaybackPeriodChart, chartsToUpdate);
+            }
+            if (chartsToUpdate.contains(postSpoilsPostFreightChart)) {
+                updateSingleChart(postSpoilsPostFreightChartIndex,
+                        postSpoilsPostFreightChart, chartsToUpdate);
+            }
+            if (chartsToUpdate.contains(unspentTradePerUnitChart)) {
+                updateSingleChart(unspentTradePerUnitChartIndex,
+                        unspentTradePerUnitChart, chartsToUpdate);
+            }
+            if (chartsToUpdate.contains(fourYearEqGpPerSkuChart)) {
+                updateSingleChart(fourYearEqGpPerSkuChartIndex,
+                        fourYearEqGpPerSkuChart, chartsToUpdate);
+            }
+            if (chartsToUpdate.contains(fourYearEqGpPerUnitChart)) {
+                updateSingleChart(fourYearEqGpPerUnitChartIndex,
+                        fourYearEqGpPerUnitChart, chartsToUpdate);
+            }
+            else {
+                System.out.println(chartsToUpdate);
+            }
+//        }
     }
     /**
      *
@@ -1022,49 +1124,50 @@ public class RTMPlanningController implements Initializable {
      * @return XYChart.Series<?, ?> chartData for BarChart.
      */
     public XYChart.Series<?, ?> getChartData(final int chartNumber) {
-        XYChart.Series<String, BigDecimal> barChartData = new XYChart.Series();
+        XYChart.Series<String, BigDecimal> barChartData = new Series();
         for (RTMOption row : rtmPlanningTable1.getItems()) {
             switch (chartNumber) {
-                case 1:
-                    barChartData.getData().add(new XYChart.Data(
+                case 0:
+                    barChartData.getData().add(new Data(
                             row.getRTMName(), row.getLandedStoreCost()));
                     break;
-                case 2:
-                    barChartData.getData().add(new XYChart.Data(
+                case 1:
+                    barChartData.getData().add(new Data(
                             row.getRTMName(), row.getEverydayRetailCalcd()));
                     break;
-                case 3:
-                    barChartData.getData().add(new XYChart.Data(
+                case 2:
+                    barChartData.getData().add(new Data(
                             row.getRTMName(),
                             row.getElasticizedUnitVelocity()));
                     break;
-                case 4:
-                    barChartData.getData().add(new XYChart.Data(
+                case 3:
+                    barChartData.getData().add(new Data(
                             row.getRTMName(), row.getAnnualVolumePerSku()));
                     break;
-                case 5:
-                    barChartData.getData().add(new XYChart.Data(
+                case 4:
+                    barChartData.getData().add(new Data(
                             row.getRTMName(), row.getSlottingPaybackPeriod()));
                     break;
-                case 6:
-                    barChartData.getData().add(new XYChart.Data(
+                case 5:
+                    barChartData.getData().add(new Data(
                             row.getRTMName(),
                             row.getPostFreightPostSpoilsWeCollectPerUnit()));
                     break;
-                case 7:
-                    barChartData.getData().add(new XYChart.Data(
+                case 6:
+                    barChartData.getData().add(new Data(
                             row.getRTMName(), row.getUnspentTradePerUnit()));
                     break;
-                case 8:
-                    barChartData.getData().add(new XYChart.Data(
+                case 7:
+                    barChartData.getData().add(new Data(
                             row.getRTMName(), row.getFourYearEqGpPerSku()));
                     break;
-                case 9 :
-                    barChartData.getData().add(new XYChart.Data(
+                case 8:
+                    barChartData.getData().add(new Data(
                             row.getRTMName(), row.getFourYearEqGpPerUnit()));
                     break;
                 default:
-                    System.out.println("ERROR: no such barchart");
+                    System.out.println("ERROR: no such barchart"+
+                            chartNumber);
                     break;
             }
             }
@@ -1075,7 +1178,7 @@ public class RTMPlanningController implements Initializable {
     */
     public static ObservableList<RTMOption> getRTMOptions() {
         ObservableList<RTMOption> rtmOptions =
-                FXCollections.observableArrayList();
+                observableArrayList();
         RTMOption testOption = new RTMOption("Direct-to-Customer",
                 new BigDecimal("0.29"), new BigDecimal("7500"),
                 new BigDecimal("3.59"), new BigDecimal("0.0"),
@@ -1105,9 +1208,9 @@ public class RTMPlanningController implements Initializable {
      * */
     public static ObservableList<RetailerProduct> getRetailerProducts() {
         ObservableList<RetailerProduct> retailerProducts =
-                FXCollections.observableArrayList();
-        ObservableList<Sku> skus = FXCollections.observableArrayList();
-        ObservableList<Meeting>  meetings = FXCollections.observableArrayList();
+                observableArrayList();
+        ObservableList<Sku> skus = observableArrayList();
+        ObservableList<Meeting>  meetings = observableArrayList();
         skus.addAll(new Sku("dill", "current",
                         "great taste"), new Sku("dill",
                         "current", "great taste"),
@@ -1132,7 +1235,7 @@ public class RTMPlanningController implements Initializable {
     }
     public static ObservableList<PromoPlan> getDummyPromoPlans() {
         ObservableList<PromoPlan> promoPlans =
-                FXCollections.observableArrayList();
+                observableArrayList();
         promoPlans.add(new PromoPlan(0));
         promoPlans.add(new PromoPlan(1));
         promoPlans.add(new PromoPlan(2));
@@ -1272,8 +1375,7 @@ public class RTMPlanningController implements Initializable {
                 .rtmNameProperty());
     }
 
-    /**
-     *
+    /** Sets cell factories for every column.
      */
     public void setCellFactories() {
 
@@ -1411,7 +1513,7 @@ public class RTMPlanningController implements Initializable {
         this.brandNameBox.valueProperty().setValue(currentRetailerProduct
                 .getProduct());
         this.productClassBox.setItems(getCorrectProductClasses(
-                MenuController.getExampleProducts() ));
+                MenuController.getExampleProducts()));
         this.productClassBox.valueProperty()
                 .setValue(currentRetailerProduct.getProduct());
 //        listLabel.setText("List = $" + currentRetailerProduct.getProduct().getUnitListCost());
