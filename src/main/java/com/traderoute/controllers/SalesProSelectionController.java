@@ -59,7 +59,6 @@ public class SalesProSelectionController implements Initializable {
     private Retailer emptyRetailer = new Retailer();
     private Product emptyProduct = new Product();
 
-
     @FXML
     private RadioButton committedRadiobutton;
     @FXML
@@ -73,7 +72,7 @@ public class SalesProSelectionController implements Initializable {
 
     private HostServices hostServices;
 
-//    p
+    // p
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -128,7 +127,6 @@ public class SalesProSelectionController implements Initializable {
 
         productListview.setItems(productFilterItems);
 
-
         productListview.setCellFactory(param -> new ListCell<Product>() {
             @Override
             protected void updateItem(Product item, boolean empty) {
@@ -137,7 +135,7 @@ public class SalesProSelectionController implements Initializable {
                 if (empty || item == null || item.getProductClass() == null) {
                     setText("");
                 } else {
-                    setText(item.getProductClass() + " ("+ item.getBrandName()+")" );
+                    setText(item.getProductClass() + " (" + item.getBrandName() + ")");
                     setOnMouseClicked(ev -> {
                         if (!selectedProducts.contains(item)) {
                             checkEmptyProduct(products, selectedProducts);
@@ -157,7 +155,7 @@ public class SalesProSelectionController implements Initializable {
                 if (empty || item == null || item.getProductClass() == null) {
                     setText("");
                 } else {
-                    setText(item.getProductClass() + " ("+ item.getBrandName()+")" );
+                    setText(item.getProductClass() + " (" + item.getBrandName() + ")");
                     setOnMouseClicked(ev -> {
                         if (!products.contains(item)) {
                             checkEmptyProduct(selectedProducts, products);
@@ -170,40 +168,41 @@ public class SalesProSelectionController implements Initializable {
             }
         });
         Platform.runLater(() -> {
-            Window window =  mainVbox.getScene().getWindow();
+            Window window = mainVbox.getScene().getWindow();
             window.setHeight(mainVbox.getPrefHeight());
             window.setWidth(mainVbox.getPrefWidth());
             window.centerOnScreen();
         });
     }
+
     public HostServices getHostServices() {
-        return hostServices ;
+        return hostServices;
     }
 
     public void setHostServices(HostServices hostServices) {
-        this.hostServices = hostServices ;
+        this.hostServices = hostServices;
     }
 
-
-    public void checkEmptyRetailer(ObservableList<Retailer> removedItemList,ObservableList<Retailer> addedItemList ){
-        if (removedItemList.size()==0){
+    public void checkEmptyRetailer(ObservableList<Retailer> removedItemList, ObservableList<Retailer> addedItemList) {
+        if (removedItemList.size() == 0) {
             removedItemList.add(emptyRetailer);
-        } if (addedItemList.size()==1 && addedItemList.contains(emptyRetailer)){
+        }
+        if (addedItemList.size() == 1 && addedItemList.contains(emptyRetailer)) {
             addedItemList.remove(emptyRetailer);
         }
     }
-    public void checkEmptyProduct(ObservableList<Product> removedItemList,ObservableList<Product> addedItemList ){
-        if (removedItemList.size()==0){
+
+    public void checkEmptyProduct(ObservableList<Product> removedItemList, ObservableList<Product> addedItemList) {
+        if (removedItemList.size() == 0) {
             removedItemList.add(emptyProduct);
-        } if (addedItemList.size()==1 && addedItemList.contains(emptyProduct)){
+        }
+        if (addedItemList.size() == 1 && addedItemList.contains(emptyProduct)) {
             addedItemList.remove(emptyProduct);
         }
     }
 
-
-
-    public void selectAllRetailersEvent(ActionEvent event){
-        for (int i=retailers.size()-1; i>=0 ; i--){
+    public void selectAllRetailersEvent(ActionEvent event) {
+        for (int i = retailers.size() - 1; i >= 0; i--) {
             if (!retailers.contains(emptyRetailer)) {
                 checkEmptyRetailer(retailers, selectedRetailers);
                 selectedRetailers.add(retailers.get(i));
@@ -212,8 +211,9 @@ public class SalesProSelectionController implements Initializable {
             }
         }
     }
-    public void selectAllProductsEvent(ActionEvent event){
-        for (int i=products.size()-1; i>=0 ; i--){
+
+    public void selectAllProductsEvent(ActionEvent event) {
+        for (int i = products.size() - 1; i >= 0; i--) {
             if (!products.contains(emptyProduct)) {
                 checkEmptyProduct(products, selectedProducts);
                 selectedProducts.add(products.get(i));
@@ -223,8 +223,8 @@ public class SalesProSelectionController implements Initializable {
         }
     }
 
-    public void unselectAllRetailersEvent(ActionEvent event){
-        for (int i=selectedRetailers.size()-1; i>=0 ; i--){
+    public void unselectAllRetailersEvent(ActionEvent event) {
+        for (int i = selectedRetailers.size() - 1; i >= 0; i--) {
             if (!selectedRetailers.contains(emptyRetailer)) {
                 checkEmptyRetailer(selectedRetailers, retailers);
                 retailers.add(selectedRetailers.get(i));
@@ -234,8 +234,8 @@ public class SalesProSelectionController implements Initializable {
         }
     }
 
-    public void unselectAllProductsEvent(ActionEvent event){
-        for (int i=selectedProducts.size()-1; i>=0 ; i--){
+    public void unselectAllProductsEvent(ActionEvent event) {
+        for (int i = selectedProducts.size() - 1; i >= 0; i--) {
             if (!selectedProducts.contains(emptyProduct)) {
                 checkEmptyProduct(selectedProducts, products);
                 products.add(selectedProducts.get(i));
@@ -245,32 +245,31 @@ public class SalesProSelectionController implements Initializable {
         }
     }
 
-
-
-    public void changeCommittedEvent(ActionEvent event){
-//        if (committedRadiobutton.isSelected()){
-//            committed.set(true);
-//        } else if (uncommittedRadiobutton.isSelected()){
-//            committed.set(false);
-//        } else {
-//            System.out.println("Show Notification: Neither Radio Button is selected.");
-//        }
+    public void changeCommittedEvent(ActionEvent event) {
+        // if (committedRadiobutton.isSelected()){
+        // committed.set(true);
+        // } else if (uncommittedRadiobutton.isSelected()){
+        // committed.set(false);
+        // } else {
+        // System.out.println("Show Notification: Neither Radio Button is selected.");
+        // }
     }
 
     public void switchToMenu(ActionEvent event) throws IOException {
         FXMLLoader menuLoader = App.createFXMLLoader("menu");
         App.setSceneRoot(menuLoader.load());
     }
+
     @FXML
-    public void switchToSalesProForma(ActionEvent event)throws IOException {
+    public void switchToSalesProForma(ActionEvent event) throws IOException {
         FXMLLoader salesProFormaLoader = App.createFXMLLoader("salesProForma");
         App.setSceneRoot(salesProFormaLoader.load());
 
         SalesProFormaController salesProFormaController = salesProFormaLoader.getController();
-        if (committedRadiobutton.isSelected()){
-            committed= true;
-        } else if (uncommittedRadiobutton.isSelected()){
-            committed= false;
+        if (committedRadiobutton.isSelected()) {
+            committed = true;
+        } else if (uncommittedRadiobutton.isSelected()) {
+            committed = false;
         } else {
             System.out.println("Show Notification: Neither Radio Button is selected.");
         }
@@ -314,7 +313,8 @@ public class SalesProSelectionController implements Initializable {
                 return null;
             } else {
                 final String uppercase = text.toUpperCase();
-                return (product) -> product.getProductClass().toUpperCase().contains(uppercase) || product.getBrandName().toUpperCase().contains(uppercase);
+                return (product) -> product.getProductClass().toUpperCase().contains(uppercase)
+                        || product.getBrandName().toUpperCase().contains(uppercase);
             }
         }, productSelectField.textProperty()));
         selectedProductListview.setItems(selectedProducts);

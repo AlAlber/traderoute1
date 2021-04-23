@@ -18,7 +18,6 @@ import java.math.BigDecimal;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-
 public class ProductSkuSpecificationsController implements Initializable {
 
     @FXML
@@ -93,16 +92,16 @@ public class ProductSkuSpecificationsController implements Initializable {
     @FXML
     private TableColumn<Sku, BigDecimal> unitListColumn;
 
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-//    @FXML
-//    private TableColumn<Sku, BigDecimal> grossCaseWeightColumn;
-//private SimpleIntegerProperty casePack, unitweight, grossCaseWeight;
+        // @FXML
+        // private TableColumn<Sku, BigDecimal> grossCaseWeightColumn;
+        // private SimpleIntegerProperty casePack, unitweight, grossCaseWeight;
         skuSpecificationTable.setItems(MenuController.getExtendedSkus()); // getSkus
         skuSpecificationTable.setEditable(true);
 
-        flavorDescriptionColumn.setCellValueFactory(cellData -> (ObservableValue) cellData.getValue().flavorDescriptionProperty());
+        flavorDescriptionColumn
+                .setCellValueFactory(cellData -> (ObservableValue) cellData.getValue().flavorDescriptionProperty());
         casePackColumn.setCellValueFactory(cellData -> (ObservableValue) cellData.getValue().casePackProperty());
         unitWeightColumn.setCellValueFactory(cellData -> cellData.getValue().unitWeightProperty());
         grossCaseWeightColumn.setCellValueFactory(cellData -> cellData.getValue().grossCaseWeightProperty());
@@ -115,37 +114,40 @@ public class ProductSkuSpecificationsController implements Initializable {
         unitLengthColumn.setCellValueFactory(cellData -> cellData.getValue().unitLengthProperty());
         unitWidthColumn.setCellValueFactory(cellData -> cellData.getValue().unitWidthProperty());
         unitHeightColumn.setCellValueFactory(cellData -> cellData.getValue().unitHeightProperty());
-        casesPerLayerColumn.setCellValueFactory(cellData -> (ObservableValue) cellData.getValue().casesPerLayerProperty());
-        layersPerPalletColumn.setCellValueFactory(cellData -> (ObservableValue) cellData.getValue().layersPerPalletProperty());
-        casesPerPalletColumn.setCellValueFactory(cellData -> (ObservableValue) cellData.getValue().casesPerPalletProperty());
+        casesPerLayerColumn
+                .setCellValueFactory(cellData -> (ObservableValue) cellData.getValue().casesPerLayerProperty());
+        layersPerPalletColumn
+                .setCellValueFactory(cellData -> (ObservableValue) cellData.getValue().layersPerPalletProperty());
+        casesPerPalletColumn
+                .setCellValueFactory(cellData -> (ObservableValue) cellData.getValue().casesPerPalletProperty());
         palletHeightColumn.setCellValueFactory(cellData -> cellData.getValue().palletHeightProperty());
-        palletWeightColumn.setCellValueFactory(cellData -> (ObservableValue) cellData.getValue().palletWeightProperty());
-        palletsPerTruckColumn.setCellValueFactory(cellData -> (ObservableValue) cellData.getValue().palletsPerTruckProperty());
-        deliveredShelfLifeColumn.setCellValueFactory(cellData -> (ObservableValue) cellData.getValue().deliveredShelfLifeProperty());
+        palletWeightColumn
+                .setCellValueFactory(cellData -> (ObservableValue) cellData.getValue().palletWeightProperty());
+        palletsPerTruckColumn
+                .setCellValueFactory(cellData -> (ObservableValue) cellData.getValue().palletsPerTruckProperty());
+        deliveredShelfLifeColumn
+                .setCellValueFactory(cellData -> (ObservableValue) cellData.getValue().deliveredShelfLifeProperty());
         packageUpcColumn.setCellValueFactory(cellData -> cellData.getValue().packageUpcProperty());
         caseUpcColumn.setCellValueFactory(cellData -> cellData.getValue().caseUpcProperty());
         unitListColumn.setCellValueFactory(cellData -> cellData.getValue().unitListProperty());
 
-
-
-
         flavorDescriptionColumn.setCellFactory(tc -> new CustomTextCell<>());
         casePackColumn.setCellFactory(tc -> new NumberEditCell("", ""));
         unitWeightColumn.setCellFactory(tc -> new NumberEditCell("", " lbs."));
-        grossCaseWeightColumn.setCellFactory(tc ->  new NumberEditCell("", " lbs."));
-        netCaseWeightColumn.setCellFactory((tc ->  new NumberEditCell("", " lbs.")));
+        grossCaseWeightColumn.setCellFactory(tc -> new NumberEditCell("", " lbs."));
+        netCaseWeightColumn.setCellFactory((tc -> new NumberEditCell("", " lbs.")));
         caseTareWeightColumn.setCellFactory(tc -> new NumberEditCell("", " lbs."));
-        caseCubeColumn.setCellFactory(tc ->  new NumberEditCell("", ""));
-        caseLengthColumn.setCellFactory(tc ->  new NumberEditCell("", "\""));
+        caseCubeColumn.setCellFactory(tc -> new NumberEditCell("", ""));
+        caseLengthColumn.setCellFactory(tc -> new NumberEditCell("", "\""));
         caseWidthColumn.setCellFactory(tc -> new NumberEditCell("", "\""));
-        caseHeightColumn.setCellFactory(tc ->  new NumberEditCell("", "\""));
+        caseHeightColumn.setCellFactory(tc -> new NumberEditCell("", "\""));
         unitLengthColumn.setCellFactory(tc -> new NumberEditCell("", "\""));
-        unitWidthColumn.setCellFactory(tc ->  new NumberEditCell("", "\""));
+        unitWidthColumn.setCellFactory(tc -> new NumberEditCell("", "\""));
         unitHeightColumn.setCellFactory(tc -> new NumberEditCell("", "\""));
         casesPerLayerColumn.setCellFactory(tc -> new NumberEditCell("", ""));
         layersPerPalletColumn.setCellFactory(tc -> new NumberEditCell("", ""));
         casesPerPalletColumn.setCellFactory(tc -> new NumberEditCell("", ""));
-        palletHeightColumn.setCellFactory(tc ->  new NumberEditCell("", " \""));
+        palletHeightColumn.setCellFactory(tc -> new NumberEditCell("", " \""));
         palletWeightColumn.setCellFactory(tc -> new NumberEditCell("", " lbs."));
         palletsPerTruckColumn.setCellFactory(tc -> new NumberEditCell("", ""));
         deliveredShelfLifeColumn.setCellFactory(tc -> new NumberEditCell("", " Months"));
@@ -153,7 +155,8 @@ public class ProductSkuSpecificationsController implements Initializable {
         caseUpcColumn.setCellFactory(tc -> new CustomTextCell<>());
         unitListColumn.setCellFactory(tc -> new NumberEditCell("$", ""));
     }
-    public void switchToMenu(ActionEvent event) throws IOException{
+
+    public void switchToMenu(ActionEvent event) throws IOException {
         FXMLLoader menuLoader = App.createFXMLLoader("menu");
         App.setSceneRoot(menuLoader.load());
 

@@ -27,7 +27,6 @@ import java.time.LocalDate;
 import java.util.Date;
 import java.util.ResourceBundle;
 
-
 public class AssortmentController implements Initializable {
     @FXML
     private TableView<Meeting> meetingTableView;
@@ -45,12 +44,11 @@ public class AssortmentController implements Initializable {
     @FXML
     private TableView<Sku> skuTableView;
     @FXML
-    private TableColumn<Sku,String> flavorDescriptionColumn;
+    private TableColumn<Sku, String> flavorDescriptionColumn;
     @FXML
     private TableColumn<Sku, String> statusColumn;
     @FXML
-    private TableColumn<Sku,String> skuNotesColumn;
-
+    private TableColumn<Sku, String> skuNotesColumn;
 
     @FXML
     private TextField descriptionField;
@@ -71,10 +69,9 @@ public class AssortmentController implements Initializable {
     private TextField skuNotesField;
 
     @FXML
-//    private JFXTextField jfxtest;
+    // private JFXTextField jfxtest;
 
     private SimpleObjectProperty<Retailer> retailer;
-
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -82,7 +79,7 @@ public class AssortmentController implements Initializable {
 
         setCellValueFactories();
 
-        meetingTableView.setItems(getExampleMeetings()); //TODO change to retailerproduct.getMeetings
+        meetingTableView.setItems(getExampleMeetings()); // TODO change to retailerproduct.getMeetings
         meetingTableView.setEditable(true);
         dateColumn.setEditable(false);
 
@@ -101,24 +98,26 @@ public class AssortmentController implements Initializable {
         skuTableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
         ObservableList<String> skuStatuses = FXCollections.observableArrayList();
-        skuStatuses.addAll("Current", "Targeted","Discontinued");
+        skuStatuses.addAll("Current", "Targeted", "Discontinued");
         statusBox.setItems(skuStatuses);
 
     }
-
 
     public void changeDescriptionCellEvent(TableColumn.CellEditEvent editedCell) {
         Meeting selectedMeeting = meetingTableView.getSelectionModel().getSelectedItem();
         selectedMeeting.setDescription(editedCell.getNewValue().toString());
     }
+
     public void changeLocationCellEvent(TableColumn.CellEditEvent editedCell) {
         Meeting selectedMeeting = meetingTableView.getSelectionModel().getSelectedItem();
         selectedMeeting.setLocation(editedCell.getNewValue().toString());
     }
+
     public void changeTimeCellEvent(TableColumn.CellEditEvent editedCell) {
         Meeting selectedMeeting = meetingTableView.getSelectionModel().getSelectedItem();
         selectedMeeting.setTime(editedCell.getNewValue().toString());
     }
+
     public void changeNotesCellEvent(TableColumn.CellEditEvent editedCell) {
         Meeting selectedMeeting = meetingTableView.getSelectionModel().getSelectedItem();
         selectedMeeting.setNotes(editedCell.getNewValue().toString());
@@ -128,51 +127,57 @@ public class AssortmentController implements Initializable {
         Sku selectedMeeting = skuTableView.getSelectionModel().getSelectedItem();
         selectedMeeting.setFlavorDescription(editedCell.getNewValue().toString());
     }
+
     public void changeStatusCellEvent(TableColumn.CellEditEvent editedCell) {
         Sku selectedMeeting = skuTableView.getSelectionModel().getSelectedItem();
         selectedMeeting.setStatus(editedCell.getNewValue().toString());
     }
+
     public void changeSkuNotesCellEvent(TableColumn.CellEditEvent editedCell) {
         Sku selectedMeeting = skuTableView.getSelectionModel().getSelectedItem();
         selectedMeeting.setSkuNotes(editedCell.getNewValue().toString());
     }
 
-    public String getDescription(){
-        if(descriptionField.getText()==null){
+    public String getDescription() {
+        if (descriptionField.getText() == null) {
             return "";
         }
         return descriptionField.getText();
     }
-    public LocalDate getDate(){
-//        if(convertToDate(datePicker.getValue())==null){
-//            return convertToDate(LocalDate.of(2000,10,5));
-        if(datePicker.getValue()==null){
+
+    public LocalDate getDate() {
+        // if(convertToDate(datePicker.getValue())==null){
+        // return convertToDate(LocalDate.of(2000,10,5));
+        if (datePicker.getValue() == null) {
             LocalDate date = LocalDate.of(1999, 12, 12);
             System.out.println("no correct date picked");
             return date;
         }
         return datePicker.getValue();
     }
-    public String getTime(){
-        if (timeField.getText()==null){
+
+    public String getTime() {
+        if (timeField.getText() == null) {
             return "";
         }
         return timeField.getText();
     }
-    public String getLocation(){
-        if(locationField.getText()==null){
+
+    public String getLocation() {
+        if (locationField.getText() == null) {
             return "";
         }
         return locationField.getText();
     }
-    public String getNotes(){
-        if(notesField.getText()==null){
+
+    public String getNotes() {
+        if (notesField.getText() == null) {
             return "";
         }
         return notesField.getText();
     }
 
-    public void addMeetingEvent(ActionEvent event){
+    public void addMeetingEvent(ActionEvent event) {
         Meeting newMeeting = new Meeting();
         newMeeting.setDescription(getDescription());
         newMeeting.setLocation(getLocation());
@@ -192,7 +197,8 @@ public class AssortmentController implements Initializable {
         notesField.setPromptText("Notes");
         meetingTableView.refresh();
     }
-    public void addSkuEvent(ActionEvent event){
+
+    public void addSkuEvent(ActionEvent event) {
         Sku newSku = new Sku();
         newSku.setFlavorDescription(getFlavorDescription());
         newSku.setStatus(getStatus());
@@ -204,34 +210,34 @@ public class AssortmentController implements Initializable {
         skuNotesField.setPromptText("Notes");
         skuTableView.refresh();
     }
+
     @FXML
     private void switchToSecondTable(ActionEvent event) throws IOException {
         FXMLLoader secondTableLoader = App.createFXMLLoader("secondTable");
         App.setSceneRoot(secondTableLoader.load());
 
-        RTMPlanningController firstTableController =secondTableLoader.getController();
+        RTMPlanningController firstTableController = secondTableLoader.getController();
         firstTableController.setRetailer(getRetailer());
     }
-
 
     @FXML
     private void switchToPricingPromotion(ActionEvent event) throws IOException {
         FXMLLoader pricingPromotionLoader = App.createFXMLLoader("pricingPromotion");
         App.setSceneRoot(pricingPromotionLoader.load());
 
-        PricingPromotionController pricingPromotionController =pricingPromotionLoader.getController();
+        PricingPromotionController pricingPromotionController = pricingPromotionLoader.getController();
         pricingPromotionController.setRetailer(getRetailer());
     }
 
-    public void deleteSkuEvent(ActionEvent event){
+    public void deleteSkuEvent(ActionEvent event) {
         ObservableList<Sku> selectedRows, allSkus;
         allSkus = skuTableView.getItems();
 
-        //this gives us the rows that were selected
+        // this gives us the rows that were selected
         selectedRows = skuTableView.getSelectionModel().getSelectedItems();
 
-        //loop over the selected rows and remove the Person objects from the table
-        for (Sku sku: selectedRows) {
+        // loop over the selected rows and remove the Person objects from the table
+        for (Sku sku : selectedRows) {
             allSkus.remove(sku);
         }
     }
@@ -241,33 +247,35 @@ public class AssortmentController implements Initializable {
     }
 
     private String getFlavorDescription() {
-        if(flavorDescriptionField.getText()==null){
+        if (flavorDescriptionField.getText() == null) {
             return "";
         }
         return flavorDescriptionField.getText();
     }
+
     private String getStatus() {
-        if(statusBox.getSelectionModel().getSelectedItem()==null){
+        if (statusBox.getSelectionModel().getSelectedItem() == null) {
             return "";
         }
         return statusBox.getSelectionModel().getSelectedItem().toString();
     }
-    private String getSkuNotes(){
-        if(skuNotesField.getText()==null){
+
+    private String getSkuNotes() {
+        if (skuNotesField.getText() == null) {
             return "";
         }
         return skuNotesField.getText();
     }
 
-    public void deleteMeetingEvent(ActionEvent event){
+    public void deleteMeetingEvent(ActionEvent event) {
         ObservableList<Meeting> selectedRows, allMeetings;
         allMeetings = meetingTableView.getItems();
 
-        //this gives us the rows that were selected
+        // this gives us the rows that were selected
         selectedRows = meetingTableView.getSelectionModel().getSelectedItems();
 
-        //loop over the selected rows and remove the Person objects from the table
-        for (Meeting person: selectedRows) {
+        // loop over the selected rows and remove the Person objects from the table
+        for (Meeting person : selectedRows) {
             allMeetings.remove(person);
         }
 
@@ -275,14 +283,16 @@ public class AssortmentController implements Initializable {
 
     public ObservableList<Meeting> getExampleMeetings() {
         ObservableList<Meeting> meetings = FXCollections.observableArrayList();
-        meetings.add(new Meeting ("First Meeting", "At Home", LocalDate.of(2022,12,5), "17:05", "gonna be cool"));
+        meetings.add(new Meeting("First Meeting", "At Home", LocalDate.of(2022, 12, 5), "17:05", "gonna be cool"));
         return meetings;
     }
+
     public ObservableList<Sku> getExampleSkus() {
         ObservableList<Sku> skus = FXCollections.observableArrayList();
-        skus.add(new Sku ("First Sku", "Current", "love this one"));
+        skus.add(new Sku("First Sku", "Current", "love this one"));
         return skus;
     }
+
     private static Date convertToDate(LocalDate dateToConvert) {
         return java.sql.Date.valueOf(dateToConvert);
     }
@@ -295,7 +305,7 @@ public class AssortmentController implements Initializable {
         notesColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 
         flavorDescriptionColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-        statusColumn.setCellFactory(ComboBoxTableCell.forTableColumn("Current","Targeted","Discontinued"));
+        statusColumn.setCellFactory(ComboBoxTableCell.forTableColumn("Current", "Targeted", "Discontinued"));
         skuNotesColumn.setCellFactory(TextFieldTableCell.forTableColumn());
     }
 
@@ -303,7 +313,7 @@ public class AssortmentController implements Initializable {
         descriptionColumn.setCellValueFactory(new PropertyValueFactory<Meeting, String>("description"));
         locationColumn.setCellValueFactory(new PropertyValueFactory<Meeting, String>("location"));
         dateColumn.setCellValueFactory(new PropertyValueFactory<Meeting, LocalDate>("date"));
-        timeColumn.setCellValueFactory(new PropertyValueFactory<Meeting,String>("time"));
+        timeColumn.setCellValueFactory(new PropertyValueFactory<Meeting, String>("time"));
         notesColumn.setCellValueFactory(new PropertyValueFactory<Meeting, String>("notes"));
 
         flavorDescriptionColumn.setCellValueFactory(new PropertyValueFactory<Sku, String>("flavorDescription"));
@@ -313,7 +323,8 @@ public class AssortmentController implements Initializable {
 
     public void setRetailer(Retailer retailer) {
         this.retailer.set(retailer);
-        RetailerProduct currentRetailerProduct =retailer.getRetailerProducts().get(retailer.getCurrentRetailerProductIndex());
+        RetailerProduct currentRetailerProduct = retailer.getRetailerProducts()
+                .get(retailer.getCurrentRetailerProductIndex());
         meetingTableView.setItems(currentRetailerProduct.getMeetings());
         skuTableView.setItems(currentRetailerProduct.getSkus());
         // implement something for general notes

@@ -5,23 +5,25 @@ import javafx.scene.control.TextField;
 
 public abstract class Parameter<Object> {
     private final BooleanProperty editable = new SimpleBooleanProperty();
-    public ObjectProperty<Object> total= new SimpleObjectProperty<>();
-    public ObjectProperty<Object> january= new SimpleObjectProperty<>();
-    public ObjectProperty<Object> february= new SimpleObjectProperty<>();
-    public ObjectProperty<Object> march= new SimpleObjectProperty<>();
-    public ObjectProperty<Object> april= new SimpleObjectProperty<>();
-    public ObjectProperty<Object> may= new SimpleObjectProperty<>();
-    public ObjectProperty<Object> june= new SimpleObjectProperty<>();
-    public ObjectProperty<Object> july= new SimpleObjectProperty<>();
-    public ObjectProperty<Object> august= new SimpleObjectProperty<>();
-    public ObjectProperty<Object> september= new SimpleObjectProperty<>();
-    public ObjectProperty<Object> october= new SimpleObjectProperty<>();
-    public SimpleObjectProperty<Object> november= new SimpleObjectProperty<>();
-    public SimpleObjectProperty<Object> december= new SimpleObjectProperty<>();
+    public ObjectProperty<Object> total = new SimpleObjectProperty<>();
+    public ObjectProperty<Object> january = new SimpleObjectProperty<>();
+    public ObjectProperty<Object> february = new SimpleObjectProperty<>();
+    public ObjectProperty<Object> march = new SimpleObjectProperty<>();
+    public ObjectProperty<Object> april = new SimpleObjectProperty<>();
+    public ObjectProperty<Object> may = new SimpleObjectProperty<>();
+    public ObjectProperty<Object> june = new SimpleObjectProperty<>();
+    public ObjectProperty<Object> july = new SimpleObjectProperty<>();
+    public ObjectProperty<Object> august = new SimpleObjectProperty<>();
+    public ObjectProperty<Object> september = new SimpleObjectProperty<>();
+    public ObjectProperty<Object> october = new SimpleObjectProperty<>();
+    public SimpleObjectProperty<Object> november = new SimpleObjectProperty<>();
+    public SimpleObjectProperty<Object> december = new SimpleObjectProperty<>();
     public String pre;
-    public SimpleStringProperty name ;
+    public SimpleStringProperty name;
 
-    public Parameter(String name, String pre, Object january, Object february, Object march, Object april, Object may, Object june, Object july, Object august, Object september, Object october, Object november, Object december, boolean editable) {
+    public Parameter(String name, String pre, Object january, Object february, Object march, Object april, Object may,
+            Object june, Object july, Object august, Object september, Object october, Object november, Object december,
+            boolean editable) {
         this.name = new SimpleStringProperty(name);
         this.pre = pre;
 
@@ -39,7 +41,10 @@ public abstract class Parameter<Object> {
         this.december = new SimpleObjectProperty<>(december);
         setEditable(editable);
     }
-    public Parameter(String name, String pre, Object total, Object january, Object february, Object march, Object april, Object may, Object june, Object july, Object august, Object september, Object october, Object november, Object december, boolean editable) {
+
+    public Parameter(String name, String pre, Object total, Object january, Object february, Object march, Object april,
+            Object may, Object june, Object july, Object august, Object september, Object october, Object november,
+            Object december, boolean editable) {
         this.name = new SimpleStringProperty(name);
         this.pre = pre;
 
@@ -60,22 +65,29 @@ public abstract class Parameter<Object> {
         setEditable(editable);
     }
 
-    public String toString(){
-        return "name: " + name.get() + "pre: "+ pre+ "january: "+ getJanuary();
+    public String toString() {
+        return "name: " + name.get() + "pre: " + pre + "january: " + getJanuary();
     }
 
-    public String getPre() {return pre; }
+    public String getPre() {
+        return pre;
+    }
 
-    public void setPre(String pre) {this.pre= pre;}
+    public void setPre(String pre) {
+        this.pre = pre;
+    }
 
-    public Parameter(){
-        this.name= new SimpleStringProperty("");
+    public Parameter() {
+        this.name = new SimpleStringProperty("");
         this.pre = "";
         setEditable(false);
     }
 
-    public Parameter(String name, String pre,Object january, Object february, Object march, Object april, Object may, Object june, Object july, Object august, Object september, Object october, Object november, Object december) {
-        this(name, pre, january, february,march, april, may, june, july, august, september, october, november, december, true);
+    public Parameter(String name, String pre, Object january, Object february, Object march, Object april, Object may,
+            Object june, Object july, Object august, Object september, Object october, Object november,
+            Object december) {
+        this(name, pre, january, february, march, april, may, june, july, august, september, october, november,
+                december, true);
     }
 
     public Parameter(String name, String pre) {
@@ -96,88 +108,88 @@ public abstract class Parameter<Object> {
         setEditable(true);
     }
 
-    public Object getMonth(int month){
-        if (month==1){
+    public Object getMonth(int month) {
+        if (month == 1) {
             return getJanuary();
         }
-        if (month ==2){
+        if (month == 2) {
             return getFebruary();
         }
-        if (month ==3){
+        if (month == 3) {
             return getMarch();
         }
-        if (month ==4){
+        if (month == 4) {
             return getApril();
         }
-        if (month ==5){
+        if (month == 5) {
             return getMay();
         }
-        if (month ==6){
+        if (month == 6) {
             return getJune();
         }
-        if (month ==7){
+        if (month == 7) {
             return getJuly();
         }
         if (month == 8) {
             return getAugust();
         }
-        if (month ==9){
+        if (month == 9) {
             return getSeptember();
         }
-        if (month ==10){
+        if (month == 10) {
             return getOctober();
         }
-        if (month ==11){
+        if (month == 11) {
             return getNovember();
         }
-        if (month ==12){
+        if (month == 12) {
             return getDecember();
         }
         System.out.println("month:" + month);
         return null;
     }
-    public void setMonth(int month, Object value){
-        if (month==1){
+
+    public void setMonth(int month, Object value) {
+        if (month == 1) {
             setJanuary(value);
         }
-        if (month ==2){
+        if (month == 2) {
             setFebruary(value);
         }
-        if (month ==3){
+        if (month == 3) {
             setMarch(value);
         }
-        if (month ==4){
+        if (month == 4) {
             setApril(value);
         }
-        if (month ==5){
+        if (month == 5) {
             setMay(value);
         }
-        if (month ==6){
+        if (month == 6) {
             setJune(value);
         }
-        if (month ==7){
+        if (month == 7) {
             setJuly(value);
         }
         if (month == 8) {
             setAugust(value);
         }
-        if (month ==9){
+        if (month == 9) {
             setSeptember(value);
         }
-        if (month ==10){
+        if (month == 10) {
             setOctober(value);
         }
-        if (month ==11){
+        if (month == 11) {
             setNovember(value);
         }
-        if (month ==12){
+        if (month == 12) {
             setDecember(value);
         }
     }
 
-
     public String getName() {
-        return name.get() ;
+        return name.get();
     }
 
     public SimpleStringProperty nameProperty() {
@@ -192,34 +204,33 @@ public abstract class Parameter<Object> {
         return total;
     }
 
-    public abstract Object getTotal() ;
+    public abstract Object getTotal();
 
     public void setTotal(Object total) {
         totalProperty().set(total);
     }
 
-
-
     public ObjectProperty<Object> januaryProperty() {
-        if (january==null){
+        if (january == null) {
             return new SimpleObjectProperty<>();
         }
         return january;
     }
 
-    public abstract Object getJanuary() ;
+    public abstract Object getJanuary();
 
     public void setJanuary(Object january) {
         januaryProperty().set(january);
     }
+
     public ObjectProperty<Object> februaryProperty() {
-        if (february==null){
+        if (february == null) {
             return new SimpleObjectProperty<>();
         }
         return february;
     }
 
-    public abstract Object getFebruary() ;
+    public abstract Object getFebruary();
 
     public void setFebruary(Object february) {
         februaryProperty().set(february);
@@ -227,142 +238,150 @@ public abstract class Parameter<Object> {
     //
 
     public ObjectProperty<Object> marchProperty() {
-        if (march==null){
+        if (march == null) {
             return new SimpleObjectProperty<>();
         }
         return march;
     }
 
-    public abstract Object getMarch() ;
+    public abstract Object getMarch();
 
     public void setMarch(Object march) {
         marchProperty().set(march);
     }
+
     //
     public ObjectProperty<Object> aprilProperty() {
-        if (april==null){
+        if (april == null) {
             return new SimpleObjectProperty<>();
         }
         return april;
     }
 
-    public abstract Object getApril() ;
+    public abstract Object getApril();
 
     public void setApril(Object april) {
         aprilProperty().set(april);
     }
+
     //
     public ObjectProperty<Object> mayProperty() {
-        if (may==null){
+        if (may == null) {
             return new SimpleObjectProperty<>();
         }
         return may;
     }
 
-    public abstract Object getMay() ;
+    public abstract Object getMay();
 
     public void setMay(Object may) {
         mayProperty().set(may);
     }
+
     //
     public ObjectProperty<Object> juneProperty() {
-        if (june==null){
+        if (june == null) {
             return new SimpleObjectProperty<>();
         }
         return june;
     }
 
-    public abstract Object getJune() ;
+    public abstract Object getJune();
 
     public void setJune(Object june) {
         juneProperty().set(june);
     }
+
     //
     public ObjectProperty<Object> julyProperty() {
-        if (july==null){
+        if (july == null) {
             return new SimpleObjectProperty<>();
         }
         return july;
     }
 
-    public abstract Object getJuly() ;
+    public abstract Object getJuly();
 
     public void setJuly(Object july) {
         julyProperty().set(july);
     }
+
     //
     public ObjectProperty<Object> augustProperty() {
-        if (august==null){
+        if (august == null) {
             return new SimpleObjectProperty<>();
         }
         return august;
     }
 
-    public abstract Object getAugust() ;
+    public abstract Object getAugust();
 
     public void setAugust(Object august) {
         augustProperty().set(august);
     }
+
     //
     public ObjectProperty<Object> septemberProperty() {
-        if (september==null){
+        if (september == null) {
             return new SimpleObjectProperty<>();
         }
         return september;
     }
 
-    public abstract Object getSeptember() ;
+    public abstract Object getSeptember();
 
     public void setSeptember(Object september) {
         septemberProperty().set(september);
     }
+
     //
     public ObjectProperty<Object> octoberProperty() {
-        if (october==null){
+        if (october == null) {
             return new SimpleObjectProperty<>();
         }
         return october;
     }
 
-    public abstract Object getOctober() ;
+    public abstract Object getOctober();
 
     public void setOctober(Object october) {
         octoberProperty().set(october);
     }
+
     //
     public ObjectProperty<Object> novemberProperty() {
-        if (november==null){
+        if (november == null) {
             return new SimpleObjectProperty<>();
         }
         return november;
     }
 
-    public abstract Object getNovember() ;
+    public abstract Object getNovember();
 
     public void setNovember(Object november) {
         novemberProperty().set(november);
     }
+
     //
     public ObjectProperty<Object> decemberProperty() {
-        if (december==null){
+        if (december == null) {
             return new SimpleObjectProperty<>();
         }
         return december;
     }
 
-    public abstract Object getDecember() ;
+    public abstract Object getDecember();
 
     public void setDecember(Object december) {
         decemberProperty().set(december);
     }
 
-
     public BooleanProperty editableProperty() {
-        return editable ;
+        return editable;
     }
 
     public boolean isEditable() {
-        return editableProperty().get() ;
+        return editableProperty().get();
     }
 
     public void setEditable(boolean editable) {

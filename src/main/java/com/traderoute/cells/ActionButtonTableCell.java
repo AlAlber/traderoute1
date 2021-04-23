@@ -13,7 +13,7 @@ public class ActionButtonTableCell<Product> extends TableCell<Product, Button> {
 
     private final JFXButton actionButton;
 
-    public ActionButtonTableCell(String label, Function< Product, Product> function) {
+    public ActionButtonTableCell(String label, Function<Product, Product> function) {
         this.getStyleClass().add("action-button-table-cell");
 
         this.actionButton = new JFXButton(label);
@@ -28,7 +28,8 @@ public class ActionButtonTableCell<Product> extends TableCell<Product, Button> {
         return (Product) getTableView().getItems().get(getIndex());
     }
 
-    public static <S> Callback<TableColumn<S, Button>, TableCell<S, Button>> forTableColumn(String label, Function< S, S> function) {
+    public static <S> Callback<TableColumn<S, Button>, TableCell<S, Button>> forTableColumn(String label,
+            Function<S, S> function) {
         return param -> new ActionButtonTableCell<>(label, function);
     }
 

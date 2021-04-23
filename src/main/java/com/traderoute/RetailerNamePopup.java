@@ -13,7 +13,7 @@ import javafx.stage.Stage;
 public class RetailerNamePopup {
     static String retailerName;
 
-    public static String display (String title, String message){
+    public static String display(String title, String message) {
         Stage window = new Stage();
         window.initModality(Modality.APPLICATION_MODAL);
         window.setTitle(title);
@@ -25,8 +25,8 @@ public class RetailerNamePopup {
         retailerField.setPromptText("Ex. Ahold Giant Landover");
         JFXButton saveButton = new JFXButton("Save");
 
-        saveButton.setOnAction(e-> {
-            if (retailerField.getText()==null){
+        saveButton.setOnAction(e -> {
+            if (retailerField.getText() == null) {
                 retailerName = "";
             } else {
                 retailerName = retailerField.getText();
@@ -35,9 +35,9 @@ public class RetailerNamePopup {
         });
 
         VBox layout = new VBox(10);
-        layout.getChildren().addAll(label, retailerField,saveButton);
+        layout.getChildren().addAll(label, retailerField, saveButton);
         layout.setAlignment(Pos.CENTER);
-        Scene scene = new Scene (layout);
+        Scene scene = new Scene(layout);
         window.setScene(scene);
         window.showAndWait();
 

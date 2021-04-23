@@ -2,38 +2,42 @@ package com.traderoute.data;
 
 public class IntegerParameter extends Parameter<Integer> {
 
-    public IntegerParameter(String name, String pre, Integer january, Integer february,
-                            Integer march, Integer april, Integer may, Integer june,
-                            Integer july, Integer august, Integer september, Integer october,
-                            Integer november, Integer december){
-        super(name, pre, january, february,march, april, may, june, july, august, september, october, november, december);
+    public IntegerParameter(String name, String pre, Integer january, Integer february, Integer march, Integer april,
+            Integer may, Integer june, Integer july, Integer august, Integer september, Integer october,
+            Integer november, Integer december) {
+        super(name, pre, january, february, march, april, may, june, july, august, september, october, november,
+                december);
 
     }
-    public IntegerParameter(String name, String pre, Integer total, Integer january, Integer february,
-                            Integer march, Integer april, Integer may, Integer june,
-                            Integer july, Integer august, Integer september, Integer october,
-                            Integer november, Integer december){
-        super(name, pre, january, february,march, april, may, june, july, august, september, october, november, december);
+
+    public IntegerParameter(String name, String pre, Integer total, Integer january, Integer february, Integer march,
+            Integer april, Integer may, Integer june, Integer july, Integer august, Integer september, Integer october,
+            Integer november, Integer december) {
+        super(name, pre, january, february, march, april, may, june, july, august, september, october, november,
+                december);
 
     }
-    public IntegerParameter(String name, String pre){
+
+    public IntegerParameter(String name, String pre) {
         super(name, pre);
         setEditable(true);
     }
-    public Integer getTotal(){
+
+    public Integer getTotal() {
         if (total.get() == null) {
             return 0;
         }
         return total.get();
     }
 
-    public Integer getJanuary(){
+    public Integer getJanuary() {
         if (january.get() == null) {
             return 0;
         }
         return january.get();
     }
-    public Integer getFebruary(){
+
+    public Integer getFebruary() {
         if (february.get() == null) {
             return 0;
         }

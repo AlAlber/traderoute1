@@ -12,27 +12,26 @@ public class Sku {
     private SimpleStringProperty flavorDescription;
     private SimpleStringProperty status;
     private SimpleStringProperty skuNotes;
-    private SimpleStringProperty packageUpc ,caseUpc;
+    private SimpleStringProperty packageUpc, caseUpc;
 
-    private SimpleIntegerProperty casePack, casesPerLayer,
-        layersPerPallet, casesPerPallet, palletWeight,palletsPerTruck,deliveredShelfLife;
+    private SimpleIntegerProperty casePack, casesPerLayer, layersPerPallet, casesPerPallet, palletWeight,
+            palletsPerTruck, deliveredShelfLife;
 
-    private SimpleObjectProperty<BigDecimal> unitWeight, grossCaseWeight, netCaseWeight,
-        caseTareWeight, caseCube, caseLength, caseWidth , caseHeight, unitLength, unitWidth, unitHeight, palletHeight, unitList;
-
+    private SimpleObjectProperty<BigDecimal> unitWeight, grossCaseWeight, netCaseWeight, caseTareWeight, caseCube,
+            caseLength, caseWidth, caseHeight, unitLength, unitWidth, unitHeight, palletHeight, unitList;
 
     public Sku(String flavorDescription, String status, String skuNotes) {
         this.flavorDescription = new SimpleStringProperty(flavorDescription);
         this.status = new SimpleStringProperty(status);
         this.skuNotes = new SimpleStringProperty(skuNotes);
     }
-    public Sku(String flavorDescription,Integer casePack, BigDecimal unitWeight, BigDecimal grossCaseWeight, BigDecimal netCaseWeight,
-               BigDecimal caseTareWeight,BigDecimal caseCube, BigDecimal caseLength,
-               BigDecimal caseWidth, BigDecimal caseHeight, BigDecimal unitLength,
-               BigDecimal unitWidth, BigDecimal unitHeight, Integer casesPerLayer,
-               Integer layersPerPallet, Integer casesPerPallet, BigDecimal palletHeight,
-               Integer palletWeight, Integer palletsPerTruck, Integer deliveredShelfLife,
-               String packageUpc, String caseUpc, BigDecimal unitList) {
+
+    public Sku(String flavorDescription, Integer casePack, BigDecimal unitWeight, BigDecimal grossCaseWeight,
+            BigDecimal netCaseWeight, BigDecimal caseTareWeight, BigDecimal caseCube, BigDecimal caseLength,
+            BigDecimal caseWidth, BigDecimal caseHeight, BigDecimal unitLength, BigDecimal unitWidth,
+            BigDecimal unitHeight, Integer casesPerLayer, Integer layersPerPallet, Integer casesPerPallet,
+            BigDecimal palletHeight, Integer palletWeight, Integer palletsPerTruck, Integer deliveredShelfLife,
+            String packageUpc, String caseUpc, BigDecimal unitList) {
         this.flavorDescription = new SimpleStringProperty(flavorDescription);
         this.casePack = new SimpleIntegerProperty(casePack);
         this.unitWeight = new SimpleObjectProperty<>(unitWeight);
@@ -48,7 +47,7 @@ public class Sku {
         this.unitHeight = new SimpleObjectProperty<>(unitHeight);
         this.casesPerLayer = new SimpleIntegerProperty(casesPerLayer);
         this.layersPerPallet = new SimpleIntegerProperty(layersPerPallet);
-        this.casesPerPallet= new SimpleIntegerProperty(casesPerPallet);
+        this.casesPerPallet = new SimpleIntegerProperty(casesPerPallet);
         this.palletHeight = new SimpleObjectProperty<>(palletHeight);
         this.palletWeight = new SimpleIntegerProperty(palletWeight);
         this.palletsPerTruck = new SimpleIntegerProperty(palletsPerTruck);
@@ -57,6 +56,7 @@ public class Sku {
         this.caseUpc = new SimpleStringProperty(caseUpc);
         this.unitList = new SimpleObjectProperty<>(unitList);
     }
+
     public Sku() {
         this.flavorDescription = new SimpleStringProperty();
         this.status = new SimpleStringProperty();

@@ -8,7 +8,7 @@ public class Meeting1 {
     GregorianCalendar startTime;
     GregorianCalendar endTime;
 
-    public Meeting1 (GregorianCalendar startTime, GregorianCalendar endTime) {
+    public Meeting1(GregorianCalendar startTime, GregorianCalendar endTime) {
         this.startTime = startTime;
         this.endTime = endTime;
     }

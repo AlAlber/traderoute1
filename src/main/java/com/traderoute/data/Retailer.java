@@ -14,7 +14,9 @@ public class Retailer {
     private SimpleIntegerProperty currentRetailerProductIndex;
     private SimpleObjectProperty<ObservableList<RetailerProduct>> retailerProducts;
 
-    public Retailer(String retailerName, ObservableList<RetailerProduct> retailerProducts,Integer currentRetailerProductIndex, BigDecimal everydayGPM, Integer yearOneStoreCount, BigDecimal spoilsFees) {
+    public Retailer(String retailerName, ObservableList<RetailerProduct> retailerProducts,
+            Integer currentRetailerProductIndex, BigDecimal everydayGPM, Integer yearOneStoreCount,
+            BigDecimal spoilsFees) {
         this.retailerName = new SimpleStringProperty(retailerName);
         this.currentRetailerProductIndex = new SimpleIntegerProperty(currentRetailerProductIndex);
         this.retailerProducts = new SimpleObjectProperty<>(retailerProducts);
@@ -22,7 +24,8 @@ public class Retailer {
         this.yearOneStoreCount = new SimpleIntegerProperty(yearOneStoreCount);
         this.spoilsFees = new SimpleObjectProperty<>(spoilsFees);
     }
-    public  Retailer() {
+
+    public Retailer() {
         this.retailerName = new SimpleStringProperty();
         this.currentRetailerProductIndex = new SimpleIntegerProperty();
         this.retailerProducts = new SimpleObjectProperty<>();
@@ -30,7 +33,6 @@ public class Retailer {
         this.yearOneStoreCount = new SimpleIntegerProperty();
         this.spoilsFees = new SimpleObjectProperty<>();
     }
-
 
     public Integer getCurrentRetailerProductIndex() {
         return currentRetailerProductIndex.get();

@@ -15,56 +15,57 @@ import java.util.Locale;
 public class ProductClassReport {
     private SimpleStringProperty retailerName;
     private SimpleBooleanProperty committed;
-    private SimpleIntegerProperty  pointsOfDistribution, storeCount;
-    private SimpleObjectProperty<BigDecimal>  totalVolumetrics,
-            everydayVolumetrics,promotedVolumetrics, grossRevenue,
-            tradeRevenue, net1Revenue, net1Pod, net1Rate, averageSkus,
-            averageSellingPrice, weeklyVelocityUfsw;
+    private SimpleIntegerProperty pointsOfDistribution, storeCount;
+    private SimpleObjectProperty<BigDecimal> totalVolumetrics, everydayVolumetrics, promotedVolumetrics, grossRevenue,
+            tradeRevenue, net1Revenue, net1Pod, net1Rate, averageSkus, averageSellingPrice, weeklyVelocityUfsw;
     private SimpleObjectProperty<Retailer> retailer;
     private SimpleObjectProperty<RetailerProduct> retailerProduct;
     private SimpleObjectProperty<ObservableList<Boolean>> selectedYears;
     private SimpleBooleanProperty onlyCommitted;
     private SimpleStringProperty selectedRtm;
 
-    public ProductClassReport(Retailer retailer, RetailerProduct retailerProduct, ObservableList<Boolean> years, Boolean onlyCommitted){
+    public ProductClassReport(Retailer retailer, RetailerProduct retailerProduct, ObservableList<Boolean> years,
+            Boolean onlyCommitted) {
         this.retailer = new SimpleObjectProperty<>(retailer);
         this.retailerProduct = new SimpleObjectProperty<>(retailerProduct);
         this.selectedYears = new SimpleObjectProperty<>(years);
         this.retailerName = new SimpleStringProperty(getRetailer().getRetailerName());
         this.onlyCommitted = new SimpleBooleanProperty(onlyCommitted);
-//        if (retailerProduct.getPromoPlans().get(selectedYear).getCommitted()) {
-//            this.committed = new SimpleStringProperty("Yes");
-//        } else {
-//            this.committed = new SimpleStringProperty("No");
-//        }
+        // if (retailerProduct.getPromoPlans().get(selectedYear).getCommitted()) {
+        // this.committed = new SimpleStringProperty("Yes");
+        // } else {
+        // this.committed = new SimpleStringProperty("No");
+        // }
         // ASK JOHN ABOUT THIS ONE
-        for (PromoPlan promoPlan: getRetailerProduct().getPromoPlans()) {
+        for (PromoPlan promoPlan : getRetailerProduct().getPromoPlans()) {
             this.committed = new SimpleBooleanProperty(promoPlan.getCommitted());
         }
 
         this.storeCount = new SimpleIntegerProperty(getRetailer().getYearOneStoreCount());
-        BigDecimal totalVolumetrics1= new BigDecimal("0.0");
+        BigDecimal totalVolumetrics1 = new BigDecimal("0.0");
         BigDecimal everydayVolumetrics1 = new BigDecimal("0.0");
-        BigDecimal promotedVolumetrics1= new BigDecimal("0.0");
+        BigDecimal promotedVolumetrics1 = new BigDecimal("0.0");
         BigDecimal grossRevenue1 = new BigDecimal("0.0");
         BigDecimal tradeRevenue1 = new BigDecimal("0.0");
         BigDecimal net1Revenue1 = new BigDecimal("0.0");
         BigDecimal averageSellingPrice1 = new BigDecimal("0.0"); // EDIT THIS
         BigDecimal weeklyVelocityUfsw1 = new BigDecimal("0.0");
 
-        for (PromoPlan promoPlan: getCurrentPromoPlans()) {
-            totalVolumetrics1= totalVolumetrics1.add(promoPlan.getSumValue(2, true));
-            everydayVolumetrics1= everydayVolumetrics1.add(promoPlan.getTwelveMonthTotal(5));
+        for (PromoPlan promoPlan : getCurrentPromoPlans()) {
+            totalVolumetrics1 = totalVolumetrics1.add(promoPlan.getSumValue(2, true));
+            everydayVolumetrics1 = everydayVolumetrics1.add(promoPlan.getTwelveMonthTotal(5));
             promotedVolumetrics1 = promotedVolumetrics1.add(promoPlan.getTwelveMonthTotal(6));
-            grossRevenue1= grossRevenue1.add(promoPlan.getSumValue(0, true));
-            tradeRevenue1= tradeRevenue1.add(promoPlan.getTwelveMonthTotal(7).subtract(promoPlan.getTwelveMonthTotal(8)));
-            net1Revenue1 =net1Revenue1.add(promoPlan.getSumValue(1, true));
+            grossRevenue1 = grossRevenue1.add(promoPlan.getSumValue(0, true));
+            tradeRevenue1 = tradeRevenue1
+                    .add(promoPlan.getTwelveMonthTotal(7).subtract(promoPlan.getTwelveMonthTotal(8)));
+            net1Revenue1 = net1Revenue1.add(promoPlan.getSumValue(1, true));
 
             averageSellingPrice1 = averageSellingPrice1.add(promoPlan.getSumValue(2, false));
-            weeklyVelocityUfsw1= weeklyVelocityUfsw1.add(promoPlan.getWeeklyPromoUfsw());
+            weeklyVelocityUfsw1 = weeklyVelocityUfsw1.add(promoPlan.getWeeklyPromoUfsw());
         }
-        if (getCurrentPromoPlans().size()>0) {
-            averageSellingPrice1 = averageSellingPrice1.divide(new BigDecimal(getCurrentPromoPlans().size()), 2, RoundingMode.HALF_UP);
+        if (getCurrentPromoPlans().size() > 0) {
+            averageSellingPrice1 = averageSellingPrice1.divide(new BigDecimal(getCurrentPromoPlans().size()), 2,
+                    RoundingMode.HALF_UP);
         }
         this.totalVolumetrics = new SimpleObjectProperty(totalVolumetrics1);
         this.everydayVolumetrics = new SimpleObjectProperty(everydayVolumetrics1);
@@ -80,17 +81,18 @@ public class ProductClassReport {
 
         this.net1Rate = new SimpleObjectProperty(calculateNet1Rate());
         this.averageSkus = new SimpleObjectProperty(calculateCurrentSkus());
-        this.selectedRtm = new SimpleStringProperty(getRetailerProduct().getPromoPlans().get(0).getSelectedRtm().getRTMName());
+        this.selectedRtm = new SimpleStringProperty(
+                getRetailerProduct().getPromoPlans().get(0).getSelectedRtm().getRTMName());
 
     }
-    public ProductClassReport(String retailerName, Boolean committed, Integer storeCount,
-                              BigDecimal totalVolumetrics, BigDecimal everydayVolumetrics,
-                              BigDecimal promotedVolumetrics, BigDecimal grossRevenue, BigDecimal tradeRevenue,
-                              BigDecimal net1Revenue, BigDecimal averageSellingPrice, BigDecimal weeklyVelocityUfsw,
-                              Integer pointsOfDistribution, BigDecimal net1Pod, BigDecimal net1Rate, BigDecimal averageSkus,
-                              String selectedRtm, ObservableList<Integer> skuTotals){
+
+    public ProductClassReport(String retailerName, Boolean committed, Integer storeCount, BigDecimal totalVolumetrics,
+            BigDecimal everydayVolumetrics, BigDecimal promotedVolumetrics, BigDecimal grossRevenue,
+            BigDecimal tradeRevenue, BigDecimal net1Revenue, BigDecimal averageSellingPrice,
+            BigDecimal weeklyVelocityUfsw, Integer pointsOfDistribution, BigDecimal net1Pod, BigDecimal net1Rate,
+            BigDecimal averageSkus, String selectedRtm, ObservableList<Integer> skuTotals) {
         this.retailerName = new SimpleStringProperty(retailerName);
-        this.committed= new SimpleBooleanProperty(committed);
+        this.committed = new SimpleBooleanProperty(committed);
         this.storeCount = new SimpleIntegerProperty(storeCount);
         this.totalVolumetrics = new SimpleObjectProperty(totalVolumetrics);
         this.everydayVolumetrics = new SimpleObjectProperty(everydayVolumetrics);
@@ -108,29 +110,32 @@ public class ProductClassReport {
         this.averageSkus = new SimpleObjectProperty(averageSkus);
         this.selectedRtm = new SimpleStringProperty(selectedRtm);
     };
-    public void updateAll(){
-        BigDecimal totalVolumetrics1= new BigDecimal("0.0");
+
+    public void updateAll() {
+        BigDecimal totalVolumetrics1 = new BigDecimal("0.0");
         BigDecimal everydayVolumetrics1 = new BigDecimal("0.0");
-        BigDecimal promotedVolumetrics1= new BigDecimal("0.0");
+        BigDecimal promotedVolumetrics1 = new BigDecimal("0.0");
         BigDecimal grossRevenue1 = new BigDecimal("0.0");
         BigDecimal tradeRevenue1 = new BigDecimal("0.0");
         BigDecimal net1Revenue1 = new BigDecimal("0.0");
         BigDecimal averageSellingPrice1 = new BigDecimal("0.0"); // EDIT THIS
         BigDecimal weeklyVelocityUfsw1 = new BigDecimal("0.0");
 
-        for (PromoPlan promoPlan: getCurrentPromoPlans()) {
-            totalVolumetrics1= totalVolumetrics1.add(promoPlan.getSumValue(2, true));
-            everydayVolumetrics1= everydayVolumetrics1.add(promoPlan.getTwelveMonthTotal(5));
+        for (PromoPlan promoPlan : getCurrentPromoPlans()) {
+            totalVolumetrics1 = totalVolumetrics1.add(promoPlan.getSumValue(2, true));
+            everydayVolumetrics1 = everydayVolumetrics1.add(promoPlan.getTwelveMonthTotal(5));
             promotedVolumetrics1 = promotedVolumetrics1.add(promoPlan.getTwelveMonthTotal(6));
-            grossRevenue1= grossRevenue1.add(promoPlan.getSumValue(0, true));
-            tradeRevenue1= tradeRevenue1.add(promoPlan.getTwelveMonthTotal(7).subtract(promoPlan.getTwelveMonthTotal(8)));
-            net1Revenue1 =net1Revenue1.add(promoPlan.getSumValue(1, true));
+            grossRevenue1 = grossRevenue1.add(promoPlan.getSumValue(0, true));
+            tradeRevenue1 = tradeRevenue1
+                    .add(promoPlan.getTwelveMonthTotal(7).subtract(promoPlan.getTwelveMonthTotal(8)));
+            net1Revenue1 = net1Revenue1.add(promoPlan.getSumValue(1, true));
 
             averageSellingPrice1 = averageSellingPrice1.add(promoPlan.getSumValue(2, false));
-            weeklyVelocityUfsw1= weeklyVelocityUfsw1.add(promoPlan.getWeeklyPromoUfsw());
+            weeklyVelocityUfsw1 = weeklyVelocityUfsw1.add(promoPlan.getWeeklyPromoUfsw());
         }
-        if (getCurrentPromoPlans().size()>0) {
-            averageSellingPrice1 = averageSellingPrice1.divide(new BigDecimal(getCurrentPromoPlans().size()), 2, RoundingMode.HALF_UP);
+        if (getCurrentPromoPlans().size() > 0) {
+            averageSellingPrice1 = averageSellingPrice1.divide(new BigDecimal(getCurrentPromoPlans().size()), 2,
+                    RoundingMode.HALF_UP);
         }
         setTotalVolumetrics(totalVolumetrics1);
         setEverydayVolumetrics(everydayVolumetrics1);
@@ -149,26 +154,29 @@ public class ProductClassReport {
 
     }
 
-
-    public BigDecimal calculateNet1Rate(){
+    public BigDecimal calculateNet1Rate() {
         BigDecimal net1Rate = new BigDecimal("0.0");
-        for (PromoPlan promoPlan: getCurrentPromoPlans()) {
-            if (promoPlan.getSumValue(2, true).compareTo(new BigDecimal("0.0")) > 0 &&
-                    (promoPlan.getSumValue(1, true).divide(promoPlan.getSumValue(2, true), 2, RoundingMode.HALF_UP)).compareTo(new BigDecimal("0.0")) > 0) {
-                net1Rate= net1Rate.add(promoPlan.getSumValue(1, true).divide(promoPlan.getSumValue(2, true), 2, RoundingMode.HALF_UP));
+        for (PromoPlan promoPlan : getCurrentPromoPlans()) {
+            if (promoPlan.getSumValue(2, true).compareTo(new BigDecimal("0.0")) > 0
+                    && (promoPlan.getSumValue(1, true).divide(promoPlan.getSumValue(2, true), 2, RoundingMode.HALF_UP))
+                            .compareTo(new BigDecimal("0.0")) > 0) {
+                net1Rate = net1Rate.add(
+                        promoPlan.getSumValue(1, true).divide(promoPlan.getSumValue(2, true), 2, RoundingMode.HALF_UP));
             }
         }
         return net1Rate;
     }
-    public BigDecimal calculateNet1Pod(){
-        if (calculatePointsOfDistribution()>0) {
+
+    public BigDecimal calculateNet1Pod() {
+        if (calculatePointsOfDistribution() > 0) {
             return getNet1Revenue().divide(new BigDecimal(calculatePointsOfDistribution()), 2, RoundingMode.HALF_UP);
         }
         return new BigDecimal("0.0");
-        }
-    public BigDecimal calculateCurrentSkus(){
-        BigDecimal count =new BigDecimal("0.0");
-        if (getRetailerProduct()!=null) {
+    }
+
+    public BigDecimal calculateCurrentSkus() {
+        BigDecimal count = new BigDecimal("0.0");
+        if (getRetailerProduct() != null) {
             for (Sku sku : retailerProduct.get().getSkus()) {
                 if (sku.getStatus().toLowerCase(Locale.ROOT).equals("current")) {
                     count = count.add(new BigDecimal("1.0"));
@@ -178,20 +186,21 @@ public class ProductClassReport {
         }
         return new BigDecimal("0.0");
     }
+
     public int calculatePointsOfDistribution() {
         int count = 0;
-        if (getRetailerProduct() != null){
+        if (getRetailerProduct() != null) {
             for (Sku sku : retailerProduct.get().getSkus()) {
                 if (sku.getStatus().toLowerCase(Locale.ROOT).equals("current")) {
                     count++;
                 }
             }
-        return count * retailer.get().getYearOneStoreCount();
+            return count * retailer.get().getYearOneStoreCount();
         }
         return 0;
     }
 
-    public ObservableList<PromoPlan> getCurrentPromoPlans(){
+    public ObservableList<PromoPlan> getCurrentPromoPlans() {
         ObservableList<PromoPlan> promoPlans = FXCollections.observableArrayList();
         for (int i = 0; i < selectedYears.get().size(); i++) {
             Boolean selectedYear = selectedYears.get().get(i);
@@ -209,8 +218,7 @@ public class ProductClassReport {
                         promoPlans.add(getRetailerProduct().getPromoPlans().get(i));
                     }
                 }
-            }
-            else{
+            } else {
                 return FXCollections.observableArrayList();
             }
         }
@@ -276,7 +284,8 @@ public class ProductClassReport {
     public void setSelectedYears(ObservableList<Boolean> selectedYears) {
         this.selectedYears.set(selectedYears);
     }
-    public Boolean getYear(int index){
+
+    public Boolean getYear(int index) {
         return getSelectedYears().get(index);
     }
 
@@ -311,7 +320,6 @@ public class ProductClassReport {
     public BigDecimal getTotalVolumetrics() {
         return totalVolumetrics.get();
     }
-
 
     public SimpleObjectProperty<BigDecimal> totalVolumetricsProperty() {
         return totalVolumetrics;
@@ -452,147 +460,147 @@ public class ProductClassReport {
     public void setWeeklyVelocityUfsw(BigDecimal weeklyVelocityUfsw) {
         this.weeklyVelocityUfsw.set(weeklyVelocityUfsw);
     }
-    //    public Object getTotalVolumetrics() {
-//        return getCurrentPromoPlan().getSumValue(2, false);
-//    }
-//
-//    public SimpleObjectProperty totalVolumetricsProperty() {
-//        return new SimpleObjectProperty(getCurrentPromoPlan().getSumValue(2, false));
-//    }
-//
-//    public void setTotalVolumetrics(Object totalVolumetrics) {
-//        this.totalVolumetrics.set(totalVolumetrics);
-//    }
-//
-//    public Object getEverydayVolumetrics() {
-//        return everydayVolumetrics.get();
-//    }
-//
-//    public SimpleObjectProperty everydayVolumetricsProperty() {
-//        return everydayVolumetrics;
-//    }
-//
-//    public void setEverydayVolumetrics(Object everydayVolumetrics) {
-//        this.everydayVolumetrics.set(everydayVolumetrics);
-//    }
-//
-//    public Object getPromotedVolumetrics() {
-//        return promotedVolumetrics.get();
-//    }
-//
-//    public SimpleObjectProperty promotedVolumetricsProperty() {
-//        return promotedVolumetrics;
-//    }
-//
-//    public void setPromotedVolumetrics(Object promotedVolumetrics) {
-//        this.promotedVolumetrics.set(promotedVolumetrics);
-//    }
-//
-//    public Object getGrossRevenue() {
-//        return grossRevenue.get();
-//    }
-//
-//    public SimpleObjectProperty grossRevenueProperty() {
-//        return grossRevenue;
-//    }
-//
-//    public void setGrossRevenue(Object grossRevenue) {
-//        this.grossRevenue.set(grossRevenue);
-//    }
-//
-//    public Object getTradeRevenue() {
-//        return tradeRevenue.get();
-//    }
-//
-//    public SimpleObjectProperty tradeRevenueProperty() {
-//        return tradeRevenue;
-//    }
-//
-//    public void setTradeRevenue(Object tradeRevenue) {
-//        this.tradeRevenue.set(tradeRevenue);
-//    }
-//
-//    public Object getNet1Revenue() {
-//        return net1Revenue.get();
-//    }
-//
-//    public SimpleObjectProperty net1RevenueProperty() {
-//        return net1Revenue;
-//    }
-//
-//    public void setNet1Revenue(Object net1Revenue) {
-//        this.net1Revenue.set(net1Revenue);
-//    }
-//
-//    public Object getNet1Pod() {
-//        return net1Pod.get();
-//    }
-//
-//    public SimpleObjectProperty net1PodProperty() {
-//        return net1Pod;
-//    }
-//
-//    public void setNet1Pod(Object net1Pod) {
-//        this.net1Pod.set(net1Pod);
-//    }
-//
-//    public Object getNet1Rate() {
-//        return net1Rate.get();
-//    }
-//
-//    public SimpleObjectProperty net1RateProperty() {
-//        return net1Rate;
-//    }
-//
-//    public void setNet1Rate(Object net1Rate) {
-//        this.net1Rate.set(net1Rate);
-//    }
-//
-//    public Object getPointsOfDistribution() {
-//        return pointsOfDistribution.get();
-//    }
-//
-//    public SimpleObjectProperty pointsOfDistributionProperty() {
-//        return pointsOfDistribution;
-//    }
-//
-//    public void setPointsOfDistribution(Object pointsOfDistribution) {
-//        this.pointsOfDistribution.set(pointsOfDistribution);
-//    }
-//
-//    public Object getAverageSkus() {
-//        return averageSkus.get();
-//    }
-//
-//    public SimpleObjectProperty averageSkusProperty() {
-//        return averageSkus;
-//    }
-//
-//    public void setAverageSkus(Object averageSkus) {
-//        this.averageSkus.set(averageSkus);
-//    }
-//
-//    public Object getAverageSellingPrice() {
-//        return averageSellingPrice.get();
-//    }
-//
-//    public SimpleObjectProperty averageSellingPriceProperty() {
-//        return averageSellingPrice;
-//    }
-//
-//    public void setAverageSellingPrice(Object averageSellingPrice) {
-//        this.averageSellingPrice.set(averageSellingPrice);
-//    }
-//
-//    public Object getWeeklyVelocityUfsw() {
-//        return weeklyVelocityUfsw.get();
-//    }
-//
-//    public SimpleObjectProperty weeklyVelocityUfswProperty() {
-//        return weeklyVelocityUfsw;
-//    }
-//
-//    public void setWeeklyVelocityUfsw(Object weeklyVelocityUfsw) {
-//        this.weeklyVelocityUfsw.set(weeklyVelocityUfsw);
-//    }
+    // public Object getTotalVolumetrics() {
+    // return getCurrentPromoPlan().getSumValue(2, false);
+    // }
+    //
+    // public SimpleObjectProperty totalVolumetricsProperty() {
+    // return new SimpleObjectProperty(getCurrentPromoPlan().getSumValue(2, false));
+    // }
+    //
+    // public void setTotalVolumetrics(Object totalVolumetrics) {
+    // this.totalVolumetrics.set(totalVolumetrics);
+    // }
+    //
+    // public Object getEverydayVolumetrics() {
+    // return everydayVolumetrics.get();
+    // }
+    //
+    // public SimpleObjectProperty everydayVolumetricsProperty() {
+    // return everydayVolumetrics;
+    // }
+    //
+    // public void setEverydayVolumetrics(Object everydayVolumetrics) {
+    // this.everydayVolumetrics.set(everydayVolumetrics);
+    // }
+    //
+    // public Object getPromotedVolumetrics() {
+    // return promotedVolumetrics.get();
+    // }
+    //
+    // public SimpleObjectProperty promotedVolumetricsProperty() {
+    // return promotedVolumetrics;
+    // }
+    //
+    // public void setPromotedVolumetrics(Object promotedVolumetrics) {
+    // this.promotedVolumetrics.set(promotedVolumetrics);
+    // }
+    //
+    // public Object getGrossRevenue() {
+    // return grossRevenue.get();
+    // }
+    //
+    // public SimpleObjectProperty grossRevenueProperty() {
+    // return grossRevenue;
+    // }
+    //
+    // public void setGrossRevenue(Object grossRevenue) {
+    // this.grossRevenue.set(grossRevenue);
+    // }
+    //
+    // public Object getTradeRevenue() {
+    // return tradeRevenue.get();
+    // }
+    //
+    // public SimpleObjectProperty tradeRevenueProperty() {
+    // return tradeRevenue;
+    // }
+    //
+    // public void setTradeRevenue(Object tradeRevenue) {
+    // this.tradeRevenue.set(tradeRevenue);
+    // }
+    //
+    // public Object getNet1Revenue() {
+    // return net1Revenue.get();
+    // }
+    //
+    // public SimpleObjectProperty net1RevenueProperty() {
+    // return net1Revenue;
+    // }
+    //
+    // public void setNet1Revenue(Object net1Revenue) {
+    // this.net1Revenue.set(net1Revenue);
+    // }
+    //
+    // public Object getNet1Pod() {
+    // return net1Pod.get();
+    // }
+    //
+    // public SimpleObjectProperty net1PodProperty() {
+    // return net1Pod;
+    // }
+    //
+    // public void setNet1Pod(Object net1Pod) {
+    // this.net1Pod.set(net1Pod);
+    // }
+    //
+    // public Object getNet1Rate() {
+    // return net1Rate.get();
+    // }
+    //
+    // public SimpleObjectProperty net1RateProperty() {
+    // return net1Rate;
+    // }
+    //
+    // public void setNet1Rate(Object net1Rate) {
+    // this.net1Rate.set(net1Rate);
+    // }
+    //
+    // public Object getPointsOfDistribution() {
+    // return pointsOfDistribution.get();
+    // }
+    //
+    // public SimpleObjectProperty pointsOfDistributionProperty() {
+    // return pointsOfDistribution;
+    // }
+    //
+    // public void setPointsOfDistribution(Object pointsOfDistribution) {
+    // this.pointsOfDistribution.set(pointsOfDistribution);
+    // }
+    //
+    // public Object getAverageSkus() {
+    // return averageSkus.get();
+    // }
+    //
+    // public SimpleObjectProperty averageSkusProperty() {
+    // return averageSkus;
+    // }
+    //
+    // public void setAverageSkus(Object averageSkus) {
+    // this.averageSkus.set(averageSkus);
+    // }
+    //
+    // public Object getAverageSellingPrice() {
+    // return averageSellingPrice.get();
+    // }
+    //
+    // public SimpleObjectProperty averageSellingPriceProperty() {
+    // return averageSellingPrice;
+    // }
+    //
+    // public void setAverageSellingPrice(Object averageSellingPrice) {
+    // this.averageSellingPrice.set(averageSellingPrice);
+    // }
+    //
+    // public Object getWeeklyVelocityUfsw() {
+    // return weeklyVelocityUfsw.get();
+    // }
+    //
+    // public SimpleObjectProperty weeklyVelocityUfswProperty() {
+    // return weeklyVelocityUfsw;
+    // }
+    //
+    // public void setWeeklyVelocityUfsw(Object weeklyVelocityUfsw) {
+    // this.weeklyVelocityUfsw.set(weeklyVelocityUfsw);
+    // }
 }

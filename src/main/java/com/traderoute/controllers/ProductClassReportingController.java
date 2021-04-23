@@ -107,36 +107,30 @@ public class ProductClassReportingController implements Initializable {
     @FXML
     private JFXCheckBox yearBox3;
 
-    private SimpleObjectProperty<Product> currentProduct= new SimpleObjectProperty<>(MenuController.getExampleProducts().get(0));
+    private SimpleObjectProperty<Product> currentProduct = new SimpleObjectProperty<>(
+            MenuController.getExampleProducts().get(0));
 
-//    FilteredList<Retailer> filterItems = new FilteredList<>(retailers);
-
+    // FilteredList<Retailer> filterItems = new FilteredList<>(retailers);
 
     private ObservableList<CheckBox> yearBoxes;
     private ObservableList<Boolean> years = FXCollections.observableArrayList(false, false, false, false);
 
-    private ObservableList<TableColumn<ProductClassReport, ?>> skuColumns= FXCollections.observableArrayList();
+    private ObservableList<TableColumn<ProductClassReport, ?>> skuColumns = FXCollections.observableArrayList();
 
     @FXML
     private JFXButton pdfButton;
 
     @FXML
     private VBox mainVbox;
-    private HostServices hostServices ;
-
-
-
+    private HostServices hostServices;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-
         retailers = FXCollections.observableArrayList();
-
 
         brandNameBox.setConverter(new ProductboxConverter("brand"));
         productClassBox.setConverter(new ProductboxConverter("product"));
-
 
         retailerNameColumn.setCellValueFactory(cellData -> cellData.getValue().retailerNameProperty());
         committedColumn.setCellValueFactory(cellData -> cellData.getValue().committedProperty());
@@ -149,11 +143,13 @@ public class ProductClassReportingController implements Initializable {
         net1RevenueColumn.setCellValueFactory(cellData -> cellData.getValue().net1RevenueProperty());
         net1PodColumn.setCellValueFactory(cellData -> cellData.getValue().net1PodProperty());
         net1RateColumn.setCellValueFactory(cellData -> cellData.getValue().net1RateProperty());
-        pointsOfDistributionColumn.setCellValueFactory(cellData -> (ObservableValue) cellData.getValue().pointsOfDistributionProperty());
+        pointsOfDistributionColumn
+                .setCellValueFactory(cellData -> (ObservableValue) cellData.getValue().pointsOfDistributionProperty());
         averageSkusColumn.setCellValueFactory(cellData -> (ObservableValue) cellData.getValue().averageSkusProperty());
         averageSellingPriceColumn.setCellValueFactory(cellData -> cellData.getValue().averageSellingPriceProperty());
         weeklyVelocityUfswColumn.setCellValueFactory(cellData -> cellData.getValue().weeklyVelocityUfswProperty());
-        selectedRtmColumn.setCellValueFactory(cellData-> cellData.getValue().selectedRtmProperty());
+        selectedRtmColumn.setCellValueFactory(cellData -> cellData.getValue().selectedRtmProperty());
+
 
         retailerNameColumn.setCellFactory(tc -> new CustomTextCell<>());
         committedColumn.setCellFactory(tc -> new CustomTextCell<>());
@@ -173,40 +169,9 @@ public class ProductClassReportingController implements Initializable {
         selectedRtmColumn.setCellFactory(tc -> new CustomTextCell<>());
         yearBoxes = FXCollections.observableArrayList(yearBox0, yearBox1, yearBox2, yearBox3);
 
-        productClassReportingTable.setPadding(new Insets(0,10,0,0));
-
-
-
-//        pdfButton.setOnAction(new EventHandler<ActionEvent>() {
-//
-//            @Override
-//            public void handle(ActionEvent event) {
-////                System.out.println("To Printer!");
-////                Stage stage = (Stage) pdfButton.getScene().getWindow();
-////                PrinterJob job = PrinterJob.createPrinterJob();
-////                if(job != null){
-////                    job.showPrintDialog(stage);
-////                    job.printPage(productClassReportingTable);
-////                    job.endJob();
-////                }
-//                WritableImage image = pdfButton.snapshot(new SnapshotParameters(), null);
-//                BufferedImage awtImage = SwingFXUtils.fromFXImage(image, null);
-//                PDDocument doc =new PDDocument();
-//
-//                try {
-//                    PDImageXObject pdImageXObject = LosslessFactory.createFromImage(doc, awtImage);
-//                    PDPageContentStream contentStream = new PDPageContentStream(doc, new PDPage(), PDPageContentStream.AppendMode.APPEND, true, true);
-//                    contentStream.drawImage(pdImageXObject, 100, 160, awtImage.getWidth() / 2, awtImage.getHeight() / 2);
-//                    contentStream.close();
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
-//
-//            }
-//        });;
+        productClassReportingTable.setPadding(new Insets(0, 10, 0, 0));
 
         pdfButton.setOnAction(new EventHandler<ActionEvent>() {
-
             @Override
             public void handle(ActionEvent event) {
                 WritableImage nodeshot = mainVbox.snapshot(new SnapshotParameters(), null);
@@ -216,7 +181,7 @@ public class ProductClassReportingController implements Initializable {
                 } catch (IOException e) {
 
                 }
-                PDDocument doc    = new PDDocument();
+                PDDocument doc = new PDDocument();
                 PDPage page = new PDPage(PDRectangle.A4);
 
                 page.setRotation(90);
@@ -230,19 +195,18 @@ public class ProductClassReportingController implements Initializable {
                 FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("PDF files (*.pdf)", "*.pdf");
                 fileChooser.getExtensionFilters().add(extFilter);
 
-
                 Stage stage = (Stage) brandNameBox.getScene().getWindow();
                 // Show open file dialog
                 File pdfFile = new File("untitled.pdf");
                 try {
                     pdfFile = fileChooser.showSaveDialog(stage);
-                    pdimage = PDImageXObject.createFromFile("chart.png",doc);
+                    pdimage = PDImageXObject.createFromFile("chart.png", doc);
 
                     content = new PDPageContentStream(doc, page, PDPageContentStream.AppendMode.OVERWRITE, false);
                     PDRectangle pageSize = page.getMediaBox();
                     float pageWidth = pageSize.getWidth();
                     content.transform(new Matrix(0, 1, -1, 0, pageWidth, 0));
-//                    Matrix scaleInstance = Matrix.getScaleInstance(0.52f, 0.65f);
+                    // Matrix scaleInstance = Matrix.getScaleInstance(0.52f, 0.65f);
                     Matrix scaleInstance = Matrix.getScaleInstance(0.52f, 0.65f);
                     content.transform(scaleInstance);
                     content.drawImage(pdimage, 35, 70);
@@ -254,26 +218,27 @@ public class ProductClassReportingController implements Initializable {
                 } catch (IOException ex) {
                     Logger.getLogger(ProductClassReportingController.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                //Open PDF file
+                // Open PDF file
                 HostServices hostServices = getHostServices();
                 hostServices.showDocument(pdfFile.getAbsolutePath());
             }
         });
         Platform.runLater(() -> {
-            Window window =  mainVbox.getScene().getWindow();
+            Window window = mainVbox.getScene().getWindow();
             window.setHeight(mainVbox.getPrefHeight());
             window.setWidth(mainVbox.getPrefWidth());
             window.centerOnScreen();
         });
 
-//        averageSellingPriceColumn.setStyle(".column-header {-fx-size:  20;}");
+        // averageSellingPriceColumn.setStyle(".column-header {-fx-size: 20;}");
     }
+
     public HostServices getHostServices() {
-        return hostServices ;
+        return hostServices;
     }
 
     public void setHostServices(HostServices hostServices) {
-        this.hostServices = hostServices ;
+        this.hostServices = hostServices;
     }
 
     public void getTotals() {
@@ -313,8 +278,9 @@ public class ProductClassReportingController implements Initializable {
         avgSellingPrice = avgSellingPrice.divide(new BigDecimal(reportCount), 2, RoundingMode.HALF_UP);
         avgWeeklyVelocityUfsw = avgWeeklyVelocityUfsw.divide(new BigDecimal(reportCount), 2, RoundingMode.HALF_UP);
         ProductClassReport totalsReport = new ProductClassReport("TOTALS", true, totalStoreCount, totalTotalVolumetrics,
-                totaleverydayVolumetrics, totalpromotedVolumetrics, totalGrossRevenue, totalTradeRevenue, totalNet1Revenue,
-                avgSellingPrice, avgWeeklyVelocityUfsw, totalPointsOfDistribution, avgNet1Pod, avgNet1Rate, avgSkus,"", FXCollections.observableArrayList());
+                totaleverydayVolumetrics, totalpromotedVolumetrics, totalGrossRevenue, totalTradeRevenue,
+                totalNet1Revenue, avgSellingPrice, avgWeeklyVelocityUfsw, totalPointsOfDistribution, avgNet1Pod,
+                avgNet1Rate, avgSkus, "", FXCollections.observableArrayList());
         productClassReportingTable.getItems().remove(0);
         productClassReportingTable.getItems().add(0, totalsReport);
 
@@ -336,22 +302,24 @@ public class ProductClassReportingController implements Initializable {
     }
 
     /*
-        Product class changed Event
-         */
+     * Product class changed Event
+     */
     public void changeBrandComboboxEvent(ActionEvent event) {
         Product selectedBrandName = brandNameBox.getSelectionModel().getSelectedItem();
-        productClassBox.setItems(getCorrespondingProductClasses(MenuController.getExampleProducts(), selectedBrandName));
+        productClassBox
+                .setItems(getCorrespondingProductClasses(MenuController.getExampleProducts(), selectedBrandName));
     }
 
     public void changeCommitted(ActionEvent event) {
         for (ProductClassReport row : productClassReportingTable.getItems()) {
-//            if (row.getCurrentPromoPlan().get)
+            // if (row.getCurrentPromoPlan().get)
         }
     }
 
-    public ObservableList<Product> getCorrespondingProductClasses(ObservableList<Product> products, Product selectedBrandName) {
+    public ObservableList<Product> getCorrespondingProductClasses(ObservableList<Product> products,
+            Product selectedBrandName) {
         ObservableList<Product> correspondingProductClasses = FXCollections.observableArrayList();
-        //Set up product combobox and make it display product class
+        // Set up product combobox and make it display product class
         for (Product product : products) {
             if (product.getBrandName().equals(selectedBrandName.getBrandName())) {
                 correspondingProductClasses.add(product);
@@ -359,78 +327,83 @@ public class ProductClassReportingController implements Initializable {
         }
         return correspondingProductClasses;
     }
-//    public void getSkuTotals(){
-//        ObservableList<Sku> skus;
-//        ObservableList<Sku> alreadySkus = FXCollections.observableArrayList();
-//        ObservableList<Integer> skuStoreCountTotals = FXCollections.observableArrayList();
-//
-//        Integer totalSkus = 0;
-//        Integer totalAlreadySkus = 0;
-//        for (int i = 1; i < productClassReportingTable.getItems().size(); i++) {
-//            skus= productClassReportingTable.getItems().get(i).getRetailerProduct().getSkus();
-//            for (int j =0; j< skus.size(); j++) {
-//                Integer total =0;
-//                Sku sku = skus.get(j);
-//                if (!alreadySkus.contains(sku)) {
-//                    if (sku.getStatus().equals("current")) {
-//                        skuStoreCountTotals.set(totalSkus, skuStoreCountTotals.get(totalSkus) + productClassReportingTable.getItems().get(i).getStoreCount().get(0));
-//                    }
-//                        totalAlreadySkus++;
-//                        totalSkus++;
-//                } else{
-//                    if (sku.getStatus().equals("current")) {
-//                        skuStoreCountTotals.set(totalSkus, skuStoreCountTotals.get(totalSkus) + productClassReportingTable.getItems().get(i).getStoreCount().get(0));
-//                    }
-//                    skuStoreCountTotals.set(totalSkus, skuStoreCountTotals.get(totalSkus)+productClassReportingTable.getItems().get(i).getStoreCount().get(0) );
-//
-//                }
-//            }
-//
-//        }
-//        for (int k= 0; k < alreadySkus.size(); k++){
-//            if (alreadySkus.get(k).equals()){
-//
-//            }
-//        }
-//    }
+    // public void getSkuTotals(){
+    // ObservableList<Sku> skus;
+    // ObservableList<Sku> alreadySkus = FXCollections.observableArrayList();
+    // ObservableList<Integer> skuStoreCountTotals = FXCollections.observableArrayList();
+    //
+    // Integer totalSkus = 0;
+    // Integer totalAlreadySkus = 0;
+    // for (int i = 1; i < productClassReportingTable.getItems().size(); i++) {
+    // skus= productClassReportingTable.getItems().get(i).getRetailerProduct().getSkus();
+    // for (int j =0; j< skus.size(); j++) {
+    // Integer total =0;
+    // Sku sku = skus.get(j);
+    // if (!alreadySkus.contains(sku)) {
+    // if (sku.getStatus().equals("current")) {
+    // skuStoreCountTotals.set(totalSkus, skuStoreCountTotals.get(totalSkus) +
+    // productClassReportingTable.getItems().get(i).getStoreCount().get(0));
+    // }
+    // totalAlreadySkus++;
+    // totalSkus++;
+    // } else{
+    // if (sku.getStatus().equals("current")) {
+    // skuStoreCountTotals.set(totalSkus, skuStoreCountTotals.get(totalSkus) +
+    // productClassReportingTable.getItems().get(i).getStoreCount().get(0));
+    // }
+    // skuStoreCountTotals.set(totalSkus,
+    // skuStoreCountTotals.get(totalSkus)+productClassReportingTable.getItems().get(i).getStoreCount().get(0) );
+    //
+    // }
+    // }
+    //
+    // }
+    // for (int k= 0; k < alreadySkus.size(); k++){
+    // if (alreadySkus.get(k).equals()){
+    //
+    // }
+    // }
+    // }
 
     /*
-    Product class changed Event=
-    */
+     * Product class changed Event=
+     */
     public void changeProductComboboxEvent(ActionEvent event) {
         Product selectedProduct = productClassBox.getSelectionModel().getSelectedItem();
         if (selectedProduct == null) {
             productClassBox.setPromptText("Now Select a Product Class");
         } else {
             currentProduct.set(selectedProduct);
-            for (int i= 1; i<productClassReportingTable.getItems().size();i++){
+            for (int i = 1; i < productClassReportingTable.getItems().size(); i++) {
                 ProductClassReport report = productClassReportingTable.getItems().get(i);
-                boolean noneExist= true;
-                for (RetailerProduct retailerProduct: report.getRetailer().getRetailerProducts()){
+                boolean noneExist = true;
+                for (RetailerProduct retailerProduct : report.getRetailer().getRetailerProducts()) {
                     System.out.println("currentproduct: " + currentProduct.get().toString());
                     System.out.println("retailerproductproduct: " + retailerProduct.getProduct());
-                    if (retailerProduct.getProduct().getBrandName().equals(currentProduct.get().getBrandName()) && retailerProduct.getProduct().getProductClass().equals(currentProduct.get().getProductClass())){
+                    if (retailerProduct.getProduct().getBrandName().equals(currentProduct.get().getBrandName())
+                            && retailerProduct.getProduct().getProductClass()
+                                    .equals(currentProduct.get().getProductClass())) {
                         System.out.println("getting HHHre");
                         report.setRetailerProduct(retailerProduct);
                         report.updateAll();
                         productClassReportingTable.refresh();
-                        noneExist=false;
+                        noneExist = false;
                     }
                 }
                 addSkuColumns();
-                if (noneExist){
+                if (noneExist) {
                     report.setRetailerProduct(null);
                     report.updateAll();
-//                    report.setTotalVolumetrics(new BigDecimal("0.0"));
-//                    report.setPromotedVolumetrics(new BigDecimal("0.0"));
-//                    report.setEverydayVolumetrics(new BigDecimal("0.0"));
-//                    report.setGrossRevenue(new BigDecimal("0.0"));
-//                    report.setTradeRevenue(new BigDecimal("0.0"));
-//                    report.setNet1Revenue(new BigDecimal("0.0"));
-//                    report.setNet1Rate(new BigDecimal("0.0"));
-//                    report.setNet1Pod(new BigDecimal("0.0"));
-//                    report.setAverageSellingPrice(new BigDecimal("0.0"));
-//                    report.setWeeklyVelocityUfsw(new BigDecimal("0.0"));
+                    // report.setTotalVolumetrics(new BigDecimal("0.0"));
+                    // report.setPromotedVolumetrics(new BigDecimal("0.0"));
+                    // report.setEverydayVolumetrics(new BigDecimal("0.0"));
+                    // report.setGrossRevenue(new BigDecimal("0.0"));
+                    // report.setTradeRevenue(new BigDecimal("0.0"));
+                    // report.setNet1Revenue(new BigDecimal("0.0"));
+                    // report.setNet1Rate(new BigDecimal("0.0"));
+                    // report.setNet1Pod(new BigDecimal("0.0"));
+                    // report.setAverageSellingPrice(new BigDecimal("0.0"));
+                    // report.setWeeklyVelocityUfsw(new BigDecimal("0.0"));
                 }
             }
             this.getTotals();
@@ -471,7 +444,7 @@ public class ProductClassReportingController implements Initializable {
                     for (RetailerProduct retailerProduct : report.getRetailer().getRetailerProducts()) {
                         if (currentProduct.equals(retailerProduct.getProduct())) {
                             for (PromoPlan promoPlan : retailerProduct.getPromoPlans()) {
-//                            promoPlan.ge
+                                // promoPlan.ge
                             }
                         }
                     }
@@ -480,7 +453,7 @@ public class ProductClassReportingController implements Initializable {
             if (yearBox0.isSelected()) {
 
             }
-//            report.
+            // report.
         }
     }
 
@@ -489,16 +462,20 @@ public class ProductClassReportingController implements Initializable {
 
     public ObservableList<ProductClassReport> getReports() {
         ObservableList<ProductClassReport> productClassReports = FXCollections.observableArrayList();
-        productClassReports.add(new ProductClassReport(retailers.get(0), retailers.get(0).getRetailerProducts().get(0), FXCollections.observableArrayList(false, false, false, false), false));
-        productClassReports.add(new ProductClassReport(retailers.get(1), retailers.get(1).getRetailerProducts().get(0), FXCollections.observableArrayList(false, false, false, false), false));
-        productClassReports.add(new ProductClassReport(retailers.get(0), retailers.get(0).getRetailerProducts().get(0), FXCollections.observableArrayList(false, false, false, false), false));
+        productClassReports.add(new ProductClassReport(retailers.get(0), retailers.get(0).getRetailerProducts().get(0),
+                FXCollections.observableArrayList(false, false, false, false), false));
+        productClassReports.add(new ProductClassReport(retailers.get(1), retailers.get(1).getRetailerProducts().get(0),
+                FXCollections.observableArrayList(false, false, false, false), false));
+        productClassReports.add(new ProductClassReport(retailers.get(0), retailers.get(0).getRetailerProducts().get(0),
+                FXCollections.observableArrayList(false, false, false, false), false));
         return productClassReports;
     }
-    public Map<Sku, Integer> getSkuTotals(){
+
+    public Map<Sku, Integer> getSkuTotals() {
 
         ObservableList<Integer> storeCountTotals;
         Map<Sku, Integer> map = new HashMap<Sku, Integer>();
-//        map.put("dog", "type of animal");animal
+        // map.put("dog", "type of animal");animal
         for (int i = 1; i < productClassReportingTable.getItems().size(); i++) {
             Integer totalStoreCount = 0;
             if (productClassReportingTable.getItems().get(i).getRetailerProduct() != null) {
@@ -517,101 +494,106 @@ public class ProductClassReportingController implements Initializable {
         return map;
 
     }
-    public void addSkuColumns(){
+
+    public void addSkuColumns() {
         for (TableColumn skuColumn : skuColumns) {
             productClassReportingTable.getColumns().remove(skuColumn);
         }
         ObservableList<Sku> skus;
         ObservableList<Sku> alreadySkus = FXCollections.observableArrayList();
         for (int i = 1; i < productClassReportingTable.getItems().size(); i++) {
-            if (productClassReportingTable.getItems().get(i).getRetailerProduct()!=null){
-            skus = productClassReportingTable.getItems().get(i).getRetailerProduct().getSkus();
-            System.out.println("report "+ i + " = "+ productClassReportingTable.getItems().get(i).toString());
-            for (Sku sku : skus) {
-                if (!alreadySkus.contains(sku)) {
-                    TableColumn<ProductClassReport, Integer> col = new TableColumn("");
-                    skuColumns.add(col);
-                    col.setCellValueFactory(cellData -> (ObservableValue) cellData.getValue().storeCountProperty());
-                    col.setCellFactory(tc -> new TableCell<>() {
-                        @Override
-                        protected void updateItem(Integer item, boolean empty) {
-                            super.updateItem(item, empty);
-                            if (empty) {
-                                setText("Hello");
-                            }
-                            if (item == null) {
-                                setText("");
-                            } else {
-                                ProductClassReport report;
-                                if (getTableRow() != null) {
-                                    if (getTableRow().getIndex() != 0) {
-                                        report = getTableRow().getItem();
-                                        if (report.getRetailerProduct()!=null) {
-                                            if (report.getRetailerProduct().getSkus().contains(sku)) {
-                                                setText(String.valueOf(item));
+            if (productClassReportingTable.getItems().get(i).getRetailerProduct() != null) {
+                skus = productClassReportingTable.getItems().get(i).getRetailerProduct().getSkus();
+                System.out.println("report " + i + " = " + productClassReportingTable.getItems().get(i).toString());
+                for (Sku sku : skus) {
+                    if (!alreadySkus.contains(sku)) {
+                        TableColumn<ProductClassReport, Integer> col = new TableColumn("");
+                        skuColumns.add(col);
+                        col.setCellValueFactory(cellData -> (ObservableValue) cellData.getValue().storeCountProperty());
+                        col.setCellFactory(tc -> new TableCell<>() {
+                            @Override
+                            protected void updateItem(Integer item, boolean empty) {
+                                super.updateItem(item, empty);
+                                if (empty) {
+                                    setText("Hello");
+                                }
+                                if (item == null) {
+                                    setText("");
+                                } else {
+                                    ProductClassReport report;
+                                    if (getTableRow() != null) {
+                                        if (getTableRow().getIndex() != 0) {
+                                            report = getTableRow().getItem();
+                                            if (report.getRetailerProduct() != null) {
+                                                if (report.getRetailerProduct().getSkus().contains(sku)) {
+                                                    setText(String.valueOf(item));
 
-                                                if (sku.getStatus().equals("current")) {
-                                                    setTooltip(new Tooltip(report.getRetailerName() + " : Current Sku, at " + item + "stores"));
-                                                    setStyle("-fx-background-color: rgb(0,255,0,0.5)");
-                                                } else if (sku.getStatus().equals("targeted")) {
-                                                    setTooltip(new Tooltip(report.getRetailerName() + " : Targeted Sku, at " + item + "stores"));
-                                                    setStyle("-fx-background-color: rgb(255,255,0,0.25)");
-                                                } else if (sku.getStatus().equals("discontinued")) {
-                                                    setTooltip(new Tooltip(report.getRetailerName() + " : Discontinued Sku, at " + item + "stores"));
-                                                    setStyle("-fx-background-color: rgb(255,0,0,0.4)");
+                                                    if (sku.getStatus().equals("current")) {
+                                                        setTooltip(new Tooltip(report.getRetailerName()
+                                                                + " : Current Sku, at " + item + "stores"));
+                                                        setStyle("-fx-background-color: rgb(0,255,0,0.5)");
+                                                    } else if (sku.getStatus().equals("targeted")) {
+                                                        setTooltip(new Tooltip(report.getRetailerName()
+                                                                + " : Targeted Sku, at " + item + "stores"));
+                                                        setStyle("-fx-background-color: rgb(255,255,0,0.25)");
+                                                    } else if (sku.getStatus().equals("discontinued")) {
+                                                        setTooltip(new Tooltip(report.getRetailerName()
+                                                                + " : Discontinued Sku, at " + item + "stores"));
+                                                        setStyle("-fx-background-color: rgb(255,0,0,0.4)");
+                                                    }
                                                 }
                                             }
-                                        }
-                                    } else {
-                                        if (getSkuTotals().get(sku) != null) {
-                                            setText(String.valueOf(getSkuTotals().get(sku)));
-                                            setTooltip(new Tooltip(" Total Skus in Store " + getSkuTotals().get(sku)));
                                         } else {
-                                            setText(String.valueOf(0));
-                                            setTooltip(new Tooltip(" Total Skus in Store " + 0));
-                                        }
+                                            if (getSkuTotals().get(sku) != null) {
+                                                setText(String.valueOf(getSkuTotals().get(sku)));
+                                                setTooltip(
+                                                        new Tooltip(" Total Skus in Store " + getSkuTotals().get(sku)));
+                                            } else {
+                                                setText(String.valueOf(0));
+                                                setTooltip(new Tooltip(" Total Skus in Store " + 0));
+                                            }
 
-                                        setStyle("-fx-background-color: rgb(105,105,105,0.5)");
+                                            setStyle("-fx-background-color: rgb(105,105,105,0.5)");
+                                        }
                                     }
                                 }
                             }
-                        }
 
-                    });
+                        });
 
+                        Label label1 = new Label(sku.getFlavorDescription());
+                        label1.setTooltip(new Tooltip(sku.getFlavorDescription()));
 
-                    Label label1 = new Label(sku.getFlavorDescription());
-                    label1.setTooltip(new Tooltip(sku.getFlavorDescription()));
+                        VBox vbox = new VBox(label1);
+                        // vbox.setRotate(-90);
+                        // vbox.setPadding(new Insets(5, 5, 5, 5));
+                        vbox.setMinWidth(45);
+                        Group g = new Group(vbox);
 
-                    VBox vbox = new VBox(label1);
-//                vbox.setRotate(-90);
-//                vbox.setPadding(new Insets(5, 5, 5, 5));
-                    vbox.setMinWidth(45);
-                    Group g = new Group(vbox);
+                        col.setGraphic(g);
 
-                    col.setGraphic(g);
-
-                    productClassReportingTable.getColumns().addAll(col);
-                    alreadySkus.add(sku);
+                        productClassReportingTable.getColumns().addAll(col);
+                        alreadySkus.add(sku);
+                    }
                 }
-            }
             }
 
         }
     }
+
     public void switchToMenu(ActionEvent event) throws IOException {
         FXMLLoader menuLoader = App.createFXMLLoader("menu");
         App.setSceneRoot(menuLoader.load());
 
     }
 
-
     public void setRetailers(ObservableList<Retailer> retailers) {
         this.retailers = retailers;
 
-        ProductClassReport totalsReport = new ProductClassReport("TOTALS", true,0, new BigDecimal("0.0"),
-                new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"),
-                new BigDecimal("0.0"), 0, new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"), "",FXCollections.observableArrayList());
+        ProductClassReport totalsReport = new ProductClassReport("TOTALS", true, 0, new BigDecimal("0.0"),
+                new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"),
+                new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"), 0, new BigDecimal("0.0"),
+                new BigDecimal("0.0"), new BigDecimal("0.0"), "", FXCollections.observableArrayList());
         this.productClassReportingTable.setItems(getReports());
         this.productClassReportingTable.getItems().add(0, totalsReport);
         this.getTotals();
@@ -620,7 +602,6 @@ public class ProductClassReportingController implements Initializable {
 
         }
         addSkuColumns();
-
 
     }
 }

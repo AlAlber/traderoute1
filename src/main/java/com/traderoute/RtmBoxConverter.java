@@ -6,9 +6,9 @@ import javafx.util.StringConverter;
 public class RtmBoxConverter extends StringConverter<RTMOption> {
     @Override
     public String toString(RTMOption rtmOption) {
-            if (rtmOption!=null) {
-                return rtmOption.getRTMName();
-            }
+        if (rtmOption != null) {
+            return rtmOption.getRTMName();
+        }
         return null;
     }
 

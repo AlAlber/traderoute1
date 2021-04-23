@@ -84,10 +84,8 @@ public class RetailerSelectionController implements Initializable {
     @FXML
     private VBox mainVbox;
 
-
     private SimpleObjectProperty<Retailer> currentRetailer = new SimpleObjectProperty<>();
     private Retailer retailer;
-
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -95,7 +93,8 @@ public class RetailerSelectionController implements Initializable {
         retailerList.setItems(filterItems);
 
         addButton.setOnAction(e -> {
-            String retailerName = RetailerNamePopup.display("Add a new Retailer", "Type the Name of the Retailer you'd like to add");
+            String retailerName = RetailerNamePopup.display("Add a new Retailer",
+                    "Type the Name of the Retailer you'd like to add");
             Retailer retailer = new Retailer();
             retailer.setRetailerName(retailerName);
             retailers.add(retailer);
@@ -103,14 +102,14 @@ public class RetailerSelectionController implements Initializable {
         changeButton.setOnAction(e -> {
             Retailer retailer = retailerList.getSelectionModel().getSelectedItem();
             System.out.println(retailer.getRetailerName());
-            String retailerName = RetailerNamePopup.display("Change the Name of a Retailer", "Type the new name of this Retailer");
+            String retailerName = RetailerNamePopup.display("Change the Name of a Retailer",
+                    "Type the new name of this Retailer");
             if (!retailerName.equals("")) {
                 retailer.setRetailerName(retailerName);
             }
             System.out.println(retailerName);
             retailerList.refresh();
         });
-
 
         descriptionColumn.setCellValueFactory(cellData -> cellData.getValue().descriptionProperty());
         locationColumn.setCellValueFactory(cellData -> cellData.getValue().locationProperty());
@@ -130,11 +129,10 @@ public class RetailerSelectionController implements Initializable {
         brandNameColumn.setCellFactory(tc -> new CustomTextCell<>());
         productClassColumn.setCellFactory(tc -> new CustomTextCell<>());
 
-
-
         retailerList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Retailer>() {
             @Override
-            public void changed(ObservableValue<? extends Retailer> observable, Retailer oldRetailer, Retailer newRetailer) {
+            public void changed(ObservableValue<? extends Retailer> observable, Retailer oldRetailer,
+                    Retailer newRetailer) {
                 retailerNameLabel.setText(newRetailer.getRetailerName());
                 yearOneStoreCountLabel.setText("Year One Store Count = $" + newRetailer.getYearOneStoreCount());
                 everydayGpmLabel.setText("Everyday GPM = " + newRetailer.getEverydayGPM().toString() + "%");
@@ -165,15 +163,11 @@ public class RetailerSelectionController implements Initializable {
             }
         });
         Platform.runLater(() -> {
-            Window window =  mainVbox.getScene().getWindow();
+            Window window = mainVbox.getScene().getWindow();
             window.setHeight(mainVbox.getPrefHeight());
             window.setWidth(mainVbox.getPrefWidth());
             window.centerOnScreen();
         });
-
-
-
-
 
         retailerList.setCellFactory(param -> new ListCell<Retailer>() {
             @Override
@@ -209,7 +203,6 @@ public class RetailerSelectionController implements Initializable {
         }, retailerSelectField.textProperty()));
     }
 
-
     @FXML
     private void switchToAssortment(ActionEvent event) throws IOException {
     }
@@ -228,6 +221,7 @@ public class RetailerSelectionController implements Initializable {
             firstTableController.setRetailer(currentRetailer.get());
         }
     }
+
     public void switchToMenu(ActionEvent event) throws IOException {
         FXMLLoader menuLoader = App.createFXMLLoader("menu");
         App.setSceneRoot(menuLoader.load());
@@ -241,7 +235,6 @@ public class RetailerSelectionController implements Initializable {
         ProductClassReportingController productClassReportingController = productClassReportingLoader.getController();
         productClassReportingController.setRetailers(getRetailers());
     }
-
 
     public void setRetailer(Retailer retailer) {
 

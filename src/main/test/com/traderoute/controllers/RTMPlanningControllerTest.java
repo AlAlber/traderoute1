@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.loadui.testfx.exceptions.NoNodesFoundException;
 import org.testfx.api.FxRobot;
+import org.testfx.api.FxAssert;
 import org.testfx.framework.junit5.ApplicationExtension;
 import org.testfx.framework.junit5.Start;
 
@@ -70,7 +71,6 @@ class RTMPlanningControllerTest {
         RTMOption rtmOption4 = new RTMOption();
         rtmOption4.setRTMName("Option 4");
         firstTableView.setItems(FXCollections.observableArrayList(rtmOption1, rtmOption2, rtmOption3, rtmOption4));
-
     }
 
     @Test

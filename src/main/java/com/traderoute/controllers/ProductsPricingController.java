@@ -97,8 +97,6 @@ public class ProductsPricingController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-
-
         productsPricingTable.setItems(MenuController.getExampleProducts());
         productsPricingTable.setEditable(true);
         brandNameColumn.setCellValueFactory(cellData -> cellData.getValue().brandNameProperty());
@@ -123,8 +121,6 @@ public class ProductsPricingController implements Initializable {
         novColumn.setCellValueFactory(cellData -> cellData.getValue().novIndiceProperty());
         decColumn.setCellValueFactory(cellData -> cellData.getValue().decIndiceProperty());
 
-
-
         brandNameColumn.setCellFactory(tc -> new CustomTextCell<>());
         productClassColumn.setCellFactory(tc -> new CustomTextCell<>());
         listCostColumn.setCellFactory(tc -> new NumberEditCell("$", ""));
@@ -133,11 +129,11 @@ public class ProductsPricingController implements Initializable {
         net1GoalColumn.setCellFactory(tc -> new NumberEditCell("$", ""));
         blendedCogsColumn.setCellFactory(tc -> new NumberEditCell("$", ""));
         elasticityMultipleColumn.setCellFactory(tc -> new NumberEditCell("", " : 1"));
-//        brandNameColumn.setCellValueFactory(tc-> new Button());
-        specificationColumn.setCellFactory(ActionButtonTableCell.<Product>forTableColumn("Edit", (Product p) -> {
-//            try {
-//                Stage window = new Stage();
-//                window.initModality(Modality.APPLICATION_MODAL);
+        // brandNameColumn.setCellValueFactory(tc-> new Button());
+        specificationColumn.setCellFactory(ActionButtonTableCell.<Product> forTableColumn("Edit", (Product p) -> {
+            // try {
+            // Stage window = new Stage();
+            // window.initModality(Modality.APPLICATION_MODAL);
 
             FXMLLoader productSkuSpecificationsLoader = null;
             try {
@@ -147,29 +143,31 @@ public class ProductsPricingController implements Initializable {
                 e.printStackTrace();
             }
 
+            // Scene scene = new Scene (productSkuSpecificationsLoader.load());
+            // window.setScene(scene);
+            // window.showAndWait();
+            //
+            // ProductSkuSpecificationsController productSkuSpecificationsController =
+            // productSkuSpecificationsLoader.getController();
+            // productSkuSpecificationsController.setProduct(p);
 
-//                Scene scene = new Scene (productSkuSpecificationsLoader.load());
-//                window.setScene(scene);
-//                window.showAndWait();
-//
-//                ProductSkuSpecificationsController productSkuSpecificationsController = productSkuSpecificationsLoader.getController();
-//                productSkuSpecificationsController.setProduct(p);
-
-//            } catch (IOException e) {
-//                System.out.println(e.getMessage());
-//            }
-//            String retailerName = RetailerNamePopup.display("Add a new Retailer", "Type the Name of the Retailer you'd like to add");
-//            Retailer retailer = new Retailer();
-//            retailer.setRetailerName(retailerName);
+            // } catch (IOException e) {
+            // System.out.println(e.getMessage());
+            // }
+            // String retailerName = RetailerNamePopup.display("Add a new Retailer", "Type the Name of the Retailer
+            // you'd like to add");
+            // Retailer retailer = new Retailer();
+            // retailer.setRetailerName(retailerName);
             return p;
         }));
 
-//        addButton.setOnAction(e -> {
-//            String retailerName = RetailerNamePopup.display("Add a new Retailer", "Type the Name of the Retailer you'd like to add");
-//            Retailer retailer = new Retailer();
-//            retailer.setRetailerName(retailerName);
-//            observableRetailerList.add(retailer);
-//        });
+        // addButton.setOnAction(e -> {
+        // String retailerName = RetailerNamePopup.display("Add a new Retailer", "Type the Name of the Retailer you'd
+        // like to add");
+        // Retailer retailer = new Retailer();
+        // retailer.setRetailerName(retailerName);
+        // observableRetailerList.add(retailer);
+        // });
 
         janColumn.setCellFactory(tc -> new NumberEditCell("", ""));
         febColumn.setCellFactory(tc -> new NumberEditCell("", ""));
@@ -184,13 +182,14 @@ public class ProductsPricingController implements Initializable {
         novColumn.setCellFactory(tc -> new NumberEditCell("", ""));
         decColumn.setCellFactory(tc -> new NumberEditCell("", ""));
         Platform.runLater(() -> {
-            Window window =  mainVbox.getScene().getWindow();
+            Window window = mainVbox.getScene().getWindow();
             window.setHeight(mainVbox.getPrefHeight());
             window.setWidth(mainVbox.getPrefWidth());
             window.centerOnScreen();
         });
     }
-    public void switchToMenu(ActionEvent event) throws IOException{
+
+    public void switchToMenu(ActionEvent event) throws IOException {
         FXMLLoader menuLoader = App.createFXMLLoader("menu");
         App.setSceneRoot(menuLoader.load());
 

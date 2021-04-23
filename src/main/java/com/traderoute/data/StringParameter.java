@@ -4,25 +4,27 @@ import com.traderoute.data.Parameter;
 
 public class StringParameter extends Parameter<String> {
 
-    public StringParameter(String name, String pre, String january, String february,
-                           String march, String april, String may, String june,
-                           String july, String august, String september, String october,
-                           String november, String december) {
-        super(name, pre, january, february, march, april, may, june, july, august, september, october, november, december);
+    public StringParameter(String name, String pre, String january, String february, String march, String april,
+            String may, String june, String july, String august, String september, String october, String november,
+            String december) {
+        super(name, pre, january, february, march, april, may, june, july, august, september, october, november,
+                december);
     }
-    public StringParameter(String name, String pre){
+
+    public StringParameter(String name, String pre) {
         super(name, pre);
     }
 
     public String getTotal() {
-        if(total.get()==null){
+        if (total.get() == null) {
             return "";
         }
         return total.get();
     }
+
     @Override
     public String getJanuary() {
-        if(january.get()==null){
+        if (january.get() == null) {
             return "";
         }
         return january.get();
@@ -30,7 +32,7 @@ public class StringParameter extends Parameter<String> {
 
     @Override
     public String getFebruary() {
-        if(february.get()==null){
+        if (february.get() == null) {
             return "";
         }
         return february.get();
@@ -38,7 +40,7 @@ public class StringParameter extends Parameter<String> {
 
     @Override
     public String getMarch() {
-        if(march.get()==null){
+        if (march.get() == null) {
             return "";
         }
         return march.get();
@@ -46,7 +48,7 @@ public class StringParameter extends Parameter<String> {
 
     @Override
     public String getApril() {
-        if(april.get()==null){
+        if (april.get() == null) {
             return "";
         }
         return april.get();
@@ -54,7 +56,7 @@ public class StringParameter extends Parameter<String> {
 
     @Override
     public String getMay() {
-        if(may.get()==null){
+        if (may.get() == null) {
             return "";
         }
         return may.get();
@@ -62,7 +64,7 @@ public class StringParameter extends Parameter<String> {
 
     @Override
     public String getJune() {
-        if(june.get()==null){
+        if (june.get() == null) {
             return "";
         }
         return june.get();
@@ -70,7 +72,7 @@ public class StringParameter extends Parameter<String> {
 
     @Override
     public String getJuly() {
-        if(july.get()==null){
+        if (july.get() == null) {
             return "";
         }
         return july.get();
@@ -78,7 +80,7 @@ public class StringParameter extends Parameter<String> {
 
     @Override
     public String getAugust() {
-        if(august.get()==null){
+        if (august.get() == null) {
             return "";
         }
         return august.get();
@@ -86,7 +88,7 @@ public class StringParameter extends Parameter<String> {
 
     @Override
     public String getSeptember() {
-        if(september.get()==null){
+        if (september.get() == null) {
             return "";
         }
         return september.get();
@@ -94,7 +96,7 @@ public class StringParameter extends Parameter<String> {
 
     @Override
     public String getOctober() {
-        if(october.get()==null){
+        if (october.get() == null) {
             return "";
         }
         return october.get();
@@ -102,7 +104,7 @@ public class StringParameter extends Parameter<String> {
 
     @Override
     public String getNovember() {
-        if(november.get()==null){
+        if (november.get() == null) {
             return "";
         }
         return november.get();
@@ -110,7 +112,7 @@ public class StringParameter extends Parameter<String> {
 
     @Override
     public String getDecember() {
-        if(december.get()==null){
+        if (december.get() == null) {
             return "";
         }
         return december.get();

@@ -7,16 +7,17 @@ import java.time.LocalDate;
 import java.util.Date;
 
 public class Meeting {
-    private SimpleStringProperty description, location,time,  notes;
+    private SimpleStringProperty description, location, time, notes;
     private SimpleObjectProperty<LocalDate> date;
 
-    public Meeting(String description, String location, LocalDate date,String time,  String notes) {
+    public Meeting(String description, String location, LocalDate date, String time, String notes) {
         this.description = new SimpleStringProperty(description);
         this.location = new SimpleStringProperty(location);
         this.date = new SimpleObjectProperty<>(date);
         this.time = new SimpleStringProperty(time);
         this.notes = new SimpleStringProperty(notes);
     }
+
     public Meeting() {
         this.description = new SimpleStringProperty();
         this.location = new SimpleStringProperty();
@@ -37,10 +38,10 @@ public class Meeting {
         this.time.set(time);
     }
 
-    public String toString(){
-        return "Description: "+getDescription()+" Location: "+getLocation()+" Date: "+ getDate() + " Notes: "+ getNotes();
+    public String toString() {
+        return "Description: " + getDescription() + " Location: " + getLocation() + " Date: " + getDate() + " Notes: "
+                + getNotes();
     }
-
 
     public String getDescription() {
         return description.get();

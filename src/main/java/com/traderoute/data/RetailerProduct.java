@@ -10,8 +10,8 @@ public class RetailerProduct {
     private SimpleObjectProperty<ObservableList<Meeting>> meetings;
     private SimpleObjectProperty<ObservableList<PromoPlan>> promoPlans;
 
-
-    public RetailerProduct(Product product, ObservableList rtmOptions, ObservableList skus, ObservableList meetings, ObservableList promoPlans) {
+    public RetailerProduct(Product product, ObservableList rtmOptions, ObservableList skus, ObservableList meetings,
+            ObservableList promoPlans) {
         this.product = new SimpleObjectProperty<>(product);
         this.rtmOptions = new SimpleObjectProperty<>(rtmOptions);
         this.skus = new SimpleObjectProperty<>(skus);

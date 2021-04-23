@@ -31,8 +31,7 @@ public class Product {
 
     private SimpleObjectProperty<ObservableList<Sku>> skus;
 
-
-    public Product(){
+    public Product() {
         this.brandName = new SimpleStringProperty();
         this.productClass = new SimpleStringProperty();
         this.unitListCost = new SimpleObjectProperty<>();
@@ -58,12 +57,13 @@ public class Product {
 
         this.skus = new SimpleObjectProperty<>();
     }
-    public Product(String brandName, String productClass, BigDecimal unitListCost,
-                   BigDecimal unitBaseFreight, BigDecimal unitFobCost, BigDecimal unitNet1Goal
-                    , BigDecimal unitBlendedCogs, BigDecimal elasticityMultiple,BigDecimal janIndice,
-                   BigDecimal febIndice, BigDecimal marIndice, BigDecimal aprIndice, BigDecimal mayIndice,
-                   BigDecimal junIndice, BigDecimal julIndice, BigDecimal augIndice, BigDecimal sepIndice,
-                   BigDecimal octIndice, BigDecimal novIndice, BigDecimal decIndice, ObservableList<Sku> skus){
+
+    public Product(String brandName, String productClass, BigDecimal unitListCost, BigDecimal unitBaseFreight,
+            BigDecimal unitFobCost, BigDecimal unitNet1Goal, BigDecimal unitBlendedCogs, BigDecimal elasticityMultiple,
+            BigDecimal janIndice, BigDecimal febIndice, BigDecimal marIndice, BigDecimal aprIndice,
+            BigDecimal mayIndice, BigDecimal junIndice, BigDecimal julIndice, BigDecimal augIndice,
+            BigDecimal sepIndice, BigDecimal octIndice, BigDecimal novIndice, BigDecimal decIndice,
+            ObservableList<Sku> skus) {
         this.brandName = new SimpleStringProperty(brandName);
         this.productClass = new SimpleStringProperty(productClass);
         this.unitListCost = new SimpleObjectProperty<>(unitListCost);
@@ -72,7 +72,7 @@ public class Product {
         this.unitNet1Goal = new SimpleObjectProperty<>(unitNet1Goal);
         this.unitBlendedCogs = new SimpleObjectProperty<>(unitBlendedCogs);
         this.elasticityMultiple = new SimpleObjectProperty<>(elasticityMultiple);
-//        thi.seasonalityIndices = new SimpleObjectProperty<>(seasonalityIndices);
+        // thi.seasonalityIndices = new SimpleObjectProperty<>(seasonalityIndices);
         this.janIndice = new SimpleObjectProperty<>(janIndice);
         this.febIndice = new SimpleObjectProperty<>(febIndice);
         this.marIndice = new SimpleObjectProperty<>(marIndice);
@@ -90,11 +90,11 @@ public class Product {
 
     }
 
-    public boolean equals(Product p){
-        if (p.getBrandName().equals(this.getBrandName())){
-            if (p.getProductClass().equals(this.getProductClass())){
-                if (p.getUnitListCost().equals(this.getUnitListCost())){
-                    if (p.getUnitFobCost().equals(this.getUnitFobCost())){
+    public boolean equals(Product p) {
+        if (p.getBrandName().equals(this.getBrandName())) {
+            if (p.getProductClass().equals(this.getProductClass())) {
+                if (p.getUnitListCost().equals(this.getUnitListCost())) {
+                    if (p.getUnitFobCost().equals(this.getUnitFobCost())) {
                         return true;
                     }
                 }
@@ -247,8 +247,9 @@ public class Product {
         this.decIndice.set(decIndice);
     }
 
-    public String toString(){
-        String product = "brandName: " + this.getBrandName() + " productClass: " + this.getProductClass() + " Unit List Cost: " + this.getUnitListCost();
+    public String toString() {
+        String product = "brandName: " + this.getBrandName() + " productClass: " + this.getProductClass()
+                + " Unit List Cost: " + this.getUnitListCost();
         return product;
     }
 
@@ -267,7 +268,6 @@ public class Product {
     public String getProductClass() {
         return productClass.get();
     }
-
 
     public SimpleStringProperty productClassProperty() {
         return productClass;
