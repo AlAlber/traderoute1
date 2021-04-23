@@ -341,7 +341,7 @@ class RTMPlanningControllerTest {
     @Test
     public void testUpdateChartEveryDayRetailCalcd(FxRobot robot){
         RTMOption testOption = new RTMOption();
-        testOption.setLandedStoreCost(new BigDecimal("6.788"));
+        testOption.setEverydayRetailCalcd(new BigDecimal("6.788"));
         rtmPlanningTable1.getItems().set(0,testOption);
         robot.interact(()->{
             controller.updateChart(FXCollections.observableArrayList(everydayRetailCalcdChart));
