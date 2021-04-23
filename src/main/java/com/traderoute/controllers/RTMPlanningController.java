@@ -6,7 +6,6 @@ import com.traderoute.data.*;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -994,7 +993,7 @@ public class RTMPlanningController implements Initializable {
                 barChartData.getData().add(new Data(row.getRTMName(), row.getSlottingPaybackPeriod()));
                 break;
             case 5:
-                barChartData.getData().add(new Data(row.getRTMName(), row.getPostFreightPostSpoilsWeCollectPerUnit()));
+                barChartData.getData().add(new Data(row.getRTMName(), row.getPostFreightPostSpoilsPerUnit()));
                 break;
             case 6:
                 barChartData.getData().add(new Data(row.getRTMName(), row.getUnspentTradePerUnit()));
@@ -1179,7 +1178,7 @@ public class RTMPlanningController implements Initializable {
         slottingPaybackPeriodColumn
                 .setCellValueFactory(cellData -> cellData.getValue().slottingPaybackPeriodProperty());
         postFreightPostSpoilsPerUnitCol
-                .setCellValueFactory(cellData -> cellData.getValue().postFreightPostSpoilsWeCollectPerUnitProperty());
+                .setCellValueFactory(cellData -> cellData.getValue().postFreightPostSpoilsPerUnitProperty());
         unspentTradePerUnitColumn.setCellValueFactory(cellData -> cellData.getValue().unspentTradePerUnitProperty());
         fourYearEqGpPerSkuColumn.setCellValueFactory(cellData -> cellData.getValue().fourYearEqGpPerSkuProperty());
         fourYearEqGpPerUnitColumn.setCellValueFactory(cellData -> cellData.getValue().fourYearEqGpPerUnitProperty());

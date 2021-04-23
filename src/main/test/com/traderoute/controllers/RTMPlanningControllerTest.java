@@ -33,6 +33,7 @@ import java.math.BigDecimal;
 class RTMPlanningControllerTest {
     private RTMPlanningController controller;
     private ObservableList<RTMOption> rtmOptions;
+    private RTMOption testOption = new RTMOption();
     private SimpleObjectProperty<Retailer> retailer= new SimpleObjectProperty<>(new Retailer("ahold", RTMPlanningController.getRetailerProducts(),0 ,  new BigDecimal("40") , 158,new BigDecimal("3.0")));;
     private TableView<RTMOption> rtmPlanningTable1;
     private TextField everydayGpmField;
@@ -237,7 +238,7 @@ class RTMPlanningControllerTest {
         Assertions.assertEquals(((RTMOption) rtmPlanningTable1.getItems().get(3)).getElasticizedUnitVelocity(), new BigDecimal("1.2"));
         Assertions.assertEquals(((RTMOption) rtmPlanningTable1.getItems().get(3)).getAnnualVolumePerSku(), new BigDecimal("9859.2000000000"));
         Assertions.assertEquals(((RTMOption) rtmPlanningTable1.getItems().get(3)).getSlottingPaybackPeriod(), new BigDecimal("1.65436")); // Refactor this in RTM Option
-        Assertions.assertEquals(((RTMOption) rtmPlanningTable1.getItems().get(3)).getPostFreightPostSpoilsWeCollectPerUnit(), new BigDecimal("3.1923000000")); // Refactor this in RTM Option
+        Assertions.assertEquals(((RTMOption) rtmPlanningTable1.getItems().get(3)).getPostFreightPostSpoilsPerUnit(), new BigDecimal("3.1923000000")); // Refactor this in RTM Option
         Assertions.assertEquals(((RTMOption) rtmPlanningTable1.getItems().get(3)).getUnspentTradePerUnit(), new BigDecimal("0.4923000000"));
         Assertions.assertEquals(((RTMOption) rtmPlanningTable1.getItems().get(3)).getFourYearEqGpPerSku(), new BigDecimal("18133.920000000000000000000000000000")); // Refactor this in RTM Option
         Assertions.assertEquals(((RTMOption) rtmPlanningTable1.getItems().get(3)).getFourYearEqGpPerUnit(), new BigDecimal("0.4598222980"));
@@ -330,7 +331,6 @@ class RTMPlanningControllerTest {
     }
     @Test
     public void testUpdateChartLandedStoreCost(FxRobot robot){
-        RTMOption testOption = new RTMOption();
         testOption.setLandedStoreCost(new BigDecimal("4.44"));
         rtmPlanningTable1.getItems().set(0,testOption);
         robot.interact(()->{
@@ -340,7 +340,6 @@ class RTMPlanningControllerTest {
     }
     @Test
     public void testUpdateChartEveryDayRetailCalcd(FxRobot robot){
-        RTMOption testOption = new RTMOption();
         testOption.setEverydayRetailCalcd(new BigDecimal("6.788"));
         rtmPlanningTable1.getItems().set(0,testOption);
         robot.interact(()->{
@@ -348,6 +347,101 @@ class RTMPlanningControllerTest {
         });
         assertEqualsYChartValueForFirstRTMOption(robot, everydayRetailCalcdChart, new BigDecimal("6.788"));
     }
+    @Test
+    public void testUpdateChartElasticizedUnitVelocityChart(FxRobot robot){
+        testOption.setElasticizedUnitVelocity(new BigDecimal("50"));
+        rtmPlanningTable1.getItems().set(0,testOption);
+        robot.interact(()->{
+            controller.updateChart(FXCollections.observableArrayList(elasticizedUnitVelocityChart));
+        });
+        assertEqualsYChartValueForFirstRTMOption(robot, elasticizedUnitVelocityChart, new BigDecimal("50"));
+    }
+    @Test
+    public void testUpdateChartAnnualVolumePerSku(FxRobot robot){
+        testOption.setAnnualVolumePerSku(new BigDecimal("202"));
+        rtmPlanningTable1.getItems().set(0,testOption);
+        robot.interact(()->{
+            controller.updateChart(FXCollections.observableArrayList(annualVolumePerSkuChart));
+        });
+        assertEqualsYChartValueForFirstRTMOption(robot, annualVolumePerSkuChart, new BigDecimal("202"));
+    }
+    @Test
+    public void testUpdateChartSlottingPerSku(FxRobot robot){
+        testOption.setSlottingPaybackPeriod(new BigDecimal("0.22"));
+        rtmPlanningTable1.getItems().set(0,testOption);
+        robot.interact(()->{
+            controller.updateChart(FXCollections.observableArrayList(slottingPaybackPeriodChart));
+        });
+        assertEqualsYChartValueForFirstRTMOption(robot, slottingPaybackPeriodChart, new BigDecimal("0.22"));
+    }
+    @Test
+    public void testUpdateChartPostFreightPostSpoils(FxRobot robot){
+        testOption.setPostFreightPostSpoilsPerUnit(new BigDecimal("0.25"));
+        rtmPlanningTable1.getItems().set(0,testOption);
+        robot.interact(()->{
+            controller.updateChart(FXCollections.observableArrayList(postSpoilsPostFreightChart));
+        });
+        assertEqualsYChartValueForFirstRTMOption(robot, postSpoilsPostFreightChart, new BigDecimal("0.25"));
+    }
+    @Test
+    public void testUpdateChartUnspentTradePerUnit(FxRobot robot){
+        testOption.setUnspentTradePerUnit(new BigDecimal("0.22"));
+        rtmPlanningTable1.getItems().set(0,testOption);
+        robot.interact(()->{
+            controller.updateChart(FXCollections.observableArrayList(unspentTradePerUnitChart));
+        });
+        assertEqualsYChartValueForFirstRTMOption(robot, unspentTradePerUnitChart, new BigDecimal("0.22"));
+    }
+
+    @Test
+    public void testUpdateChartFourYearEqGpPerSku(FxRobot robot){
+        testOption.setFourYearEqGpPerSku(new BigDecimal("0.20002"));
+        rtmPlanningTable1.getItems().set(0,testOption);
+        robot.interact(()->{
+            controller.updateChart(FXCollections.observableArrayList(fourYearEqGpPerSkuChart));
+        });
+        assertEqualsYChartValueForFirstRTMOption(robot, fourYearEqGpPerSkuChart, new BigDecimal("0.20002"));
+    }
+    @Test
+    public void testUpdateChartFourYearEqGpPerUnit(FxRobot robot){
+        testOption.setFourYearEqGpPerUnit(new BigDecimal("0.555"));
+        rtmPlanningTable1.getItems().set(0,testOption);
+        robot.interact(()->{
+            controller.updateChart(FXCollections.observableArrayList(fourYearEqGpPerUnitChart));
+        });
+        assertEqualsYChartValueForFirstRTMOption(robot, fourYearEqGpPerUnitChart, new BigDecimal("0.555"));
+    }
+    @Test
+    public void testUpdateChartAll(FxRobot robot){
+        testOption.setFourYearEqGpPerUnit(new BigDecimal("0.555"));
+        rtmPlanningTable1.getItems().set(0,testOption);
+        testOption.setLandedStoreCost(new BigDecimal("1"));
+        testOption.setEverydayRetailCalcd(new BigDecimal("2"));
+        testOption.setElasticizedUnitVelocity(new BigDecimal("3"));
+        testOption.setAnnualVolumePerSku(new BigDecimal("4"));
+        testOption.setSlottingPaybackPeriod(new BigDecimal("5"));
+        testOption.setPostFreightPostSpoilsPerUnit(new BigDecimal("6"));
+        testOption.setUnspentTradePerUnit(new BigDecimal("7"));
+        testOption.setFourYearEqGpPerSku(new BigDecimal("8"));
+        testOption.setFourYearEqGpPerUnit(new BigDecimal("9"));
+        robot.interact(()->{
+            controller.updateChart(FXCollections.observableArrayList(landedStoreCostChart,everydayRetailCalcdChart,
+                    elasticizedUnitVelocityChart, annualVolumePerSkuChart, slottingPaybackPeriodChart,
+                    postSpoilsPostFreightChart, unspentTradePerUnitChart, fourYearEqGpPerSkuChart,
+                    fourYearEqGpPerUnitChart));
+        });
+        assertEqualsYChartValueForFirstRTMOption(robot, landedStoreCostChart, new BigDecimal("1"));
+        assertEqualsYChartValueForFirstRTMOption(robot, everydayRetailCalcdChart, new BigDecimal("2"));
+        assertEqualsYChartValueForFirstRTMOption(robot, elasticizedUnitVelocityChart, new BigDecimal("3"));
+        assertEqualsYChartValueForFirstRTMOption(robot, annualVolumePerSkuChart, new BigDecimal("4"));
+        assertEqualsYChartValueForFirstRTMOption(robot, slottingPaybackPeriodChart, new BigDecimal("5"));
+        assertEqualsYChartValueForFirstRTMOption(robot, postSpoilsPostFreightChart, new BigDecimal("6"));
+        assertEqualsYChartValueForFirstRTMOption(robot, unspentTradePerUnitChart, new BigDecimal("7"));
+        assertEqualsYChartValueForFirstRTMOption(robot, fourYearEqGpPerSkuChart, new BigDecimal("8"));
+        assertEqualsYChartValueForFirstRTMOption(robot, fourYearEqGpPerUnitChart, new BigDecimal("9"));
+    }
+
+
     /**
      * Checks whether x value of first RTMOption in the selected barchart
      * equals the expected String
