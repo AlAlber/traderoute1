@@ -2,6 +2,7 @@ package com.traderoute.controllers;
 
 import com.traderoute.*;
 import com.traderoute.cells.CustomNonEditCell;
+import com.traderoute.charts.LandedStoreCostChart;
 import com.traderoute.data.*;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
@@ -11,9 +12,12 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.BarChart;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.layout.HBox;
 import javafx.util.StringConverter;
 import javafx.util.converter.BigDecimalStringConverter;
 
@@ -353,8 +357,10 @@ public class RTMPlanningController implements Initializable {
     /**
      * BarCharts to display relevant table data. X-Axis has RTM Option Name, Y-Axis the respective value.
      */
+    final CategoryAxis xAxis = new CategoryAxis();
+    final NumberAxis yAxis = new NumberAxis();
     @FXML
-    private BarChart<String, BigDecimal> landedStoreCostChart;
+    private LandedStoreCostChart landedStoreCostChart= new LandedStoreCostChart(xAxis, yAxis);
     @FXML
     private BarChart<String, BigDecimal> everydayRetailCalcdChart;
     @FXML
@@ -385,8 +391,13 @@ public class RTMPlanningController implements Initializable {
      * @param resourceBundle
      *            default javafx param in initialize method.
      */
+
+    @FXML
+    private HBox chartHBox;
     @Override
     public void initialize(final URL url, final ResourceBundle resourceBundle) {
+
+        chartHBox.getChildren().add(landedStoreCostChart);
 
         // Set up cell value factories
         setCellValueFactories();
@@ -441,6 +452,8 @@ public class RTMPlanningController implements Initializable {
         // Set cell factories
         setCellFactories();
 
+
+
     }
 
     /**
@@ -452,7 +465,7 @@ public class RTMPlanningController implements Initializable {
         for (RTMOption row : rtmPlanningTable1.getItems()) {
             row.setupListeners();
             row.landedStoreCostProperty().addListener(((arg, oldVal, newVal) -> {
-                updateChart(observableArrayList(landedStoreCostChart));
+                landedStoreCostChart.updateChart(rtmPlanningTable1.getItems());
                 // updateChart(true, false, false,
                 // false, false, false, false,
                 // false, false);
@@ -462,10 +475,10 @@ public class RTMPlanningController implements Initializable {
                 for (int i = 0; i < 9; i++) {
                     chartsToUpdate.add(i);
                 }
-                updateChart(observableArrayList(landedStoreCostChart, everydayRetailCalcdChart,
-                        elasticizedUnitVelocityChart, annualVolumePerSkuChart, slottingPaybackPeriodChart,
-                        postSpoilsPostFreightChart, unspentTradePerUnitChart, fourYearEqGpPerSkuChart,
-                        fourYearEqGpPerUnitChart));
+//                updateChart(observableArrayList(landedStoreCostChart, everydayRetailCalcdChart,
+//                        elasticizedUnitVelocityChart, annualVolumePerSkuChart, slottingPaybackPeriodChart,
+//                        postSpoilsPostFreightChart, unspentTradePerUnitChart, fourYearEqGpPerSkuChart,
+//                        fourYearEqGpPerUnitChart));
                 // updateChart(new ArrayList<>(landedStoreCostChartIndex));
                 // true, true, true,
                 // true, true, true,
@@ -634,9 +647,9 @@ public class RTMPlanningController implements Initializable {
             // updateChart(true, true, true, true, true,
             // true, true, true, true);
         }
-        updateChart(observableArrayList(landedStoreCostChart, everydayRetailCalcdChart, elasticizedUnitVelocityChart,
-                annualVolumePerSkuChart, slottingPaybackPeriodChart, postSpoilsPostFreightChart,
-                unspentTradePerUnitChart, fourYearEqGpPerSkuChart, fourYearEqGpPerUnitChart));
+//        updateChart(observableArrayList(landedStoreCostChart, everydayRetailCalcdChart, elasticizedUnitVelocityChart,
+//                annualVolumePerSkuChart, slottingPaybackPeriodChart, postSpoilsPostFreightChart,
+//                unspentTradePerUnitChart, fourYearEqGpPerSkuChart, fourYearEqGpPerUnitChart));
         rtmPlanningTable2.setVisible(false);
         rtmPlanningTable2.setVisible(true);
         rtmPlanningTable2.refresh();
@@ -934,9 +947,9 @@ public class RTMPlanningController implements Initializable {
     public void updateChart(final ObservableList<BarChart<String, BigDecimal>> chartsToUpdate) {
         // for (int chartNumber = 0; chartNumber < chartsToUpdate.size();
         // chartNumber++) {
-        if (chartsToUpdate.contains(landedStoreCostChart)) {
-            updateSingleChart(landedStoreCostChartIndex, landedStoreCostChart, chartsToUpdate);
-        }
+//        if (chartsToUpdate.contains(landedStoreCostChart)) {
+//            updateSingleChart(landedStoreCostChartIndex, landedStoreCostChart, chartsToUpdate);
+//        }
         if (chartsToUpdate.contains(everydayRetailCalcdChart)) {
             updateSingleChart(everydayRetailCalcdChartIndex, everydayRetailCalcdChart, chartsToUpdate);
         }
