@@ -912,8 +912,8 @@ public class RTMPlanningController implements Initializable {
      *            Boolean array containing all charts which should be updated. Only update a chart if the index in the
      *            List is not true.
      */
-    private void updateSingleChart(final int chartNumber, final BarChart<?, ?> chartToUpdate,
-            final ObservableList<BarChart<?, ?>> chartsToUpdate) {
+    private void updateSingleChart(final int chartNumber, final BarChart<String, BigDecimal> chartToUpdate,
+            final ObservableList<BarChart<String, BigDecimal>> chartsToUpdate) {
         // if (chartsToUpdate.contains(chartNumber)) {
         // System.out.println("failing or herrrrr");
         // if (chartToUpdate != null) {
@@ -932,7 +932,7 @@ public class RTMPlanningController implements Initializable {
      * @param chartsToUpdate
      *            a list of all charts that should be updated;
      */
-    public void updateChart(final ObservableList<BarChart<?, ?>> chartsToUpdate) {
+    public void updateChart(final ObservableList<BarChart<String, BigDecimal>> chartsToUpdate) {
         // for (int chartNumber = 0; chartNumber < chartsToUpdate.size();
         // chartNumber++) {
         if (chartsToUpdate.contains(landedStoreCostChart)) {
