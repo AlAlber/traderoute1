@@ -255,15 +255,15 @@ class RTMPlanningControllerTest {
 //            String xValue = data.getXValue();
 //            Assertions.assertEquals("New RTM Name", xValue);
 //        });
-        assertEqualsXChartValue(robot,landedStoreCostChart, "New RTM Name");
-        assertEqualsXChartValue(robot,everydayRetailCalcdChart, "New RTM Name");
-        assertEqualsXChartValue(robot,elasticizedUnitVelocityChart,"New RTM Name");
-        assertEqualsXChartValue(robot,annualVolumePerSkuChart, "New RTM Name");
-        assertEqualsXChartValue(robot,slottingPaybackPeriodChart, "New RTM Name");
-        assertEqualsXChartValue(robot,postSpoilsPostFreightChart, "New RTM Name");
-        assertEqualsXChartValue(robot,unspentTradePerUnitChart, "New RTM Name");
-        assertEqualsXChartValue(robot,fourYearEqGpPerSkuChart, "New RTM Name");
-        assertEqualsXChartValue(robot,fourYearEqGpPerUnitChart, "New RTM Name");
+        assertEqualsXChartValueForFirstRTMOption(robot,landedStoreCostChart, "New RTM Name");
+        assertEqualsXChartValueForFirstRTMOption(robot,everydayRetailCalcdChart, "New RTM Name");
+        assertEqualsXChartValueForFirstRTMOption(robot,elasticizedUnitVelocityChart,"New RTM Name");
+        assertEqualsXChartValueForFirstRTMOption(robot,annualVolumePerSkuChart, "New RTM Name");
+        assertEqualsXChartValueForFirstRTMOption(robot,slottingPaybackPeriodChart, "New RTM Name");
+        assertEqualsXChartValueForFirstRTMOption(robot,postSpoilsPostFreightChart, "New RTM Name");
+        assertEqualsXChartValueForFirstRTMOption(robot,unspentTradePerUnitChart, "New RTM Name");
+        assertEqualsXChartValueForFirstRTMOption(robot,fourYearEqGpPerSkuChart, "New RTM Name");
+        assertEqualsXChartValueForFirstRTMOption(robot,fourYearEqGpPerUnitChart, "New RTM Name");
     }
 
 
@@ -275,7 +275,7 @@ class RTMPlanningControllerTest {
         robot.write("4.0");
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
         Assertions.assertEquals(new BigDecimal("4.0"), rtmPlanningTable1.getItems().get(0).getLandedStoreCost());
-        assertEqualsYChartValue(robot, landedStoreCostChart, new BigDecimal("4.0"));
+        assertEqualsYChartValueForFirstRTMOption(robot, landedStoreCostChart, new BigDecimal("4.0"));
     }
     @Test
     public void testChartUpdateEverydayRetailCalcd(FxRobot robot) {
@@ -289,7 +289,7 @@ class RTMPlanningControllerTest {
         robot.write("40.0");
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
         Assertions.assertEquals(new BigDecimal("5.9833333333"), rtmPlanningTable1.getItems().get(0).getEverydayRetailCalcd());
-        assertEqualsYChartValue(robot,everydayRetailCalcdChart, new BigDecimal("5.9833333333"));
+        assertEqualsYChartValueForFirstRTMOption(robot,everydayRetailCalcdChart, new BigDecimal("5.9833333333"));
     }
 
 
@@ -308,7 +308,7 @@ class RTMPlanningControllerTest {
         robot.write("1.2");
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
         Assertions.assertEquals(new BigDecimal("1.2"), rtmPlanningTable1.getItems().get(0).getWeeklyUSFWAtMin());
-        assertEqualsYChartValue(robot,elasticizedUnitVelocityChart,  new BigDecimal("1.2"));
+        assertEqualsYChartValueForFirstRTMOption(robot,elasticizedUnitVelocityChart,  new BigDecimal("1.2"));
     }
     @Test
     public void testChartUpdateYearOneStoreCount(FxRobot robot) {
@@ -326,15 +326,27 @@ class RTMPlanningControllerTest {
         robot.doubleClickOn(yearOneStoreCountField);
         robot.write("158");
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
-        assertEqualsYChartValue( robot, annualVolumePerSkuChart, new BigDecimal("9887"));
+        assertEqualsYChartValueForFirstRTMOption( robot, annualVolumePerSkuChart, new BigDecimal("9887"));
     }
     @Test
     public void testUpdateChartLandedStoreCost(FxRobot robot){
         RTMOption testOption = new RTMOption();
         testOption.setLandedStoreCost(new BigDecimal("4.44"));
         rtmPlanningTable1.getItems().set(0,testOption);
-        controller.updateChart(landedStoreCostChart);
-        assertEqualsYChartValue(robot, landedStoreCostChart, new BigDecimal("4.44"));
+        robot.interact(()->{
+            controller.updateChart(FXCollections.observableArrayList(landedStoreCostChart));
+        });
+        assertEqualsYChartValueForFirstRTMOption(robot, landedStoreCostChart, new BigDecimal("4.44"));
+    }
+    @Test
+    public void testUpdateChartEveryDayRetailCalcd(FxRobot robot){
+        RTMOption testOption = new RTMOption();
+        testOption.setLandedStoreCost(new BigDecimal("6.788"));
+        rtmPlanningTable1.getItems().set(0,testOption);
+        robot.interact(()->{
+            controller.updateChart(FXCollections.observableArrayList(everydayRetailCalcdChart));
+        });
+        assertEqualsYChartValueForFirstRTMOption(robot, everydayRetailCalcdChart, new BigDecimal("6.788"));
     }
     /**
      * Checks whether x value of first RTMOption in the selected barchart
@@ -342,8 +354,8 @@ class RTMPlanningControllerTest {
      * @param barChart  barchart to test
      * @param expected expected x value from first RTMOption in chart
      */
-    public void assertEqualsXChartValue(FxRobot robot, BarChart<String, BigDecimal> barChart,
-                                          String expected){
+    public void assertEqualsXChartValueForFirstRTMOption(FxRobot robot, BarChart<String, BigDecimal> barChart,
+                                                         String expected){
         robot.interact(() -> {
             XYChart.Series<String, BigDecimal> series = barChart.getData().get(0);
             XYChart.Data<String, BigDecimal> data = series.getData().get(0);
@@ -357,8 +369,8 @@ class RTMPlanningControllerTest {
      * @param barChart  barchart to test
      * @param expected expected y value from first RTMOption in chart
      */
-    public void assertEqualsYChartValue( FxRobot robot, BarChart<String, BigDecimal> barChart,
-                                          BigDecimal expected){
+    public void assertEqualsYChartValueForFirstRTMOption(FxRobot robot, BarChart<String, BigDecimal> barChart,
+                                                         BigDecimal expected){
         robot.interact(() -> {
             XYChart.Series<String, BigDecimal> series = barChart.getData().get(0);
             XYChart.Data<String, BigDecimal> data = series.getData().get(0);
