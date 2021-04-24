@@ -358,12 +358,10 @@ public class RTMPlanningController implements Initializable {
     /**
      * BarCharts to display relevant table data. X-Axis has RTM Option Name, Y-Axis the respective value.
      */
-    final CategoryAxis xAxis = new CategoryAxis();
-    final NumberAxis yAxis = new NumberAxis();
     @FXML
-    private LandedStoreCostChart landedStoreCostChart= new LandedStoreCostChart(xAxis, yAxis);
+    private LandedStoreCostChart landedStoreCostChart= new LandedStoreCostChart(new CategoryAxis(), new NumberAxis());
     @FXML
-    private EverydayRetailCalcdChart everydayRetailCalcdChart = new EverydayRetailCalcdChart(xAxis, yAxis);
+    private EverydayRetailCalcdChart everydayRetailCalcdChart = new EverydayRetailCalcdChart(new CategoryAxis(), new NumberAxis());
     @FXML
     private BarChart<String, BigDecimal> elasticizedUnitVelocityChart;
     @FXML
