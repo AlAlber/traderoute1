@@ -6,6 +6,8 @@ import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 
+import java.math.BigDecimal;
+
 import static javafx.collections.FXCollections.observableArrayList;
 
 public class PostSpoilsPostFreightChart extends RTMPlanningChart {
@@ -17,11 +19,7 @@ public class PostSpoilsPostFreightChart extends RTMPlanningChart {
     }
 
     @Override
-    public void updateChart(ObservableList<RTMOption> rtmOptions) {
-        XYChart.Series<java.lang.String, java.math.BigDecimal> barChartData = new XYChart.Series();
-        for (RTMOption row : rtmOptions) {
-            barChartData.getData().add(new XYChart.Data(row.getRTMName(), row.getPostSpoilsPostFreightPerUnit()));
-        }
-        this.setData(observableArrayList(new XYChart.Series[]{barChartData}));
+    public BigDecimal getYValue(RTMOption rtmOption) {
+        return rtmOption.getPostSpoilsPostFreightPerUnit();
     }
 }
