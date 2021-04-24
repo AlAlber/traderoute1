@@ -1,8 +1,7 @@
 package com.traderoute.controllers;
 
 import com.traderoute.App;
-import com.traderoute.charts.EverydayRetailCalcdChart;
-import com.traderoute.charts.LandedStoreCostChart;
+import com.traderoute.charts.*;
 import com.traderoute.data.Product;
 import com.traderoute.data.RTMOption;
 import com.traderoute.data.Retailer;
@@ -47,13 +46,13 @@ class RTMPlanningControllerTest {
     final String  tableString = "#rtmPlanningTable1";
     public LandedStoreCostChart landedStoreCostChart;
     public EverydayRetailCalcdChart everydayRetailCalcdChart;
-    public BarChart<String, BigDecimal> elasticizedUnitVelocityChart;
-    public BarChart<String, BigDecimal> annualVolumePerSkuChart;
-    public BarChart<String, BigDecimal> slottingPaybackPeriodChart;
-    public BarChart<String, BigDecimal> postSpoilsPostFreightChart;
-    public BarChart<String, BigDecimal> unspentTradePerUnitChart;
-    public BarChart<String, BigDecimal> fourYearEqGpPerSkuChart;
-    public BarChart<String, BigDecimal> fourYearEqGpPerUnitChart;
+    public ElasticizedUnitVelocityChart elasticizedUnitVelocityChart;
+    public AnnualVolumePerSkuChart annualVolumePerSkuChart;
+    public SlottingPaybackPeriodChart slottingPaybackPeriodChart;
+    public PostSpoilsPostFreightChart postSpoilsPostFreightChart;
+    public UnspentTradePerUnitChart unspentTradePerUnitChart;
+    public FourYearEqGpPerSkuChart fourYearEqGpPerSkuChart;
+    public FourYearEqGpPerUnitChart fourYearEqGpPerUnitChart;
 
 
     @Start
@@ -92,13 +91,13 @@ class RTMPlanningControllerTest {
         landedStoreCostChart = robot.lookup("#landedStoreCostChart").queryAs(LandedStoreCostChart.class);
 
         everydayRetailCalcdChart = robot.lookup("#everydayRetailCalcdChart").queryAs(EverydayRetailCalcdChart.class);
-        elasticizedUnitVelocityChart = robot.lookup("#elasticizedUnitVelocityChart").queryAs(BarChart.class);
-        annualVolumePerSkuChart = robot.lookup("#annualVolumePerSkuChart").queryAs(BarChart.class);
-        slottingPaybackPeriodChart = robot.lookup("#slottingPaybackPeriodChart").queryAs(BarChart.class);
-        postSpoilsPostFreightChart = robot.lookup("#postSpoilsPostFreightChart").queryAs(BarChart.class);
-        unspentTradePerUnitChart = robot.lookup("#unspentTradePerUnitChart").queryAs(BarChart.class);
-        fourYearEqGpPerSkuChart = robot.lookup("#fourYearEqGpPerSkuChart").queryAs(BarChart.class);
-        fourYearEqGpPerUnitChart = robot.lookup("#fourYearEqGpPerUnitChart").queryAs(BarChart.class);
+        elasticizedUnitVelocityChart = robot.lookup("#elasticizedUnitVelocityChart").queryAs(ElasticizedUnitVelocityChart.class);
+        annualVolumePerSkuChart = robot.lookup("#annualVolumePerSkuChart").queryAs(AnnualVolumePerSkuChart.class);
+        slottingPaybackPeriodChart = robot.lookup("#slottingPaybackPeriodChart").queryAs(SlottingPaybackPeriodChart.class);
+        postSpoilsPostFreightChart = robot.lookup("#postSpoilsPostFreightChart").queryAs(PostSpoilsPostFreightChart.class);
+        unspentTradePerUnitChart = robot.lookup("#unspentTradePerUnitChart").queryAs(UnspentTradePerUnitChart.class);
+        fourYearEqGpPerSkuChart = robot.lookup("#fourYearEqGpPerSkuChart").queryAs(FourYearEqGpPerSkuChart.class);
+        fourYearEqGpPerUnitChart = robot.lookup("#fourYearEqGpPerUnitChart").queryAs(FourYearEqGpPerUnitChart.class);
     }
 
     @Test
@@ -241,7 +240,7 @@ class RTMPlanningControllerTest {
         Assertions.assertEquals(((RTMOption) rtmPlanningTable1.getItems().get(3)).getElasticizedUnitVelocity(), new BigDecimal("1.2"));
         Assertions.assertEquals(((RTMOption) rtmPlanningTable1.getItems().get(3)).getAnnualVolumePerSku(), new BigDecimal("9859.2000000000"));
         Assertions.assertEquals(((RTMOption) rtmPlanningTable1.getItems().get(3)).getSlottingPaybackPeriod(), new BigDecimal("1.65436")); // Refactor this in RTM Option
-        Assertions.assertEquals(((RTMOption) rtmPlanningTable1.getItems().get(3)).getPostFreightPostSpoilsPerUnit(), new BigDecimal("3.1923000000")); // Refactor this in RTM Option
+        Assertions.assertEquals(((RTMOption) rtmPlanningTable1.getItems().get(3)).getPostSpoilsPostFreightPerUnit(), new BigDecimal("3.1923000000")); // Refactor this in RTM Option
         Assertions.assertEquals(((RTMOption) rtmPlanningTable1.getItems().get(3)).getUnspentTradePerUnit(), new BigDecimal("0.4923000000"));
         Assertions.assertEquals(((RTMOption) rtmPlanningTable1.getItems().get(3)).getFourYearEqGpPerSku(), new BigDecimal("18133.920000000000000000000000000000")); // Refactor this in RTM Option
         Assertions.assertEquals(((RTMOption) rtmPlanningTable1.getItems().get(3)).getFourYearEqGpPerUnit(), new BigDecimal("0.4598222980"));
@@ -356,7 +355,7 @@ class RTMPlanningControllerTest {
         testOption.setElasticizedUnitVelocity(new BigDecimal("50"));
         rtmPlanningTable1.getItems().set(0,testOption);
         robot.interact(()->{
-            controller.updateChart(FXCollections.observableArrayList(elasticizedUnitVelocityChart));
+            elasticizedUnitVelocityChart.updateChart(rtmPlanningTable1.getItems());
         });
         assertEqualsYChartValueForFirstRTMOption(robot, elasticizedUnitVelocityChart, new BigDecimal("50"));
     }
@@ -365,7 +364,7 @@ class RTMPlanningControllerTest {
         testOption.setAnnualVolumePerSku(new BigDecimal("202"));
         rtmPlanningTable1.getItems().set(0,testOption);
         robot.interact(()->{
-            controller.updateChart(FXCollections.observableArrayList(annualVolumePerSkuChart));
+            annualVolumePerSkuChart.updateChart(rtmPlanningTable1.getItems());
         });
         assertEqualsYChartValueForFirstRTMOption(robot, annualVolumePerSkuChart, new BigDecimal("202"));
     }
@@ -374,16 +373,16 @@ class RTMPlanningControllerTest {
         testOption.setSlottingPaybackPeriod(new BigDecimal("0.22"));
         rtmPlanningTable1.getItems().set(0,testOption);
         robot.interact(()->{
-            controller.updateChart(FXCollections.observableArrayList(slottingPaybackPeriodChart));
+            slottingPaybackPeriodChart.updateChart(rtmPlanningTable1.getItems());
         });
         assertEqualsYChartValueForFirstRTMOption(robot, slottingPaybackPeriodChart, new BigDecimal("0.22"));
     }
     @Test
     public void testUpdateChartPostFreightPostSpoils(FxRobot robot){
-        testOption.setPostFreightPostSpoilsPerUnit(new BigDecimal("0.25"));
+        testOption.setPostSpoilsPostFreightPerUnit(new BigDecimal("0.25"));
         rtmPlanningTable1.getItems().set(0,testOption);
         robot.interact(()->{
-            controller.updateChart(FXCollections.observableArrayList(postSpoilsPostFreightChart));
+            postSpoilsPostFreightChart.updateChart(rtmPlanningTable1.getItems());
         });
         assertEqualsYChartValueForFirstRTMOption(robot, postSpoilsPostFreightChart, new BigDecimal("0.25"));
     }
@@ -392,7 +391,7 @@ class RTMPlanningControllerTest {
         testOption.setUnspentTradePerUnit(new BigDecimal("0.22"));
         rtmPlanningTable1.getItems().set(0,testOption);
         robot.interact(()->{
-            controller.updateChart(FXCollections.observableArrayList(unspentTradePerUnitChart));
+            unspentTradePerUnitChart.updateChart(rtmPlanningTable1.getItems());
         });
         assertEqualsYChartValueForFirstRTMOption(robot, unspentTradePerUnitChart, new BigDecimal("0.22"));
     }
@@ -402,7 +401,7 @@ class RTMPlanningControllerTest {
         testOption.setFourYearEqGpPerSku(new BigDecimal("0.20002"));
         rtmPlanningTable1.getItems().set(0,testOption);
         robot.interact(()->{
-            controller.updateChart(FXCollections.observableArrayList(fourYearEqGpPerSkuChart));
+            fourYearEqGpPerSkuChart.updateChart(rtmPlanningTable1.getItems());
         });
         assertEqualsYChartValueForFirstRTMOption(robot, fourYearEqGpPerSkuChart, new BigDecimal("0.20002"));
     }
@@ -411,7 +410,7 @@ class RTMPlanningControllerTest {
         testOption.setFourYearEqGpPerUnit(new BigDecimal("0.555"));
         rtmPlanningTable1.getItems().set(0,testOption);
         robot.interact(()->{
-            controller.updateChart(FXCollections.observableArrayList(fourYearEqGpPerUnitChart));
+            fourYearEqGpPerUnitChart.updateChart(rtmPlanningTable1.getItems());
         });
         assertEqualsYChartValueForFirstRTMOption(robot, fourYearEqGpPerUnitChart, new BigDecimal("0.555"));
     }
@@ -424,7 +423,7 @@ class RTMPlanningControllerTest {
         testOption.setElasticizedUnitVelocity(new BigDecimal("3"));
         testOption.setAnnualVolumePerSku(new BigDecimal("4"));
         testOption.setSlottingPaybackPeriod(new BigDecimal("5"));
-        testOption.setPostFreightPostSpoilsPerUnit(new BigDecimal("6"));
+        testOption.setPostSpoilsPostFreightPerUnit(new BigDecimal("6"));
         testOption.setUnspentTradePerUnit(new BigDecimal("7"));
         testOption.setFourYearEqGpPerSku(new BigDecimal("8"));
         testOption.setFourYearEqGpPerUnit(new BigDecimal("9"));

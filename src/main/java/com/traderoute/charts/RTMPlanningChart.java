@@ -2,11 +2,10 @@ package com.traderoute.charts;
 
 import com.traderoute.data.RTMOption;
 import javafx.collections.ObservableList;
-import javafx.scene.chart.Axis;
-import javafx.scene.chart.BarChart;
-import javafx.scene.chart.CategoryAxis;
-import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.*;
 import jfxtras.scene.layout.HBox;
+
+import static javafx.collections.FXCollections.observableArrayList;
 
 public abstract class RTMPlanningChart extends BarChart {
 
@@ -15,5 +14,6 @@ public abstract class RTMPlanningChart extends BarChart {
         this.setLegendVisible(false);
         this.setAnimated(false);
     }
+
     public abstract void updateChart(ObservableList<RTMOption> rtmOptions);
 }

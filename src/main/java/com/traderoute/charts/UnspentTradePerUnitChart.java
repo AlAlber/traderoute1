@@ -2,15 +2,17 @@ package com.traderoute.charts;
 
 import com.traderoute.data.RTMOption;
 import javafx.collections.ObservableList;
-import javafx.scene.chart.*;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
 
 import static javafx.collections.FXCollections.observableArrayList;
 
-public class LandedStoreCostChart extends RTMPlanningChart {
+public class UnspentTradePerUnitChart extends RTMPlanningChart {
 
-    public LandedStoreCostChart(CategoryAxis xAxis, NumberAxis yAxis) {
+    public UnspentTradePerUnitChart(CategoryAxis xAxis, NumberAxis yAxis) {
         super(xAxis, yAxis);
-        this.setId("landedStoreCostChart");
+        this.setId("unspentTradePerUnitChart");
 
     }
 
@@ -18,7 +20,7 @@ public class LandedStoreCostChart extends RTMPlanningChart {
     public void updateChart(ObservableList<RTMOption> rtmOptions) {
         XYChart.Series<java.lang.String, java.math.BigDecimal> barChartData = new XYChart.Series();
         for (RTMOption row : rtmOptions) {
-            barChartData.getData().add(new XYChart.Data(row.getRTMName(), row.getLandedStoreCost()));
+            barChartData.getData().add(new XYChart.Data(row.getRTMName(), row.getUnspentTradePerUnit()));
         }
         this.setData(observableArrayList(new XYChart.Series[]{barChartData}));
     }

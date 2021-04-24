@@ -2,8 +2,7 @@ package com.traderoute.controllers;
 
 import com.traderoute.*;
 import com.traderoute.cells.CustomNonEditCell;
-import com.traderoute.charts.EverydayRetailCalcdChart;
-import com.traderoute.charts.LandedStoreCostChart;
+import com.traderoute.charts.*;
 import com.traderoute.data.*;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
@@ -363,19 +362,19 @@ public class RTMPlanningController implements Initializable {
     @FXML
     private EverydayRetailCalcdChart everydayRetailCalcdChart = new EverydayRetailCalcdChart(new CategoryAxis(), new NumberAxis());
     @FXML
-    private BarChart<String, BigDecimal> elasticizedUnitVelocityChart;
+    private ElasticizedUnitVelocityChart elasticizedUnitVelocityChart = new ElasticizedUnitVelocityChart(new CategoryAxis(), new NumberAxis());
     @FXML
-    private BarChart<String, BigDecimal> annualVolumePerSkuChart;
+    private AnnualVolumePerSkuChart annualVolumePerSkuChart = new AnnualVolumePerSkuChart(new CategoryAxis(), new NumberAxis());
     @FXML
-    private BarChart<String, BigDecimal> slottingPaybackPeriodChart;
+    private SlottingPaybackPeriodChart slottingPaybackPeriodChart = new SlottingPaybackPeriodChart(new CategoryAxis(), new NumberAxis());
     @FXML
-    private BarChart<String, BigDecimal> unspentTradePerUnitChart;
+    private PostSpoilsPostFreightChart unspentTradePerUnitChart = new PostSpoilsPostFreightChart(new CategoryAxis(), new NumberAxis());
     @FXML
-    private BarChart<String, BigDecimal> postSpoilsPostFreightChart;
+    private UnspentTradePerUnitChart postSpoilsPostFreightChart = new UnspentTradePerUnitChart(new CategoryAxis(), new NumberAxis());
     @FXML
-    private BarChart<String, BigDecimal> fourYearEqGpPerSkuChart;
+    private FourYearEqGpPerSkuChart fourYearEqGpPerSkuChart = new FourYearEqGpPerSkuChart(new CategoryAxis(), new NumberAxis());
     @FXML
-    private BarChart<String, BigDecimal> fourYearEqGpPerUnitChart;
+    private FourYearEqGpPerUnitChart fourYearEqGpPerUnitChart = new FourYearEqGpPerUnitChart(new CategoryAxis(), new NumberAxis());
 
     /**
      * Called when new page is created from FXML. - Sets Cell Value factories to reflect RTM Option data. - Sets unique
@@ -397,7 +396,10 @@ public class RTMPlanningController implements Initializable {
 
     @Override
     public void initialize(final URL url, final ResourceBundle resourceBundle) {
-        chartHBox.getChildren().addAll(landedStoreCostChart, everydayRetailCalcdChart);
+        chartHBox.getChildren().addAll(landedStoreCostChart, everydayRetailCalcdChart,
+                elasticizedUnitVelocityChart, annualVolumePerSkuChart, slottingPaybackPeriodChart,
+                postSpoilsPostFreightChart, unspentTradePerUnitChart, fourYearEqGpPerSkuChart,
+                fourYearEqGpPerUnitChart);
 
 
         // Set up cell value factories
@@ -1007,7 +1009,7 @@ public class RTMPlanningController implements Initializable {
                 barChartData.getData().add(new Data(row.getRTMName(), row.getSlottingPaybackPeriod()));
                 break;
             case 5:
-                barChartData.getData().add(new Data(row.getRTMName(), row.getPostFreightPostSpoilsPerUnit()));
+                barChartData.getData().add(new Data(row.getRTMName(), row.getPostSpoilsPostFreightPerUnit()));
                 break;
             case 6:
                 barChartData.getData().add(new Data(row.getRTMName(), row.getUnspentTradePerUnit()));
@@ -1192,7 +1194,7 @@ public class RTMPlanningController implements Initializable {
         slottingPaybackPeriodColumn
                 .setCellValueFactory(cellData -> cellData.getValue().slottingPaybackPeriodProperty());
         postFreightPostSpoilsPerUnitCol
-                .setCellValueFactory(cellData -> cellData.getValue().postFreightPostSpoilsPerUnitProperty());
+                .setCellValueFactory(cellData -> cellData.getValue().postSpoilsPostFreightPerUnitProperty());
         unspentTradePerUnitColumn.setCellValueFactory(cellData -> cellData.getValue().unspentTradePerUnitProperty());
         fourYearEqGpPerSkuColumn.setCellValueFactory(cellData -> cellData.getValue().fourYearEqGpPerSkuProperty());
         fourYearEqGpPerUnitColumn.setCellValueFactory(cellData -> cellData.getValue().fourYearEqGpPerUnitProperty());

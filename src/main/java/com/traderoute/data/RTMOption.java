@@ -13,7 +13,7 @@ public class RTMOption {
     private SimpleIntegerProperty yearOneStoreCount;
     private SimpleObjectProperty<BigDecimal> slottingPerSku, freightOutPerUnit, firstReceiver, secondReceiver,
             thirdReceiver, fourthReceiver, landedStoreCost, everydayRetailCalcd, resultingEverydayRetailOverride,
-            elasticizedUnitVelocity, slottingPaybackPeriod, postFreightPostSpoilsPerUnit, unspentTradePerUnit,
+            elasticizedUnitVelocity, slottingPaybackPeriod, postSpoilsPostFreightPerUnit, unspentTradePerUnit,
             fourYearEqGpPerSku, fourYearEqGpPerUnit, minOverride, weeklyUSFWAtMin, everydayGPM, spoilsAndFees,
             annualVolumePerSku;
     private SimpleObjectProperty<Product> product;
@@ -34,7 +34,7 @@ public class RTMOption {
         this.elasticizedUnitVelocity = new SimpleObjectProperty<BigDecimal>();
         this.annualVolumePerSku = new SimpleObjectProperty<>();
         this.slottingPaybackPeriod = new SimpleObjectProperty<BigDecimal>();
-        this.postFreightPostSpoilsPerUnit = new SimpleObjectProperty<BigDecimal>();
+        this.postSpoilsPostFreightPerUnit = new SimpleObjectProperty<BigDecimal>();
         this.unspentTradePerUnit = new SimpleObjectProperty<BigDecimal>();
         this.fourYearEqGpPerSku = new SimpleObjectProperty<BigDecimal>();
         this.fourYearEqGpPerUnit = new SimpleObjectProperty<BigDecimal>();
@@ -65,7 +65,7 @@ public class RTMOption {
         this.elasticizedUnitVelocity = new SimpleObjectProperty<BigDecimal>();
         this.annualVolumePerSku = new SimpleObjectProperty<>();
         this.slottingPaybackPeriod = new SimpleObjectProperty<BigDecimal>();
-        this.postFreightPostSpoilsPerUnit = new SimpleObjectProperty<BigDecimal>();
+        this.postSpoilsPostFreightPerUnit = new SimpleObjectProperty<BigDecimal>();
         this.unspentTradePerUnit = new SimpleObjectProperty<BigDecimal>();
         this.fourYearEqGpPerSku = new SimpleObjectProperty<BigDecimal>();
         this.fourYearEqGpPerUnit = new SimpleObjectProperty<BigDecimal>();
@@ -96,7 +96,7 @@ public class RTMOption {
         this.elasticizedUnitVelocity = new SimpleObjectProperty<BigDecimal>();
         this.annualVolumePerSku = new SimpleObjectProperty<>();
         this.slottingPaybackPeriod = new SimpleObjectProperty<BigDecimal>();
-        this.postFreightPostSpoilsPerUnit = new SimpleObjectProperty<BigDecimal>();
+        this.postSpoilsPostFreightPerUnit = new SimpleObjectProperty<BigDecimal>();
         this.unspentTradePerUnit = new SimpleObjectProperty<BigDecimal>();
         this.fourYearEqGpPerSku = new SimpleObjectProperty<BigDecimal>();
         this.fourYearEqGpPerUnit = new SimpleObjectProperty<BigDecimal>();
@@ -181,7 +181,7 @@ public class RTMOption {
         if (getWeeklyUSFWAtMin().compareTo(new BigDecimal("0.0")) > 0
                 && getMinOverride().compareTo(new BigDecimal("0.0")) > 0
                 && getAnnualVolumePerSku().compareTo(new BigDecimal("0.0")) > 0) {
-            setPostFreightPostSpoilsPerUnit(getPostSpoilsAndFreightWeCollectPerUnit());
+            setPostSpoilsPostFreightPerUnit(getPostSpoilsAndFreightWeCollectPerUnit());
         }
     }
 
@@ -655,19 +655,19 @@ public class RTMOption {
         this.slottingPaybackPeriod.set(slottingPaybackPeriod);
     }
 
-    public BigDecimal getPostFreightPostSpoilsPerUnit() {
-        if (postFreightPostSpoilsPerUnit.get() == null) {
+    public BigDecimal getPostSpoilsPostFreightPerUnit() {
+        if (postSpoilsPostFreightPerUnit.get() == null) {
             return new BigDecimal("0.0");
         }
-        return postFreightPostSpoilsPerUnit.get();
+        return postSpoilsPostFreightPerUnit.get();
     }
 
-    public SimpleObjectProperty<BigDecimal> postFreightPostSpoilsPerUnitProperty() {
-        return postFreightPostSpoilsPerUnit;
+    public SimpleObjectProperty<BigDecimal> postSpoilsPostFreightPerUnitProperty() {
+        return postSpoilsPostFreightPerUnit;
     }
 
-    public void setPostFreightPostSpoilsPerUnit(BigDecimal postFreightPostSpoilsPerUnit) {
-        this.postFreightPostSpoilsPerUnit.set(postFreightPostSpoilsPerUnit);
+    public void setPostSpoilsPostFreightPerUnit(BigDecimal postSpoilsPostFreightPerUnit) {
+        this.postSpoilsPostFreightPerUnit.set(postSpoilsPostFreightPerUnit);
     }
 
     public BigDecimal getUnspentTradePerUnit() {

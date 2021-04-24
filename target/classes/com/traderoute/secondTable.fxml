@@ -174,66 +174,7 @@
                   </TableView>
                </children>
             </HBox>
-            <HBox fx:id="chartHBox" prefHeight="316.0" prefWidth="1482.0">
-               <children>
-                  <BarChart fx:id="elasticizedUnitVelocityChart" animated="false" legendVisible="false" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="369.0" prefWidth="161.0" title="Elasticized Unit Velocity">
-                     <xAxis>
-                        <CategoryAxis side="BOTTOM" />
-                     </xAxis>
-                     <yAxis>
-                        <NumberAxis side="LEFT" />
-                     </yAxis>
-                  </BarChart>
-                  <BarChart fx:id="annualVolumePerSkuChart" animated="false" legendVisible="false" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="369.0" prefWidth="161.0" title="Annual Volume Per Sku">
-                     <xAxis>
-                        <CategoryAxis side="BOTTOM" />
-                     </xAxis>
-                     <yAxis>
-                        <NumberAxis side="LEFT" />
-                     </yAxis>
-                  </BarChart>
-                  <BarChart fx:id="slottingPaybackPeriodChart" animated="false" legendVisible="false" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="369.0" prefWidth="161.0" title="Slotting Paybackk Period">
-                     <xAxis>
-                        <CategoryAxis side="BOTTOM" />
-                     </xAxis>
-                     <yAxis>
-                        <NumberAxis side="LEFT" />
-                     </yAxis>
-                  </BarChart>
-                  <BarChart fx:id="postSpoilsPostFreightChart" animated="false" legendVisible="false" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="369.0" prefWidth="161.0" title="Post Spoils &amp; Freight We Collect Per Unit">
-                     <xAxis>
-                        <CategoryAxis side="BOTTOM" />
-                     </xAxis>
-                     <yAxis>
-                        <NumberAxis side="LEFT" />
-                     </yAxis>
-                  </BarChart>
-                  <BarChart fx:id="unspentTradePerUnitChart" animated="false" legendVisible="false" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="369.0" prefWidth="161.0" title="Unspent Trade Per Unit">
-                     <xAxis>
-                        <CategoryAxis side="BOTTOM" />
-                     </xAxis>
-                     <yAxis>
-                        <NumberAxis side="LEFT" />
-                     </yAxis>
-                  </BarChart>
-                  <BarChart fx:id="fourYearEqGpPerSkuChart" animated="false" legendVisible="false" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="369.0" prefWidth="161.0" title="4 Year Eq Gp Per Sku">
-                     <xAxis>
-                        <CategoryAxis side="BOTTOM" />
-                     </xAxis>
-                     <yAxis>
-                        <NumberAxis side="LEFT" />
-                     </yAxis>
-                  </BarChart>
-                  <BarChart fx:id="fourYearEqGpPerUnitChart" animated="false" legendVisible="false" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="369.0" prefWidth="161.0" title="4 Year Eq GP Per Unit">
-                     <xAxis>
-                        <CategoryAxis side="BOTTOM" />
-                     </xAxis>
-                     <yAxis>
-                        <NumberAxis side="LEFT" />
-                     </yAxis>
-                  </BarChart>
-               </children>
-            </HBox>
+            <HBox fx:id="chartHBox" prefHeight="316.0" prefWidth="1482.0"> </HBox>
          </children>
          <padding>
             <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
