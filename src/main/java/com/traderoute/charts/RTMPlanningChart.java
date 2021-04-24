@@ -1,4 +1,4 @@
-package com.traderoute;
+package com.traderoute.charts;
 
 import com.traderoute.data.RTMOption;
 import javafx.collections.ObservableList;

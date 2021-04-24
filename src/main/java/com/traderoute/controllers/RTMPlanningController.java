@@ -2,6 +2,7 @@ package com.traderoute.controllers;
 
 import com.traderoute.*;
 import com.traderoute.cells.CustomNonEditCell;
+import com.traderoute.charts.EverydayRetailCalcdChart;
 import com.traderoute.charts.LandedStoreCostChart;
 import com.traderoute.data.*;
 import javafx.beans.property.SimpleObjectProperty;
@@ -362,7 +363,7 @@ public class RTMPlanningController implements Initializable {
     @FXML
     private LandedStoreCostChart landedStoreCostChart= new LandedStoreCostChart(xAxis, yAxis);
     @FXML
-    private BarChart<String, BigDecimal> everydayRetailCalcdChart;
+    private EverydayRetailCalcdChart everydayRetailCalcdChart = new EverydayRetailCalcdChart(xAxis, yAxis);
     @FXML
     private BarChart<String, BigDecimal> elasticizedUnitVelocityChart;
     @FXML
@@ -398,7 +399,7 @@ public class RTMPlanningController implements Initializable {
 
     @Override
     public void initialize(final URL url, final ResourceBundle resourceBundle) {
-        chartHBox.getChildren().add(landedStoreCostChart);
+        chartHBox.getChildren().addAll(landedStoreCostChart, everydayRetailCalcdChart);
 
 
         // Set up cell value factories

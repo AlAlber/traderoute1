@@ -1,6 +1,7 @@
 package com.traderoute.controllers;
 
 import com.traderoute.App;
+import com.traderoute.charts.EverydayRetailCalcdChart;
 import com.traderoute.charts.LandedStoreCostChart;
 import com.traderoute.data.Product;
 import com.traderoute.data.RTMOption;
@@ -45,7 +46,7 @@ class RTMPlanningControllerTest {
     private ComboBox<Product> brandNameBox;
     final String  tableString = "#rtmPlanningTable1";
     public LandedStoreCostChart landedStoreCostChart;
-    public BarChart<String, BigDecimal> everydayRetailCalcdChart;
+    public EverydayRetailCalcdChart everydayRetailCalcdChart;
     public BarChart<String, BigDecimal> elasticizedUnitVelocityChart;
     public BarChart<String, BigDecimal> annualVolumePerSkuChart;
     public BarChart<String, BigDecimal> slottingPaybackPeriodChart;
@@ -88,11 +89,9 @@ class RTMPlanningControllerTest {
         rtmPlanningTable1.setItems(FXCollections.observableArrayList(rtmOption1, rtmOption2, rtmOption3, rtmOption4));
         //Set up row listeners which is normally done in initialize
         controller.setUpListeners();
-//        Platform.runLater(()->{
-            landedStoreCostChart = robot.lookup("#landedStoreCostChart").queryAs(LandedStoreCostChart.class);
-//        });
+        landedStoreCostChart = robot.lookup("#landedStoreCostChart").queryAs(LandedStoreCostChart.class);
 
-        everydayRetailCalcdChart = robot.lookup("#everydayRetailCalcdChart").queryAs(BarChart.class);
+        everydayRetailCalcdChart = robot.lookup("#everydayRetailCalcdChart").queryAs(EverydayRetailCalcdChart.class);
         elasticizedUnitVelocityChart = robot.lookup("#elasticizedUnitVelocityChart").queryAs(BarChart.class);
         annualVolumePerSkuChart = robot.lookup("#annualVolumePerSkuChart").queryAs(BarChart.class);
         slottingPaybackPeriodChart = robot.lookup("#slottingPaybackPeriodChart").queryAs(BarChart.class);
@@ -348,7 +347,7 @@ class RTMPlanningControllerTest {
         testOption.setEverydayRetailCalcd(new BigDecimal("6.788"));
         rtmPlanningTable1.getItems().set(0,testOption);
         robot.interact(()->{
-            controller.updateChart(FXCollections.observableArrayList(everydayRetailCalcdChart));
+            everydayRetailCalcdChart.updateChart(rtmPlanningTable1.getItems());
         });
         assertEqualsYChartValueForFirstRTMOption(robot, everydayRetailCalcdChart, new BigDecimal("6.788"));
     }

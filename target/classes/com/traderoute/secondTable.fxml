@@ -177,14 +177,14 @@
             <HBox fx:id="chartHBox" prefHeight="316.0" prefWidth="1482.0">
                <children>
 <!--                  <LandedStoreCostChart> </LandedStoreCostChart>-->
-                  <BarChart fx:id="everydayRetailCalcdChart" animated="false" legendVisible="false" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="369.0" prefWidth="161.0" title="Resulting Everyday Retail">
-                     <xAxis>
-                        <CategoryAxis side="BOTTOM" />
-                     </xAxis>
-                     <yAxis>
-                        <NumberAxis side="LEFT" />
-                     </yAxis>
-                  </BarChart>
+<!--                  <BarChart fx:id="everydayRetailCalcdChart" animated="false" legendVisible="false" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="369.0" prefWidth="161.0" title="Resulting Everyday Retail">-->
+<!--                     <xAxis>-->
+<!--                        <CategoryAxis side="BOTTOM" />-->
+<!--                     </xAxis>-->
+<!--                     <yAxis>-->
+<!--                        <NumberAxis side="LEFT" />-->
+<!--                     </yAxis>-->
+<!--                  </BarChart>-->
                   <BarChart fx:id="elasticizedUnitVelocityChart" animated="false" legendVisible="false" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="369.0" prefWidth="161.0" title="Elasticized Unit Velocity">
                      <xAxis>
                         <CategoryAxis side="BOTTOM" />
