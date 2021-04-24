@@ -1,12 +1,13 @@
 package com.traderoute.charts;
 
+import com.traderoute.RTMPlanningChart;
 import com.traderoute.data.RTMOption;
 import javafx.collections.ObservableList;
 import javafx.scene.chart.*;
 
 import static javafx.collections.FXCollections.observableArrayList;
 
-public class LandedStoreCostChart extends BarChart implements UpdatableChart{
+public class LandedStoreCostChart extends RTMPlanningChart {
 //    @FXML
 //    private BarChart<String, BigDecimal> barchart;
 
@@ -16,7 +17,6 @@ public class LandedStoreCostChart extends BarChart implements UpdatableChart{
         this.setAnimated(false);
         this.setLegendVisible(false);
     }
-
 
     @Override
     public void updateChart(ObservableList<RTMOption> rtmOptions) {
