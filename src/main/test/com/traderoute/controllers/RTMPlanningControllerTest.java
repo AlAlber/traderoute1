@@ -44,7 +44,7 @@ class RTMPlanningControllerTest {
     private ComboBox<Product> productClassBox;
     private ComboBox<Product> brandNameBox;
     final String  tableString = "#rtmPlanningTable1";
-    public LandedStoreCostChart<String, BigDecimal> landedStoreCostChart;
+    public LandedStoreCostChart landedStoreCostChart;
     public BarChart<String, BigDecimal> everydayRetailCalcdChart;
     public BarChart<String, BigDecimal> elasticizedUnitVelocityChart;
     public BarChart<String, BigDecimal> annualVolumePerSkuChart;
@@ -88,7 +88,10 @@ class RTMPlanningControllerTest {
         rtmPlanningTable1.setItems(FXCollections.observableArrayList(rtmOption1, rtmOption2, rtmOption3, rtmOption4));
         //Set up row listeners which is normally done in initialize
         controller.setUpListeners();
-        landedStoreCostChart = robot.lookup("#landedStoreCostChart").queryAs(LandedStoreCostChart.class);
+//        Platform.runLater(()->{
+            landedStoreCostChart = robot.lookup("#landedStoreCostChart").queryAs(LandedStoreCostChart.class);
+//        });
+
         everydayRetailCalcdChart = robot.lookup("#everydayRetailCalcdChart").queryAs(BarChart.class);
         elasticizedUnitVelocityChart = robot.lookup("#elasticizedUnitVelocityChart").queryAs(BarChart.class);
         annualVolumePerSkuChart = robot.lookup("#annualVolumePerSkuChart").queryAs(BarChart.class);

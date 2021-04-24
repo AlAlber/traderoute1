@@ -1,24 +1,20 @@
 package com.traderoute.charts;
 
-import com.traderoute.CustomBarChart;
-import com.traderoute.charts.UpdatableChart;
 import com.traderoute.data.RTMOption;
 import javafx.collections.ObservableList;
-import javafx.fxml.FXML;
-import javafx.scene.chart.Axis;
-import javafx.scene.chart.BarChart;
-import javafx.scene.chart.XYChart;
-
-import java.io.IOException;
+import javafx.scene.chart.*;
 
 import static javafx.collections.FXCollections.observableArrayList;
 
-public class LandedStoreCostChart<String, BigDecimal> extends BarChart implements UpdatableChart{
-    @FXML
-    private BarChart<String, BigDecimal> barchart;
+public class LandedStoreCostChart extends BarChart implements UpdatableChart{
+//    @FXML
+//    private BarChart<String, BigDecimal> barchart;
 
-    public LandedStoreCostChart(Axis axis, Axis axis1) {
-        super(axis, axis1);
+    public LandedStoreCostChart(CategoryAxis xAxis, NumberAxis yAxis) {
+        super(xAxis, yAxis);
+        this.setId("landedStoreCostChart");
+        this.setAnimated(false);
+        this.setLegendVisible(false);
     }
 
 

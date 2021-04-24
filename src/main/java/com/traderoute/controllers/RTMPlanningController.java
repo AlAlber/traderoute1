@@ -394,10 +394,12 @@ public class RTMPlanningController implements Initializable {
 
     @FXML
     private HBox chartHBox;
+
+
     @Override
     public void initialize(final URL url, final ResourceBundle resourceBundle) {
-
         chartHBox.getChildren().add(landedStoreCostChart);
+
 
         // Set up cell value factories
         setCellValueFactories();
