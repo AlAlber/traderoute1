@@ -278,7 +278,7 @@ class RTMPlanningControllerTest {
         robot.write("4.0");
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
         Assertions.assertEquals(new BigDecimal("4.0"), rtmPlanningTable1.getItems().get(0).getLandedStoreCost());
-//        assertEqualsYChartValueForFirstRTMOption(robot, landedStoreCostChart, new BigDecimal("4.0"));
+        assertEqualsYChartValueForFirstRTMOption(robot, landedStoreCostChart, new BigDecimal("4.0"));
     }
     @Test
     public void testChartUpdateEverydayRetailCalcd(FxRobot robot) {
@@ -428,12 +428,12 @@ class RTMPlanningControllerTest {
         testOption.setFourYearEqGpPerSku(new BigDecimal("8"));
         testOption.setFourYearEqGpPerUnit(new BigDecimal("9"));
         robot.interact(()->{
-//            controller.updateChart(FXCollections.observableArrayList(landedStoreCostChart,everydayRetailCalcdChart,
-//                    elasticizedUnitVelocityChart, annualVolumePerSkuChart, slottingPaybackPeriodChart,
-//                    postSpoilsPostFreightChart, unspentTradePerUnitChart, fourYearEqGpPerSkuChart,
-//                    fourYearEqGpPerUnitChart));
+            controller.updateCharts(FXCollections.observableArrayList(landedStoreCostChart,everydayRetailCalcdChart,
+                    elasticizedUnitVelocityChart, annualVolumePerSkuChart, slottingPaybackPeriodChart,
+                    postSpoilsPostFreightChart, unspentTradePerUnitChart, fourYearEqGpPerSkuChart,
+                    fourYearEqGpPerUnitChart));
         });
-//        assertEqualsYChartValueForFirstRTMOption(robot, landedStoreCostChart, new BigDecimal("1"));
+        assertEqualsYChartValueForFirstRTMOption(robot, landedStoreCostChart, new BigDecimal("1"));
         assertEqualsYChartValueForFirstRTMOption(robot, everydayRetailCalcdChart, new BigDecimal("2"));
         assertEqualsYChartValueForFirstRTMOption(robot, elasticizedUnitVelocityChart, new BigDecimal("3"));
         assertEqualsYChartValueForFirstRTMOption(robot, annualVolumePerSkuChart, new BigDecimal("4"));

@@ -15,6 +15,8 @@ public abstract class RTMPlanningChart extends BarChart {
         super(xAxis, yAxis);
         this.setLegendVisible(false);
         this.setAnimated(false);
+        this.setMinWidth(150);
+        this.setPrefWidth(170);
     }
 
     public void updateChart(ObservableList<RTMOption> rtmOptions) {

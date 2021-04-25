@@ -14,6 +14,7 @@ public class LandedStoreCostChart extends RTMPlanningChart {
         super(xAxis, yAxis);
         this.setId("landedStoreCostChart");
 
+
     }
 
     @Override

@@ -99,8 +99,6 @@
 }
 .chart {
 -fx-background-color: transparent;
-
-
 }
 .chart-bar {
     -fx-bar-fill: red;
