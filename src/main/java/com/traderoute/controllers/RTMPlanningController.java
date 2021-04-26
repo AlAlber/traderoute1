@@ -18,6 +18,7 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.util.StringConverter;
 import javafx.util.converter.BigDecimalStringConverter;
 
@@ -186,18 +187,23 @@ public class RTMPlanningController implements Initializable {
      * TextField to insert Store Count of this RetailerProduct (specific Product being sold by retailer) in first year.
      */
     @FXML
-    private TextField yearOneStoreCountField;
+    private IntegerTextField yearOneStoreCountField =
+            new IntegerTextField(0, 0,10000, true);
     /**
      * TextField to insert Everyday Gross Profit Margin Percentage of RetailerProduct.
      */
     @FXML
-    private TextField everydayGpmField;
+    private BigDecimalTextField everydayGpmField =
+            new BigDecimalTextField(new BigDecimal("40.0"),
+                    new BigDecimal("1.0"), new BigDecimal("99.0"), true);
 
     /**
      * TextField to insert percentage of Spoils and Fees of RetailerProduct.
      */
     @FXML
-    private TextField spoilsFeesField;
+    private BigDecimalTextField spoilsFeesField =
+            new BigDecimalTextField(new BigDecimal("3.0"),
+                    new BigDecimal("1.0"), new BigDecimal("99.0"), false);
 
     /**
      * TextField to insert the Weekly Velocity U/F/S/W of product at the minimum price in the everyday retail override
@@ -341,18 +347,6 @@ public class RTMPlanningController implements Initializable {
     @FXML
     private Label elasticityRatioLabel;
 
-    /**
-     * Indexes for each chart to determine which to update
-     */
-    private final int landedStoreCostChartIndex = 0;
-    private final int everydayRetailCalcdChartIndex = 1;
-    private final int elasticizedUnitVelocityChartIndex = 2;
-    private final int annualVolumePerSkuChartIndex = 3;
-    private final int slottingPaybackPeriodChartIndex = 4;
-    private final int postSpoilsPostFreightChartIndex = 5;
-    private final int unspentTradePerUnitChartIndex = 6;
-    private final int fourYearEqGpPerSkuChartIndex = 7;
-    private final int fourYearEqGpPerUnitChartIndex = 8;
 
     /**
      * BarCharts to display relevant table data. X-Axis has RTM Option Name, Y-Axis the respective value.
@@ -393,6 +387,9 @@ public class RTMPlanningController implements Initializable {
     @FXML
     private HBox chartHBox;
 
+    @FXML
+    private VBox textfieldVBox;
+
 
     @Override
     public void initialize(final URL url, final ResourceBundle resourceBundle) {
@@ -400,6 +397,10 @@ public class RTMPlanningController implements Initializable {
                 elasticizedUnitVelocityChart, annualVolumePerSkuChart, slottingPaybackPeriodChart,
                 postSpoilsPostFreightChart, unspentTradePerUnitChart, fourYearEqGpPerSkuChart,
                 fourYearEqGpPerUnitChart);
+        textfieldVBox.getChildren().addAll(yearOneStoreCountField, everydayGpmField, spoilsFeesField);
+        yearOneStoreCountField.setId("yearOneStoreCountField");
+        everydayGpmField.setId("everydayGpmField");
+        spoilsFeesField.setId("spoilsFeesField");
 
 
         // Set up cell value factories

@@ -1,6 +1,8 @@
 package com.traderoute.controllers;
 
 import com.traderoute.App;
+import com.traderoute.BigDecimalTextField;
+import com.traderoute.IntegerTextField;
 import com.traderoute.charts.*;
 import com.traderoute.data.Product;
 import com.traderoute.data.RTMOption;
@@ -25,6 +27,7 @@ import org.testfx.api.FxRobot;
 import org.testfx.api.FxAssert;
 import org.testfx.framework.junit5.ApplicationExtension;
 import org.testfx.framework.junit5.Start;
+import org.testfx.matcher.base.NodeMatchers;
 import org.testfx.matcher.control.LabeledMatchers;
 
 import java.io.IOException;
@@ -37,9 +40,9 @@ class RTMPlanningControllerTest {
     private RTMOption testOption = new RTMOption();
     private SimpleObjectProperty<Retailer> retailer= new SimpleObjectProperty<>(new Retailer("ahold", RTMPlanningController.getRetailerProducts(),0 ,  new BigDecimal("40") , 158,new BigDecimal("3.0")));;
     private TableView<RTMOption> rtmPlanningTable1;
-    private TextField everydayGpmField;
-    private TextField yearOneStoreCountField;
-    private TextField spoilsFeesField;
+    private BigDecimalTextField everydayGpmField;
+    private IntegerTextField yearOneStoreCountField;
+    private BigDecimalTextField spoilsFeesField;
     private TextField weeklyUfswAtMinField;
     private ComboBox<Product> productClassBox;
     private ComboBox<Product> brandNameBox;
@@ -69,9 +72,9 @@ class RTMPlanningControllerTest {
     void setUp(FxRobot robot) {
         rtmOptions = retailer.get().getRetailerProducts().get(0).getRtmOptions();
         rtmPlanningTable1 = robot.lookup(tableString).queryTableView();
-        everydayGpmField = robot.lookup("#everydayGpmField").queryAs(TextField.class);
-        yearOneStoreCountField = robot.lookup("#yearOneStoreCountField").queryAs(TextField.class);
-        spoilsFeesField = robot.lookup("#spoilsFeesField").queryAs(TextField.class);
+        everydayGpmField = robot.lookup("#everydayGpmField").queryAs(BigDecimalTextField.class);
+        yearOneStoreCountField = robot.lookup("#yearOneStoreCountField").queryAs(IntegerTextField.class);
+        spoilsFeesField = robot.lookup("#spoilsFeesField").queryAs(BigDecimalTextField.class);
         weeklyUfswAtMinField = robot.lookup("#weeklyUfswAtMinField").queryAs(TextField.class);
         productClassBox = robot.lookup("#productClassBox").queryComboBox();
         brandNameBox = robot.lookup("#brandNameBox").queryComboBox();
@@ -474,7 +477,14 @@ class RTMPlanningControllerTest {
         });
     }
 
-
+    @Test
+    public void testYearOneStoreCountFieldEnteringValueGreaterThan10000(FxRobot robot){
+        robot.doubleClickOn(yearOneStoreCountField);
+        robot.write("10001");
+        robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
+        Assertions.assertEquals( yearOneStoreCountField.getText(), yearOneStoreCountField.getDefaultValue().toString(), "Textfield ignores decimal points");
+        FxAssert.verifyThat("OK", NodeMatchers.isVisible());
+    }
     @Test
     public void testYearOneStoreCountFieldEnteringDecimalValue(FxRobot robot){
         robot.doubleClickOn(yearOneStoreCountField);
@@ -491,45 +501,57 @@ class RTMPlanningControllerTest {
     }
     @Test
     public void testEverydayGpmFieldEnteringValueLessThan1(FxRobot robot){
-        robot.doubleClickOn(yearOneStoreCountField);
-        robot.write("0");
+        robot.doubleClickOn(everydayGpmField);
+        robot.write("0.99");
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
-        Assertions.assertEquals(yearOneStoreCountField.getText(), String.valueOf(40),  "Textfield rejects values less than 1");
+        Assertions.assertEquals(everydayGpmField.getText(), everydayGpmField.getDefaultValue().toString(),  "Textfield rejects values less than 1");
+        FxAssert.verifyThat("OK", NodeMatchers.isVisible());
     }
     @Test
     public void testEverydayGpmFieldEnteringValueGreaterThan99(FxRobot robot){
         robot.doubleClickOn(everydayGpmField);
         robot.write("100");
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
-        Assertions.assertEquals(everydayGpmField.getText(), String.valueOf(40),  "Textfield rejects values greater than 99");
+        Assertions.assertEquals(everydayGpmField.getText(), everydayGpmField.getDefaultValue().toString(),  "Textfield rejects values greater than 99");
+        FxAssert.verifyThat("OK", NodeMatchers.isVisible());
     }
     @Test
-    public void testEverydayGpmFieldEnteringDecimalValue(FxRobot robot){
+    public void testEverydayGpmFieldEnteringValueWithMoreThan2Decimals(FxRobot robot){
         robot.doubleClickOn(everydayGpmField);
-        robot.write("0.12");
+        robot.write("1.11111");
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
-        Assertions.assertEquals(everydayGpmField.getText(), String.valueOf(0.12),  "Textfield accepts decimal values");
+        Assertions.assertEquals(everydayGpmField.getText(), String.valueOf(1.11),  "Textfield rejects values greater than 99");
+        FxAssert.verifyThat("OK", NodeMatchers.isVisible());
     }
     @Test
-    public void testSpoilsFeesFieldEnteringDecimalValue(FxRobot robot){
-        robot.doubleClickOn(spoilsFeesField);
-        robot.write("0.11");
+    public void testEverydayGpmFieldEnteringMinValueAsDecimal(FxRobot robot){
+        robot.doubleClickOn(everydayGpmField);
+        robot.write("1.0");
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
-        Assertions.assertEquals(spoilsFeesField.getText(), String.valueOf(0.11),  "Textfield accepts decimal value");
+        Assertions.assertEquals(everydayGpmField.getText(), String.valueOf(1.0),  "Textfield accepts decimal values");
+    }
+    @Test
+    public void testSpoilsFeesFieldEnteringMaxValueAsDecimal(FxRobot robot){
+        robot.doubleClickOn(spoilsFeesField);
+        robot.write("99.0");
+        robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
+        Assertions.assertEquals(spoilsFeesField.getText(), String.valueOf(99.0),  "Textfield accepts decimal value");
     }
     @Test
     public void testSpoilsFeesFieldEnteringValueGreaterThan99(FxRobot robot){
         robot.doubleClickOn(spoilsFeesField);
         robot.write("100");
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
-        Assertions.assertEquals(spoilsFeesField.getText(), String.valueOf(0.0),  "Textfield rejects values greater than 99");
+        Assertions.assertEquals(spoilsFeesField.getText(), spoilsFeesField.getDefaultValue().toString(),  "Textfield rejects values greater than 99");
+        FxAssert.verifyThat("OK", NodeMatchers.isVisible());
     }
     @Test
     public void testSpoilsFeesFieldEnteringNegativeValue(FxRobot robot){
         robot.doubleClickOn(spoilsFeesField);
         robot.write("-1");
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
-        Assertions.assertEquals(spoilsFeesField.getText(), String.valueOf(0.0),  "Textfield rejects negative values");
+        Assertions.assertEquals(spoilsFeesField.getText(), spoilsFeesField.getDefaultValue().toString(),  "Textfield rejects negative values");
+        FxAssert.verifyThat("OK", NodeMatchers.isVisible());
     }
 
 

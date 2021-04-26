@@ -2,9 +2,6 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.chart.BarChart?>
-<?import javafx.scene.chart.CategoryAxis?>
-<?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
@@ -18,8 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<?import com.traderoute.charts.LandedStoreCostChart?>
-<AnchorPane prefHeight="780.0" prefWidth="1530.0" stylesheets="@../styles/Styles.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.traderoute.controllers.RTMPlanningController">
+<AnchorPane prefHeight="780.0" prefWidth="1530.0" stylesheets="@../styles/Styles.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.traderoute.controllers.RTMPlanningController">
    <children>
       <VBox prefHeight="800.0" prefWidth="1530.0" style="-fx-background-color: #1E1D1A;">
          <children>
@@ -40,12 +36,48 @@
                               <Font name="Arial Nova Light" size="36.0" />
                            </font>
                         </Label>
-                        <Label layoutY="67.0" prefHeight="15.0" prefWidth="96.0" text="Year 1 Store Count" />
-                        <Label layoutY="90.0" prefHeight="15.0" prefWidth="96.0" text="Everyday GPM %" />
-                        <Label layoutY="111.0" prefHeight="15.0" prefWidth="96.0" text="Spoils + Fees %" />
-                        <TextField fx:id="everydayGpmField" layoutX="100.0" layoutY="89.0" maxHeight="-Infinity" minHeight="-Infinity" onAction="#changeEveryDayGpmCellEvent" prefHeight="17.0" prefWidth="107.0" promptText="0.0" />
-                        <TextField fx:id="yearOneStoreCountField" layoutX="100.0" layoutY="66.0" maxHeight="-Infinity" minHeight="-Infinity" onAction="#changeYearOneStoreCount" prefHeight="17.0" prefWidth="107.0" promptText="0.0" />
-                        <TextField fx:id="spoilsFeesField" layoutX="100.0" layoutY="110.0" maxHeight="-Infinity" minHeight="-Infinity" onAction="#changeSpoilsAndFeesEvent" prefHeight="17.0" prefWidth="107.0" promptText="0.0" />
+                        <HBox layoutX="4.0" layoutY="58.0" prefHeight="80.0" prefWidth="200.0" AnchorPane.topAnchor="65.0">
+                           <children>
+                              <VBox prefHeight="58.0" prefWidth="100.0">
+                                 <children>
+                                    <Label prefHeight="15.0" prefWidth="96.0" text="Year 1 Store Count">
+                                       <VBox.margin>
+                                          <Insets bottom="10.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                    <Label prefHeight="15.0" prefWidth="96.0" text="Everyday GPM %">
+                                       <VBox.margin>
+                                          <Insets bottom="10.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                    <Label prefHeight="15.0" prefWidth="96.0" text="Spoils + Fees %">
+                                       <VBox.margin>
+                                          <Insets bottom="10.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                 </children>
+                              </VBox>
+                              <VBox fx:id="textfieldVBox" prefHeight="76.0" prefWidth="100.0">
+<!--                                 <children>-->
+<!--                                    <TextField fx:id="everydayGpmField" maxHeight="-Infinity" minHeight="-Infinity" onAction="#changeEveryDayGpmCellEvent" prefHeight="17.0" prefWidth="107.0" promptText="0.0">-->
+<!--                                       <VBox.margin>-->
+<!--                                          <Insets bottom="10.0" />-->
+<!--                                       </VBox.margin>-->
+<!--                                    </TextField>-->
+<!--                                    <TextField fx:id="yearOneStoreCountField" maxHeight="-Infinity" minHeight="-Infinity" onAction="#changeYearOneStoreCount" prefHeight="17.0" prefWidth="107.0" promptText="0.0">-->
+<!--                                       <VBox.margin>-->
+<!--                                          <Insets bottom="10.0" />-->
+<!--                                       </VBox.margin>-->
+<!--                                    </TextField>-->
+<!--                                    <TextField fx:id="spoilsFeesField" maxHeight="-Infinity" minHeight="-Infinity" onAction="#changeSpoilsAndFeesEvent" prefHeight="17.0" prefWidth="107.0" promptText="0.0">-->
+<!--                                       <VBox.margin>-->
+<!--                                          <Insets bottom="10.0" />-->
+<!--                                       </VBox.margin>-->
+<!--                                    </TextField>-->
+<!--                                 </children>-->
+                              </VBox>
+                           </children>
+                        </HBox>
                      </children>
                      <HBox.margin>
                         <Insets right="30.0" />
