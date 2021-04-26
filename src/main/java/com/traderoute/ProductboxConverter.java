@@ -14,12 +14,13 @@ public class ProductboxConverter extends StringConverter<Product> {
     @Override
     public String toString(Product retailerProduct) {
         if (retailerProduct != null) {
-            if (type.equals("product")) {
-                return retailerProduct.getProductClass();
-            }
-            if (type.equals("brand")) {
-                return retailerProduct.getBrandName();
-            }
+//            if (type.equals("product")) {
+//                return retailerProduct.getProductClass();
+//            }
+//            if (type.equals("brand")) {
+//                return retailerProduct.getBrandName();
+//            }
+            retun
         }
         return null;
     }

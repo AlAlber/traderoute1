@@ -413,17 +413,17 @@ public class RTMPlanningController implements Initializable {
         productClassBox.setConverter(getProductComboboxConverter());
 
         // Restrict input fields to only accept text in Integer or Double format
-        yearOneStoreCountField.textProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(final ObservableValue<? extends String> observable, final String oldValue,
-                    final String newValue) {
-                if (!newValue.matches("\\d*")) {
-                    yearOneStoreCountField.setText(newValue.replaceAll("[^\\d]", ""));
-                }
-            }
-        });
-        everydayGpmField.setTextFormatter(new TextFormatter<>(getDoubleInputConverter(), 0.0, getDoubleInputFilter()));
-        spoilsFeesField.setTextFormatter(new TextFormatter<>(getDoubleInputConverter(), 0.0, getDoubleInputFilter()));
+//        yearOneStoreCountField.textProperty().addListener(new ChangeListener<String>() {
+//            @Override
+//            public void changed(final ObservableValue<? extends String> observable, final String oldValue,
+//                    final String newValue) {
+//                if (!newValue.matches("\\d*")) {
+//                    yearOneStoreCountField.setText(newValue.replaceAll("[^\\d]", ""));
+//                }
+//            }
+//        });
+//        everydayGpmField.setTextFormatter(new TextFormatter<>(getDoubleInputConverter(), 0.0, getDoubleInputFilter()));
+//        spoilsFeesField.setTextFormatter(new TextFormatter<>(getDoubleInputConverter(), 0.0, getDoubleInputFilter()));
         weeklyUfswAtMinField
                 .setTextFormatter(new TextFormatter<>(getDoubleInputConverter(), 0.0, getDoubleInputFilter()));
 

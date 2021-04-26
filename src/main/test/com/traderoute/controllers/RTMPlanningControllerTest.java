@@ -515,14 +515,7 @@ class RTMPlanningControllerTest {
         Assertions.assertEquals(everydayGpmField.getText(), everydayGpmField.getDefaultValue().toString(),  "Textfield rejects values greater than 99");
         FxAssert.verifyThat("OK", NodeMatchers.isVisible());
     }
-    @Test
-    public void testEverydayGpmFieldEnteringValueWithMoreThan2Decimals(FxRobot robot){
-        robot.doubleClickOn(everydayGpmField);
-        robot.write("1.11111");
-        robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
-        Assertions.assertEquals(everydayGpmField.getText(), String.valueOf(1.11),  "Textfield rejects values greater than 99");
-        FxAssert.verifyThat("OK", NodeMatchers.isVisible());
-    }
+
     @Test
     public void testEverydayGpmFieldEnteringMinValueAsDecimal(FxRobot robot){
         robot.doubleClickOn(everydayGpmField);

@@ -32,6 +32,9 @@ public class NumberTextField extends TextField {
                         alert.showAndWait();
                         }});
     }
+    public boolean isPositiveOnly(){
+        return positiveOnly;
+    }
 
     public Number getDefaultValue() {
         return defaultValue;
