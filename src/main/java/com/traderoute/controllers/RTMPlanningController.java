@@ -502,11 +502,11 @@ public class RTMPlanningController implements Initializable {
      * 
      * @return ObservableList<Product> all products with correct brandName, which user has selected on the brandNameBox.
      */
-    public static ObservableList<Product> getCorrectProductClasses(final ObservableList<Product> products) {
+    public ObservableList<Product> getCorrectProductClasses(final ObservableList<Product> products) {
         ObservableList<Product> correspondingProductClasses = observableArrayList();
         // Set up product combobox and make it display product class
         for (Product product : products) {
-            if (product.getBrandName().equals(product.getBrandName())) {
+            if (product.getBrandName().equals(brandNameBox.getSelectionModel().getSelectedItem().getBrandName())) {
                 correspondingProductClasses.add(product);
             }
         }

@@ -32,6 +32,8 @@ import org.testfx.matcher.control.LabeledMatchers;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.HashSet;
+import java.util.Set;
 
 @ExtendWith(ApplicationExtension.class)
 class RTMPlanningControllerTest {
@@ -601,6 +603,45 @@ class RTMPlanningControllerTest {
         rtmPlanningTable1.refresh();
         Assertions.assertEquals("$30.0", tableCell.getText());
     }
+    @Test
+    public void testGetUniqueBrandNamesForBrandComboBox(FxRobot robot){
+        ObservableList<Product> productsWithUniqueBrandNames =
+                controller.getUniqueBrandNames(MenuController.getExampleProducts());
+        ObservableList<String> stringList= FXCollections.observableArrayList();
+        for (Product product: productsWithUniqueBrandNames){
+            stringList.add(product.getBrandName());
+        }
+        Set<String> uniqueSet = new HashSet<String>(stringList);
+        Assertions.assertTrue(uniqueSet.size()==stringList.size());
+    }
+    @Test
+    public void testGetCorrespondingProductClassesForComboBox(FxRobot robot){
+        robot.interact(() -> {
+            brandNameBox.getSelectionModel().select(0);
+        });
+        String brandname = brandNameBox.getSelectionModel().getSelectedItem().getBrandName();
+        ObservableList<Product> productsWithCorrectBrandName =
+                controller.getCorrectProductClasses(MenuController.getExampleProducts());
+        for (Product product: productsWithCorrectBrandName){
+            Assertions.assertEquals(brandname, product.getBrandName());
+            System.out.println("product class"+ product.getProductClass());
+        }
+    }
+    @Test
+    public void testBrandNameBoxConverter(FxRobot robot){
+        Product exampleProduct = new Product();
+        exampleProduct.setBrandName("edeka");
+        Assertions.assertEquals(exampleProduct.getBrandName(),
+                brandNameBox.getConverter().toString(exampleProduct));
+    }
+    @Test
+    public void testProductClassBoxConverter(FxRobot robot){
+        Product exampleProduct = new Product();
+        exampleProduct.setProductClass("pickles");
+        Assertions.assertEquals(exampleProduct.getProductClass(),
+                productClassBox.getConverter().toString(exampleProduct));
+    }
+
 
 
 
