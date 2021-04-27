@@ -532,7 +532,6 @@ public class RTMPlanningController implements Initializable {
      * be updated and all the RTM Option's products need to be updated (//TODO this functionality could be done better)
      */
     public void changeProductComboboxEvent() {
-
         Product selectedProduct = productClassBox.getSelectionModel().getSelectedItem();
         if (selectedProduct == null) {
             productClassBox.setPromptText("Now Select a Product Class");
@@ -545,7 +544,7 @@ public class RTMPlanningController implements Initializable {
             for (RTMOption row : rtmPlanningTable1.getItems()) {
                 row.setProduct(selectedProduct);
             }
-            updateRetailerProduct(selectedProduct);
+//            updateRetailerProduct(selectedProduct);
         }
     }
 

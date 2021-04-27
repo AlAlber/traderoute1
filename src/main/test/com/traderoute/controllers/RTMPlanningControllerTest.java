@@ -59,6 +59,12 @@ class RTMPlanningControllerTest {
     public FourYearEqGpPerSkuChart fourYearEqGpPerSkuChart;
     public FourYearEqGpPerUnitChart fourYearEqGpPerUnitChart;
 
+    Label listLabel;
+    Label fobLabel;
+    Label net1GoalLabel;
+    Label elasticityRatioLabel;
+
+
 
     @Start
     public void start(Stage stage) throws IOException {
@@ -93,8 +99,13 @@ class RTMPlanningControllerTest {
         rtmPlanningTable1.setItems(FXCollections.observableArrayList(rtmOption1, rtmOption2, rtmOption3, rtmOption4));
         //Set up row listeners which is normally done in initialize
         controller.setUpListeners();
-        landedStoreCostChart = robot.lookup("#landedStoreCostChart").queryAs(LandedStoreCostChart.class);
 
+        listLabel = robot.lookup("#listLabel").queryAs(Label.class);
+        fobLabel = robot.lookup("#fobLabel").queryAs(Label.class);
+        net1GoalLabel = robot.lookup("#net1GoalLabel").queryAs(Label.class);
+        elasticityRatioLabel = robot.lookup("#elasticityRatioLabel").queryAs(Label.class);
+
+        landedStoreCostChart = robot.lookup("#landedStoreCostChart").queryAs(LandedStoreCostChart.class);
         everydayRetailCalcdChart = robot.lookup("#everydayRetailCalcdChart").queryAs(EverydayRetailCalcdChart.class);
         elasticizedUnitVelocityChart = robot.lookup("#elasticizedUnitVelocityChart").queryAs(ElasticizedUnitVelocityChart.class);
         annualVolumePerSkuChart = robot.lookup("#annualVolumePerSkuChart").queryAs(AnnualVolumePerSkuChart.class);
@@ -186,10 +197,7 @@ class RTMPlanningControllerTest {
             brandNameBox.getSelectionModel().select(0);
             productClassBox.getSelectionModel().select(0);
         });
-        Label listLabel = robot.lookup("#listLabel").queryAs(Label.class);
-        Label fobLabel = robot.lookup("#fobLabel").queryAs(Label.class);
-        Label net1GoalLabel = robot.lookup("#net1GoalLabel").queryAs(Label.class);
-        Label elasticityRatioLabel = robot.lookup("#elasticityRatioLabel").queryAs(Label.class);
+
         FxAssert.verifyThat(listLabel, LabeledMatchers.hasText("List = $3.59")) ;
         Assertions.assertEquals("List = $3.59", listLabel.getText());
         Assertions.assertEquals("F.O.B. = $3.30", fobLabel.getText());
@@ -640,6 +648,31 @@ class RTMPlanningControllerTest {
         exampleProduct.setProductClass("pickles");
         Assertions.assertEquals(exampleProduct.getProductClass(),
                 productClassBox.getConverter().toString(exampleProduct));
+    }
+    @Test
+    public void testBrandNameBoxEvent(FxRobot robot){
+        robot.interact(() -> {
+            brandNameBox.getSelectionModel().select(0);
+        });
+        FxAssert.verifyThat(listLabel, LabeledMatchers.hasText("List = $"));
+        FxAssert.verifyThat(fobLabel, LabeledMatchers.hasText("F.O.B. = $"));
+        FxAssert.verifyThat(net1GoalLabel, LabeledMatchers.hasText("Net 1 Goal = $"));
+        FxAssert.verifyThat(elasticityRatioLabel, LabeledMatchers.hasText("Elasticity Ratio = +1% Price :  % Volume"));
+    }
+    @Test
+    public void testProductClassBoxEvent(FxRobot robot){
+        robot.interact(() -> {
+            brandNameBox.getSelectionModel().select(0);
+            productClassBox.getSelectionModel().select(0);
+        });
+        Product selectedProduct =  productClassBox.getSelectionModel().getSelectedItem();
+        FxAssert.verifyThat(listLabel, LabeledMatchers.hasText("List = $"+selectedProduct.getUnitListCost()));
+        FxAssert.verifyThat(fobLabel, LabeledMatchers.hasText("F.O.B. = $" + selectedProduct.getUnitFobCost()));
+        FxAssert.verifyThat(net1GoalLabel, LabeledMatchers.hasText("Net 1 Goal = $"+ selectedProduct.getUnitNet1Goal()));
+        FxAssert.verifyThat(elasticityRatioLabel, LabeledMatchers.hasText("Elasticity Ratio = +1% Price :"+selectedProduct.getElasticityMultiple()+ "% Volume"));
+        for (RTMOption row: rtmPlanningTable1.getItems()){
+            Assertions.assertEquals(selectedProduct, row.getProduct());
+        }
     }
 
 

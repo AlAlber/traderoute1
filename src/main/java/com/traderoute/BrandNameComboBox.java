@@ -1,4 +1,11 @@
 package com.traderoute;
 
-public class BrandNameComboBox {
+import javafx.scene.control.ComboBox;
+
+public class BrandNameComboBox extends ComboBox {
+
+    public BrandNameComboBox (){
+        super();
+    }
+    
 }
