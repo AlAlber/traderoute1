@@ -70,7 +70,7 @@ class RTMPlanningControllerTest {
 
     @org.junit.jupiter.api.BeforeEach
     void setUp(FxRobot robot) {
-        rtmOptions = retailer.get().getRetailerProducts().get(0).getRtmOptions();
+//        rtmOptions = retailer.get().getRetailerProducts().get(0).getRtmOptions();
         rtmPlanningTable1 = robot.lookup(tableString).queryTableView();
         everydayGpmField = robot.lookup("#everydayGpmField").queryAs(BigDecimalTextField.class);
         yearOneStoreCountField = robot.lookup("#yearOneStoreCountField").queryAs(IntegerTextField.class);
@@ -546,6 +546,62 @@ class RTMPlanningControllerTest {
         Assertions.assertEquals(spoilsFeesField.getText(), spoilsFeesField.getDefaultValue().toString(),  "Textfield rejects negative values");
         FxAssert.verifyThat("OK", NodeMatchers.isVisible());
     }
+
+    @Test
+    public void testSlottingPerSkuCellStartsWithDollar(FxRobot robot){
+        TableCell tableCell = cell(tableString,3,1, robot);
+        robot.doubleClickOn(cell(tableString,3,1, robot));
+        robot.write("30.0");
+        robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
+        rtmPlanningTable1.refresh();
+        Assertions.assertEquals("$30.0", tableCell.getText());
+    }
+    @Test
+    public void testFreightOutPerUnitCellStartsWithDollar(FxRobot robot){
+        TableCell tableCell = cell(tableString,3,2, robot);
+        robot.doubleClickOn(cell(tableString,3,2, robot));
+        robot.write("30.0");
+        robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
+        rtmPlanningTable1.refresh();
+        Assertions.assertEquals("$30.0", tableCell.getText());
+    }
+    @Test
+    public void testFirstReceiverCellStartsWithDollar(FxRobot robot){
+        TableCell tableCell = cell(tableString,3,3, robot);
+        robot.doubleClickOn(cell(tableString,3,3, robot));
+        robot.write("30.0");
+        robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
+        rtmPlanningTable1.refresh();
+        Assertions.assertEquals("$30.0", tableCell.getText());
+    }
+    @Test
+    public void testSecondReceiverCellStartsWithDollar(FxRobot robot){
+        TableCell tableCell = cell(tableString,3,4, robot);
+        robot.doubleClickOn(cell(tableString,3,4, robot));
+        robot.write("30.0");
+        robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
+        rtmPlanningTable1.refresh();
+        Assertions.assertEquals("$30.0", tableCell.getText());
+    }
+    @Test
+    public void testThirdReceiverCellStartsWithDollar(FxRobot robot){
+        TableCell tableCell = cell(tableString,3,5, robot);
+        robot.doubleClickOn(cell(tableString,3,5, robot));
+        robot.write("30.0");
+        robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
+        rtmPlanningTable1.refresh();
+        Assertions.assertEquals("$30.0", tableCell.getText());
+    }
+    @Test
+    public void testFourthReceiverCellStartsWithDollar(FxRobot robot){
+        TableCell tableCell = cell(tableString,3,6, robot);
+        robot.doubleClickOn(cell(tableString,3,6, robot));
+        robot.write("30.0");
+        robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
+        rtmPlanningTable1.refresh();
+        Assertions.assertEquals("$30.0", tableCell.getText());
+    }
+
 
 
 

@@ -1,6 +1,7 @@
 package com.traderoute;
 
 import com.traderoute.cells.ParameterEditCell;
+import com.traderoute.controllers.MenuController;
 import com.traderoute.controllers.PricingPromotionController;
 import com.traderoute.controllers.RTMPlanningController;
 import com.traderoute.data.*;
@@ -36,7 +37,7 @@ public class PricingPromotionControllerTest{
 //    public static GuiTest controller;
 
     private ObservableList<RTMOption> rtmOptions;
-    private SimpleObjectProperty<Retailer> retailer= new SimpleObjectProperty<>(new Retailer("ahold", RTMPlanningController.getRetailerProducts(),0 ,  new BigDecimal("40") , 158,new BigDecimal("3.0")));;
+    private SimpleObjectProperty<Retailer> retailer; // new SimpleObjectProperty<>(new Retailer("ahold", RTMPlanningController.getRetailerProducts(),0 ,  new BigDecimal("40") , 158,new BigDecimal("3.0")));;
     private TableView pricingPromotionTableOne;
 
     private static final int skusInDistributionIndex = 0;
@@ -67,33 +68,22 @@ public class PricingPromotionControllerTest{
 
     private PricingPromotionController controller;
 
-
-    //    @BeforeClass
-//    public static void setUpClass() throws InterruptedException, IOException
-//    {
-//        FXTestUtils.launchApp(App.class);
-//        Thread.sleep(2000);
-//        controller = new GuiTest()
-//        {
-//            @Override
-//            protected Parent getRootNode()
-//            {
-//                return App.getStage().getScene().getRoot();
-//            }
-//        };
-//    }
     @Start
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = App.createFXMLLoader("pricingPromotion");
         Scene scene = new Scene(fxmlLoader.load());
         controller = fxmlLoader.getController();
-        controller.setRetailer(retailer.get());
+
         stage.setScene(scene);
         stage.show();
 
     }
     @org.junit.jupiter.api.BeforeEach
     void setUp(FxRobot robot) {
+        retailer= new SimpleObjectProperty<>(new Retailer("ahold", RTMPlanningController.getRetailerProducts(),
+                0 ,  new BigDecimal("40") , 158,new BigDecimal("3.0")));
+            controller.setRetailer(retailer.get());
+
          rtmOptions = retailer.get().getRetailerProducts().get(0).getRtmOptions();
          pricingPromotionTableOne = robot.lookup("#pricingPromotionTableOne").queryTableView();
         controller.getPromoPlans().get(0).setSelectedRtm(retailer.get().getRetailerProducts().get(0).getRtmOptions().get(1));

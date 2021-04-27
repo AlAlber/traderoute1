@@ -1236,6 +1236,7 @@ public class PricingPromotionController implements Initializable {
         promoPlans.set(currentRetailerProduct.getPromoPlans());
 
         setCurrentPromoPlanIndex(0);
+        System.out.println("retailer"+ retailer.getRetailerName());
         this.getCurrentPromoPlan().setRetailer(retailer);
         // also update labels in future
         if (getCurrentPromoPlanIndex() > -1) {

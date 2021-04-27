@@ -195,7 +195,7 @@ public class RTMPlanningController implements Initializable {
     @FXML
     private BigDecimalTextField everydayGpmField =
             new BigDecimalTextField(new BigDecimal("40.0"),
-                    new BigDecimal("1.0"), new BigDecimal("99.0"), true);
+                    new BigDecimal("1.0"), new BigDecimal("99.0"), false);
 
     /**
      * TextField to insert percentage of Spoils and Fees of RetailerProduct.
@@ -412,24 +412,12 @@ public class RTMPlanningController implements Initializable {
         brandNameBox.setConverter(getBrandComboboxConverter());
         productClassBox.setConverter(getProductComboboxConverter());
 
-        // Restrict input fields to only accept text in Integer or Double format
-//        yearOneStoreCountField.textProperty().addListener(new ChangeListener<String>() {
-//            @Override
-//            public void changed(final ObservableValue<? extends String> observable, final String oldValue,
-//                    final String newValue) {
-//                if (!newValue.matches("\\d*")) {
-//                    yearOneStoreCountField.setText(newValue.replaceAll("[^\\d]", ""));
-//                }
-//            }
-//        });
-//        everydayGpmField.setTextFormatter(new TextFormatter<>(getDoubleInputConverter(), 0.0, getDoubleInputFilter()));
-//        spoilsFeesField.setTextFormatter(new TextFormatter<>(getDoubleInputConverter(), 0.0, getDoubleInputFilter()));
         weeklyUfswAtMinField
                 .setTextFormatter(new TextFormatter<>(getDoubleInputConverter(), 0.0, getDoubleInputFilter()));
 
         // Set dummy data
-        rtmPlanningTable1.setItems(getRTMOptions());
-        rtmPlanningTable2.setItems(rtmPlanningTable1.getItems());
+//        rtmPlanningTable1.setItems(getRTMOptions());
+//        rtmPlanningTable2.setItems(rtmPlanningTable1.getItems());
 
         // Set Bar Chart
         updateCharts(observableArrayList(landedStoreCostChart, everydayRetailCalcdChart,
@@ -885,51 +873,7 @@ public class RTMPlanningController implements Initializable {
             chart.updateChart(rtmPlanningTable1.getItems());
         }
     }
-    /**
-     *
-     * @param chartNumber
-     *            1 of 9 chart numbers from left to right.
-     * 
-     * @return XYChart.Series<?, ?> chartData for BarChart.
-     */
-    public XYChart.Series<?, ?> getChartData(final int chartNumber) {
-        XYChart.Series<String, BigDecimal> barChartData = new Series();
-        for (RTMOption row : rtmPlanningTable1.getItems()) {
-            switch (chartNumber) {
-            case 0:
-                barChartData.getData().add(new Data(row.getRTMName(), row.getLandedStoreCost()));
-                break;
-            case 1:
-                barChartData.getData().add(new Data(row.getRTMName(), row.getEverydayRetailCalcd()));
-                break;
-            case 2:
-                barChartData.getData().add(new Data(row.getRTMName(), row.getElasticizedUnitVelocity()));
-                break;
-            case 3:
-                barChartData.getData().add(new Data(row.getRTMName(), row.getAnnualVolumePerSku()));
-                break;
-            case 4:
-                barChartData.getData().add(new Data(row.getRTMName(), row.getSlottingPaybackPeriod()));
-                break;
-            case 5:
-                barChartData.getData().add(new Data(row.getRTMName(), row.getPostSpoilsPostFreightPerUnit()));
-                break;
-            case 6:
-                barChartData.getData().add(new Data(row.getRTMName(), row.getUnspentTradePerUnit()));
-                break;
-            case 7:
-                barChartData.getData().add(new Data(row.getRTMName(), row.getFourYearEqGpPerSku()));
-                break;
-            case 8:
-                barChartData.getData().add(new Data(row.getRTMName(), row.getFourYearEqGpPerUnit()));
-                break;
-            default:
-                System.out.println("ERROR: no such barchart" + chartNumber);
-                break;
-            }
-        }
-        return barChartData;
-    }
+
 
     /**
      * Loads dummy table data.
