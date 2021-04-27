@@ -83,18 +83,18 @@
                         <Insets right="30.0" />
                      </HBox.margin>
                   </AnchorPane>
-                  <VBox prefHeight="132.0" prefWidth="217.0">
+                  <VBox fx:id="productVBox" prefHeight="132.0" prefWidth="217.0">
                      <children>
-                        <ComboBox fx:id="brandNameBox" onAction="#changeBrandComboboxEvent" prefHeight="26.0" prefWidth="215.0" promptText="Please select the product brand">
-                           <VBox.margin>
-                              <Insets bottom="5.0" />
-                           </VBox.margin>
-                        </ComboBox>
-                        <ComboBox fx:id="productClassBox" onAction="#changeProductComboboxEvent" prefHeight="26.0" prefWidth="216.0" promptText="Please select the product class">
-                           <VBox.margin>
-                              <Insets bottom="5.0" />
-                           </VBox.margin>
-                        </ComboBox>
+<!--                        <ComboBox fx:id="brandNameBox" onAction="#changeBrandComboboxEvent" prefHeight="26.0" prefWidth="215.0" promptText="Please select the product brand">-->
+<!--                           <VBox.margin>-->
+<!--                              <Insets bottom="5.0" />-->
+<!--                           </VBox.margin>-->
+<!--                        </ComboBox>-->
+<!--                        <ComboBox fx:id="productClassBox" onAction="#changeProductComboboxEvent" prefHeight="26.0" prefWidth="216.0" promptText="Please select the product class">-->
+<!--                           <VBox.margin>-->
+<!--                              <Insets bottom="5.0" />-->
+<!--                           </VBox.margin>-->
+<!--                        </ComboBox>-->
                         <Label fx:id="listLabel" prefHeight="17.0" prefWidth="245.0" text="List = $" textFill="#f7f7f7">
                            <VBox.margin>
                               <Insets />

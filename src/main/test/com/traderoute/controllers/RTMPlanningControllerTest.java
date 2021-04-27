@@ -1,8 +1,6 @@
 package com.traderoute.controllers;
 
-import com.traderoute.App;
-import com.traderoute.BigDecimalTextField;
-import com.traderoute.IntegerTextField;
+import com.traderoute.*;
 import com.traderoute.charts.*;
 import com.traderoute.data.Product;
 import com.traderoute.data.RTMOption;
@@ -46,8 +44,8 @@ class RTMPlanningControllerTest {
     private IntegerTextField yearOneStoreCountField;
     private BigDecimalTextField spoilsFeesField;
     private TextField weeklyUfswAtMinField;
-    private ComboBox<Product> productClassBox;
-    private ComboBox<Product> brandNameBox;
+    private ProductClassComboBox productClassBox;
+    private BrandNameComboBox brandNameBox;
     final String  tableString = "#rtmPlanningTable1";
     public LandedStoreCostChart landedStoreCostChart;
     public EverydayRetailCalcdChart everydayRetailCalcdChart;
@@ -84,8 +82,8 @@ class RTMPlanningControllerTest {
         yearOneStoreCountField = robot.lookup("#yearOneStoreCountField").queryAs(IntegerTextField.class);
         spoilsFeesField = robot.lookup("#spoilsFeesField").queryAs(BigDecimalTextField.class);
         weeklyUfswAtMinField = robot.lookup("#weeklyUfswAtMinField").queryAs(TextField.class);
-        productClassBox = robot.lookup("#productClassBox").queryComboBox();
-        brandNameBox = robot.lookup("#brandNameBox").queryComboBox();
+        productClassBox = robot.lookup("#productClassBox").queryAs(ProductClassComboBox.class);
+        brandNameBox = robot.lookup("#brandNameBox").queryAs(BrandNameComboBox.class);
 
 
         RTMOption rtmOption1 = new RTMOption();
@@ -614,7 +612,7 @@ class RTMPlanningControllerTest {
     @Test
     public void testGetUniqueBrandNamesForBrandComboBox(FxRobot robot){
         ObservableList<Product> productsWithUniqueBrandNames =
-                controller.getUniqueBrandNames(MenuController.getExampleProducts());
+                brandNameBox.getUniqueBrandNames(MenuController.getExampleProducts());
         ObservableList<String> stringList= FXCollections.observableArrayList();
         for (Product product: productsWithUniqueBrandNames){
             stringList.add(product.getBrandName());
@@ -627,11 +625,12 @@ class RTMPlanningControllerTest {
         robot.interact(() -> {
             brandNameBox.getSelectionModel().select(0);
         });
-        String brandname = brandNameBox.getSelectionModel().getSelectedItem().getBrandName();
+        Product productWithCorrectBrandName = brandNameBox.getSelectionModel().getSelectedItem();
         ObservableList<Product> productsWithCorrectBrandName =
-                controller.getCorrectProductClasses(MenuController.getExampleProducts());
+                productClassBox.getCorrectProductClasses(MenuController.getExampleProducts(),
+                        productWithCorrectBrandName);
         for (Product product: productsWithCorrectBrandName){
-            Assertions.assertEquals(brandname, product.getBrandName());
+            Assertions.assertEquals(productWithCorrectBrandName.getBrandName(), product.getBrandName());
             System.out.println("product class"+ product.getProductClass());
         }
     }

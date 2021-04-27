@@ -318,12 +318,12 @@ public class RTMPlanningController implements Initializable {
      * Combobox where user can select the brand name of a Product.
      */
     @FXML
-    private ComboBox<Product> brandNameBox;
+    private BrandNameComboBox brandNameBox = new BrandNameComboBox();
     /**
      * ComboBox where user can select brand name specific product classes.
      */
     @FXML
-    private ComboBox<Product> productClassBox;
+    private ProductClassComboBox productClassBox = new ProductClassComboBox();
 
     /**
      * Displays unit list cost of the selected Product. (General Product information is inserted on Product pricing page
@@ -390,6 +390,9 @@ public class RTMPlanningController implements Initializable {
     @FXML
     private VBox textfieldVBox;
 
+    @FXML
+    private VBox productVBox;
+
 
     @Override
     public void initialize(final URL url, final ResourceBundle resourceBundle) {
@@ -402,15 +405,19 @@ public class RTMPlanningController implements Initializable {
         everydayGpmField.setId("everydayGpmField");
         spoilsFeesField.setId("spoilsFeesField");
 
+        productVBox.getChildren().add(0, brandNameBox);
+        productVBox.getChildren().add(1, productClassBox);
+        brandNameBox.setOnAction(e -> changeBrandComboboxEvent());
+        productClassBox.setOnAction(e -> changeProductComboboxEvent());
 
         // Set up cell value factories
         setCellValueFactories();
 
         // Set unique values for brandcombobox and set converters for both brand and productCombobox
 
-        brandNameBox.setItems(getUniqueBrandNames(MenuController.getExampleProducts()));
-        brandNameBox.setConverter(getBrandComboboxConverter());
-        productClassBox.setConverter(getProductComboboxConverter());
+        brandNameBox.setUniqueItems(MenuController.getExampleProducts());
+//        brandNameBox.setConverter(getBrandComboboxConverter());
+//        productClassBox.setConverter(getProductComboboxConverter());
 
         weeklyUfswAtMinField
                 .setTextFormatter(new TextFormatter<>(getDoubleInputConverter(), 0.0, getDoubleInputFilter()));
