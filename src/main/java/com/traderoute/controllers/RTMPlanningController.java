@@ -5,16 +5,12 @@ import com.traderoute.cells.CustomNonEditCell;
 import com.traderoute.charts.*;
 import com.traderoute.data.*;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
-import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.HBox;
@@ -32,7 +28,6 @@ import java.util.function.UnaryOperator;
 import java.util.regex.Pattern;
 
 import static javafx.collections.FXCollections.*;
-import static javafx.scene.chart.XYChart.*;
 //<a href="#{@link}">{@link URL}</a>
 
 /**
@@ -408,7 +403,7 @@ public class RTMPlanningController implements Initializable {
         productVBox.getChildren().add(0, brandNameBox);
         productVBox.getChildren().add(1, productClassBox);
         brandNameBox.setOnAction(e -> changeBrandComboboxEvent());
-        productClassBox.setOnAction(e -> changeProductComboboxEvent());
+        productClassBox.setOnAction(e -> changeProductClassComboboxEvent());
 
         // Set up cell value factories
         setCellValueFactories();
@@ -416,15 +411,9 @@ public class RTMPlanningController implements Initializable {
         // Set unique values for brandcombobox and set converters for both brand and productCombobox
 
         brandNameBox.setUniqueItems(MenuController.getExampleProducts());
-//        brandNameBox.setConverter(getBrandComboboxConverter());
-//        productClassBox.setConverter(getProductComboboxConverter());
 
         weeklyUfswAtMinField
                 .setTextFormatter(new TextFormatter<>(getDoubleInputConverter(), 0.0, getDoubleInputFilter()));
-
-        // Set dummy data
-//        rtmPlanningTable1.setItems(getRTMOptions());
-//        rtmPlanningTable2.setItems(rtmPlanningTable1.getItems());
 
         // Set Bar Chart
         updateCharts(observableArrayList(landedStoreCostChart, everydayRetailCalcdChart,
@@ -531,14 +520,13 @@ public class RTMPlanningController implements Initializable {
         elasticityRatioLabel.setText("Elasticity Ratio = +1% Price :  % Volume");
         ObservableList<Product> productsWithBrandName = getCorrectProductClasses(MenuController.getExampleProducts());
         productClassBox.setItems(productsWithBrandName);
-        // Change this to get the retailerProduct
     }
 
     /**
      * A different option was chosen from the product combo box now retailerProduct needs to be updated, labels need to
      * be updated and all the RTM Option's products need to be updated (//TODO this functionality could be done better)
      */
-    public void changeProductComboboxEvent() {
+    public void changeProductClassComboboxEvent() {
         Product selectedProduct = productClassBox.getSelectionModel().getSelectedItem();
         if (selectedProduct == null) {
             productClassBox.setPromptText("Now Select a Product Class");
@@ -661,12 +649,9 @@ public class RTMPlanningController implements Initializable {
             row.setWeeklyUSFWAtMin(getWeeklyUSFWAtMin());
         }
         rtmPlanningTable2.refresh();
-
         updateCharts(observableArrayList(elasticizedUnitVelocityChart, annualVolumePerSkuChart,
                 slottingPaybackPeriodChart, postSpoilsPostFreightChart, unspentTradePerUnitChart,
                 fourYearEqGpPerSkuChart, fourYearEqGpPerUnitChart));
-        // updateChart(false, false, true, true,
-        // true, true, true, true, true);
     }
 
     /**
@@ -676,16 +661,11 @@ public class RTMPlanningController implements Initializable {
      *            Cell that edited in everyday Retail Override Column.
      */
     public void changeOverrideEvent(final TableColumn.CellEditEvent editedCell) {
-        System.out.println("please get here at least");
         RTMOption rtmOptionSelected = rtmPlanningTable1.getSelectionModel().getSelectedItem();
         rtmOptionSelected.setResultingEverydayRetailOverride(new BigDecimal(editedCell.getNewValue().toString()));
         for (RTMOption row : rtmPlanningTable2.getItems()) {
             row.setMinOverride(getMinOverride());
         }
-        System.out.println(
-                rtmOptionSelected.getRTMName() + ", elasticized= " + rtmOptionSelected.getElasticizedUnitVelocity());
-        System.out.println(
-                rtmOptionSelected.getRTMName() + ", annual Volume= " + rtmOptionSelected.getAnnualVolumePerSku());
         rtmPlanningTable2.refresh();
         updateCharts(observableArrayList(elasticizedUnitVelocityChart, annualVolumePerSkuChart,
                 slottingPaybackPeriodChart, postSpoilsPostFreightChart, unspentTradePerUnitChart,

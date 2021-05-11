@@ -675,9 +675,6 @@ class RTMPlanningControllerTest {
     }
 
 
-
-
-
     /**
      * IMPORTED FROM TESTFX LOADUI, BUT NEEDED TO COPY METHODS IN ORDER
      * to access them.

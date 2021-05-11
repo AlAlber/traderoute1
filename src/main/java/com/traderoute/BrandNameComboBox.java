@@ -17,7 +17,7 @@ public class BrandNameComboBox extends ComboBox<Product> {
             @Override
         public String toString (Product product) {
             if (product != null) {
-                return product.getBrandName();
+                return product.getBrandName(); //Hello
             }
             return null;
         }

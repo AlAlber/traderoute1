@@ -15,9 +15,7 @@
             <id>jitpack.io</id>
             <url>https://jitpack.io</url>
         </repository>
-
     </repositories>
-
     <pluginRepositories>
         <pluginRepository>
             <id>central</id>
@@ -39,16 +37,8 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
-
     </properties>
-
     <dependencies>
-<!--        <dependency>-->
-<!--            <groupId>org.proyecto-adalid</groupId>-->
-<!--            <artifactId>adalid-alfa</artifactId>-->
-<!--            <version>2.1.0</version>-->
-<!--        </dependency>-->
-
         <dependency>
             <groupId>com.github.PlusHaze</groupId>
             <artifactId>TrayNotification</artifactId>
