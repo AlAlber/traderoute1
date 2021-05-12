@@ -481,7 +481,22 @@ class RTMPlanningControllerTest {
             Assertions.assertEquals(expected, yValue);
         });
     }
-
+    @Test
+    public void testIntegerTextFieldGetValue(FxRobot robot){
+        robot.doubleClickOn(yearOneStoreCountField);
+        robot.write("1000");
+        robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
+        Assertions.assertEquals(1000, yearOneStoreCountField.getValue(), "Textfield ignores decimal points");
+        FxAssert.verifyThat("OK", NodeMatchers.isVisible());
+    }
+    @Test
+    public void testBigDecimalTextFieldGetValue(FxRobot robot){
+        robot.doubleClickOn(everydayGpmField);
+        robot.write("99");
+        robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
+        Assertions.assertEquals(new BigDecimal("99.0"), everydayGpmField.getValue(), "Textfield ignores decimal points");
+        FxAssert.verifyThat("OK", NodeMatchers.isVisible());
+    }
     @Test
     public void testYearOneStoreCountFieldEnteringValueGreaterThan10000(FxRobot robot){
         robot.doubleClickOn(yearOneStoreCountField);

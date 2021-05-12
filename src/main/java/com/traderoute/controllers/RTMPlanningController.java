@@ -452,10 +452,6 @@ public class RTMPlanningController implements Initializable {
                 landedStoreCostChart.updateChart(rtmPlanningTable1.getItems());
             }));
             row.RTMNameProperty().addListener(((arg, oldVal, newVal) -> {
-                ArrayList<Integer> chartsToUpdate = new ArrayList<>();
-                for (int i = 0; i < 9; i++) {
-                    chartsToUpdate.add(i);
-                }
                 updateCharts();
             }));
             row.everydayRetailCalcdProperty().addListener(((arg, oldVal, newVal) -> {
