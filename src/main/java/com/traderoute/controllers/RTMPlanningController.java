@@ -881,6 +881,10 @@ public class RTMPlanningController implements Initializable {
         label.setTooltip(tooltip);
         column.setGraphic(label);
     }
+    public void setColHeaderTip(Label colLabel, Tooltip tip, TableColumn col) {
+        colLabel.setTooltip(tip);
+        col.setGraphic(colLabel);
+    }
 
     /**
      * Set Column header labels and tooltips for first and second planning table.
