@@ -15,6 +15,7 @@ import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
+import javafx.scene.control.TableColumn;
 import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 import org.junit.jupiter.api.Assertions;
@@ -40,13 +41,15 @@ class RTMPlanningControllerTest {
     private RTMOption testOption = new RTMOption();
     private SimpleObjectProperty<Retailer> retailer= new SimpleObjectProperty<>(new Retailer("ahold", RTMPlanningController.getRetailerProducts(),0 ,  new BigDecimal("40") , 158,new BigDecimal("3.0")));;
     private TableView<RTMOption> rtmPlanningTable1;
+    private TableView<RTMOption> rtmPlanningTable2;
     private BigDecimalTextField everydayGpmField;
     private IntegerTextField yearOneStoreCountField;
     private BigDecimalTextField spoilsFeesField;
     private BigDecimalTextField weeklyUfswAtMinField;
     private ProductClassComboBox productClassBox;
     private BrandNameComboBox brandNameBox;
-    final String  tableString = "#rtmPlanningTable1";
+    final String table1String = "#rtmPlanningTable1";
+    final String table2String = "#rtmPlanningTable2";
     public LandedStoreCostChart landedStoreCostChart;
     public EverydayRetailCalcdChart everydayRetailCalcdChart;
     public ElasticizedUnitVelocityChart elasticizedUnitVelocityChart;
@@ -56,6 +59,25 @@ class RTMPlanningControllerTest {
     public UnspentTradePerUnitChart unspentTradePerUnitChart;
     public FourYearEqGpPerSkuChart fourYearEqGpPerSkuChart;
     public FourYearEqGpPerUnitChart fourYearEqGpPerUnitChart;
+
+    private TableColumn<RTMOption, String> rtmNameCol1;
+    private TableColumn<RTMOption, BigDecimal> slottingPerSkuCol;
+    private TableColumn<RTMOption, BigDecimal> freightOutPerUnitCol;
+    private TableColumn<RTMOption, BigDecimal> firstReceiverCol;
+    private TableColumn<RTMOption, BigDecimal> secondReceiverColumn;
+    private TableColumn<RTMOption, BigDecimal> thirdReceiverColumn;
+    private TableColumn<RTMOption, BigDecimal> fourthReceiverColumn;
+    private TableColumn<RTMOption, BigDecimal> landedStoreCostColumn;
+    private TableColumn<RTMOption, BigDecimal> everydayRetailCalcdCol;
+    private TableColumn<RTMOption, BigDecimal> everydayRetailOverrideCol;
+    private TableColumn<RTMOption, String> rtmNameColumn2;
+    private TableColumn<RTMOption, BigDecimal> elasticizedUnitVelocityColumn;
+    private TableColumn<RTMOption, BigDecimal> annualVolumePerSkuColumn;
+    private TableColumn<RTMOption, BigDecimal> slottingPaybackPeriodColumn;
+    private TableColumn<RTMOption, BigDecimal> postFreightPostSpoilsPerUnitCol;
+    private TableColumn<RTMOption, BigDecimal> unspentTradePerUnitColumn;
+    private TableColumn<RTMOption, BigDecimal> fourYearEqGpPerSkuColumn;
+    private TableColumn<RTMOption, BigDecimal> fourYearEqGpPerUnitColumn;
 
     Label listLabel;
     Label fobLabel;
@@ -77,7 +99,8 @@ class RTMPlanningControllerTest {
     @org.junit.jupiter.api.BeforeEach
     void setUp(FxRobot robot) {
 //        rtmOptions = retailer.get().getRetailerProducts().get(0).getRtmOptions();
-        rtmPlanningTable1 = robot.lookup(tableString).queryTableView();
+        rtmPlanningTable1 = robot.lookup(table1String).queryTableView();
+        rtmPlanningTable2 = robot.lookup(table2String).queryTableView();
         everydayGpmField = robot.lookup("#everydayGpmField").queryAs(BigDecimalTextField.class);
         yearOneStoreCountField = robot.lookup("#yearOneStoreCountField").queryAs(IntegerTextField.class);
         spoilsFeesField = robot.lookup("#spoilsFeesField").queryAs(BigDecimalTextField.class);
@@ -112,11 +135,32 @@ class RTMPlanningControllerTest {
         unspentTradePerUnitChart = robot.lookup("#unspentTradePerUnitChart").queryAs(UnspentTradePerUnitChart.class);
         fourYearEqGpPerSkuChart = robot.lookup("#fourYearEqGpPerSkuChart").queryAs(FourYearEqGpPerSkuChart.class);
         fourYearEqGpPerUnitChart = robot.lookup("#fourYearEqGpPerUnitChart").queryAs(FourYearEqGpPerUnitChart.class);
+        ObservableList<TableColumn<RTMOption, ?>> columns1= rtmPlanningTable1.getColumns();
+        rtmNameCol1= (TableColumn<RTMOption,String>) columns1.get(0);
+        slottingPerSkuCol= (TableColumn<RTMOption,BigDecimal>) columns1.get(1);
+        freightOutPerUnitCol= (TableColumn<RTMOption,BigDecimal>) columns1.get(2);
+        firstReceiverCol= (TableColumn<RTMOption,BigDecimal>) columns1.get(3);
+        secondReceiverColumn= (TableColumn<RTMOption,BigDecimal>) columns1.get(4);
+        thirdReceiverColumn= (TableColumn<RTMOption,BigDecimal>) columns1.get(5);
+        fourthReceiverColumn= (TableColumn<RTMOption,BigDecimal>) columns1.get(6);
+        landedStoreCostColumn= (TableColumn<RTMOption,BigDecimal>) columns1.get(7);
+        everydayRetailCalcdCol= (TableColumn<RTMOption,BigDecimal>) columns1.get(8);
+        everydayRetailOverrideCol= (TableColumn<RTMOption,BigDecimal>) columns1.get(9);
+
+        ObservableList<TableColumn<RTMOption, ?>> columns2= rtmPlanningTable1.getColumns();
+        rtmNameColumn2= (TableColumn<RTMOption,String>) columns2.get(0);
+        elasticizedUnitVelocityColumn= (TableColumn<RTMOption,BigDecimal>) columns2.get(1);
+        annualVolumePerSkuColumn= (TableColumn<RTMOption,BigDecimal>) columns2.get(2);
+        slottingPaybackPeriodColumn= (TableColumn<RTMOption,BigDecimal>) columns2.get(3);
+        postFreightPostSpoilsPerUnitCol= (TableColumn<RTMOption,BigDecimal>) columns2.get(4);
+        unspentTradePerUnitColumn= (TableColumn<RTMOption,BigDecimal>) columns2.get(5);
+        fourYearEqGpPerSkuColumn= (TableColumn<RTMOption,BigDecimal>) columns2.get(6);
+        fourYearEqGpPerUnitColumn= (TableColumn<RTMOption,BigDecimal>) columns2.get(7);
     }
 
     @Test
     public void testFirstReceiverUpdatesLandedStoreCost(FxRobot robot){
-        robot.doubleClickOn(cell(tableString, 3, 3, robot));
+        robot.doubleClickOn(cell(table1String, 3, 3, robot));
         robot.write("0.7");
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
         Assertions.assertEquals(((RTMOption) rtmPlanningTable1.getItems().get(3)).getFirstReceiver(),new BigDecimal("0.7"));
@@ -124,7 +168,7 @@ class RTMPlanningControllerTest {
     }
     @Test
     public void testSecondReceiverUpdatesLandedStoreCost(FxRobot robot){
-        robot.doubleClickOn(cell(tableString, 3, 4, robot));
+        robot.doubleClickOn(cell(table1String, 3, 4, robot));
         robot.write("0.7");
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
         Assertions.assertEquals(((RTMOption) rtmPlanningTable1.getItems().get(3)).getSecondReceiver(),new BigDecimal("0.7"));
@@ -132,7 +176,7 @@ class RTMPlanningControllerTest {
     }
     @Test
     public void testThirdReceiverUpdatesLandedStoreCost(FxRobot robot){
-        robot.doubleClickOn(cell(tableString, 3, 5, robot));
+        robot.doubleClickOn(cell(table1String, 3, 5, robot));
         robot.write("0.7");
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
         Assertions.assertEquals(((RTMOption) rtmPlanningTable1.getItems().get(3)).getThirdReceiver(),new BigDecimal("0.7"));
@@ -140,7 +184,7 @@ class RTMPlanningControllerTest {
     }
     @Test
     public void testFourthReceiverUpdatesLandedStoreCost(FxRobot robot){
-        robot.doubleClickOn(cell(tableString, 3, 6, robot));
+        robot.doubleClickOn(cell(table1String, 3, 6, robot));
         robot.write("0.7");
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
         Assertions.assertEquals(((RTMOption) rtmPlanningTable1.getItems().get(3)).getFourthReceiver(),new BigDecimal("0.7"));
@@ -149,25 +193,25 @@ class RTMPlanningControllerTest {
 
     @Test
     public void testReceiversCorrectlyPickMaxLandedStoreCost(FxRobot robot){
-        robot.doubleClickOn(cell(tableString, 3, 6, robot));
+        robot.doubleClickOn(cell(table1String, 3, 6, robot));
         robot.write("0.7");
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
         Assertions.assertEquals(((RTMOption) rtmPlanningTable1.getItems().get(3)).getFourthReceiver(),new BigDecimal("0.7"));
         Assertions.assertEquals(((RTMOption) rtmPlanningTable1.getItems().get(3)).getLandedStoreCost(),new BigDecimal("0.7"));
 
-        robot.doubleClickOn(cell(tableString, 3, 5, robot));
+        robot.doubleClickOn(cell(table1String, 3, 5, robot));
         robot.write("1.1");
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
         Assertions.assertEquals(((RTMOption) rtmPlanningTable1.getItems().get(3)).getThirdReceiver(),new BigDecimal("1.1"));
         Assertions.assertEquals(((RTMOption) rtmPlanningTable1.getItems().get(3)).getLandedStoreCost(),new BigDecimal("1.1"));
 
-        robot.doubleClickOn(cell(tableString, 3, 3, robot));
+        robot.doubleClickOn(cell(table1String, 3, 3, robot));
         robot.write("0.9");
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
         Assertions.assertEquals(((RTMOption) rtmPlanningTable1.getItems().get(3)).getFirstReceiver(),new BigDecimal("0.9"));
         Assertions.assertEquals(((RTMOption) rtmPlanningTable1.getItems().get(3)).getLandedStoreCost(),new BigDecimal("1.1"));
 
-        robot.doubleClickOn(cell(tableString, 3, 4, robot));
+        robot.doubleClickOn(cell(table1String, 3, 4, robot));
         robot.write("5.0");
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
         Assertions.assertEquals(((RTMOption) rtmPlanningTable1.getItems().get(3)).getSecondReceiver(),new BigDecimal("5.0"));
@@ -176,7 +220,7 @@ class RTMPlanningControllerTest {
 
     @Test
     public void testMaxReceiverAndEverydayGpmUpdateEverydayRetails(FxRobot robot){
-        robot.doubleClickOn(cell(tableString, 3, 3, robot));
+        robot.doubleClickOn(cell(table1String, 3, 3, robot));
         robot.write("3.59");
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
         Assertions.assertEquals(((RTMOption) rtmPlanningTable1.getItems().get(3)).getFirstReceiver(),new BigDecimal("3.59"));
@@ -218,19 +262,19 @@ class RTMPlanningControllerTest {
         robot.write("3.0");
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
 
-        robot.doubleClickOn(cell(tableString, 3, 0, robot));
+        robot.doubleClickOn(cell(table1String, 3, 0, robot));
         robot.write("Direct To Customer Model");
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
         Assertions.assertEquals(((RTMOption) rtmPlanningTable1.getItems().get(3)).getRTMName(),"Direct To Customer Model");
-        robot.doubleClickOn(cell(tableString, 3, 1, robot));
+        robot.doubleClickOn(cell(table1String, 3, 1, robot));
         robot.write("7500");
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
         Assertions.assertEquals(((RTMOption) rtmPlanningTable1.getItems().get(3)).getSlottingPerSku(),new BigDecimal("7500"));
-        robot.doubleClickOn(cell(tableString, 3, 2, robot));
+        robot.doubleClickOn(cell(table1String, 3, 2, robot));
         robot.write("0.29");
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
         Assertions.assertEquals(((RTMOption) rtmPlanningTable1.getItems().get(3)).getFreightOutPerUnit(),new BigDecimal("0.29"));
-        robot.doubleClickOn(cell(tableString, 3, 3, robot));
+        robot.doubleClickOn(cell(table1String, 3, 3, robot));
         robot.write("3.59");
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
         Assertions.assertEquals(((RTMOption) rtmPlanningTable1.getItems().get(3)).getFirstReceiver(),new BigDecimal("3.59"));
@@ -238,7 +282,7 @@ class RTMPlanningControllerTest {
         Assertions.assertEquals(((RTMOption) rtmPlanningTable1.getItems().get(3)).getEverydayRetailCalcd(),new BigDecimal("5.9833333333"), "Resulting Calcd should have changed");
         Assertions.assertEquals(((RTMOption) rtmPlanningTable1.getItems().get(3)).getResultingEverydayRetailOverride(),new BigDecimal("5.9833333333"), "Resulting Override should have changed");
 //      ^^ ADD THIS LATER ^^
-        robot.doubleClickOn(cell(tableString, 3, 9, robot));
+        robot.doubleClickOn(cell(table1String, 3, 9, robot));
         robot.write("5.99");
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
         Assertions.assertEquals(((RTMOption) rtmPlanningTable1.getItems().get(3)).getResultingEverydayRetailOverride(),new BigDecimal("5.99"));
@@ -259,7 +303,7 @@ class RTMPlanningControllerTest {
     @Test
     public void testChartUpdateRtmName(FxRobot robot) throws InterruptedException {
         Assertions.assertEquals("Option 1", rtmPlanningTable1.getItems().get(0).getRTMName());
-        robot.doubleClickOn(cell(tableString, 0, 0, robot));
+        robot.doubleClickOn(cell(table1String, 0, 0, robot));
         robot.write("New RTM Name");
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
         Assertions.assertEquals("New RTM Name", rtmPlanningTable1.getItems().get(0).getRTMName());
@@ -285,7 +329,7 @@ class RTMPlanningControllerTest {
     public void testChartUpdateLandedStoreCost(FxRobot robot) {
         Assertions.assertEquals(new BigDecimal("0.0"), rtmPlanningTable1.getItems().get(0).getSecondReceiver());
         Assertions.assertEquals(new BigDecimal("0.0"), rtmPlanningTable1.getItems().get(0).getLandedStoreCost());
-        robot.doubleClickOn(cell(tableString, 0, 4, robot));
+        robot.doubleClickOn(cell(table1String, 0, 4, robot));
         robot.write("4.0");
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
         Assertions.assertEquals(new BigDecimal("4.0"), rtmPlanningTable1.getItems().get(0).getLandedStoreCost());
@@ -294,7 +338,7 @@ class RTMPlanningControllerTest {
     @Test
     public void testChartUpdateEverydayRetailCalcd(FxRobot robot) {
         Assertions.assertEquals(new BigDecimal("0.0"), rtmPlanningTable1.getItems().get(0).getFirstReceiver());
-        robot.doubleClickOn(cell(tableString,0,3, robot));
+        robot.doubleClickOn(cell(table1String,0,3, robot));
         robot.write("3.59");
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
         Assertions.assertEquals(new BigDecimal("0.0"), rtmPlanningTable1.getItems().get(0).getEverydayRetailCalcd());
@@ -310,7 +354,7 @@ class RTMPlanningControllerTest {
     @Test
     public void testChartUpdateWeeklyVelocityAtMin(FxRobot robot) {
         Assertions.assertEquals(new BigDecimal("0.0"), rtmPlanningTable1.getItems().get(0).getFirstReceiver());
-        robot.doubleClickOn(cell(tableString,0,3, robot));
+        robot.doubleClickOn(cell(table1String,0,3, robot));
         robot.write("3.59");
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
         Assertions.assertEquals(new BigDecimal("0.0"), rtmPlanningTable1.getItems().get(0).getWeeklyUSFWAtMin());
@@ -327,7 +371,7 @@ class RTMPlanningControllerTest {
     @Test
     public void testChartUpdateYearOneStoreCount(FxRobot robot) {
         Assertions.assertEquals(new BigDecimal("0.0"), rtmPlanningTable1.getItems().get(0).getFirstReceiver());
-        robot.doubleClickOn(cell(tableString,0,3, robot));
+        robot.doubleClickOn(cell(table1String,0,3, robot));
         robot.write("3.59");
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
 //        Assertions.assertEquals(new BigDecimal("3.59"), rtmPlanningTable1.getItems().get(0).getFirstReceiver());
@@ -483,7 +527,7 @@ class RTMPlanningControllerTest {
     }
     @Test
     public void testGetFocusedRtmOption(FxRobot robot){
-        robot.clickOn(cell(tableString,1,3, robot));
+        robot.clickOn(cell(table1String,1,3, robot));
         Assertions.assertEquals(rtmPlanningTable1.getItems().get(1), controller.getFocusedRtmOption(), "Focused RTM Option is wrong");
     }
 
@@ -591,8 +635,8 @@ class RTMPlanningControllerTest {
 
     @Test
     public void testSlottingPerSkuCellStartsWithDollar(FxRobot robot){
-        TableCell tableCell = cell(tableString,3,1, robot);
-        robot.doubleClickOn(cell(tableString,3,1, robot));
+        TableCell tableCell = cell(table1String,3,1, robot);
+        robot.doubleClickOn(cell(table1String,3,1, robot));
         robot.write("30.0");
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
         rtmPlanningTable1.refresh();
@@ -600,8 +644,8 @@ class RTMPlanningControllerTest {
     }
     @Test
     public void testFreightOutPerUnitCellStartsWithDollar(FxRobot robot){
-        TableCell tableCell = cell(tableString,3,2, robot);
-        robot.doubleClickOn(cell(tableString,3,2, robot));
+        TableCell tableCell = cell(table1String,3,2, robot);
+        robot.doubleClickOn(cell(table1String,3,2, robot));
         robot.write("30.0");
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
         rtmPlanningTable1.refresh();
@@ -609,8 +653,8 @@ class RTMPlanningControllerTest {
     }
     @Test
     public void testFirstReceiverCellStartsWithDollar(FxRobot robot){
-        TableCell tableCell = cell(tableString,3,3, robot);
-        robot.doubleClickOn(cell(tableString,3,3, robot));
+        TableCell tableCell = cell(table1String,3,3, robot);
+        robot.doubleClickOn(cell(table1String,3,3, robot));
         robot.write("30.0");
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
         rtmPlanningTable1.refresh();
@@ -618,8 +662,8 @@ class RTMPlanningControllerTest {
     }
     @Test
     public void testSecondReceiverCellStartsWithDollar(FxRobot robot){
-        TableCell tableCell = cell(tableString,3,4, robot);
-        robot.doubleClickOn(cell(tableString,3,4, robot));
+        TableCell tableCell = cell(table1String,3,4, robot);
+        robot.doubleClickOn(cell(table1String,3,4, robot));
         robot.write("30.0");
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
         rtmPlanningTable1.refresh();
@@ -627,8 +671,8 @@ class RTMPlanningControllerTest {
     }
     @Test
     public void testThirdReceiverCellStartsWithDollar(FxRobot robot){
-        TableCell tableCell = cell(tableString,3,5, robot);
-        robot.doubleClickOn(cell(tableString,3,5, robot));
+        TableCell tableCell = cell(table1String,3,5, robot);
+        robot.doubleClickOn(cell(table1String,3,5, robot));
         robot.write("30.0");
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
         rtmPlanningTable1.refresh();
@@ -636,8 +680,8 @@ class RTMPlanningControllerTest {
     }
     @Test
     public void testFourthReceiverCellStartsWithDollar(FxRobot robot){
-        TableCell tableCell = cell(tableString,3,6, robot);
-        robot.doubleClickOn(cell(tableString,3,6, robot));
+        TableCell tableCell = cell(table1String,3,6, robot);
+        robot.doubleClickOn(cell(table1String,3,6, robot));
         robot.write("30.0");
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
         rtmPlanningTable1.refresh();
@@ -706,6 +750,10 @@ class RTMPlanningControllerTest {
         for (RTMOption row: rtmPlanningTable1.getItems()){
             Assertions.assertEquals(selectedProduct, row.getProduct());
         }
+    }
+    @Test
+    public void testColumnHeaderLabels(){
+        Assertions.assertEquals();
     }
 
 
