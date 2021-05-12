@@ -21,7 +21,7 @@ public class IntegerTextField extends NumberTextField{
     }
 
     @Override
-    public Number getValue() {
+    public Integer getValue() {
         return Integer.valueOf(this.getText());
     }
 }

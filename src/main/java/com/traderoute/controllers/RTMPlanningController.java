@@ -642,7 +642,7 @@ public class RTMPlanningController implements Initializable {
         rtmPlanningTable2.setItems(rtmPlanningTable1.getItems());
         for (RTMOption row : rtmPlanningTable2.getItems()) {
             row.setMinOverride(getMinOverride());
-            row.setWeeklyUSFWAtMin(getWeeklyUSFWAtMin());
+            row.setWeeklyUSFWAtMin(weeklyUfswAtMinField.getValue());
         }
         rtmPlanningTable2.refresh();
         updateCharts();
@@ -671,7 +671,7 @@ public class RTMPlanningController implements Initializable {
     public void changeYearOneStoreCount() {
         rtmPlanningTable2.setItems(rtmPlanningTable1.getItems());
         for (RTMOption row : rtmPlanningTable2.getItems()) {
-            row.setYearOneStoreCount(getYearOneStoreCount());
+            row.setYearOneStoreCount(yearOneStoreCountField.getValue());
         }
         rtmPlanningTable2.refresh();
         updateCharts();
@@ -682,7 +682,7 @@ public class RTMPlanningController implements Initializable {
      */
     public void changeEveryDayGpmCellEvent() {
         for (RTMOption row : rtmPlanningTable1.getItems()) {
-            row.setEverydayGPM(this.getEveryDayGpm());
+            row.setEverydayGPM(everydayGpmField.getValue());
         }
         updateCharts();
     }
@@ -694,7 +694,9 @@ public class RTMPlanningController implements Initializable {
     public void changeSpoilsAndFeesEvent() {
         for (RTMOption row : rtmPlanningTable1.getItems()) {
             row.setSpoilsAndFees(
-                    getSpoilsAndFees().divide((new BigDecimal("100")), divisionScale, RoundingMode.HALF_UP));
+                    spoilsFeesField.getValue()
+                            .divide((new BigDecimal("100")),
+                                    divisionScale, RoundingMode.HALF_UP));
         }
         updateCharts();
     }
@@ -793,47 +795,6 @@ public class RTMPlanningController implements Initializable {
             selectedOption.setLandedStoreCost(maxReceivers);
         }
     }
-
-    /**
-     * @return Integer value of the text in the yearOneStoreCount field.
-     */
-    public int getYearOneStoreCount() {
-        if (yearOneStoreCountField.getText() == null) {
-            return 0;
-        }
-        return Integer.valueOf(yearOneStoreCountField.getText());
-    }
-
-    /**
-     * @return BigDecimal value of the text in the everudauGpm field.
-     */
-    public BigDecimal getEveryDayGpm() {
-        if (everydayGpmField.getText() == null) {
-            return new BigDecimal("0.0");
-        }
-        return new BigDecimal(everydayGpmField.getText());
-    }
-
-    /**
-     * @return BigDecimal value of the text in spoilsFees field.
-     */
-    public BigDecimal getSpoilsAndFees() {
-        if (spoilsFeesField.getText() == null) {
-            return new BigDecimal(0.0);
-        }
-        return new BigDecimal(spoilsFeesField.getText());
-    }
-
-    /**
-     * @return BigDecimal value of the text in the weeklyUfswAtMin field.
-     */
-    public BigDecimal getWeeklyUSFWAtMin() {
-        if (weeklyUfswAtMinField.getText() == null) {
-            return new BigDecimal("0.0");
-        }
-        return new BigDecimal(weeklyUfswAtMinField.getText());
-    }
-
 
     /**
      * Updates all bar charts.
@@ -1095,20 +1056,6 @@ public class RTMPlanningController implements Initializable {
             }
         };
         return converter;
-    }
-
-    /**
-     * @return StringConverter<Product> a converter for product combobox.
-     */
-    public StringConverter<Product> getProductComboboxConverter() {
-        return new ProductboxConverter("product");
-    }
-
-    /**
-     * @return StringConverter<Product> a converter for brand combobox
-     */
-    public StringConverter<Product> getBrandComboboxConverter() {
-        return new ProductboxConverter("brand");
     }
 
     /**

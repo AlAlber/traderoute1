@@ -21,7 +21,7 @@ public class BigDecimalTextField extends NumberTextField{
     }
 
     @Override
-    public Number getValue() {
+    public BigDecimal getValue() {
         return new BigDecimal(this.getText());
     }
 
