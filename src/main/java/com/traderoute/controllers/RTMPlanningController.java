@@ -6,6 +6,7 @@ import com.traderoute.charts.*;
 import com.traderoute.data.*;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -405,6 +406,10 @@ public class RTMPlanningController implements Initializable {
         everydayGpmField.setId("everydayGpmField");
         spoilsFeesField.setId("spoilsFeesField");
         weeklyUfswAtMinField.setId("weeklyUfswAtMinField");
+        yearOneStoreCountField.setOnAction(e -> changeYearOneStoreCount());
+        everydayGpmField.setOnAction(e -> changeEveryDayGpmCellEvent());
+        spoilsFeesField.setOnAction(e -> changeSpoilsAndFeesEvent());
+        weeklyUfswAtMinField.setOnAction(e -> changeWeeklyUSFWAtMinEvent());
 
         productVBox.getChildren().add(0, brandNameBox);
         productVBox.getChildren().add(1, productClassBox);
@@ -418,10 +423,7 @@ public class RTMPlanningController implements Initializable {
         brandNameBox.setUniqueItems(MenuController.getExampleProducts());
 
         // Set Bar Chart
-        updateCharts(observableArrayList(landedStoreCostChart, everydayRetailCalcdChart,
-                elasticizedUnitVelocityChart, annualVolumePerSkuChart, slottingPaybackPeriodChart,
-                slottingPaybackPeriodChart, postSpoilsPostFreightChart, unspentTradePerUnitChart,
-                fourYearEqGpPerSkuChart, fourYearEqGpPerUnitChart));
+        updateCharts();
 
         // Add Labels to list, give them tooltips
         setToolTipsTable1And2();
@@ -454,14 +456,11 @@ public class RTMPlanningController implements Initializable {
                 for (int i = 0; i < 9; i++) {
                     chartsToUpdate.add(i);
                 }
-                updateCharts(observableArrayList(landedStoreCostChart, everydayRetailCalcdChart,
-                        elasticizedUnitVelocityChart, annualVolumePerSkuChart, slottingPaybackPeriodChart,
-                        postSpoilsPostFreightChart, unspentTradePerUnitChart, fourYearEqGpPerSkuChart,
-                        fourYearEqGpPerUnitChart));
+                updateCharts();
             }));
             row.everydayRetailCalcdProperty().addListener(((arg, oldVal, newVal) -> {
                 maxOverrideLabel.setText("of $" + getMinOverride());
-                updateCharts(observableArrayList(everydayRetailCalcdChart));
+                updateCharts();
             }));
             row.resultingEverydayRetailOverrideProperty().addListener(((arg, oldVal, newVal) -> {
                 row.setMinOverride(getMinOverride());
@@ -617,9 +616,7 @@ public class RTMPlanningController implements Initializable {
             // updateChart(true, true, true, true, true,
             // true, true, true, true);
         }
-        updateCharts(observableArrayList(landedStoreCostChart, everydayRetailCalcdChart, elasticizedUnitVelocityChart,
-                annualVolumePerSkuChart, slottingPaybackPeriodChart, postSpoilsPostFreightChart,
-                unspentTradePerUnitChart, fourYearEqGpPerSkuChart, fourYearEqGpPerUnitChart));
+        updateCharts();
         rtmPlanningTable2.setVisible(false);
         rtmPlanningTable2.setVisible(true);
         rtmPlanningTable2.refresh();
@@ -651,9 +648,7 @@ public class RTMPlanningController implements Initializable {
             row.setWeeklyUSFWAtMin(getWeeklyUSFWAtMin());
         }
         rtmPlanningTable2.refresh();
-        updateCharts(observableArrayList(elasticizedUnitVelocityChart, annualVolumePerSkuChart,
-                slottingPaybackPeriodChart, postSpoilsPostFreightChart, unspentTradePerUnitChart,
-                fourYearEqGpPerSkuChart, fourYearEqGpPerUnitChart));
+        updateCharts();
     }
 
     /**
@@ -669,9 +664,7 @@ public class RTMPlanningController implements Initializable {
             row.setMinOverride(getMinOverride());
         }
         rtmPlanningTable2.refresh();
-        updateCharts(observableArrayList(elasticizedUnitVelocityChart, annualVolumePerSkuChart,
-                slottingPaybackPeriodChart, postSpoilsPostFreightChart, unspentTradePerUnitChart,
-                fourYearEqGpPerSkuChart, fourYearEqGpPerUnitChart));
+        updateCharts();
     }
 
     /**
@@ -684,8 +677,7 @@ public class RTMPlanningController implements Initializable {
             row.setYearOneStoreCount(getYearOneStoreCount());
         }
         rtmPlanningTable2.refresh();
-        updateCharts(observableArrayList(annualVolumePerSkuChart, slottingPaybackPeriodChart, postSpoilsPostFreightChart,
-                unspentTradePerUnitChart, fourYearEqGpPerSkuChart, fourYearEqGpPerUnitChart));
+        updateCharts();
     }
 
     /**
@@ -695,7 +687,7 @@ public class RTMPlanningController implements Initializable {
         for (RTMOption row : rtmPlanningTable1.getItems()) {
             row.setEverydayGPM(this.getEveryDayGpm());
         }
-        updateCharts(observableArrayList(everydayRetailCalcdChart));
+        updateCharts();
     }
 
     /**
@@ -707,8 +699,7 @@ public class RTMPlanningController implements Initializable {
             row.setSpoilsAndFees(
                     getSpoilsAndFees().divide((new BigDecimal("100")), divisionScale, RoundingMode.HALF_UP));
         }
-        updateCharts(observableArrayList(slottingPaybackPeriodChart, postSpoilsPostFreightChart,
-                unspentTradePerUnitChart, fourYearEqGpPerSkuChart, fourYearEqGpPerUnitChart));
+        updateCharts();
     }
 
     /**
@@ -722,8 +713,7 @@ public class RTMPlanningController implements Initializable {
         rtmOptionSelected.setSlottingPerSku(new BigDecimal(editedCell.getNewValue().toString()));
         rtmPlanningTable2.setItems(rtmPlanningTable1.getItems());
         rtmPlanningTable2.refresh();
-        updateCharts(observableArrayList(slottingPaybackPeriodChart, postSpoilsPostFreightChart,
-                unspentTradePerUnitChart, fourYearEqGpPerSkuChart, fourYearEqGpPerUnitChart));
+        updateCharts();
     }
 
     /**
@@ -737,8 +727,7 @@ public class RTMPlanningController implements Initializable {
         RTMOption rtmOptionSelected = rtmPlanningTable1.getSelectionModel().getSelectedItem();
         rtmOptionSelected.setFreightOutPerUnit(new BigDecimal(editedCell.getNewValue().toString()));
 
-        updateCharts(observableArrayList(slottingPaybackPeriodChart, postSpoilsPostFreightChart,
-                unspentTradePerUnitChart, fourYearEqGpPerSkuChart, fourYearEqGpPerUnitChart));
+        updateCharts();
     }
 
     /**
@@ -752,8 +741,7 @@ public class RTMPlanningController implements Initializable {
         RTMOption rtmOptionSelected = rtmPlanningTable1.getSelectionModel().getSelectedItem();
         rtmOptionSelected.setFirstReceiver(new BigDecimal(editedCell.getNewValue().toString()));
         maxReceivers(rtmOptionSelected);
-        updateCharts(observableArrayList(slottingPaybackPeriodChart, postSpoilsPostFreightChart,
-                unspentTradePerUnitChart, fourYearEqGpPerSkuChart, fourYearEqGpPerUnitChart));
+        updateCharts();
     }
 
     /**
@@ -851,15 +839,15 @@ public class RTMPlanningController implements Initializable {
 
 
     /**
-     * Updates selected bar charts.
-     * 
-     * @param chartsToUpdate
-     *            a list of all charts that should be updated;
+     * Updates all bar charts.
      */
-    public void updateCharts(final ObservableList<RTMPlanningChart> chartsToUpdate) {
-        for (RTMPlanningChart chart: chartsToUpdate) {
-            chart.updateChart(rtmPlanningTable1.getItems());
-        }
+    public void updateCharts() {
+        ObservableList<RTMPlanningChart> charts = FXCollections
+                .observableArrayList(landedStoreCostChart,everydayRetailCalcdChart,
+                    elasticizedUnitVelocityChart, annualVolumePerSkuChart, slottingPaybackPeriodChart,
+                    postSpoilsPostFreightChart, unspentTradePerUnitChart, fourYearEqGpPerSkuChart,
+                    fourYearEqGpPerUnitChart);
+        charts.stream().forEach(chart -> chart.updateChart(rtmPlanningTable1.getItems()));
     }
 
 
