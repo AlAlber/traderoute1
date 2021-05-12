@@ -649,8 +649,7 @@ public class RTMPlanningController implements Initializable {
      *            Cell that edited in everyday Retail Override Column.
      */
     public void changeOverrideEvent(final TableColumn.CellEditEvent editedCell) {
-        RTMOption rtmOptionSelected = rtmPlanningTable1.getSelectionModel().getSelectedItem();
-        rtmOptionSelected.setResultingEverydayRetailOverride(new BigDecimal(editedCell.getNewValue().toString()));
+        getFocusedRtmOption().setResultingEverydayRetailOverride(new BigDecimal(editedCell.getNewValue().toString()));
         for (RTMOption row : rtmPlanningTable2.getItems()) {
             row.setMinOverride(getMinOverride());
         }
@@ -702,8 +701,7 @@ public class RTMPlanningController implements Initializable {
      *            cell edited by user.
      */
     public void changeSlottingPerSkuCellEvent(final TableColumn.CellEditEvent editedCell) {
-        RTMOption rtmOptionSelected = rtmPlanningTable1.getSelectionModel().getSelectedItem();
-        rtmOptionSelected.setSlottingPerSku(new BigDecimal(editedCell.getNewValue().toString()));
+        getFocusedRtmOption().setSlottingPerSku(new BigDecimal(editedCell.getNewValue().toString()));
         rtmPlanningTable2.setItems(rtmPlanningTable1.getItems());
         rtmPlanningTable2.refresh();
         updateCharts();
@@ -717,9 +715,7 @@ public class RTMPlanningController implements Initializable {
      *            cell edited by user.
      */
     public void changeFreightOutPerUnitCellEvent(final TableColumn.CellEditEvent editedCell) {
-        RTMOption rtmOptionSelected = rtmPlanningTable1.getSelectionModel().getSelectedItem();
-        rtmOptionSelected.setFreightOutPerUnit(new BigDecimal(editedCell.getNewValue().toString()));
-
+        getFocusedRtmOption().setFreightOutPerUnit(new BigDecimal(editedCell.getNewValue().toString()));
         updateCharts();
     }
 
@@ -731,9 +727,8 @@ public class RTMPlanningController implements Initializable {
      *            cell edited by user.
      */
     public void changeFirstReceiverCellEvent(final TableColumn.CellEditEvent editedCell) {
-        RTMOption rtmOptionSelected = rtmPlanningTable1.getSelectionModel().getSelectedItem();
-        rtmOptionSelected.setFirstReceiver(new BigDecimal(editedCell.getNewValue().toString()));
-        maxReceivers(rtmOptionSelected);
+        getFocusedRtmOption().setFirstReceiver(new BigDecimal(editedCell.getNewValue().toString()));
+        maxReceivers(getFocusedRtmOption());
         updateCharts();
     }
 
@@ -745,9 +740,8 @@ public class RTMPlanningController implements Initializable {
      *            cell edited by user.
      */
     public void changeSecondReceiverCellEvent(final TableColumn.CellEditEvent editedCell) {
-        RTMOption rtmOptionSelected = rtmPlanningTable1.getSelectionModel().getSelectedItem();
-        rtmOptionSelected.setSecondReceiver(new BigDecimal(editedCell.getNewValue().toString()));
-        maxReceivers(rtmOptionSelected);
+        getFocusedRtmOption().setSecondReceiver(new BigDecimal(editedCell.getNewValue().toString()));
+        maxReceivers(getFocusedRtmOption());
     }
 
     /**
@@ -758,9 +752,8 @@ public class RTMPlanningController implements Initializable {
      *            cell edited by user.
      */
     public void changeThirdReceiverCellEvent(final TableColumn.CellEditEvent editedCell) {
-        RTMOption rtmOptionSelected = rtmPlanningTable1.getSelectionModel().getSelectedItem();
-        rtmOptionSelected.setThirdReceiver(new BigDecimal(editedCell.getNewValue().toString()));
-        maxReceivers(rtmOptionSelected);
+        getFocusedRtmOption().setThirdReceiver(new BigDecimal(editedCell.getNewValue().toString()));
+        maxReceivers(getFocusedRtmOption());
     }
 
     /**
@@ -771,9 +764,8 @@ public class RTMPlanningController implements Initializable {
      *            cell edited by user.
      */
     public void changeFourthReceiverCellEvent(final TableColumn.CellEditEvent editedCell) {
-        RTMOption rtmOptionSelected = rtmPlanningTable1.getSelectionModel().getSelectedItem();
-        rtmOptionSelected.setFourthReceiver(new BigDecimal(editedCell.getNewValue().toString()));
-        maxReceivers(rtmOptionSelected);
+        getFocusedRtmOption().setFourthReceiver(new BigDecimal(editedCell.getNewValue().toString()));
+        maxReceivers(getFocusedRtmOption());
     }
 
     /**
