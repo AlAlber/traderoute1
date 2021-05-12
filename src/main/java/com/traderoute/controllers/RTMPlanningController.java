@@ -415,11 +415,7 @@ public class RTMPlanningController implements Initializable {
         setCellValueFactories();
 
         // Set unique values for brandcombobox and set converters for both brand and productCombobox
-
         brandNameBox.setUniqueItems(MenuController.getExampleProducts());
-
-        weeklyUfswAtMinField
-                .setTextFormatter(new TextFormatter<>(getDoubleInputConverter(), 0.0, getDoubleInputFilter()));
 
         // Set Bar Chart
         updateCharts(observableArrayList(landedStoreCostChart, everydayRetailCalcdChart,

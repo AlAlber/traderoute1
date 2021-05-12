@@ -439,10 +439,11 @@ class RTMPlanningControllerTest {
         testOption.setFourYearEqGpPerSku(new BigDecimal("8"));
         testOption.setFourYearEqGpPerUnit(new BigDecimal("9"));
         robot.interact(()->{
-            controller.updateCharts(FXCollections.observableArrayList(landedStoreCostChart,everydayRetailCalcdChart,
-                    elasticizedUnitVelocityChart, annualVolumePerSkuChart, slottingPaybackPeriodChart,
-                    postSpoilsPostFreightChart, unspentTradePerUnitChart, fourYearEqGpPerSkuChart,
-                    fourYearEqGpPerUnitChart));
+//            controller.updateCharts(FXCollections.observableArrayList(landedStoreCostChart,everydayRetailCalcdChart,
+//                    elasticizedUnitVelocityChart, annualVolumePerSkuChart, slottingPaybackPeriodChart,
+//                    postSpoilsPostFreightChart, unspentTradePerUnitChart, fourYearEqGpPerSkuChart,
+//                    fourYearEqGpPerUnitChart));
+            controller.updateCharts();
         });
         assertEqualsYChartValueForFirstRTMOption(robot, landedStoreCostChart, new BigDecimal("1"));
         assertEqualsYChartValueForFirstRTMOption(robot, everydayRetailCalcdChart, new BigDecimal("2"));
