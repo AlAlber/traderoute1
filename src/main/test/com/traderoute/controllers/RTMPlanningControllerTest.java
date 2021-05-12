@@ -482,11 +482,17 @@ class RTMPlanningControllerTest {
         });
     }
     @Test
+    public void testGetFocusedRtmOption(FxRobot robot){
+        robot.clickOn(cell(tableString,1,3, robot));
+        Assertions.assertEquals(rtmPlanningTable1.getItems().get(1), controller.getFocusedRtmOption(), "Focused RTM Option is wrong");
+    }
+
+    @Test
     public void testIntegerTextFieldGetValue(FxRobot robot){
         robot.doubleClickOn(yearOneStoreCountField);
         robot.write("1000");
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
-        Assertions.assertEquals(1000, yearOneStoreCountField.getValue(), "Textfield gets wrong value");
+        Assertions.assertEquals(1000, (int) yearOneStoreCountField.getValue(), "Textfield gets wrong value");
     }
     @Test
     public void testBigDecimalTextFieldGetValue(FxRobot robot){

@@ -379,20 +379,14 @@ public class RTMPlanningController implements Initializable {
      * @param resourceBundle
      *            default javafx param in initialize method.
      */
-
     @FXML
     private HBox chartHBox;
-
     @FXML
     private VBox textfieldVBox;
-
     @FXML
     private VBox productVBox;
-
     @FXML
     private VBox weeklyUfswVBox;
-
-
 
     @Override
     public void initialize(final URL url, final ResourceBundle resourceBundle) {
@@ -1110,5 +1104,9 @@ public class RTMPlanningController implements Initializable {
         // secondTableView.setVisible(true);
         // secondTableView.refresh();
 
+    }
+
+    public RTMOption getFocusedRtmOption() {
+        return rtmPlanningTable1.getSelectionModel().getSelectedItem();
     }
 }
