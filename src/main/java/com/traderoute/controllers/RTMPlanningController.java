@@ -217,9 +217,9 @@ public class RTMPlanningController implements Initializable {
      * Labels for column headers.
      */
     @FXML
-    private final Label rtmNameColumnLabel = new Label("Route to market options");
+    private final Label rtmNameColumnLabel = new Label("Route-to-Market Options");
     @FXML
-    private final Label rtmNameColumnLabel2 = new Label("Route to market options");
+    private final Label rtmNameColumnLabel2 = new Label("Route-to-Market Options");
     @FXML
     private final Label slottingPerSkuLabel = new Label("Slotting Per Sku");
     @FXML
@@ -239,9 +239,9 @@ public class RTMPlanningController implements Initializable {
     @FXML
     private final Label everyDayRetailOverrideLabel = new Label("Override Everyday Retail");
     @FXML
-    private final Label elasticizedUnitVelocityLabel = new Label("Elasticized Unit Velocity ");
+    private final Label elasticizedUnitVelocityLabel = new Label("Elasticized Unit Velocity");
     @FXML
-    private final Label annualVolumePerSkuLabel = new Label("Annual Volume Per Sku ");
+    private final Label annualVolumePerSkuLabel = new Label("Annual Volume Per Sku");
     @FXML
     private final Label slottingPaybackPeriodLabel = new Label("Slotting Payback Period");
     @FXML
@@ -258,10 +258,10 @@ public class RTMPlanningController implements Initializable {
      */
     @FXML
     private final Tooltip rtmNameColumnTip = new Tooltip(
-            "Please enter the most likely 'route-to-market'" + " options to get the product to the market.");
+            "Please enter the most likely 'Route-To-Market'" + " options to get the product to the market.");
     @FXML
     private final Tooltip slottingPerSkuTip = new Tooltip(
-            "Please enter the required slotting (placement)" + " investment specific to this 'route-to-arket option.'");
+            "Please enter the required slotting (placement)" + " investment specific to this 'Route-To-Market' option.");
     @FXML
     private final Tooltip freightOutPerUnitTip = new Tooltip("If we're responsible for the cost of shipping for"
             + " this route-to -market option, please enter in the 'per"
@@ -289,7 +289,7 @@ public class RTMPlanningController implements Initializable {
             "Please enter the REALISTIC Everyday Retail" + " considering the auto-calculated retail to the left.");
     @FXML
     private final Tooltip elasticizedUnitVelocityTip = new Tooltip(
-            "For each route-to-market option provided," + " these are the Estimated Weekly Unit Velocities given"
+            "For each 'Route-To-Market' option provided," + " these are the Estimated Weekly Unit Velocities given"
                     + " the Product Class's Price Elasticity Multiple (for"
                     + " each X% increase in Unit Price there is a Y% decrease" + " in Units Sold");
     @FXML
@@ -919,6 +919,7 @@ public class RTMPlanningController implements Initializable {
 
         everyDayRetailOverrideLabel.setTooltip(everyDayRetailOverrideTip);
         everydayRetailOverrideCol.setGraphic(everyDayRetailOverrideLabel);
+
 
         rtmNameColumn2.setGraphic(rtmNameColumnLabel2);
 
