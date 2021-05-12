@@ -876,12 +876,7 @@ public class RTMPlanningController implements Initializable {
         PricingPromotionController pricingPromotionController = pricingPromotionLoader.getController();
         pricingPromotionController.setRetailer(retailer.get());
     }
-
-    public void setColumnHeaderTooltip(TableColumn<?,?> column,Label label, Tooltip tooltip) {
-        label.setTooltip(tooltip);
-        column.setGraphic(label);
-    }
-    public void setColHeaderTip(Label colLabel, Tooltip tip, TableColumn col) {
+    public static void setColHeaderTip(Label colLabel, Tooltip tip, TableColumn col) {
         colLabel.setTooltip(tip);
         col.setGraphic(colLabel);
     }
@@ -890,59 +885,25 @@ public class RTMPlanningController implements Initializable {
      * Set Column header labels and tooltips for first and second planning table.
      */
     public void setToolTipsTable1And2() {
-        rtmNameColumnLabel.setTooltip(rtmNameColumnTip);
-        rtmNameCol1.setGraphic(rtmNameColumnLabel);
-
-        freightOutPerUnitLabel.setTooltip(freightOutPerUnitTip);
-        freightOutPerUnitCol.setGraphic(freightOutPerUnitLabel);
-
-        slottingPerSkuLabel.setTooltip(slottingPerSkuTip);
-        slottingPerSkuCol.setGraphic(slottingPerSkuLabel);
-
-        firstReceiverLabel.setTooltip(firstReceiverTip);
-        firstReceiverCol.setGraphic(firstReceiverLabel);
-
-        secondReceiverLabel.setTooltip(secondReceiverTip);
-        secondReceiverColumn.setGraphic(secondReceiverLabel);
-
-        thirdReceiverLabel.setTooltip(thirdReceiverTip);
-        thirdReceiverColumn.setGraphic(thirdReceiverLabel);
-
-        fourthReceiverLabel.setTooltip(fourthReceiverTip);
-        fourthReceiverColumn.setGraphic(fourthReceiverLabel);
-
-        landedStoreCostLabel.setTooltip(landedStoreCostTip);
-        landedStoreCostColumn.setGraphic(landedStoreCostLabel);
-
-        everyDayRetailCalcdLabel.setTooltip(everyDayRetailCalcdTip);
-        everydayRetailCalcdCol.setGraphic(everyDayRetailCalcdLabel);
-
-        everyDayRetailOverrideLabel.setTooltip(everyDayRetailOverrideTip);
-        everydayRetailOverrideCol.setGraphic(everyDayRetailOverrideLabel);
-
+        setColHeaderTip(rtmNameColumnLabel, rtmNameColumnTip, rtmNameCol1);
+        setColHeaderTip(freightOutPerUnitLabel, freightOutPerUnitTip,freightOutPerUnitCol);
+        setColHeaderTip(slottingPerSkuLabel, slottingPerSkuTip, slottingPerSkuCol);
+        setColHeaderTip(firstReceiverLabel, firstReceiverTip, firstReceiverCol);
+        setColHeaderTip(secondReceiverLabel, secondReceiverTip, secondReceiverColumn);
+        setColHeaderTip(thirdReceiverLabel, thirdReceiverTip, thirdReceiverColumn);
+        setColHeaderTip(fourthReceiverLabel,fourthReceiverTip, fourthReceiverColumn);
+        setColHeaderTip(landedStoreCostLabel, landedStoreCostTip, landedStoreCostColumn);
+        setColHeaderTip(everyDayRetailCalcdLabel, everyDayRetailCalcdTip, everydayRetailCalcdCol);
+        setColHeaderTip(everyDayRetailOverrideLabel, everyDayRetailOverrideTip, everydayRetailOverrideCol);
 
         rtmNameColumn2.setGraphic(rtmNameColumnLabel2);
-
-        elasticizedUnitVelocityLabel.setTooltip(elasticizedUnitVelocityTip);
-        elasticizedUnitVelocityColumn.setGraphic(elasticizedUnitVelocityLabel);
-
-        annualVolumePerSkuLabel.setTooltip(annualVolumePerSkuTip);
-        annualVolumePerSkuColumn.setGraphic(annualVolumePerSkuLabel);
-
-        slottingPaybackPeriodLabel.setTooltip(slottingPaybackPeriodTip);
-        slottingPaybackPeriodColumn.setGraphic(slottingPaybackPeriodLabel);
-
-        postFreightPostSpoilsLabel.setTooltip(postFreightPostSpoilsTip);
-        postFreightPostSpoilsPerUnitCol.setGraphic(postFreightPostSpoilsLabel);
-
-        unspentTradePerUnitLabel.setTooltip(unspentTradePerUnitTip);
-        unspentTradePerUnitColumn.setGraphic(unspentTradePerUnitLabel);
-
-        fourYearEqGpPerSkuLabel.setTooltip(fourYearEqGpPerSkuTip);
-        fourYearEqGpPerSkuColumn.setGraphic(fourYearEqGpPerSkuLabel);
-
-        fourYearEqGpPerUnitLabel.setTooltip(fourYearEqGpPerUnitTip);
-        fourYearEqGpPerUnitColumn.setGraphic(fourYearEqGpPerUnitLabel);
+        setColHeaderTip(elasticizedUnitVelocityLabel, elasticizedUnitVelocityTip, elasticizedUnitVelocityColumn);
+        setColHeaderTip(annualVolumePerSkuLabel, annualVolumePerSkuTip, annualVolumePerSkuColumn);
+        setColHeaderTip(slottingPaybackPeriodLabel, slottingPaybackPeriodTip, slottingPaybackPeriodColumn);
+        setColHeaderTip(postFreightPostSpoilsLabel,postFreightPostSpoilsTip, postFreightPostSpoilsPerUnitCol);
+        setColHeaderTip(unspentTradePerUnitLabel, unspentTradePerUnitTip, unspentTradePerUnitColumn);
+        setColHeaderTip(fourYearEqGpPerSkuLabel, fourYearEqGpPerSkuTip, fourYearEqGpPerSkuColumn);
+        setColHeaderTip(fourYearEqGpPerUnitLabel, fourYearEqGpPerUnitTip, fourYearEqGpPerUnitColumn);
     }
 
     /**
