@@ -20,6 +20,11 @@ public class BigDecimalTextField extends NumberTextField{
         }
     }
 
+    @Override
+    public Number getValue() {
+        return new BigDecimal(this.getText());
+    }
+
 //    public String getRegex(){
 //        if (isPositiveOnly()){
 //            regexString = "^(?:(?![,0-9]{14})\\d{1,3}(?:,\\d{3})*(?:\\[.]\\d{1,2})?|(?![.0-9]{14})\\d{1,3}(?:\\[.]\\d{3})*(?:\\,\\d{1,2})?)$";

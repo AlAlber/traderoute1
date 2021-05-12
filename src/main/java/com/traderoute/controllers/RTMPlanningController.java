@@ -406,10 +406,11 @@ public class RTMPlanningController implements Initializable {
         everydayGpmField.setId("everydayGpmField");
         spoilsFeesField.setId("spoilsFeesField");
         weeklyUfswAtMinField.setId("weeklyUfswAtMinField");
-        yearOneStoreCountField.setOnAction(e -> changeYearOneStoreCount());
-        everydayGpmField.setOnAction(e -> changeEveryDayGpmCellEvent());
-        spoilsFeesField.setOnAction(e -> changeSpoilsAndFeesEvent());
-        weeklyUfswAtMinField.setOnAction(e -> changeWeeklyUSFWAtMinEvent());
+        yearOneStoreCountField.onActionProperty().addListener(e -> changeYearOneStoreCount());
+        everydayGpmField.onActionProperty().addListener(e -> changeEveryDayGpmCellEvent());
+        spoilsFeesField.onActionProperty().addListener(e -> changeSpoilsAndFeesEvent());
+        weeklyUfswAtMinField.onActionProperty().addListener(e -> changeWeeklyUSFWAtMinEvent());
+
 
         productVBox.getChildren().add(0, brandNameBox);
         productVBox.getChildren().add(1, productClassBox);

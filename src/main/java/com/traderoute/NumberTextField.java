@@ -10,7 +10,7 @@ import javafx.stage.Popup;
 
 import java.math.BigDecimal;
 
-public class NumberTextField extends TextField {
+public abstract class NumberTextField extends TextField {
     private Number maxValue;
     private Number minValue;
     private Number defaultValue;
@@ -24,10 +24,11 @@ public class NumberTextField extends TextField {
         Alert alert = new Alert(Alert.AlertType.WARNING,
                 "Enter a value between "+ minValue + " and " + maxValue + ", please." +
                         " We have\nreset the field to its default value.", ButtonType.OK);
-
+        System.out.println("checking this?");
         setOnAction((args) -> {
                     if (new BigDecimal(this.getText()).compareTo(new BigDecimal(maxValue.toString())) > 0 ||
                             new BigDecimal(this.getText()).compareTo(new BigDecimal(minValue.toString())) < 0) {
+
                         this.setText(defaultValue.toString());
                         alert.showAndWait();
                         }});
@@ -39,4 +40,5 @@ public class NumberTextField extends TextField {
     public Number getDefaultValue() {
         return defaultValue;
     }
+    public abstract Number getValue();
 }
