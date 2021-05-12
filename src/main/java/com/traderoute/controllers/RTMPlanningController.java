@@ -5,6 +5,7 @@ import com.traderoute.cells.CustomNonEditCell;
 import com.traderoute.charts.*;
 import com.traderoute.data.*;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,6 +16,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.util.Callback;
 import javafx.util.StringConverter;
 import javafx.util.converter.BigDecimalStringConverter;
 
@@ -24,6 +26,7 @@ import java.math.RoundingMode;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.*;
+import java.util.function.BiFunction;
 import java.util.function.UnaryOperator;
 import java.util.regex.Pattern;
 
@@ -173,11 +176,6 @@ public class RTMPlanningController implements Initializable {
      */
     private SimpleObjectProperty<Retailer> retailer = new SimpleObjectProperty<>();
 
-    //
-    // new Retailer("ahold",
-    // RTMPlanningController.getRetailerProducts(),
-    // 0, new BigDecimal("40"),
-    // 158, new BigDecimal("3.0"))
     /**
      * TextField to insert Store Count of this RetailerProduct (specific Product being sold by retailer) in first year.
      */
@@ -205,7 +203,9 @@ public class RTMPlanningController implements Initializable {
      * column.
      */
     @FXML
-    private TextField weeklyUfswAtMinField;
+    private BigDecimalTextField weeklyUfswAtMinField =
+            new BigDecimalTextField(new BigDecimal("1.0"),
+                    new BigDecimal("0.0"), new BigDecimal("1000.0"), false);
     /**
      * Label that denotes the max of the retail override column.
      */
@@ -388,6 +388,10 @@ public class RTMPlanningController implements Initializable {
     @FXML
     private VBox productVBox;
 
+    @FXML
+    private VBox weeklyUfswVBox;
+
+
 
     @Override
     public void initialize(final URL url, final ResourceBundle resourceBundle) {
@@ -396,9 +400,11 @@ public class RTMPlanningController implements Initializable {
                 postSpoilsPostFreightChart, unspentTradePerUnitChart, fourYearEqGpPerSkuChart,
                 fourYearEqGpPerUnitChart);
         textfieldVBox.getChildren().addAll(yearOneStoreCountField, everydayGpmField, spoilsFeesField);
+        weeklyUfswVBox.getChildren().add(weeklyUfswAtMinField);
         yearOneStoreCountField.setId("yearOneStoreCountField");
         everydayGpmField.setId("everydayGpmField");
         spoilsFeesField.setId("spoilsFeesField");
+        weeklyUfswAtMinField.setId("weeklyUfswAtMinField");
 
         productVBox.getChildren().add(0, brandNameBox);
         productVBox.getChildren().add(1, productClassBox);

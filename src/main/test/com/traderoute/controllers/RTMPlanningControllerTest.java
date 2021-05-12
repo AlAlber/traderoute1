@@ -43,7 +43,7 @@ class RTMPlanningControllerTest {
     private BigDecimalTextField everydayGpmField;
     private IntegerTextField yearOneStoreCountField;
     private BigDecimalTextField spoilsFeesField;
-    private TextField weeklyUfswAtMinField;
+    private BigDecimalTextField weeklyUfswAtMinField;
     private ProductClassComboBox productClassBox;
     private BrandNameComboBox brandNameBox;
     final String  tableString = "#rtmPlanningTable1";
@@ -81,7 +81,7 @@ class RTMPlanningControllerTest {
         everydayGpmField = robot.lookup("#everydayGpmField").queryAs(BigDecimalTextField.class);
         yearOneStoreCountField = robot.lookup("#yearOneStoreCountField").queryAs(IntegerTextField.class);
         spoilsFeesField = robot.lookup("#spoilsFeesField").queryAs(BigDecimalTextField.class);
-        weeklyUfswAtMinField = robot.lookup("#weeklyUfswAtMinField").queryAs(TextField.class);
+        weeklyUfswAtMinField = robot.lookup("#weeklyUfswAtMinField").queryAs(BigDecimalTextField.class);
         productClassBox = robot.lookup("#productClassBox").queryAs(ProductClassComboBox.class);
         brandNameBox = robot.lookup("#brandNameBox").queryAs(BrandNameComboBox.class);
 
@@ -554,6 +554,24 @@ class RTMPlanningControllerTest {
         Assertions.assertEquals(spoilsFeesField.getText(), spoilsFeesField.getDefaultValue().toString(),  "Textfield rejects negative values");
         FxAssert.verifyThat("OK", NodeMatchers.isVisible());
     }
+    @Test
+    public void testWeeklyUfswAtMinFieldEnteringValueOver1000(FxRobot robot){
+        robot.doubleClickOn(weeklyUfswAtMinField);
+        robot.write("1001");
+        robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
+        Assertions.assertEquals(weeklyUfswAtMinField.getText(), weeklyUfswAtMinField.getDefaultValue().toString(),  "Textfield rejects values over 1000");
+        FxAssert.verifyThat("OK", NodeMatchers.isVisible());
+    }
+    @Test
+    public void testWeeklyUfswAtMinFieldEnteringNegativeValue(FxRobot robot){
+        robot.doubleClickOn(weeklyUfswAtMinField);
+        robot.write("-1");
+        robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
+        Assertions.assertEquals(weeklyUfswAtMinField.getText(), weeklyUfswAtMinField.getDefaultValue().toString(),  "Textfield rejects negative values over 1000");
+        FxAssert.verifyThat("OK", NodeMatchers.isVisible());
+    }
+
+
 
     @Test
     public void testSlottingPerSkuCellStartsWithDollar(FxRobot robot){

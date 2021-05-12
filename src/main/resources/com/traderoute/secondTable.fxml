@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.JFXButton?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -111,7 +109,7 @@
                   <Button mnemonicParsing="false" text="Route-to-Market" />
                   <Button mnemonicParsing="false" onAction="#switchToAssortment" text="Assortment" />
                   <Button fx:id="pricingPromotionButton" mnemonicParsing="false" onAction="#switchToPricingPromotion" text="Pricing and Promotion" />
-                  <JFXButton onAction="#switchToRetailerSelection" style="-fx-background-color: white;" text="Return to Selection" />
+                  <Button onAction="#switchToRetailerSelection" style="-fx-background-color: white;" text="Return to Selection" />
                </children>
             </HBox>
             <TableView fx:id="rtmPlanningTable1" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="130.0" prefWidth="1464.0" styleClass="firstTable" stylesheets="@../styles/Styles.css">
@@ -135,7 +133,7 @@
                <children>
                   <AnchorPane prefHeight="130.0" prefWidth="154.0" style="-fx-background-color: transparent;">
                      <children>
-                        <VBox prefHeight="130.0" prefWidth="150.0" style="-fx-background-color: transparent;">
+                        <VBox fx:id="weeklyUfswVBox" prefHeight="130.0" prefWidth="150.0" style="-fx-background-color: transparent;">
                            <children>
                               <Label prefHeight="15.0" prefWidth="141.0" text="FIll in your estimated unit" textFill="white">
                                  <VBox.margin>
@@ -185,8 +183,6 @@
                                     <Insets left="7.0" />
                                  </padding>
                               </Label>
-                              <TextField fx:id="weeklyUfswAtMinField" maxHeight="-Infinity" minHeight="-Infinity" onAction="#changeWeeklyUSFWAtMinEvent" prefHeight="18.0" prefWidth="106.0" promptText="0.0" />
-                              <AnchorPane prefHeight="200.0" prefWidth="200.0" />
                            </children>
                         </VBox>
                      </children>
