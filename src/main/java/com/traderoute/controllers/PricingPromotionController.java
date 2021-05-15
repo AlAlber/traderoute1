@@ -311,8 +311,8 @@ public class PricingPromotionController implements Initializable, MyController {
             editButtons.get(i).setWrapText(true);
             rtmBoxes.get(i).setConverter(new RtmBoxConverter());
             weeklyVelocityFields.get(i)
-                    .setTextFormatter(new TextFormatter<Double>(RTMPlanningController.getDoubleInputConverter(), 0.0,
-                            RTMPlanningController.getDoubleInputFilter()));
+                    .setTextFormatter(new TextFormatter<Double>(new DoubleInputConverter(), 0.0,
+                            DoubleInputConverter.getFilter()));
             weeklyVelocityFields.get(i).setTooltip(new Tooltip("Please add the weekly velocity Unit/Flavor/Sku/Week"));
             rtmBoxes.get(i).setTooltip(new Tooltip(
                     "Please select a Route-to-Market from the ones you configured on the Route to Market Page"));

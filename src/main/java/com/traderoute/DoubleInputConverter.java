@@ -1,6 +1,10 @@
 package com.traderoute;
 
+import javafx.scene.control.TextFormatter;
 import javafx.util.StringConverter;
+
+import java.util.function.UnaryOperator;
+import java.util.regex.Pattern;
 
 public class DoubleInputConverter extends StringConverter<Double> {
     @Override
@@ -11,10 +15,21 @@ public class DoubleInputConverter extends StringConverter<Double> {
             return Double.valueOf(s);
         }
     }
-
     @Override
     public String toString(final Double d) {
         return d.toString();
     }
 
+    public static UnaryOperator<TextFormatter.Change> getFilter() {
+        Pattern validEditingState = Pattern.compile("-?(([1-9+][0-9]*)|0)?(\\.[0-9]*)?");
+        UnaryOperator<TextFormatter.Change> filter = c -> {
+            String text = c.getControlNewText();
+            if (validEditingState.matcher(text).matches()) {
+                return c;
+            } else {
+                return null;
+            }
+        };
+        return filter;
+    }
 }

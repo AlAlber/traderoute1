@@ -1,6 +1,7 @@
 
 package com.traderoute.cells;
 
+import com.traderoute.DoubleInputConverter;
 import com.traderoute.data.Parameter;
 import com.traderoute.data.PromoPlan;
 import com.traderoute.controllers.RTMPlanningController;
@@ -45,8 +46,8 @@ public class ParameterEditCell extends TableCell<Parameter<?>, Object> {
                 return;
             }
             if (param.getJanuary() instanceof BigDecimal) {
-                textField.setTextFormatter(new TextFormatter(RTMPlanningController.getDoubleInputConverter(),
-                        Double.valueOf(textField.getText()), RTMPlanningController.getDoubleInputFilter()));
+                textField.setTextFormatter(new TextFormatter(new DoubleInputConverter(),
+                        Double.valueOf(textField.getText()), DoubleInputConverter.getFilter()));
             } else if (param.getJanuary() instanceof Integer) {
                 textField.textProperty().addListener(new ChangeListener<String>() {
                     private boolean changing;
