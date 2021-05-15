@@ -464,44 +464,6 @@ public class RTMPlanningController implements Initializable {
     }
 
     /**
-     * Get Unique list of brand names from Product list.
-     * 
-     * @param products
-     *            contains list of all Products ProductsPricingController.
-     * 
-     * @return uniqueBrandNames list of unique Products with correct brand name- can later be compared in corresponding
-     *         product classes method.
-     */
-    public static ObservableList<Product> getUniqueBrandNames(final ObservableList<Product> products) {
-        ObservableList<Product> uniqueBrandNames = observableArrayList();
-        ObservableList<String> uniqueBrandNameStrs = observableArrayList();
-        for (Product product : products) {
-            if (!uniqueBrandNameStrs.contains(product.getBrandName())) {
-                uniqueBrandNameStrs.add(product.getBrandName());
-                uniqueBrandNames.add(product);
-            }
-        }
-        return uniqueBrandNames;
-    }
-
-    /**
-     * @param products
-     *            a sample list of products that have the right brand name.
-     * 
-     * @return ObservableList<Product> all products with correct brandName, which user has selected on the brandNameBox.
-     */
-    public ObservableList<Product> getCorrectProductClasses(final ObservableList<Product> products) {
-        ObservableList<Product> correspondingProductClasses = observableArrayList();
-        // Set up product combobox and make it display product class
-        for (Product product : products) {
-            if (product.getBrandName().equals(brandNameBox.getSelectionModel().getSelectedItem().getBrandName())) {
-                correspondingProductClasses.add(product);
-            }
-        }
-        return correspondingProductClasses;
-    }
-
-    /**
      * Listener reacts to event on brandNameBox. Sets Product info labels and sets items in product- ClassBox
      */
     public void changeBrandComboboxEvent() {
@@ -510,7 +472,8 @@ public class RTMPlanningController implements Initializable {
         fobLabel.setText("F.O.B. = $");
         net1GoalLabel.setText("Net 1 Goal = $");
         elasticityRatioLabel.setText("Elasticity Ratio = +1% Price :  % Volume");
-        ObservableList<Product> productsWithBrandName = getCorrectProductClasses(MenuController.getExampleProducts());
+        ObservableList<Product> productsWithBrandName = productClassBox.getCorrectProductClasses(MenuController.getExampleProducts(),
+                brandNameBox.getSelectionModel().getSelectedItem());
         productClassBox.setItems(productsWithBrandName);
     }
 
@@ -820,25 +783,25 @@ public class RTMPlanningController implements Initializable {
      * Set Column header labels and tooltips for first and second planning table.
      */
     public void setToolTipsTable1And2() {
-        setColHeaderTip(rtmNameColumnLabel, rtmNameColumnTip, rtmNameCol1);
-        setColHeaderTip(freightOutPerUnitLabel, freightOutPerUnitTip,freightOutPerUnitCol);
-        setColHeaderTip(slottingPerSkuLabel, slottingPerSkuTip, slottingPerSkuCol);
-        setColHeaderTip(firstReceiverLabel, firstReceiverTip, firstReceiverCol);
-        setColHeaderTip(secondReceiverLabel, secondReceiverTip, secondReceiverColumn);
-        setColHeaderTip(thirdReceiverLabel, thirdReceiverTip, thirdReceiverColumn);
-        setColHeaderTip(fourthReceiverLabel,fourthReceiverTip, fourthReceiverColumn);
-        setColHeaderTip(landedStoreCostLabel, landedStoreCostTip, landedStoreCostColumn);
-        setColHeaderTip(everyDayRetailCalcdLabel, everyDayRetailCalcdTip, everydayRetailCalcdCol);
-        setColHeaderTip(everyDayRetailOverrideLabel, everyDayRetailOverrideTip, everydayRetailOverrideCol);
-
-        rtmNameColumn2.setGraphic(rtmNameColumnLabel2);
-        setColHeaderTip(elasticizedUnitVelocityLabel, elasticizedUnitVelocityTip, elasticizedUnitVelocityColumn);
-        setColHeaderTip(annualVolumePerSkuLabel, annualVolumePerSkuTip, annualVolumePerSkuColumn);
-        setColHeaderTip(slottingPaybackPeriodLabel, slottingPaybackPeriodTip, slottingPaybackPeriodColumn);
-        setColHeaderTip(postFreightPostSpoilsLabel,postFreightPostSpoilsTip, postFreightPostSpoilsPerUnitCol);
-        setColHeaderTip(unspentTradePerUnitLabel, unspentTradePerUnitTip, unspentTradePerUnitColumn);
-        setColHeaderTip(fourYearEqGpPerSkuLabel, fourYearEqGpPerSkuTip, fourYearEqGpPerSkuColumn);
-        setColHeaderTip(fourYearEqGpPerUnitLabel, fourYearEqGpPerUnitTip, fourYearEqGpPerUnitColumn);
+//        setColHeaderTip(rtmNameColumnLabel, rtmNameColumnTip, rtmNameCol1);
+//        setColHeaderTip(freightOutPerUnitLabel, freightOutPerUnitTip,freightOutPerUnitCol);
+//        setColHeaderTip(slottingPerSkuLabel, slottingPerSkuTip, slottingPerSkuCol);
+//        setColHeaderTip(firstReceiverLabel, firstReceiverTip, firstReceiverCol);
+//        setColHeaderTip(secondReceiverLabel, secondReceiverTip, secondReceiverColumn);
+//        setColHeaderTip(thirdReceiverLabel, thirdReceiverTip, thirdReceiverColumn);
+//        setColHeaderTip(fourthReceiverLabel,fourthReceiverTip, fourthReceiverColumn);
+//        setColHeaderTip(landedStoreCostLabel, landedStoreCostTip, landedStoreCostColumn);
+//        setColHeaderTip(everyDayRetailCalcdLabel, everyDayRetailCalcdTip, everydayRetailCalcdCol);
+//        setColHeaderTip(everyDayRetailOverrideLabel, everyDayRetailOverrideTip, everydayRetailOverrideCol);
+//
+//        rtmNameColumn2.setGraphic(rtmNameColumnLabel2);
+//        setColHeaderTip(elasticizedUnitVelocityLabel, elasticizedUnitVelocityTip, elasticizedUnitVelocityColumn);
+//        setColHeaderTip(annualVolumePerSkuLabel, annualVolumePerSkuTip, annualVolumePerSkuColumn);
+//        setColHeaderTip(slottingPaybackPeriodLabel, slottingPaybackPeriodTip, slottingPaybackPeriodColumn);
+//        setColHeaderTip(postFreightPostSpoilsLabel,postFreightPostSpoilsTip, postFreightPostSpoilsPerUnitCol);
+//        setColHeaderTip(unspentTradePerUnitLabel, unspentTradePerUnitTip, unspentTradePerUnitColumn);
+//        setColHeaderTip(fourYearEqGpPerSkuLabel, fourYearEqGpPerSkuTip, fourYearEqGpPerSkuColumn);
+//        setColHeaderTip(fourYearEqGpPerUnitLabel, fourYearEqGpPerUnitTip, fourYearEqGpPerUnitColumn);
     }
 
     /**
@@ -927,9 +890,9 @@ public class RTMPlanningController implements Initializable {
         // this.secondTableView.setItems(currentRtmOptions);
 
         updateRetailerProduct(currentRetailerProduct.getProduct());
-        this.brandNameBox.setItems(getUniqueBrandNames(MenuController.getExampleProducts()));
+        this.brandNameBox.setUniqueItems(MenuController.getExampleProducts());
         this.brandNameBox.valueProperty().setValue(currentRetailerProduct.getProduct());
-        this.productClassBox.setItems(getCorrectProductClasses(MenuController.getExampleProducts()));
+        this.productClassBox.setItems(productClassBox.getCorrectProductClasses(MenuController.getExampleProducts(), brandNameBox.getValue()));
         this.productClassBox.valueProperty().setValue(currentRetailerProduct.getProduct());
         // listLabel.setText("List = $" + currentRetailerProduct.getProduct().getUnitListCost());
         // fobLabel.setText("F.O.B. = $" + currentRetailerProduct.getProduct().getUnitFobCost());

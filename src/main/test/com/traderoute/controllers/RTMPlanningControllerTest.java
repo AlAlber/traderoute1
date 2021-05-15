@@ -782,9 +782,7 @@ class RTMPlanningControllerTest {
         Assertions.assertEquals(((Label)rtmNameCol1.getGraphic()).getTooltip().getText(), "Please enter the most likely 'Route-To-Market'" + " options to get the product to the market.");
         Assertions.assertEquals(((Label)slottingPerSkuCol.getGraphic()).getTooltip().getText(), "Please enter the required slotting (placement)" + " investment specific to this 'Route-To-Market' option.");
         //TODO add dynamic value for end of below tooltip freight-out value
-        Assertions.assertEquals(((Label)freightOutPerUnitCol.getGraphic()).getTooltip().getText(), "If we're responsible for the cost of shipping for"
-                + " this route-to -market option, please enter in the 'per"
-                + " unit cost' of this 'Freight-Out.' For F.O.B (Pick-up)" + " Customers, Freight-Out equals $0.");
+        Assertions.assertEquals(((Label)freightOutPerUnitCol.getGraphic()).getTooltip().getText(), "If we're responsible for the cost of shipping for this 'Route-To-Market' option, please enter in the 'per unit cost' of this 'Freight-Out.' For F.O.B (Pick-up) Customers, Freight-Out equals $0.");
         Assertions.assertEquals(((Label)firstReceiverCol.getGraphic()).getTooltip().getText(), "The Per Unit Cost the First Receiver pays us,"
                 + " typically the Unit List Cost or the Unit F.O.B");
         Assertions.assertEquals(((Label)secondReceiverColumn.getGraphic()).getTooltip().getText(), "The Per Unit Cost the Second Receiver pays"
@@ -793,16 +791,13 @@ class RTMPlanningControllerTest {
                 + " pays to the Second Receiver.");
         Assertions.assertEquals(((Label)fourthReceiverColumn.getGraphic()).getTooltip().getText(), "The Per Unit Cost the Fourth Receiver"
                 + " pays to the Third Receiver.");
-        Assertions.assertEquals(((Label)landedStoreCostColumn.getGraphic()).getTooltip().getText(), "The Per Unit Cost the Retail OutLet (Last"
-                + " Receiver pays prior to applying the Required GPM%" + " to establish the Everyday Retail.");
+        Assertions.assertEquals(((Label)landedStoreCostColumn.getGraphic()).getTooltip().getText(), "The Per Unit Cost the Retail OutLet (Last Receiver) pays prior to applying the Required GPM% to establish the Everyday Retail.");
         Assertions.assertEquals(((Label)everydayRetailCalcdCol.getGraphic()).getTooltip().getText(), "The auto-calculated Resulting Everyday"
                 + " Retail given the Landed Store Cost and Required " + "Gross Profit Margin %.");
         Assertions.assertEquals(((Label)everydayRetailOverrideCol.getGraphic()).getTooltip().getText(), "Please enter the REALISTIC Everyday Retail"
                 + " considering the auto-calculated retail to the left.");
 
-        Assertions.assertEquals(((Label)elasticizedUnitVelocityColumn.getGraphic()).getTooltip().getText(), "For each 'Route-To-Market' option provided," + " these are the Estimated Weekly Unit Velocities given"
-                + " the Product Class's Price Elasticity Multiple (for"
-                + " each X% increase in Unit Price there is a Y% decrease" + " in Units Sold");
+        Assertions.assertEquals(((Label)elasticizedUnitVelocityColumn.getGraphic()).getTooltip().getText(), "For each 'Route-To-Market' option provided, these are the Estimated Weekly Unit Velocities given the Product Class's Price Elasticity Multiple (for each X% increase in Unit Price there is a Y% decrease in Units Sold");
         Assertions.assertEquals(((Label)annualVolumePerSkuColumn.getGraphic()).getTooltip().getText(), "For each route-to-market option provided,"
                 + " these are the Estimated Annual Volumes Per SKU " + "(accounting for price elasticities)");
         Assertions.assertEquals(((Label)slottingPaybackPeriodColumn.getGraphic()).getTooltip().getText(), "If Slotting is a consideration these" + " are the Payback Periods (in years) for each "

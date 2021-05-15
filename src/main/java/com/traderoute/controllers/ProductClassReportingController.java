@@ -597,7 +597,8 @@ public class ProductClassReportingController implements Initializable {
         this.productClassReportingTable.setItems(getReports());
         this.productClassReportingTable.getItems().add(0, totalsReport);
         this.getTotals();
-        this.brandNameBox.setItems(RTMPlanningController.getUniqueBrandNames(MenuController.getExampleProducts()));
+        // REENTER THIS WITH NEW BRANDNAMEBOX
+//        this.brandNameBox.setItems(RTMPlanningController.getUniqueBrandNames(MenuController.getExampleProducts()));
         if (yearBox0.isSelected()) {
 
         }

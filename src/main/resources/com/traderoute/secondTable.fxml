@@ -5,6 +5,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -114,16 +115,87 @@
             </HBox>
             <TableView fx:id="rtmPlanningTable1" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="130.0" prefWidth="1464.0" styleClass="firstTable" stylesheets="@../styles/Styles.css">
                <columns>
-                  <TableColumn fx:id="rtmNameCol1" prefWidth="148.0" resizable="false" />
-                  <TableColumn fx:id="slottingPerSkuCol" onEditCommit="#changeSlottingPerSkuCellEvent" prefWidth="148.0" resizable="false" />
-                  <TableColumn fx:id="freightOutPerUnitCol" onEditCommit="#changeFreightOutPerUnitCellEvent" prefWidth="148.0" resizable="false" />
-                  <TableColumn fx:id="firstReceiverCol" onEditCommit="#changeFirstReceiverCellEvent" prefWidth="148.0" resizable="false" />
-                  <TableColumn fx:id="secondReceiverColumn" onEditCommit="#changeSecondReceiverCellEvent" prefWidth="148.0" resizable="false" />
-                  <TableColumn fx:id="thirdReceiverColumn" onEditCommit="#changeThirdReceiverCellEvent" prefWidth="148.0" resizable="false" />
-                  <TableColumn fx:id="fourthReceiverColumn" onEditCommit="#changeFourthReceiverCellEvent" prefWidth="148.0" resizable="false" />
-                  <TableColumn fx:id="landedStoreCostColumn" prefWidth="148.0" resizable="false" />
-                  <TableColumn fx:id="everydayRetailCalcdCol" prefWidth="148.0" resizable="false" />
-                  <TableColumn fx:id="everydayRetailOverrideCol" onEditCommit="#changeOverrideEvent" prefWidth="148.0" resizable="false" />
+                  <TableColumn fx:id="rtmNameCol1" prefWidth="148.0" resizable="false">
+                     <graphic>
+                        <Label text="Route-to-Market Options">
+                           <tooltip>
+                              <Tooltip text="Please enter the most likely 'Route-To-Market' options to get the product to the market." />
+                           </tooltip>
+                        </Label>
+                     </graphic>
+                  </TableColumn>
+                  <TableColumn fx:id="slottingPerSkuCol" onEditCommit="#changeSlottingPerSkuCellEvent" prefWidth="148.0" resizable="false">
+                     <graphic>
+                        <Label text="Slotting Per Sku">
+                           <tooltip>
+                              <Tooltip text="Please enter the required slotting (placement) investment specific to this 'Route-To-Market' option." />
+                           </tooltip>
+                        </Label>
+                     </graphic></TableColumn>
+                  <TableColumn fx:id="freightOutPerUnitCol" onEditCommit="#changeFreightOutPerUnitCellEvent" prefWidth="148.0" resizable="false">
+                     <graphic>
+                        <Label text="Freight Out Per Unit">
+                           <tooltip>
+                              <Tooltip text="If we're responsible for the cost of shipping for this 'Route-To-Market' option, please enter in the 'per unit cost' of this 'Freight-Out.' For F.O.B (Pick-up) Customers, Freight-Out equals $0." />
+                           </tooltip>
+                        </Label>
+                     </graphic></TableColumn>
+                  <TableColumn fx:id="firstReceiverCol" onEditCommit="#changeFirstReceiverCellEvent" prefWidth="148.0" resizable="false">
+                     <graphic>
+                        <Label text="First Receiver Pays">
+                           <tooltip>
+                              <Tooltip text="The Per Unit Cost the First Receiver pays us, typically the Unit List Cost or the Unit F.O.B" />
+                           </tooltip>
+                        </Label>
+                     </graphic></TableColumn>
+                  <TableColumn fx:id="secondReceiverColumn" onEditCommit="#changeSecondReceiverCellEvent" prefWidth="148.0" resizable="false">
+                     <graphic>
+                        <Label text="Second Receiver Pays">
+                           <tooltip>
+                              <Tooltip text="The Per Unit Cost the Second Receiver pays to the First Receiver." />
+                           </tooltip>
+                        </Label>
+                     </graphic></TableColumn>
+                  <TableColumn fx:id="thirdReceiverColumn" onEditCommit="#changeThirdReceiverCellEvent" prefWidth="148.0" resizable="false">
+                     <graphic>
+                        <Label text="Third Receiver Pays">
+                           <tooltip>
+                              <Tooltip text="The Per Unit Cost the Third Receiver pays to the Second Receiver." />
+                           </tooltip>
+                        </Label>
+                     </graphic></TableColumn>
+                  <TableColumn fx:id="fourthReceiverColumn" onEditCommit="#changeFourthReceiverCellEvent" prefWidth="148.0" resizable="false">
+                     <graphic>
+                        <Label text="Fourth Receiver Pays">
+                           <tooltip>
+                              <Tooltip text="The Per Unit Cost the Fourth Receiver pays to the Third Receiver." />
+                           </tooltip>
+                        </Label>
+                     </graphic></TableColumn>
+                  <TableColumn fx:id="landedStoreCostColumn" prefWidth="148.0" resizable="false">
+                     <graphic>
+                        <Label text="Landed Store Cost">
+                           <tooltip>
+                              <Tooltip text="The Per Unit Cost the Retail OutLet (Last Receiver) pays prior to applying the Required GPM% to establish the Everyday Retail." />
+                           </tooltip>
+                        </Label>
+                     </graphic></TableColumn>
+                  <TableColumn fx:id="everydayRetailCalcdCol" prefWidth="148.0" resizable="false">
+                     <graphic>
+                        <Label text="Calculated Everyday Retail">
+                           <tooltip>
+                              <Tooltip text="The auto-calculated Resulting Everyday Retail given the Landed Store Cost and Required Gross Profit Margin %." />
+                           </tooltip>
+                        </Label>
+                     </graphic></TableColumn>
+                  <TableColumn fx:id="everydayRetailOverrideCol" onEditCommit="#changeOverrideEvent" prefWidth="148.0" resizable="false">
+                     <graphic>
+                        <Label text="Override Everyday Retail">
+                           <tooltip>
+                              <Tooltip text="Please enter the REALISTIC Everyday Retail considering the auto-calculated retail to the left." />
+                           </tooltip>
+                        </Label>
+                     </graphic></TableColumn>
                </columns>
                <VBox.margin>
                   <Insets top="40.0" />
@@ -189,14 +261,70 @@
                   </AnchorPane>
                   <TableView fx:id="rtmPlanningTable2" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="102.0" prefWidth="1310.0" styleClass="firstTable" stylesheets="@../styles/Styles.css">
                      <columns>
-                        <TableColumn fx:id="rtmNameColumn2" prefWidth="166.0" resizable="false" />
-                        <TableColumn fx:id="elasticizedUnitVelocityColumn" prefWidth="166.0" resizable="false" />
-                        <TableColumn fx:id="annualVolumePerSkuColumn" prefWidth="166.0" resizable="false" />
-                        <TableColumn fx:id="slottingPaybackPeriodColumn" prefWidth="166.0" resizable="false" />
-                        <TableColumn fx:id="postFreightPostSpoilsPerUnitCol" prefWidth="166.0" resizable="false" />
-                        <TableColumn fx:id="unspentTradePerUnitColumn" prefWidth="166.0" resizable="false" />
-                        <TableColumn fx:id="fourYearEqGpPerSkuColumn" prefWidth="166.0" resizable="false" />
-                        <TableColumn fx:id="fourYearEqGpPerUnitColumn" prefWidth="166.0" resizable="false" />
+                        <TableColumn fx:id="rtmNameColumn2" prefWidth="166.0" resizable="false">
+                           <graphic>
+                              <Label text="Route-to-Market Options">
+                                 <tooltip>
+                                    <Tooltip text="The most likely 'Route-To-Market' options to get the product to the market." />
+                                 </tooltip>
+                              </Label>
+                           </graphic></TableColumn>
+                        <TableColumn fx:id="elasticizedUnitVelocityColumn" prefWidth="166.0" resizable="false">
+                           <graphic>
+                              <Label text="Elasticized Unit Velocity">
+                                 <tooltip>
+                                    <Tooltip text="For each 'Route-To-Market' option provided, these are the Estimated Weekly Unit Velocities given the Product Class's Price Elasticity Multiple (for each X% increase in Unit Price there is a Y% decrease in Units Sold" />
+                                 </tooltip>
+                              </Label>
+                           </graphic></TableColumn>
+                        <TableColumn fx:id="annualVolumePerSkuColumn" prefWidth="166.0" resizable="false">
+                           <graphic>
+                              <Label text="Annual Volume Per Sku">
+                                 <tooltip>
+                                    <Tooltip text="For each route-to-market option provided, these are the Estimated Annual Volumes Per SKU (accounting for price elasticities)" />
+                                 </tooltip>
+                              </Label>
+                           </graphic></TableColumn>
+                        <TableColumn fx:id="slottingPaybackPeriodColumn" prefWidth="166.0" resizable="false">
+                           <graphic>
+                              <Label text="Slotting Payback Period">
+                                 <tooltip>
+                                    <Tooltip text="If Slotting is a consideration these are the Payback Periods (in years) for each route-to-market option provided to recoup the initial Slotting Investment." />
+                                 </tooltip>
+                              </Label>
+                           </graphic></TableColumn>
+                        <TableColumn fx:id="postFreightPostSpoilsPerUnitCol" prefWidth="166.0" resizable="false">
+                           <graphic>
+                              <Label text="Post Freight &amp; Spoils We Collect">
+                                 <tooltip>
+                                    <Tooltip text="For each route-to-market option provided, the Per Unit Rate we collect after which Freight Costs and Spoils are accounted (but prior to Trade Spending)." />
+                                 </tooltip>
+                              </Label>
+                           </graphic></TableColumn>
+                        <TableColumn fx:id="unspentTradePerUnitColumn" prefWidth="166.0" resizable="false">
+                           <graphic>
+                              <Label text="Unspent Trade Per Unit">
+                                 <tooltip>
+                                    <Tooltip text="Unspent Trade Per Unit" />
+                                 </tooltip>
+                              </Label>
+                           </graphic></TableColumn>
+                        <TableColumn fx:id="fourYearEqGpPerSkuColumn" prefWidth="166.0" resizable="false">
+                           <graphic>
+                              <Label text="4-Year EQ GP $ Per Sku">
+                                 <tooltip>
+                                    <Tooltip text="4-Year Equivalized Gross Profit $ Per Sku" />
+                                 </tooltip>
+                              </Label>
+                           </graphic></TableColumn>
+                        <TableColumn fx:id="fourYearEqGpPerUnitColumn" prefWidth="166.0" resizable="false">
+                           <graphic>
+                              <Label text="4-Year EQ GP $ Per Unit">
+                                 <tooltip>
+                                    <Tooltip text="4-Year Equivalized Gross Profit $ Per Unit" />
+                                 </tooltip>
+                              </Label>
+                           </graphic></TableColumn>
                      </columns>
                   </TableView>
                </children>
