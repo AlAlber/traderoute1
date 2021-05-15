@@ -850,21 +850,21 @@ public class RTMPlanningController implements Initializable {
         promoPlans.add(new PromoPlan(3));
         return promoPlans;
     }
+    private void switchScenes(String fxml) throws IOException {
+        App.getNewController(fxml).setRetailer(retailer.get());
+    }
 
     @FXML
     private void switchToAssortment() throws IOException {
-        AssortmentController assortmentController = App.switchToNewScene("assortment").getController();
-        assortmentController.setRetailer(retailer.get());
+        switchScenes("assortment");
     }
     @FXML
     private void switchToRetailerSelection() throws IOException {
-        RetailerSelectionController assortmentController = App.switchToNewScene("retailerSelection").getController();
-        assortmentController.setRetailer(retailer.get());
+        switchScenes("retailerSelection");
     }
     @FXML
     private void switchToPricingPromotion() throws IOException {
-        PricingPromotionController pricingPromotionController = App.switchToNewScene("pricingPromotion").getController();
-        pricingPromotionController.setRetailer(retailer.get());
+        switchScenes("pricingPromotion");
     }
 
     public static void setColHeaderTip(Label colLabel, Tooltip tip, TableColumn col) {

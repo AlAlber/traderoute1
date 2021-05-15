@@ -1,9 +1,8 @@
 package com.traderoute;
 
-import com.traderoute.controllers.AssortmentController;
 import com.traderoute.controllers.MenuController;
+import com.traderoute.controllers.MyController;
 import javafx.application.Application;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -36,6 +35,11 @@ public class App extends Application {
         App.setSceneRoot(loader.load());
         return loader;
     }
+    public static MyController getNewController(String fxml) throws IOException {
+        FXMLLoader loader = App.createFXMLLoader(fxml);
+        App.setSceneRoot(loader.load());
+        return loader.getController();
+    }
 
     public static Stage getStage() {
         return (Stage) scene.getWindow();
@@ -50,17 +54,29 @@ public class App extends Application {
     }
 
     public static FXMLLoader createFXMLLoader(String fxml) throws IOException {
-        return new FXMLLoader(App.class.getResource(fxml + ".fxml"));
-    }
-
-    public static FXMLLoader getFXMLLoader() {
+        fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
         return fxmlLoader;
     }
+
+//    public static FXMLLoader getFXMLLoader() {
+//        return fxmlLoader;
+//    }
 
     private static Parent loadFXML(String fxml) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
         return fxmlLoader.load();
     }
+    public static Scene getScene(){
+        return scene;
+    }
+    public static void setNewScene(Scene sceneToLoad){
+        scene = sceneToLoad;
+    }
+
+    public static FXMLLoader getFxmlLoader(){
+        return fxmlLoader;
+    }
+
 
     public static void main(String[] args) {
         launch();

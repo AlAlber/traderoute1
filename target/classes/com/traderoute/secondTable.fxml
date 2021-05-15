@@ -107,9 +107,9 @@
                      </children>
                   </VBox>
                   <Button mnemonicParsing="false" text="Route-to-Market" />
-                  <Button mnemonicParsing="false" onAction="#switchToAssortment" text="Assortment" />
-                  <Button fx:id="pricingPromotionButton" mnemonicParsing="false" onAction="#switchToPricingPromotion" text="Pricing and Promotion" />
-                  <Button onAction="#switchToRetailerSelection" style="-fx-background-color: white;" text="Return to Selection" />
+                  <Button fx:id="switchToAssortmentButton" mnemonicParsing="false" onAction="#switchToAssortment" text="Assortment" />
+                  <Button fx:id="switchToPricingPromotionButton" mnemonicParsing="false" onAction="#switchToPricingPromotion" text="Pricing and Promotion" />
+                  <Button fx:id="switchToRetailerSelectionButton" onAction="#switchToRetailerSelection" style="-fx-background-color: white;" text="Return to Selection" />
                </children>
             </HBox>
             <TableView fx:id="rtmPlanningTable1" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="130.0" prefWidth="1464.0" styleClass="firstTable" stylesheets="@../styles/Styles.css">
