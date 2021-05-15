@@ -80,7 +80,7 @@ public class PricingPromotionControllerTest{
     }
     @org.junit.jupiter.api.BeforeEach
     void setUp(FxRobot robot) {
-        retailer= new SimpleObjectProperty<>(new Retailer("ahold", RTMPlanningController.getRetailerProducts(),
+        retailer= new SimpleObjectProperty<>(new Retailer("ahold", MenuController.getRetailerProducts(),
                 0 ,  new BigDecimal("40") , 158,new BigDecimal("3.0")));
             controller.setRetailer(retailer.get());
 

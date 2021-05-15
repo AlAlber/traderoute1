@@ -794,62 +794,6 @@ public class RTMPlanningController implements Initializable {
         charts.stream().forEach(chart -> chart.updateChart(rtmPlanningTable1.getItems()));
     }
 
-
-    /**
-     * Loads dummy table data.
-     */
-    public static ObservableList<RTMOption> getRTMOptions() {
-        ObservableList<RTMOption> rtmOptions = observableArrayList();
-        RTMOption testOption = new RTMOption("Direct-to-Customer", new BigDecimal("0.29"), new BigDecimal("7500"),
-                new BigDecimal("3.59"), new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"));
-        testOption.setResultingEverydayRetailOverride(new BigDecimal("5.99"));
-        testOption.setLandedStoreCost(new BigDecimal("3.59"));
-        rtmOptions.add(testOption);
-        RTMOption optionTwo = new RTMOption("Direct-to-Customer", new BigDecimal("0.0"), new BigDecimal("3500"),
-                new BigDecimal("3.07"), new BigDecimal("3.75"), new BigDecimal("0.0"), new BigDecimal("0.0"));
-        optionTwo.setResultingEverydayRetailOverride(new BigDecimal("6.49"));
-        optionTwo.setEverydayRetailCalcd(new BigDecimal("6.32"));
-        optionTwo.setLandedStoreCost(new BigDecimal("3.79"));
-        optionTwo.setRTMName("Option2");
-        rtmOptions.add(optionTwo);
-        RTMOption optionThree = new RTMOption();
-        optionThree.setRTMName("Option3");
-        rtmOptions.add(optionThree);
-        RTMOption optionFour = new RTMOption();
-        optionFour.setRTMName("Option4");
-        rtmOptions.add(optionFour);
-        return rtmOptions;
-    }
-
-    /**
-     * Load dummy RetailerProduct.
-     */
-    public static ObservableList<RetailerProduct> getRetailerProducts() {
-        ObservableList<RetailerProduct> retailerProducts = observableArrayList();
-        ObservableList<Sku> skus = observableArrayList();
-        ObservableList<Meeting> meetings = observableArrayList();
-        skus.addAll(new Sku("dill", "current", "great taste"), new Sku("dill", "current", "great taste"),
-                new Sku("dill", "current", "great taste"));
-        meetings.addAll(new Meeting("Review Meeting", "here", LocalDate.of(2022, 12, 5), "11:15", "will be fun"),
-                new Meeting());
-        retailerProducts.add(new RetailerProduct(new Product("Big Time Food Company", "24 oz pickles",
-                new BigDecimal("3.59"), new BigDecimal("0.29"), new BigDecimal("3.30"), new BigDecimal("2.99"),
-                new BigDecimal("2.05"), new BigDecimal("-1.15"), new BigDecimal("0.0"), new BigDecimal("0.0"),
-                new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"),
-                new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"),
-                new BigDecimal("0.0"), new BigDecimal("0.0"), MenuController.getExtendedSkus()), getRTMOptions(), skus,
-                meetings, getDummyPromoPlans()));
-        return retailerProducts;
-    }
-
-    public static ObservableList<PromoPlan> getDummyPromoPlans() {
-        ObservableList<PromoPlan> promoPlans = observableArrayList();
-        promoPlans.add(new PromoPlan(0));
-        promoPlans.add(new PromoPlan(1));
-        promoPlans.add(new PromoPlan(2));
-        promoPlans.add(new PromoPlan(3));
-        return promoPlans;
-    }
     private void switchScenes(String fxml) throws IOException {
         App.getNewController(fxml).setRetailer(retailer.get());
     }

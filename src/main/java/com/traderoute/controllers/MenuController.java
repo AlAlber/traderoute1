@@ -222,7 +222,7 @@ public class MenuController implements Initializable {
     /*
      * Load dummy RetailerProduct
      */
-    public ObservableList<RetailerProduct> getRetailerProducts() {
+    public static ObservableList<RetailerProduct> getRetailerProducts() {
         ObservableList<RetailerProduct> retailerProducts = FXCollections.observableArrayList();
         ObservableList<Sku> skus = FXCollections.observableArrayList(getExampleSkus().get(0), getExampleSkus().get(1),
                 getExampleSkus().get(2), getExampleSkus().get(3), getExampleSkus().get(4));
@@ -366,7 +366,7 @@ public class MenuController implements Initializable {
         return meetings;
     }
 
-    public ObservableList<Sku> getExampleSkus() {
+    public static ObservableList<Sku> getExampleSkus() {
         ObservableList<Sku> skus = FXCollections.observableArrayList();
         skus.add(new Sku("First Sku", "current", "love this one"));
         skus.add(new Sku("Second Sku", "current", "Not my favorite"));

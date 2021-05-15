@@ -40,7 +40,7 @@ class RTMPlanningControllerTest {
     private RTMPlanningController controller;
     private ObservableList<RTMOption> rtmOptions;
     private RTMOption testOption = new RTMOption();
-    private SimpleObjectProperty<Retailer> retailer= new SimpleObjectProperty<>(new Retailer("ahold", RTMPlanningController.getRetailerProducts(),0 ,  new BigDecimal("40") , 158,new BigDecimal("3.0")));;
+    private SimpleObjectProperty<Retailer> retailer= new SimpleObjectProperty<>(new Retailer("ahold", MenuController.getRetailerProducts(),0 ,  new BigDecimal("40") , 158,new BigDecimal("3.0")));;
     private TableView<RTMOption> rtmPlanningTable1;
     private TableView<RTMOption> rtmPlanningTable2;
     private BigDecimalTextField everydayGpmField;
