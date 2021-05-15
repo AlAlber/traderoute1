@@ -83,8 +83,8 @@ class RTMOptionTest {
 
     @org.junit.jupiter.api.Test
     void testUpdateEstimatedAnnualVolumePerSku() {
-        optionOne.setYearOneStoreCount(158);
-        optionTwo.setYearOneStoreCount(158);
+//        optionOne.setYearOneStoreCount(158);
+//        optionTwo.setYearOneStoreCount(158);
         optionOne.setElasticizedUnitVelocity(new BigDecimal("1.2"));
         optionTwo.setElasticizedUnitVelocity(new BigDecimal("0.7161936560640")); //needs exact value otherwise it doesnt work
         optionOne.updateEstimatedAnnualVolumePerSku();

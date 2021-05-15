@@ -5,11 +5,10 @@ import com.traderoute.cells.CustomNonEditCell;
 import com.traderoute.charts.*;
 import com.traderoute.data.*;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
@@ -17,22 +16,13 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.util.Callback;
-import javafx.util.StringConverter;
 import javafx.util.converter.BigDecimalStringConverter;
 
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.net.URL;
-import java.time.LocalDate;
 import java.util.*;
-import java.util.function.BiFunction;
-import java.util.function.UnaryOperator;
-import java.util.regex.Pattern;
-
-import static javafx.collections.FXCollections.*;
-//<a href="#{@link}">{@link URL}</a>
 
 /**
  * On this page a user can type in information about their Product for a a specific Retailer. In the brandNameBox a user
@@ -292,6 +282,8 @@ public class RTMPlanningController implements Initializable {
     @FXML
     private VBox weeklyUfswVBox;
 
+    private SimpleObjectProperty<RetailerProduct> currentRetailerProduct;
+
     @Override
     public void initialize(final URL url, final ResourceBundle resourceBundle) {
         chartHBox.getChildren().addAll(landedStoreCostChart, everydayRetailCalcdChart,
@@ -304,16 +296,20 @@ public class RTMPlanningController implements Initializable {
         everydayGpmField.setId("everydayGpmField");
         spoilsFeesField.setId("spoilsFeesField");
         weeklyUfswAtMinField.setId("weeklyUfswAtMinField");
-        yearOneStoreCountField.onActionProperty().addListener(e -> changeYearOneStoreCount());
+        yearOneStoreCountField.addEventHandler(ActionEvent.ACTION, e -> changeYearOneStoreCount());
         everydayGpmField.onActionProperty().addListener(e -> changeEveryDayGpmCellEvent());
         spoilsFeesField.onActionProperty().addListener(e -> changeSpoilsAndFeesEvent());
         weeklyUfswAtMinField.onActionProperty().addListener(e -> changeWeeklyUSFWAtMinEvent());
 
+        currentRetailerProduct = new SimpleObjectProperty<>(MenuController.getRetailerProducts().get(0));
+        rtmPlanningTable1.getItems().stream().forEach(e -> e.setRetailerProduct(currentRetailerProduct.get()));
 
         productVBox.getChildren().add(0, brandNameBox);
         productVBox.getChildren().add(1, productClassBox);
         brandNameBox.setOnAction(e -> changeBrandComboboxEvent());
         productClassBox.setOnAction(e -> changeProductClassComboboxEvent());
+
+
 
         // Set up cell value factories
         setCellValueFactories();
@@ -460,8 +456,9 @@ public class RTMPlanningController implements Initializable {
         // Stuff that should be implemented differently
         this.weeklyUfswAtMinField.setText(currentRtmOptions.get(0).getWeeklyUSFWAtMin().toString());
         for (RTMOption row : rtmPlanningTable1.getItems()) {
+            row.setRetailerProduct(currentRetailerProduct);
             row.setProduct(currentRetailerProduct.getProduct());
-            row.setYearOneStoreCount(getRetailer().getYearOneStoreCount());
+//            row.setYearOneStoreCount(getRetailer().getYearOneStoreCount());
             row.setEverydayGPM(getRetailer().getEverydayGPM());
             row.setSpoilsAndFees(
                     getRetailer().getSpoilsFees().divide((new BigDecimal("100")), divisionScale, RoundingMode.HALF_UP));
@@ -526,10 +523,14 @@ public class RTMPlanningController implements Initializable {
      * RTMOptions. Also updates charts.
      */
     public void changeYearOneStoreCount() {
+        System.out.println("hello");
         rtmPlanningTable2.setItems(rtmPlanningTable1.getItems());
-        for (RTMOption row : rtmPlanningTable2.getItems()) {
-            row.setYearOneStoreCount(yearOneStoreCountField.getValue());
-        }
+        currentRetailerProduct.get().setYearOneStoreCount(yearOneStoreCountField.getValue());
+//        for (RTMOption row : rtmPlanningTable2.getItems()) {
+//            row.setYearOneStoreCount(yearOneStoreCountField.getValue());
+//        }
+
+        System.out.println(rtmPlanningTable1.getItems().get(0).getYearOneStoreCount());
         rtmPlanningTable2.refresh();
         updateCharts();
     }
@@ -592,7 +593,7 @@ public class RTMPlanningController implements Initializable {
      */
     public void changeFirstReceiverCellEvent(final TableColumn.CellEditEvent editedCell) {
         getFocusedRtmOption().setFirstReceiver(new BigDecimal(editedCell.getNewValue().toString()));
-        maxReceivers();
+        maxReceivers(getFocusedRtmOption());
         updateCharts();
     }
 
@@ -605,7 +606,7 @@ public class RTMPlanningController implements Initializable {
      */
     public void changeSecondReceiverCellEvent(final TableColumn.CellEditEvent editedCell) {
         getFocusedRtmOption().setSecondReceiver(new BigDecimal(editedCell.getNewValue().toString()));
-        maxReceivers();
+        maxReceivers(getFocusedRtmOption());
     }
 
     /**
@@ -617,7 +618,7 @@ public class RTMPlanningController implements Initializable {
      */
     public void changeThirdReceiverCellEvent(final TableColumn.CellEditEvent editedCell) {
         getFocusedRtmOption().setThirdReceiver(new BigDecimal(editedCell.getNewValue().toString()));
-        maxReceivers();
+        maxReceivers(getFocusedRtmOption());
     }
 
     /**
@@ -629,7 +630,7 @@ public class RTMPlanningController implements Initializable {
      */
     public void changeFourthReceiverCellEvent(final TableColumn.CellEditEvent editedCell) {
         getFocusedRtmOption().setFourthReceiver(new BigDecimal(editedCell.getNewValue().toString()));
-        maxReceivers();
+        maxReceivers(getFocusedRtmOption());
     }
 
     /**
@@ -638,11 +639,11 @@ public class RTMPlanningController implements Initializable {
      * @param selectedOption
      *            RTMOption where max value from receivers needs to be calculated.
      */
-    public void maxReceivers() {
-        BigDecimal maxReceivers = getFocusedRtmOption().getFirstReceiver().max(getFocusedRtmOption().getSecondReceiver()
-                .max(getFocusedRtmOption().getThirdReceiver().max(getFocusedRtmOption().getFourthReceiver())));
+    public void maxReceivers(final RTMOption selectedOption) {
+        BigDecimal maxReceivers = selectedOption.getFirstReceiver().max(selectedOption.getSecondReceiver()
+                .max(selectedOption.getThirdReceiver().max(selectedOption.getFourthReceiver())));
         if (maxReceivers.compareTo(new BigDecimal("0.0")) > 0) {
-            getFocusedRtmOption().setLandedStoreCost(maxReceivers);
+            selectedOption.setLandedStoreCost(maxReceivers);
         }
     }
 
@@ -664,7 +665,9 @@ public class RTMPlanningController implements Initializable {
 
     @FXML
     private void switchToAssortment() throws IOException {
+        System.out.println("workign");
         switchScenes("assortment");
+
     }
     @FXML
     private void switchToRetailerSelection() throws IOException {
@@ -752,19 +755,25 @@ public class RTMPlanningController implements Initializable {
     public void setRetailer(final Retailer selectedRetailer) {
         this.retailer.set(selectedRetailer);
         ObservableList<RetailerProduct> retailerProducts = getRetailer().getRetailerProducts();
-        RetailerProduct currentRetailerProduct = retailerProducts.get(getRetailer().getCurrentRetailerProductIndex());
-        ObservableList<RTMOption> currentRtmOptions = currentRetailerProduct.getRtmOptions();
+        RetailerProduct thisRetailerProduct = retailerProducts.get(getRetailer().getCurrentRetailerProductIndex());
+        ObservableList<RTMOption> currentRtmOptions = thisRetailerProduct.getRtmOptions();
         // this.firstTableView.setItems(currentRtmOptions);
         // setUpListeners();
         // CHANGE PRODUCT BOX TO AVE RETAILER OPTION SELECTION
         // INSTEAD OF PRODUCT SELECTION
         // this.secondTableView.setItems(currentRtmOptions);
 
-        updateRetailerProduct(currentRetailerProduct.getProduct());
+        currentRetailerProduct.set(getRetailer().getRetailerProducts().get(0));
+//        rtmPlanningTable1.getItems().stream().forEach(e -> e.setRetailerProduct(currentRetailerProduct.get()));
+
+        updateRetailerProduct(thisRetailerProduct.getProduct());
+
+
+
         this.brandNameBox.setUniqueItems(MenuController.getExampleProducts());
-        this.brandNameBox.valueProperty().setValue(currentRetailerProduct.getProduct());
+        this.brandNameBox.valueProperty().setValue(thisRetailerProduct.getProduct());
         this.productClassBox.setItems(productClassBox.getCorrectProductClasses(MenuController.getExampleProducts(), brandNameBox.getValue()));
-        this.productClassBox.valueProperty().setValue(currentRetailerProduct.getProduct());
+        this.productClassBox.valueProperty().setValue(thisRetailerProduct.getProduct());
         // listLabel.setText("List = $" + currentRetailerProduct.getProduct().getUnitListCost());
         // fobLabel.setText("F.O.B. = $" + currentRetailerProduct.getProduct().getUnitFobCost());
         // net1GoalLabel.setText("Net 1 Goal = $" + currentRetailerProduct.getProduct().getUnitNet1Goal());

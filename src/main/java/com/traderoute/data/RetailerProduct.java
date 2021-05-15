@@ -1,5 +1,6 @@
 package com.traderoute.data;
 
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.ObservableList;
 
@@ -9,14 +10,17 @@ public class RetailerProduct {
     private SimpleObjectProperty<ObservableList<Sku>> skus;
     private SimpleObjectProperty<ObservableList<Meeting>> meetings;
     private SimpleObjectProperty<ObservableList<PromoPlan>> promoPlans;
+    private SimpleIntegerProperty yearOneStoreCount;
 
     public RetailerProduct(Product product, ObservableList rtmOptions, ObservableList skus, ObservableList meetings,
-            ObservableList promoPlans) {
+            ObservableList promoPlans, int yearOneStoreCount) {
         this.product = new SimpleObjectProperty<>(product);
         this.rtmOptions = new SimpleObjectProperty<>(rtmOptions);
         this.skus = new SimpleObjectProperty<>(skus);
         this.meetings = new SimpleObjectProperty<>(meetings);
         this.promoPlans = new SimpleObjectProperty<>(promoPlans);
+
+        this.yearOneStoreCount = new SimpleIntegerProperty(yearOneStoreCount);
     }
 
     public RetailerProduct() {
@@ -25,6 +29,20 @@ public class RetailerProduct {
         this.skus = new SimpleObjectProperty<>();
         this.meetings = new SimpleObjectProperty<>();
         this.promoPlans = new SimpleObjectProperty<>();
+
+        this.yearOneStoreCount = new SimpleIntegerProperty();
+    }
+
+    public int getYearOneStoreCount() {
+        return yearOneStoreCount.get();
+    }
+
+    public SimpleIntegerProperty yearOneStoreCountProperty() {
+        return yearOneStoreCount;
+    }
+
+    public void setYearOneStoreCount(int yearOneStoreCount) {
+        this.yearOneStoreCount.set(yearOneStoreCount);
     }
 
     public ObservableList<PromoPlan> getPromoPlans() {

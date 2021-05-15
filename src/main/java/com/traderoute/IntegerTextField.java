@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 
 public class IntegerTextField extends NumberTextField{
     public IntegerTextField(Number defaultValue, Number minValue, Number maxValue,
-                            boolean positiveOnly) {
+                            boolean positiveOnly ) {
         super(defaultValue, minValue, maxValue, positiveOnly);
         this.textProperty().addListener(new ChangeListener<String>() {
             @Override

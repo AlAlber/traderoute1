@@ -1,5 +1,6 @@
 package com.traderoute;
 
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import javafx.scene.control.*;
@@ -41,4 +42,5 @@ public abstract class NumberTextField extends TextField {
         return defaultValue;
     }
     public abstract Number getValue();
+
 }
