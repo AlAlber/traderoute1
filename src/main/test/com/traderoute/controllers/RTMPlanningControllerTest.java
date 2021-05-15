@@ -8,6 +8,7 @@ import com.traderoute.data.Retailer;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -84,15 +85,18 @@ class RTMPlanningControllerTest {
     Label net1GoalLabel;
     Label elasticityRatioLabel;
 
+    private FXMLLoader fxmlLoader;
 
 
     @Start
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = App.createFXMLLoader("secondTable");
+        fxmlLoader = App.createFXMLLoader("secondTable");
         Scene scene = new Scene(fxmlLoader.load());
+        App.setNewScene(scene);
         controller = fxmlLoader.getController();
         controller.setRetailer(retailer.get());
-        stage.setScene(scene);
+
+        stage.setScene(App.getScene());
         stage.show();
     }
 
@@ -809,6 +813,28 @@ class RTMPlanningControllerTest {
         Assertions.assertEquals(((Label)fourYearEqGpPerSkuColumn.getGraphic()).getTooltip().getText(), "4-Year Equivalized Gross Profit $ Per Sku");
         Assertions.assertEquals(((Label)fourYearEqGpPerUnitColumn.getGraphic()).getTooltip().getText(), "4-Year Equivalized Gross Profit $ Per Unit");
     }
+    @Test
+    public void testSwitchToAssortment(FxRobot robot){
+        Button switchToAssortmentButton = robot.lookup("#switchToAssortmentButton").queryButton();
+        robot.clickOn(switchToAssortmentButton);
+
+        Assertions.assertTrue(App.getFxmlLoader().getController() instanceof AssortmentController);
+    }
+    @Test
+    public void testSwitchToRetailerSelection(FxRobot robot){
+        Button switchToRetailerSelectionButton = robot.lookup("#switchToRetailerSelectionButton").queryButton();
+        robot.clickOn(switchToRetailerSelectionButton);
+
+        Assertions.assertTrue(App.getFxmlLoader().getController() instanceof RetailerSelectionController);
+    }
+    @Test
+    public void testSwitchToPricingPromotion(FxRobot robot){
+        Button switchToPricingPromotionButton = robot.lookup("#switchToPricingPromotionButton").queryButton();
+        robot.clickOn(switchToPricingPromotionButton);
+
+        Assertions.assertTrue(App.getFxmlLoader().getController() instanceof PricingPromotionController);
+    }
+
 
 
     /**
