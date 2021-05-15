@@ -1,7 +1,9 @@
 package com.traderoute;
 
+import com.traderoute.controllers.AssortmentController;
 import com.traderoute.controllers.MenuController;
 import javafx.application.Application;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -28,6 +30,11 @@ public class App extends Application {
         stage.setScene(scene);
         stage.show();
 
+    }
+    public static FXMLLoader switchToNewScene(String fxml) throws IOException {
+        FXMLLoader loader = App.createFXMLLoader(fxml);
+        App.setSceneRoot(loader.load());
+        return loader;
     }
 
     public static Stage getStage() {

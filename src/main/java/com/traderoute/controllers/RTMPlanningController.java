@@ -853,29 +853,20 @@ public class RTMPlanningController implements Initializable {
 
     @FXML
     private void switchToAssortment() throws IOException {
-        FXMLLoader assortmentLoader = App.createFXMLLoader("assortment");
-        App.setSceneRoot(assortmentLoader.load());
-
-        AssortmentController assortmentController = assortmentLoader.getController();
+        AssortmentController assortmentController = App.switchToNewScene("assortment").getController();
         assortmentController.setRetailer(retailer.get());
     }
-
     @FXML
     private void switchToRetailerSelection() throws IOException {
-        FXMLLoader retailerSelectionLoader = App.createFXMLLoader("retailerSelection");
-        App.setSceneRoot(retailerSelectionLoader.load());
-        RetailerSelectionController assortmentController = retailerSelectionLoader.getController();
+        RetailerSelectionController assortmentController = App.switchToNewScene("retailerSelection").getController();
         assortmentController.setRetailer(retailer.get());
     }
-
     @FXML
     private void switchToPricingPromotion() throws IOException {
-        FXMLLoader pricingPromotionLoader = App.createFXMLLoader("pricingPromotion");
-        App.setSceneRoot(pricingPromotionLoader.load());
-
-        PricingPromotionController pricingPromotionController = pricingPromotionLoader.getController();
+        PricingPromotionController pricingPromotionController = App.switchToNewScene("pricingPromotion").getController();
         pricingPromotionController.setRetailer(retailer.get());
     }
+
     public static void setColHeaderTip(Label colLabel, Tooltip tip, TableColumn col) {
         colLabel.setTooltip(tip);
         col.setGraphic(colLabel);
