@@ -213,102 +213,6 @@ public class RTMPlanningController implements Initializable {
     @FXML
     private Label maxOverrideLabel;
 
-    /**
-     * Labels for column headers.
-     */
-    @FXML
-    private final Label rtmNameColumnLabel = new Label("Route-to-Market Options");
-    @FXML
-    private final Label rtmNameColumnLabel2 = new Label("Route-to-Market Options");
-    @FXML
-    private final Label slottingPerSkuLabel = new Label("Slotting Per Sku");
-    @FXML
-    private final Label freightOutPerUnitLabel = new Label("Freight Out Per Unit");
-    @FXML
-    private final Label firstReceiverLabel = new Label("First Receiver Pays");
-    @FXML
-    private final Label secondReceiverLabel = new Label("Second Receiver Pays");
-    @FXML
-    private final Label thirdReceiverLabel = new Label("Third Receiver Pays");
-    @FXML
-    private final Label fourthReceiverLabel = new Label("Fourth Receiver Pays");
-    @FXML
-    private final Label landedStoreCostLabel = new Label("Landed Store Cost");
-    @FXML
-    private final Label everyDayRetailCalcdLabel = new Label("Calculated Everyday Retail");
-    @FXML
-    private final Label everyDayRetailOverrideLabel = new Label("Override Everyday Retail");
-    @FXML
-    private final Label elasticizedUnitVelocityLabel = new Label("Elasticized Unit Velocity");
-    @FXML
-    private final Label annualVolumePerSkuLabel = new Label("Annual Volume Per Sku");
-    @FXML
-    private final Label slottingPaybackPeriodLabel = new Label("Slotting Payback Period");
-    @FXML
-    private final Label postFreightPostSpoilsLabel = new Label("Post Freight & Spoils We Collect");
-    @FXML
-    private final Label unspentTradePerUnitLabel = new Label("Unspent Trade Per Unit");
-    @FXML
-    private final Label fourYearEqGpPerSkuLabel = new Label("4-Year EQ GP $ Per Sku");
-    @FXML
-    private final Label fourYearEqGpPerUnitLabel = new Label("4-Year EQ GP $ Per Unit");
-
-    /**
-     * Tooltips to be added to Column Header Labels.
-     */
-    @FXML
-    private final Tooltip rtmNameColumnTip = new Tooltip(
-            "Please enter the most likely 'Route-To-Market'" + " options to get the product to the market.");
-    @FXML
-    private final Tooltip slottingPerSkuTip = new Tooltip(
-            "Please enter the required slotting (placement)" + " investment specific to this 'Route-To-Market' option.");
-    @FXML
-    private final Tooltip freightOutPerUnitTip = new Tooltip("If we're responsible for the cost of shipping for"
-            + " this route-to -market option, please enter in the 'per"
-            + " unit cost' of this 'Freight-Out.' For F.O.B (Pick-up)" + " Customers, Freight-Out equals $0.");
-    @FXML
-    private final Tooltip firstReceiverTip = new Tooltip(
-            "The Per Unit Cost the First Receiver pays us," + " typically the Unit List Cost or the Unit F.O.B");
-    @FXML
-    private final Tooltip secondReceiverTip = new Tooltip(
-            "The Per Unit Cost the Second Receiver pays" + " to the First Receiver.");
-    @FXML
-    private final Tooltip thirdReceiverTip = new Tooltip(
-            "The Per Unit Cost the Third Receiver" + " pays to the Second Receiver.");
-    @FXML
-    private final Tooltip fourthReceiverTip = new Tooltip(
-            "The Per Unit Cost the Fourth Receiver" + " pays to the Third Receiver.");
-    @FXML
-    private final Tooltip landedStoreCostTip = new Tooltip("The Per Unit Cost the Retail OutLet (Last"
-            + " Receiver pays prior to applying the Required GPM%" + " to establish the Everyday Retail.");
-    @FXML
-    private final Tooltip everyDayRetailCalcdTip = new Tooltip("The auto-calculated Resulting Everyday"
-            + " Retail given the Landed Store Cost and Required " + "Gross Profit Margin %.");
-    @FXML
-    private final Tooltip everyDayRetailOverrideTip = new Tooltip(
-            "Please enter the REALISTIC Everyday Retail" + " considering the auto-calculated retail to the left.");
-    @FXML
-    private final Tooltip elasticizedUnitVelocityTip = new Tooltip(
-            "For each 'Route-To-Market' option provided," + " these are the Estimated Weekly Unit Velocities given"
-                    + " the Product Class's Price Elasticity Multiple (for"
-                    + " each X% increase in Unit Price there is a Y% decrease" + " in Units Sold");
-    @FXML
-    private final Tooltip annualVolumePerSkuTip = new Tooltip("For each route-to-market option provided,"
-            + " these are the Estimated Annual Volumes Per SKU " + "(accounting for price elasticities)");
-    @FXML
-    private final Tooltip slottingPaybackPeriodTip = new Tooltip(
-            "If Slotting is a consideration these" + " are the Payback Periods (in years) for each "
-                    + "route-to-market option provided to recoup the " + "initial Slotting Investment.");
-    @FXML
-    private final Tooltip postFreightPostSpoilsTip = new Tooltip(
-            "For each route-to-market option provided," + " the Per Unit Rate we collect after which Freight"
-                    + " Costs and Spoils are accounted (but prior to Trade" + " Spending).");
-    @FXML
-    private final Tooltip unspentTradePerUnitTip = new Tooltip("Unspent Trade Per Unit");
-    @FXML
-    private final Tooltip fourYearEqGpPerSkuTip = new Tooltip("4-Year Equivalized Gross Profit $ Per Sku");
-    @FXML
-    private final Tooltip fourYearEqGpPerUnitTip = new Tooltip("4-Year Equivalized Gross Profit $ Per Unit");
 
     /**
      * Combobox where user can select the brand name of a Product.
@@ -419,9 +323,6 @@ public class RTMPlanningController implements Initializable {
 
         // Set Bar Chart
         updateCharts();
-
-        // Add Labels to list, give them tooltips
-        setToolTipsTable1And2();
 
         // Set editable columns
         rtmPlanningTable1.setEditable(true);
@@ -691,7 +592,7 @@ public class RTMPlanningController implements Initializable {
      */
     public void changeFirstReceiverCellEvent(final TableColumn.CellEditEvent editedCell) {
         getFocusedRtmOption().setFirstReceiver(new BigDecimal(editedCell.getNewValue().toString()));
-        maxReceivers(getFocusedRtmOption());
+        maxReceivers();
         updateCharts();
     }
 
@@ -704,7 +605,7 @@ public class RTMPlanningController implements Initializable {
      */
     public void changeSecondReceiverCellEvent(final TableColumn.CellEditEvent editedCell) {
         getFocusedRtmOption().setSecondReceiver(new BigDecimal(editedCell.getNewValue().toString()));
-        maxReceivers(getFocusedRtmOption());
+        maxReceivers();
     }
 
     /**
@@ -716,7 +617,7 @@ public class RTMPlanningController implements Initializable {
      */
     public void changeThirdReceiverCellEvent(final TableColumn.CellEditEvent editedCell) {
         getFocusedRtmOption().setThirdReceiver(new BigDecimal(editedCell.getNewValue().toString()));
-        maxReceivers(getFocusedRtmOption());
+        maxReceivers();
     }
 
     /**
@@ -728,7 +629,7 @@ public class RTMPlanningController implements Initializable {
      */
     public void changeFourthReceiverCellEvent(final TableColumn.CellEditEvent editedCell) {
         getFocusedRtmOption().setFourthReceiver(new BigDecimal(editedCell.getNewValue().toString()));
-        maxReceivers(getFocusedRtmOption());
+        maxReceivers();
     }
 
     /**
@@ -737,11 +638,11 @@ public class RTMPlanningController implements Initializable {
      * @param selectedOption
      *            RTMOption where max value from receivers needs to be calculated.
      */
-    public void maxReceivers(final RTMOption selectedOption) {
-        BigDecimal maxReceivers = selectedOption.getFirstReceiver().max(selectedOption.getSecondReceiver()
-                .max(selectedOption.getThirdReceiver().max(selectedOption.getFourthReceiver())));
+    public void maxReceivers() {
+        BigDecimal maxReceivers = getFocusedRtmOption().getFirstReceiver().max(getFocusedRtmOption().getSecondReceiver()
+                .max(getFocusedRtmOption().getThirdReceiver().max(getFocusedRtmOption().getFourthReceiver())));
         if (maxReceivers.compareTo(new BigDecimal("0.0")) > 0) {
-            selectedOption.setLandedStoreCost(maxReceivers);
+            getFocusedRtmOption().setLandedStoreCost(maxReceivers);
         }
     }
 
@@ -772,36 +673,6 @@ public class RTMPlanningController implements Initializable {
     @FXML
     private void switchToPricingPromotion() throws IOException {
         switchScenes("pricingPromotion");
-    }
-
-    public static void setColHeaderTip(Label colLabel, Tooltip tip, TableColumn col) {
-        colLabel.setTooltip(tip);
-        col.setGraphic(colLabel);
-    }
-
-    /**
-     * Set Column header labels and tooltips for first and second planning table.
-     */
-    public void setToolTipsTable1And2() {
-//        setColHeaderTip(rtmNameColumnLabel, rtmNameColumnTip, rtmNameCol1);
-//        setColHeaderTip(freightOutPerUnitLabel, freightOutPerUnitTip,freightOutPerUnitCol);
-//        setColHeaderTip(slottingPerSkuLabel, slottingPerSkuTip, slottingPerSkuCol);
-//        setColHeaderTip(firstReceiverLabel, firstReceiverTip, firstReceiverCol);
-//        setColHeaderTip(secondReceiverLabel, secondReceiverTip, secondReceiverColumn);
-//        setColHeaderTip(thirdReceiverLabel, thirdReceiverTip, thirdReceiverColumn);
-//        setColHeaderTip(fourthReceiverLabel,fourthReceiverTip, fourthReceiverColumn);
-//        setColHeaderTip(landedStoreCostLabel, landedStoreCostTip, landedStoreCostColumn);
-//        setColHeaderTip(everyDayRetailCalcdLabel, everyDayRetailCalcdTip, everydayRetailCalcdCol);
-//        setColHeaderTip(everyDayRetailOverrideLabel, everyDayRetailOverrideTip, everydayRetailOverrideCol);
-//
-//        rtmNameColumn2.setGraphic(rtmNameColumnLabel2);
-//        setColHeaderTip(elasticizedUnitVelocityLabel, elasticizedUnitVelocityTip, elasticizedUnitVelocityColumn);
-//        setColHeaderTip(annualVolumePerSkuLabel, annualVolumePerSkuTip, annualVolumePerSkuColumn);
-//        setColHeaderTip(slottingPaybackPeriodLabel, slottingPaybackPeriodTip, slottingPaybackPeriodColumn);
-//        setColHeaderTip(postFreightPostSpoilsLabel,postFreightPostSpoilsTip, postFreightPostSpoilsPerUnitCol);
-//        setColHeaderTip(unspentTradePerUnitLabel, unspentTradePerUnitTip, unspentTradePerUnitColumn);
-//        setColHeaderTip(fourYearEqGpPerSkuLabel, fourYearEqGpPerSkuTip, fourYearEqGpPerSkuColumn);
-//        setColHeaderTip(fourYearEqGpPerUnitLabel, fourYearEqGpPerUnitTip, fourYearEqGpPerUnitColumn);
     }
 
     /**
