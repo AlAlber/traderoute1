@@ -27,7 +27,7 @@ import java.time.LocalDate;
 import java.util.Date;
 import java.util.ResourceBundle;
 
-public class AssortmentController implements Initializable {
+public class AssortmentController implements Initializable, MyController {
     @FXML
     private TableView<Meeting> meetingTableView;
     @FXML

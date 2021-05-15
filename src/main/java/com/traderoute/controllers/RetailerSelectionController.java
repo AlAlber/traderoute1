@@ -30,7 +30,7 @@ import javafx.stage.Window;
 
 import static javafx.beans.binding.Bindings.add;
 
-public class RetailerSelectionController implements Initializable {
+public class RetailerSelectionController implements Initializable, MyController {
 
     @FXML
     private TextField retailerSelectField;
