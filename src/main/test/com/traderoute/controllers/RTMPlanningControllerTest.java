@@ -113,13 +113,13 @@ class RTMPlanningControllerTest {
 
 
         RTMOption rtmOption1 = new RTMOption();
-        rtmOption1.setRTMName("Option 1");
+        rtmOption1.setRtmName("Option 1");
         RTMOption rtmOption2 = new RTMOption();
-        rtmOption2.setRTMName("Option 2");
+        rtmOption2.setRtmName("Option 2");
         RTMOption rtmOption3 = new RTMOption();
-        rtmOption3.setRTMName("Option 3");
+        rtmOption3.setRtmName("Option 3");
         RTMOption rtmOption4 = new RTMOption();
-        rtmOption4.setRTMName("Option 4");
+        rtmOption4.setRtmName("Option 4");
         rtmPlanningTable1.setItems(FXCollections.observableArrayList(rtmOption1, rtmOption2, rtmOption3, rtmOption4));
         //Set up row listeners which is normally done in initialize
         controller.setUpListeners();
@@ -233,7 +233,7 @@ class RTMPlanningControllerTest {
         robot.write("40.0");
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
         Assertions.assertEquals(new BigDecimal("5.9833333333"),rtmPlanningTable1.getItems().get(3).getEverydayRetailCalcd());
-        Assertions.assertEquals(new BigDecimal("5.9833333333"),rtmPlanningTable1.getItems().get(3).getResultingEverydayRetailOverride());
+        Assertions.assertEquals(new BigDecimal("5.9833333333"),rtmPlanningTable1.getItems().get(3).getEverydayRetailOverride());
     }
 
     @Test
@@ -270,7 +270,7 @@ class RTMPlanningControllerTest {
         robot.doubleClickOn(cell(table1String, 3, 0, robot));
         robot.write("Direct To Customer Model");
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
-        Assertions.assertEquals(rtmPlanningTable1.getItems().get(3).getRTMName(),"Direct To Customer Model");
+        Assertions.assertEquals(rtmPlanningTable1.getItems().get(3).getRtmName(),"Direct To Customer Model");
         robot.doubleClickOn(cell(table1String, 3, 1, robot));
         robot.write("7500");
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
@@ -285,12 +285,12 @@ class RTMPlanningControllerTest {
         Assertions.assertEquals(rtmPlanningTable1.getItems().get(3).getFirstReceiver(),new BigDecimal("3.59"));
         Assertions.assertEquals(rtmPlanningTable1.getItems().get(3).getLandedStoreCost(),new BigDecimal("3.59"));
         Assertions.assertEquals(rtmPlanningTable1.getItems().get(3).getEverydayRetailCalcd(),new BigDecimal("5.9833333333"), "Resulting Calcd should have changed");
-        Assertions.assertEquals(rtmPlanningTable1.getItems().get(3).getResultingEverydayRetailOverride(),new BigDecimal("5.9833333333"), "Resulting Override should have changed");
+        Assertions.assertEquals(rtmPlanningTable1.getItems().get(3).getEverydayRetailOverride(),new BigDecimal("5.9833333333"), "Resulting Override should have changed");
 //      ^^ ADD THIS LATER ^^
         robot.doubleClickOn(cell(table1String, 3, 9, robot));
         robot.write("5.99");
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
-        Assertions.assertEquals(rtmPlanningTable1.getItems().get(3).getResultingEverydayRetailOverride(),new BigDecimal("5.99"));
+        Assertions.assertEquals(rtmPlanningTable1.getItems().get(3).getEverydayRetailOverride(),new BigDecimal("5.99"));
 
         robot.doubleClickOn(weeklyUfswAtMinField);
         robot.write("1.20");
@@ -307,11 +307,11 @@ class RTMPlanningControllerTest {
     }
     @Test
     public void testChartUpdateRtmName(FxRobot robot) throws InterruptedException {
-        Assertions.assertEquals("Option 1", rtmPlanningTable1.getItems().get(0).getRTMName());
+        Assertions.assertEquals("Option 1", rtmPlanningTable1.getItems().get(0).getRtmName());
         robot.doubleClickOn(cell(table1String, 0, 0, robot));
         robot.write("New RTM Name");
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
-        Assertions.assertEquals("New RTM Name", rtmPlanningTable1.getItems().get(0).getRTMName());
+        Assertions.assertEquals("New RTM Name", rtmPlanningTable1.getItems().get(0).getRtmName());
         assertEqualsXChartValueForFirstRTMOption(robot,everydayRetailCalcdChart, "New RTM Name");
         assertEqualsXChartValueForFirstRTMOption(robot,elasticizedUnitVelocityChart,"New RTM Name");
         assertEqualsXChartValueForFirstRTMOption(robot,annualVolumePerSkuChart, "New RTM Name");

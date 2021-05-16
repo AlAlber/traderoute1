@@ -51,7 +51,7 @@ public abstract class NumberTextField extends TextField {
     public SimpleObjectProperty<Number> valueProperty(){ return value;}
 
     private void setValue(Number newValue){ this.value.set(newValue); }
-    
+
 
 
 

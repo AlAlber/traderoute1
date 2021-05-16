@@ -7,7 +7,7 @@ public class RtmBoxConverter extends StringConverter<RTMOption> {
     @Override
     public String toString(RTMOption rtmOption) {
         if (rtmOption != null) {
-            return rtmOption.getRTMName();
+            return rtmOption.getRtmName();
         }
         return null;
     }

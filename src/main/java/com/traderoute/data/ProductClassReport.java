@@ -6,7 +6,6 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.fxml.FXML;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -82,7 +81,7 @@ public class ProductClassReport {
         this.net1Rate = new SimpleObjectProperty(calculateNet1Rate());
         this.averageSkus = new SimpleObjectProperty(calculateCurrentSkus());
         this.selectedRtm = new SimpleStringProperty(
-                getRetailerProduct().getPromoPlans().get(0).getSelectedRtm().getRTMName());
+                getRetailerProduct().getPromoPlans().get(0).getSelectedRtm().getRtmName());
 
     }
 

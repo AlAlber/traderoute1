@@ -330,14 +330,14 @@ public class RTMPlanningController implements Initializable {
             row.landedStoreCostProperty().addListener(((arg, oldVal, newVal) -> {
                 landedStoreCostChart.updateChart(rtmPlanningTable1.getItems());
             }));
-            row.RTMNameProperty().addListener(((arg, oldVal, newVal) -> {
+            row.rtmNameProperty().addListener(((arg, oldVal, newVal) -> {
                 updateCharts();
             }));
             row.everydayRetailCalcdProperty().addListener(((arg, oldVal, newVal) -> {
                 maxOverrideLabel.setText("of $" + getMinOverride());
                 updateCharts();
             }));
-            row.resultingEverydayRetailOverrideProperty().addListener(((arg, oldVal, newVal) -> {
+            row.everydayRetailOverrideProperty().addListener(((arg, oldVal, newVal) -> {
                 currentRetailerProduct.get().setMinOverride(getMinOverride());
                 rtmPlanningTable1.refresh();
                 row.updateElasticizedUnitVelocity();
@@ -458,7 +458,7 @@ public class RTMPlanningController implements Initializable {
     public BigDecimal getMinOverride() {
         BigDecimal smallest = new BigDecimal("100000000000");
         for (RTMOption row : rtmPlanningTable1.getItems()) {
-            BigDecimal currentNumber = row.getResultingEverydayRetailOverride();
+            BigDecimal currentNumber = row.getEverydayRetailOverride();
             if (currentNumber.compareTo(smallest) < 0 && currentNumber.compareTo(new BigDecimal("0.0")) > 0) {
                 smallest = currentNumber;
             }
@@ -677,7 +677,7 @@ public class RTMPlanningController implements Initializable {
         landedStoreCostColumn.setCellValueFactory(cellData -> cellData.getValue().landedStoreCostProperty());
         everydayRetailCalcdCol.setCellValueFactory(cellData -> cellData.getValue().everydayRetailCalcdProperty());
         everydayRetailOverrideCol
-                .setCellValueFactory(cellData -> cellData.getValue().resultingEverydayRetailOverrideProperty());
+                .setCellValueFactory(cellData -> cellData.getValue().everydayRetailOverrideProperty());
         elasticizedUnitVelocityColumn
                 .setCellValueFactory(cellData -> cellData.getValue().elasticizedUnitVelocityProperty());
         annualVolumePerSkuColumn.setCellValueFactory(cellData -> cellData.getValue().annualVolumePerSkuProperty());

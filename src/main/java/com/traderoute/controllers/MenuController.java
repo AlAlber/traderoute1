@@ -144,24 +144,24 @@ public class MenuController implements Initializable {
         optionTwo.setLandedStoreCost(new BigDecimal("3.79"));
         RTMOptions.add(optionTwo);
         RTMOption optionThree = new RTMOption();
-        optionThree.setRTMName("Option3");
+        optionThree.setRtmName("Option3");
         RTMOptions.add(optionThree);
         RTMOption optionFour = new RTMOption();
-        optionFour.setRTMName("Option4");
+        optionFour.setRtmName("Option4");
         RTMOptions.add(optionFour);
         return RTMOptions;
     }
 
     public static ObservableList<RTMOption> getTestRTMOptions() {
         RTMOption rtmOption1 = new RTMOption();
-        rtmOption1.setRTMName("Option 1");
+        rtmOption1.setRtmName("Option 1");
         rtmOption1.setFirstReceiver(new BigDecimal("3.59"));
         RTMOption rtmOption2 = new RTMOption();
-        rtmOption2.setRTMName("Option 2");
+        rtmOption2.setRtmName("Option 2");
         RTMOption rtmOption3 = new RTMOption();
-        rtmOption3.setRTMName("Option 3");
+        rtmOption3.setRtmName("Option 3");
         RTMOption rtmOption4 = new RTMOption();
-        rtmOption4.setRTMName("Option 4");
+        rtmOption4.setRtmName("Option 4");
         return FXCollections.observableArrayList(rtmOption1, rtmOption2, rtmOption3, rtmOption4);
     }
 
@@ -189,7 +189,7 @@ public class MenuController implements Initializable {
         optionTwo.setLandedStoreCost(new BigDecimal("1.79"));
         RTMOptions.add(optionThree);
         RTMOption optionFour = new RTMOption();
-        optionFour.setRTMName("Option 4");
+        optionFour.setRtmName("Option 4");
         RTMOptions.add(optionFour);
         return RTMOptions;
     }
@@ -214,7 +214,7 @@ public class MenuController implements Initializable {
         optionThree.setLandedStoreCost(new BigDecimal("4.68"));
         RTMOptions.add(optionThree);
         RTMOption optionFour = new RTMOption();
-        optionFour.setRTMName("Option4");
+        optionFour.setRtmName("Option4");
         RTMOptions.add(optionFour);
         return RTMOptions;
     }

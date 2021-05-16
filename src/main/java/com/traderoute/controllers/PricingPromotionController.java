@@ -642,14 +642,14 @@ public class PricingPromotionController implements Initializable, MyController {
         RTMOption selectedRtmOption = (RTMOption) rtmBoxes.get(getCurrentPromoPlanIndex()).getSelectionModel()
                 .getSelectedItem();
         everydayLabels.get(getCurrentPromoPlanIndex())
-                .setText("$" + selectedRtmOption.getResultingEverydayRetailOverride() + " Everyday");
+                .setText("$" + selectedRtmOption.getEverydayRetailOverride() + " Everyday");
         costLabels.get(getCurrentPromoPlanIndex())
                 .setText("$" + selectedRtmOption.getLandedStoreCost().setScale(2, RoundingMode.HALF_UP) + " Cost");
         BigDecimal gpm = new BigDecimal("0.0");
         if (!selectedRtmOption.getLandedStoreCost().equals(new BigDecimal("0.0"))) {
-            gpm = (selectedRtmOption.getResultingEverydayRetailOverride()
+            gpm = (selectedRtmOption.getEverydayRetailOverride()
                     .subtract(selectedRtmOption.getLandedStoreCost()))
-                            .divide(selectedRtmOption.getResultingEverydayRetailOverride(), 2, RoundingMode.HALF_UP);
+                            .divide(selectedRtmOption.getEverydayRetailOverride(), 2, RoundingMode.HALF_UP);
         }
         gpmLabels.get(getCurrentPromoPlanIndex()).setText(gpm.multiply(new BigDecimal("100")) + "% GPM");
         currentPromoPlan.setSelectedRtm(selectedRtmOption);

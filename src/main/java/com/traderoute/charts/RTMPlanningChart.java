@@ -3,7 +3,6 @@ package com.traderoute.charts;
 import com.traderoute.data.RTMOption;
 import javafx.collections.ObservableList;
 import javafx.scene.chart.*;
-import jfxtras.scene.layout.HBox;
 
 import java.math.BigDecimal;
 
@@ -22,7 +21,7 @@ public abstract class RTMPlanningChart extends BarChart {
     public void updateChart(ObservableList<RTMOption> rtmOptions) {
         XYChart.Series<java.lang.String, java.math.BigDecimal> barChartData = new XYChart.Series();
         for (RTMOption row : rtmOptions) {
-            barChartData.getData().add(new XYChart.Data(row.getRTMName(), getYValue(row)));
+            barChartData.getData().add(new XYChart.Data(row.getRtmName(), getYValue(row)));
         }
         this.setData(observableArrayList(new XYChart.Series[]{barChartData}));
     }
