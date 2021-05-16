@@ -1,11 +1,7 @@
 package com.traderoute.data;
 
 import com.traderoute.RTMUpdateListener;
-import com.traderoute.controllers.RTMPlanningController;
 import javafx.beans.property.*;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import lombok.Getter;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -123,23 +119,24 @@ public class RTMOption {
             yearOneStoreCountProperty().addListener(new RTMUpdateListener<>(this, true));
             firstReceiverProperty().addListener(new RTMUpdateListener<>(this, true));
             resultingEverydayRetailOverrideProperty().addListener(new RTMUpdateListener<>(this, true));
+            productProperty().addListener(new RTMUpdateListener<>(this, false));
+            spoilsAndFeesProperty().addListener(new RTMUpdateListener(this, false));
+            minOverrideProperty().addListener(new RTMUpdateListener<>(this, true));
+            weeklyUSFWAtMinProperty().addListener(new RTMUpdateListener<>(this, true));
+            everydayGPMProperty().addListener(((arg1, oldVal1, newVal1) -> {
+                updateResultingEverydayRetailCald();
+            }));
         }));
-        productProperty().addListener(new RTMUpdateListener<>(this, false));
-        spoilsAndFeesProperty().addListener(new RTMUpdateListener(this, false));
         slottingPerSkuProperty().addListener(new RTMUpdateListener<>(this, false));
         freightOutPerUnitProperty().addListener(new RTMUpdateListener<>(this, false));
 
-        minOverrideProperty().addListener(new RTMUpdateListener<>(this, true));
-        weeklyUSFWAtMinProperty().addListener(new RTMUpdateListener<>(this, true));
         /*
          * Check if landedStoreCostProperty changed, if it it did calculate everyday Retail
          */
         landedStoreCostProperty().addListener(((arg, oldVal, newVal) -> {
             updateResultingEverydayRetailCald();
         }));
-        everydayGPMProperty().addListener(((arg, oldVal, newVal) -> {
-            updateResultingEverydayRetailCald();
-        }));
+
     }
 
     public void updateResultingEverydayRetailCald() {
@@ -237,11 +234,11 @@ public class RTMOption {
     }
 
     public BigDecimal getEverydayGPM() {
-        return getRetailerProduct().getEverydayGPM();
+        return getRetailerProduct().getEverydayGpm();
     }
 
     public SimpleObjectProperty<BigDecimal> everydayGPMProperty() {
-        return getRetailerProduct().everydayGPMProperty();
+        return getRetailerProduct().everydayGpmProperty();
     }
 
     public BigDecimal getSpoilsAndFees() {
@@ -366,6 +363,8 @@ public class RTMOption {
 
     // IMPLEMENT GET GROSS PROFIT INDEX
     public BigDecimal getPostSpoilsAndFreightWeCollect() {
+        System.out.println("grorev: " + getGrossRevenueList()+ ", spoilstrade: " + getSpoilsTrade()+ ", ourFreightcost: "+ getOurFreightCost()
+                + ", fobd: "+ getFobDiscount());
         return getGrossRevenueList().subtract(getSpoilsTrade()).subtract(getOurFreightCost())
                 .subtract(getFobDiscount());
     }

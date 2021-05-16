@@ -42,19 +42,19 @@ class RTMOptionTest {
                 new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),
                 new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),
                 new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"), MenuController.getExtendedSkus());
-        optionThree.setProduct(productOne);
+//        optionThree.setProduct(productOne);
         optionThree.setAnnualVolumePerSku(new BigDecimal(9859));
     }
 
     @org.junit.jupiter.api.Test
     void testUpdateResultingEverydayRetailCald() {
         // everydayGPM null, landed Store Cost 3.95
-        optionOne.setEverydayGPM(null);
+//        optionOne.setEverydayGPM(null);
         optionOne.setLandedStoreCost(new BigDecimal("3.95"));
         optionOne.updateResultingEverydayRetailCald();
         Assert.assertEquals(null, optionOne.getEverydayRetailCalcd());
         // everydayGPm 40, landed Store Cost 3.95
-        optionOne.setEverydayGPM(new BigDecimal("40"));
+//        optionOne.setEverydayGPM(new BigDecimal("40"));
         optionOne.updateResultingEverydayRetailCald();
         Assert.assertEquals(new BigDecimal("6.58"),optionOne.getEverydayRetailCalcd());
        // landed store cost null, everydayGPM 40 -- no change
@@ -62,7 +62,7 @@ class RTMOptionTest {
         optionOne.updateResultingEverydayRetailCald();
         Assert.assertEquals(new BigDecimal("6.58"), optionOne.getEverydayRetailCalcd());
         // everyday GPM null, landedStore Cost null -- no change
-        optionOne.setEverydayGPM(null);
+//        optionOne.setEverydayGPM(null);
         optionOne.updateResultingEverydayRetailCald();
         Assert.assertEquals(new BigDecimal("6.58"), optionOne.getEverydayRetailCalcd());
     }
@@ -70,11 +70,11 @@ class RTMOptionTest {
     @org.junit.jupiter.api.Test
     void testUpdateElasticizedEstimatedUnitVelocity() {
         optionOne.setResultingEverydayRetailOverride(new BigDecimal("5.99"));
-        optionOne.setMinOverride(new BigDecimal("5.99"));
+//        optionOne.setMinOverride(new BigDecimal("5.99"));
         optionTwo.setResultingEverydayRetailOverride(new BigDecimal("8.09"));
-        optionTwo.setMinOverride(new BigDecimal("5.99"));
-        optionOne.setWeeklyUSFWAtMin(new BigDecimal("1.2"));
-        optionTwo.setWeeklyUSFWAtMin(new BigDecimal("1.2"));
+//        optionTwo.setMinOverride(new BigDecimal("5.99"));
+//        optionOne.setWeeklyUSFWAtMin(new BigDecimal("1.2"));
+//        optionTwo.setWeeklyUSFWAtMin(new BigDecimal("1.2"));
         optionOne.updateElasticizedUnitVelocity();
         optionTwo.updateElasticizedUnitVelocity();
         Assert.assertEquals(new BigDecimal("1.2"),optionOne.getElasticizedUnitVelocity());
@@ -97,8 +97,8 @@ class RTMOptionTest {
     void testUpdateSlottingPaybackPeriod() {
         optionOne.setSlottingPerSku(new BigDecimal(7500));
         optionTwo.setSlottingPerSku(new BigDecimal(3500));
-        optionOne.setWeeklyUSFWAtMin(new BigDecimal("1.2"));
-        optionTwo.setWeeklyUSFWAtMin(new BigDecimal("1.2"));
+//        optionOne.setWeeklyUSFWAtMin(new BigDecimal("1.2"));
+//        optionTwo.setWeeklyUSFWAtMin(new BigDecimal("1.2"));
     }
 
     @org.junit.jupiter.api.Test

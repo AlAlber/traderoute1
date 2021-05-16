@@ -388,11 +388,7 @@ class RTMPlanningControllerTest {
 
     @Test
     public void testYearOneStoreCountUpdates(FxRobot robot){
-        RTMOption firstRtmOption = replaceValuesInSingleRtmOption(5, robot);
-
-        robot.doubleClickOn(cell(table1String, 0, 9, robot));
-        robot.write("5.99");
-        robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
+        RTMOption firstRtmOption = replaceValuesInSingleRtmOption(-1, robot);
 
         robot.doubleClickOn(yearOneStoreCountField);
         robot.write("158");
@@ -402,7 +398,7 @@ class RTMPlanningControllerTest {
     }
     @Test
     public void testEverydayGpmUpdates(FxRobot robot){
-        RTMOption firstRtmOption = replaceValuesInSingleRtmOption(5, robot);
+        RTMOption firstRtmOption = replaceValuesInSingleRtmOption(-1, robot);
 
         robot.doubleClickOn(everydayGpmField);
         robot.write("40");
@@ -412,7 +408,7 @@ class RTMPlanningControllerTest {
     }
     @Test
     public void testSpoilsFeesUpdates(FxRobot robot){
-        RTMOption firstRtmOption = replaceValuesInSingleRtmOption(6, robot);
+        RTMOption firstRtmOption = replaceValuesInSingleRtmOption(-1, robot);
         robot.doubleClickOn(spoilsFeesField);
         robot.write("3.0");
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
@@ -421,10 +417,11 @@ class RTMPlanningControllerTest {
     }
     @Test
     public void testWeeklyUfswAtMinUpdates(FxRobot robot){
-        RTMOption firstRtmOption = replaceValuesInSingleRtmOption(7, robot);
+        RTMOption firstRtmOption = replaceValuesInSingleRtmOption(-1, robot);
         robot.doubleClickOn(weeklyUfswAtMinField);
         robot.write("1.2");
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
+        System.out.println(firstRtmOption.getMinOverride());
         assertEqualsTestRtmOption(firstRtmOption);
     }
 
@@ -432,21 +429,13 @@ class RTMPlanningControllerTest {
         RTMOption firstRtmOption = rtmPlanningTable1.getItems().get(0);
         if (replaceField!=0){
             rtmPlanningTable1.getItems().stream().forEach(e -> e.setRetailerProduct(retailer.get().getRetailerProducts().get(0)));
-        } if (replaceField!=1){
-            firstRtmOption.setProduct(retailer.get().getRetailerProducts().get(0).getProduct());
-        } if (replaceField!=2){
+        }  if (replaceField!=1){
             firstRtmOption.setFreightOutPerUnit(new BigDecimal("0.29"));
-        } if (replaceField!=3){
+        } if (replaceField!=2){
             firstRtmOption.setSlottingPerSku(new BigDecimal("7500"));
-        } if (replaceField!=4){
+        } if (replaceField!=3){
             firstRtmOption.setFirstReceiver(new BigDecimal("3.59"));
-        } if (replaceField!=5){
-            firstRtmOption.setEverydayGPM(new BigDecimal("40.0"));
-        } if (replaceField!=6){
-            firstRtmOption.setSpoilsAndFees(new BigDecimal("0.03"));
-        } if (replaceField!=7) {
-            firstRtmOption.setWeeklyUSFWAtMin(new BigDecimal("1.2"));
-        } if (replaceField!=8) {
+        } if (replaceField!=4) {
             robot.interact(() -> firstRtmOption.setResultingEverydayRetailOverride(new BigDecimal("5.99")));
         }
         return firstRtmOption;

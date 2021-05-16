@@ -13,10 +13,10 @@ public class RetailerProduct {
     private SimpleObjectProperty<ObservableList<Meeting>> meetings;
     private SimpleObjectProperty<ObservableList<PromoPlan>> promoPlans;
     private SimpleIntegerProperty yearOneStoreCount;
-    private SimpleObjectProperty<BigDecimal> minOverride, weeklyUSFWAtMin, everydayGPM, spoilsAndFees;
+    private SimpleObjectProperty<BigDecimal> minOverride, weeklyUSFWAtMin, everydayGpm, spoilsAndFees;
 
     public RetailerProduct(Product product, ObservableList rtmOptions, ObservableList skus, ObservableList meetings,
-            ObservableList promoPlans, int yearOneStoreCount) {
+            ObservableList promoPlans, int yearOneStoreCount, BigDecimal everydayGpm, BigDecimal spoilsAndFees, BigDecimal weeklyUfswAtMin) {
         this.product = new SimpleObjectProperty<>(product);
         this.rtmOptions = new SimpleObjectProperty<>(rtmOptions);
         this.skus = new SimpleObjectProperty<>(skus);
@@ -24,10 +24,10 @@ public class RetailerProduct {
         this.promoPlans = new SimpleObjectProperty<>(promoPlans);
 
         this.yearOneStoreCount = new SimpleIntegerProperty(yearOneStoreCount);
-        this.minOverride = new SimpleObjectProperty<>();
-        this.weeklyUSFWAtMin = new SimpleObjectProperty<>();
-        this.everydayGPM = new SimpleObjectProperty<>();
-        this.spoilsAndFees = new SimpleObjectProperty<>();
+        this.everydayGpm = new SimpleObjectProperty<>(everydayGpm);
+        this.spoilsAndFees = new SimpleObjectProperty<>(spoilsAndFees);
+        this.minOverride = new SimpleObjectProperty<>(); // is updated dyamically
+        this.weeklyUSFWAtMin = new SimpleObjectProperty<>(weeklyUfswAtMin);
     }
 
     public RetailerProduct() {
@@ -40,7 +40,7 @@ public class RetailerProduct {
         this.yearOneStoreCount = new SimpleIntegerProperty();
         this.minOverride = new SimpleObjectProperty<>();
         this.weeklyUSFWAtMin = new SimpleObjectProperty<>();
-        this.everydayGPM = new SimpleObjectProperty<>();
+        this.everydayGpm = new SimpleObjectProperty<>();
         this.spoilsAndFees = new SimpleObjectProperty<>();
     }
 
@@ -80,16 +80,16 @@ public class RetailerProduct {
         this.weeklyUSFWAtMin.set(weeklyUSFWAtMin);
     }
 
-    public BigDecimal getEverydayGPM() {
-        return everydayGPM.get();
+    public BigDecimal getEverydayGpm() {
+        return everydayGpm.get();
     }
 
-    public SimpleObjectProperty<BigDecimal> everydayGPMProperty() {
-        return everydayGPM;
+    public SimpleObjectProperty<BigDecimal> everydayGpmProperty() {
+        return everydayGpm;
     }
 
-    public void setEverydayGPM(BigDecimal everydayGPM) {
-        this.everydayGPM.set(everydayGPM);
+    public void setEverydayGpm(BigDecimal everydayGpm) {
+        this.everydayGpm.set(everydayGpm);
     }
 
     public BigDecimal getSpoilsAndFees() {

@@ -338,7 +338,7 @@ public class RTMPlanningController implements Initializable {
                 updateCharts();
             }));
             row.resultingEverydayRetailOverrideProperty().addListener(((arg, oldVal, newVal) -> {
-                row.setMinOverride(getMinOverride());
+                currentRetailerProduct.get().setMinOverride(getMinOverride());
                 rtmPlanningTable1.refresh();
                 row.updateElasticizedUnitVelocity();
                 maxOverrideLabel.setText("of $" + getMinOverride());
@@ -376,7 +376,8 @@ public class RTMPlanningController implements Initializable {
             elasticityRatioLabel
                     .setText("Elasticity Ratio = +1% Price :" + selectedProduct.getElasticityMultiple() + "% Volume");
             for (RTMOption row : rtmPlanningTable1.getItems()) {
-                row.setProduct(selectedProduct);
+                // FIX THIS ASAP, should update retailerProduct instead
+//                row.setProduct(selectedProduct);
             }
 //            updateRetailerProduct(selectedProduct);
         }
@@ -421,27 +422,27 @@ public class RTMPlanningController implements Initializable {
         rtmPlanningTable2.refresh();
         setUpListeners();
         ObservableList<RetailerProduct> retailerProducts = getRetailer().getRetailerProducts();
-        RetailerProduct currentRetailerProduct = retailerProducts.get(getRetailer().getCurrentRetailerProductIndex());
-        ObservableList<RTMOption> currentRtmOptions = currentRetailerProduct.getRtmOptions();
+        RetailerProduct currentRetailerProduct1 = retailerProducts.get(getRetailer().getCurrentRetailerProductIndex());
+        ObservableList<RTMOption> currentRtmOptions = currentRetailerProduct1.getRtmOptions();
         this.rtmPlanningTable1.setItems(currentRtmOptions);
         setUpListeners();
         // CHANGE PRODUCT BOX TO AVE RETAILER OPTION SELECTION
         // INSTEAD OF PRODUCT SELECTION
         this.rtmPlanningTable2.setItems(currentRtmOptions);
 
-        listLabel.setText("List = $" + currentRetailerProduct.getProduct().getUnitListCost());
-        fobLabel.setText("F.O.B. = $" + currentRetailerProduct.getProduct().getUnitFobCost());
-        net1GoalLabel.setText("Net 1 Goal = $" + currentRetailerProduct.getProduct().getUnitNet1Goal());
+        listLabel.setText("List = $" + currentRetailerProduct1.getProduct().getUnitListCost());
+        fobLabel.setText("F.O.B. = $" + currentRetailerProduct1.getProduct().getUnitFobCost());
+        net1GoalLabel.setText("Net 1 Goal = $" + currentRetailerProduct1.getProduct().getUnitNet1Goal());
         elasticityRatioLabel.setText("Elasticity Ratio = +1% Price :"
-                + currentRetailerProduct.getProduct().getElasticityMultiple() + "% Volume");
+                + currentRetailerProduct1.getProduct().getElasticityMultiple() + "% Volume");
         // Stuff that should be implemented differently
-        this.weeklyUfswAtMinField.setText(currentRtmOptions.get(0).getWeeklyUSFWAtMin().toString());
+        this.weeklyUfswAtMinField.setText(currentRetailerProduct.get().getWeeklyUSFWAtMin().toString());
         for (RTMOption row : rtmPlanningTable1.getItems()) {
-            row.setRetailerProduct(currentRetailerProduct);
-            row.setProduct(currentRetailerProduct.getProduct());
-            row.setEverydayGPM(getRetailer().getEverydayGPM());
-            row.setSpoilsAndFees(
-                    getRetailer().getSpoilsFees().divide((new BigDecimal("100")), divisionScale, RoundingMode.HALF_UP));
+            row.setRetailerProduct(currentRetailerProduct.get());
+//            row.setProduct(currentRetailerProduct.getProduct());
+//            row.setEverydayGPM(getRetailer().getEverydayGPM());
+//            row.setSpoilsAndFees(
+//                    getRetailer().getSpoilsFees().divide((new BigDecimal("100")), divisionScale, RoundingMode.HALF_UP));
             maxReceivers(row);
             row.updateResultingEverydayRetailCald();
         }
@@ -519,7 +520,7 @@ public class RTMPlanningController implements Initializable {
      * //TODO Set RetailerProduct EverydayGpm. Set RTMProduct EverydayGpm in rows which calls listeners, updateChart.
      */
     public void changeEveryDayGpmCellEvent() {
-        currentRetailerProduct.get().setEverydayGPM(everydayGpmField.getValue());
+        currentRetailerProduct.get().setEverydayGpm(everydayGpmField.getValue());
 //        for (RTMOption row : rtmPlanningTable1.getItems()) {
 //            row.setEverydayGPM(everydayGpmField.getValue());
 //        }
