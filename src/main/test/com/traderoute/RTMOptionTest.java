@@ -149,20 +149,20 @@ class RTMOptionTest {
     void testGetFourYearUnitVolumePerSku() {
         optionOne.setAnnualVolumePerSku(new BigDecimal(9859));
         optionTwo.setAnnualVolumePerSku(new BigDecimal(5884));
-        Assert.assertEquals(new BigDecimal("39436"), optionOne.getFourYearUnitVolumePerSku());
-        Assert.assertEquals(new BigDecimal("23536"),optionTwo.getFourYearUnitVolumePerSku());
+        Assert.assertEquals(new BigDecimal("39436"), optionOne.calcFourYearUnitVolumePerSku());
+        Assert.assertEquals(new BigDecimal("23536"),optionTwo.calcFourYearUnitVolumePerSku());
     }
 
     @org.junit.jupiter.api.Test
     void testGetOurFreightCost() {
-        Assert.assertEquals(new BigDecimal("11436.44"), optionThree.getOurFreightCost());
+        Assert.assertEquals(new BigDecimal("11436.44"), optionThree.calcOurFreightCost());
         // Actually expected: 11436.67
 //        Assert.assertEquals(new BigDecimal("1.2"), optionThree.getElasticizedEstimatedUnitVelocity());;
     }
 
     @org.junit.jupiter.api.Test
     void testGetGrossRevenueList() {
-        Assert.assertEquals(new BigDecimal("141575.2400000000"), optionThree.getGrossRevenueList());
+        Assert.assertEquals(new BigDecimal("141575.2400000000"), optionThree.calcGrossRevenueList());
         // Actually expected = 141578.11
         // remains changes when set to product two
 
@@ -170,112 +170,112 @@ class RTMOptionTest {
 
     @org.junit.jupiter.api.Test
     void testGetFobDiscount() {
-        Assert.assertEquals(new BigDecimal("0.0"), optionThree.getFobDiscount());
+        Assert.assertEquals(new BigDecimal("0.0"), optionThree.calcFobDiscount());
         optionThree.setFreightOutPerUnit(new BigDecimal("0.0"));
-        Assert.assertEquals(new BigDecimal("11436.44"), optionThree.getFobDiscount());
+        Assert.assertEquals(new BigDecimal("11436.44"), optionThree.calcFobDiscount());
     }
 
     @org.junit.jupiter.api.Test
     void testGetSpoilsTrade() {
-        Assert.assertEquals(new BigDecimal("4247.257200000000"),optionThree.getSpoilsTrade());
+        Assert.assertEquals(new BigDecimal("4247.257200000000"),optionThree.calcSpoilsTrade());
         // Actually Expected = 4247.34
     }
 
 
     @org.junit.jupiter.api.Test
     void testGetStandardAllowanceTrade() {
-        Assert.assertEquals(new BigDecimal("0.0"), optionThree.getStandardAllowanceTrade().setScale(1, RoundingMode.HALF_UP));
+        Assert.assertEquals(new BigDecimal("0.0"), optionThree.calcStandardAllowanceTrade().setScale(1, RoundingMode.HALF_UP));
         optionThree.setFreightOutPerUnit(new BigDecimal("0.0"));
         optionThree.setFirstReceiver(new BigDecimal("3.30"));
-        Assert.assertEquals(new BigDecimal("0.0"), optionThree.getStandardAllowanceTrade().setScale(1,RoundingMode.HALF_UP));
+        Assert.assertEquals(new BigDecimal("0.0"), optionThree.calcStandardAllowanceTrade().setScale(1,RoundingMode.HALF_UP));
 //        Assert.assertEquals(new BigDecimal("3.59"),optionThree.getFirstReceiver());
         optionThree.setFirstReceiver(new BigDecimal("3.07"));
         optionThree.setAnnualVolumePerSku(new BigDecimal(8913));
-        Assert.assertEquals(new BigDecimal("8199.9600000000"), optionThree.getStandardAllowanceTrade());
+        Assert.assertEquals(new BigDecimal("8199.9600000000"), optionThree.calcStandardAllowanceTrade());
         //actually expected: 8199.76
 
     }
 
     @org.junit.jupiter.api.Test
     void testGetAfterSpoilsAndStdAllowanceTrade() {
-        Assert.assertEquals(new BigDecimal("19414.342800000000"), optionThree.getAfterSpoilsAndStdAllowanceTrade());
+        Assert.assertEquals(new BigDecimal("19414.342800000000"), optionThree.calcAfterSpoilsAndStdAllowanceTrade());
         //actually expected= 19414.74
     }
 
     @org.junit.jupiter.api.Test
     void testGetIfFobFreightCredit() {
-        Assert.assertEquals(new BigDecimal("0.0"), optionThree.getIfFobFreightCredit());
+        Assert.assertEquals(new BigDecimal("0.0"), optionThree.calcIfFobFreightCredit());
         optionThree.setFreightOutPerUnit(new BigDecimal("0.0"));
-        Assert.assertEquals(new BigDecimal("11436.44"), optionThree.getIfFobFreightCredit());
+        Assert.assertEquals(new BigDecimal("11436.44"), optionThree.calcIfFobFreightCredit());
     }
 
     @org.junit.jupiter.api.Test
     void testGetEqualsNet1Rev() {
-        Assert.assertEquals(new BigDecimal("117913.640000000000"), optionThree.getEqualsNet1Rev());
+        Assert.assertEquals(new BigDecimal("117913.640000000000"), optionThree.calcEqualsNet1Rev());
         // Actually expected "117916.03"
     }
 
     @org.junit.jupiter.api.Test
     void getTotalFobAndFreightSpending() {
-        Assert.assertEquals(new BigDecimal("11436.44"),optionThree.getTotalFobAndFreightSpending());
+        Assert.assertEquals(new BigDecimal("11436.44"),optionThree.calcTotalFobAndFreightSpending());
         //Actuallly expected: 11436.66
     }
 
     @org.junit.jupiter.api.Test
     void getEqualsNet2Rev() {
-        Assert.assertEquals(new BigDecimal("106477.200000000000"),optionThree.getEqualsNet2Rev());
+        Assert.assertEquals(new BigDecimal("106477.200000000000"),optionThree.calcEqualsNet2Rev());
         //Actually expected: 106479.46
     }
 
     @org.junit.jupiter.api.Test
     void getEqualsNet3Rev() {
-        Assert.assertEquals(new BigDecimal("98977.200000000000"), optionThree.getEqualsNet3Rev());
+        Assert.assertEquals(new BigDecimal("98977.200000000000"), optionThree.calcEqualsNet3Rev());
         // Actually expected: 98979.36
     }
 
     @org.junit.jupiter.api.Test
     void getNetRev3Rate() {
-        Assert.assertEquals(new BigDecimal("2.51"), optionThree.getNetRev3Rate().setScale(2,RoundingMode.HALF_UP));
+        Assert.assertEquals(new BigDecimal("2.51"), optionThree.calcNetRev3Rate().setScale(2,RoundingMode.HALF_UP));
     }
 
     @org.junit.jupiter.api.Test
     void testGetTotalCogs() {
-        Assert.assertEquals(new BigDecimal("80843.80"),optionThree.getTotalCogs());
+        Assert.assertEquals(new BigDecimal("80843.80"),optionThree.calcTotalCogs());
         //Actually expected 80845.44
     }
 
     @org.junit.jupiter.api.Test
     void getGrossProfit() {
-        Assert.assertEquals(new BigDecimal("18133.400000000000"), optionThree.getGrossProfit());
+        Assert.assertEquals(new BigDecimal("18133.400000000000"), optionThree.calcGrossProfit());
         // Actually expected 18133.92
     }
 
     @org.junit.jupiter.api.Test
     void getGrossProfitPerUnit() {
-        Assert.assertEquals(new BigDecimal("0.4598184400"), optionThree.getGrossProfitPerUnit());
+        Assert.assertEquals(new BigDecimal("0.4598184400"), optionThree.calcGrossProfitPerUnit());
         // actually expected: 0.46
     }
 
     @org.junit.jupiter.api.Test
     void testGetSlottingPayback() {
-        Assert.assertEquals(new BigDecimal("1.65441"),optionThree.getSlottingPayback());
+        Assert.assertEquals(new BigDecimal("1.65441"),optionThree.calcSlottingPaybackPeriod());
         //Actually expected Expected :1.65
     }
 
     @org.junit.jupiter.api.Test
     void getPostSpoilsAndFreightWeCollect() {
-        Assert.assertEquals(new BigDecimal("125891.542800000000"), optionThree.getPostSpoilsAndFreightWeCollect());
+        Assert.assertEquals(new BigDecimal("125891.542800000000"), optionThree.calcPostSpoilsAndFreightWeCollect());
     }
 
     @org.junit.jupiter.api.Test
     void getPostSpoilsAndFreightWeCollectPerUnit() {
-        Assert.assertEquals(new BigDecimal("3.192300000000"), optionThree.getPostSpoilsAndFreightWeCollectPerUnit());
+        Assert.assertEquals(new BigDecimal("3.192300000000"), optionThree.calcPostSpoilsAndFreightWeCollectPerUnit());
         //Actually expected: 3.19
     }
 
     @org.junit.jupiter.api.Test
     void getPostSpoilsAndStdAllowancesAvailableTrade() {
-        Assert.assertEquals(new BigDecimal("0.492300000000"), optionThree.getPostSpoilsAndStdAllowancesAvailableTrade());
+        Assert.assertEquals(new BigDecimal("0.492300000000"), optionThree.calcPostSpoilsAndStdAllowancesAvailableTrade());
         // Actually expected 0.492300000000
     }
 

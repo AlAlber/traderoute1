@@ -129,7 +129,7 @@ public class RTMOption {
             if (getSlottingPerSku().compareTo(new BigDecimal("0.0")) == 0) {
                 setSlottingPaybackPeriod(new BigDecimal("0.0"));
             } else {
-                setSlottingPaybackPeriod(getSlottingPayback());
+                setSlottingPaybackPeriod(calcSlottingPaybackPeriod());
             }
         }
     }
@@ -137,28 +137,28 @@ public class RTMOption {
     public void updatePostFreightPostSpoilsWeCollect() {
         if (allPositive(observableArrayList(weeklyUSFWAtMinProperty(), minOverrideProperty(),
                 annualVolumePerSku))) {
-            setPostSpoilsPostFreightPerUnit(getPostSpoilsAndFreightWeCollectPerUnit());
+            setPostSpoilsPostFreightPerUnit(calcPostSpoilsAndFreightWeCollectPerUnit());
         }
     }
 
     public void updateUnspentTrade() {
         if (allPositive(observableArrayList(weeklyUSFWAtMinProperty(), minOverrideProperty(),
                 annualVolumePerSku))) {
-            setUnspentTradePerUnit(getPostSpoilsAndStdAllowancesAvailableTrade());
+            setUnspentTradePerUnit(calcPostSpoilsAndStdAllowancesAvailableTrade());
         }
     }
 
     public void updateFourYearEqGpPerSku() {
         if (allPositive(observableArrayList(weeklyUSFWAtMinProperty(), minOverrideProperty(),
                 annualVolumePerSku))) {
-            setFourYearEqGpPerSku(getGrossProfit().setScale(4, RoundingMode.HALF_UP));
+            setFourYearEqGpPerSku(calcGrossProfit().setScale(4, RoundingMode.HALF_UP));
         }
     }
 
     public void updateFourYearEqGpPerUnit() {
         if (allPositive(observableArrayList(weeklyUSFWAtMinProperty(), minOverrideProperty(),
                 annualVolumePerSku))) {
-            setFourYearEqGpPerUnit(getGrossProfitPerUnit().setScale(4, RoundingMode.HALF_UP));
+            setFourYearEqGpPerUnit(calcGrossProfitPerUnit().setScale(4, RoundingMode.HALF_UP));
         }
     }
     public boolean allPositive(ObservableList<SimpleObjectProperty<BigDecimal>> properties){
@@ -209,94 +209,94 @@ public class RTMOption {
         return true;
     }
 
-    public BigDecimal getFourYearUnitVolumePerSku() {
+    public BigDecimal calcFourYearUnitVolumePerSku() {
         return getAnnualVolumePerSku().multiply(new BigDecimal(4.0));
     }
 
-    public BigDecimal getOurFreightCost() {
-        return getFourYearUnitVolumePerSku().multiply(getFreightOutPerUnit());
+    public BigDecimal calcOurFreightCost() {
+        return calcFourYearUnitVolumePerSku().multiply(getFreightOutPerUnit());
     }
 
-    public BigDecimal getGrossRevenueList() {
-        return getFourYearUnitVolumePerSku()
+    public BigDecimal calcGrossRevenueList() {
+        return calcFourYearUnitVolumePerSku()
                 .multiply(getProduct().getUnitListCost().setScale(4, RoundingMode.HALF_UP));
     }
 
-    public BigDecimal getFobDiscount() {
+    public BigDecimal calcFobDiscount() {
         if (isFob()) {
             return ((getProduct().getUnitListCost()).subtract(getProduct().getUnitFobCost()))
-                    .multiply(getFourYearUnitVolumePerSku());
+                    .multiply(calcFourYearUnitVolumePerSku());
         }
         return new BigDecimal("0.0");
     }
 
-    public BigDecimal getGrossRevenueActual() {
-        return getGrossRevenueList().subtract(getFobDiscount());
+    public BigDecimal calcGrossRevenueActual() {
+        return calcGrossRevenueList().subtract(calcFobDiscount());
     }
 
-    public BigDecimal getSpoilsTrade() { // retest // Put spoils+fees field value in parameter
-        return getGrossRevenueActual().multiply(getSpoilsAndFees());
+    public BigDecimal calcSpoilsTrade() { // retest // Put spoils+fees field value in parameter
+        return calcGrossRevenueActual().multiply(getSpoilsAndFees());
     }
 
-    public BigDecimal getStandardAllowanceTrade() { // retest //HARDCODED FOR NOW, LIST PRICE NEEDED
+    public BigDecimal calcStandardAllowanceTrade() { // retest //HARDCODED FOR NOW, LIST PRICE NEEDED
         if (isFob()) {
             return ((((getProduct().getUnitListCost()).subtract(getFirstReceiver()))
-                    .multiply(getFourYearUnitVolumePerSku())).subtract(getFobDiscount())).setScale(4,
+                    .multiply(calcFourYearUnitVolumePerSku())).subtract(calcFobDiscount())).setScale(4,
                             RoundingMode.HALF_UP);
         }
         BigDecimal zeroValue = (getProduct().getUnitListCost()).subtract(getFirstReceiver());
-        zeroValue = zeroValue.multiply(getFourYearUnitVolumePerSku());
+        zeroValue = zeroValue.multiply(calcFourYearUnitVolumePerSku());
         return zeroValue.setScale(4, RoundingMode.HALF_UP);
     }
 
-    public BigDecimal getAfterSpoilsAndStdAllowanceTrade() { // retest //HARDCODED FOR NOW, LIST PRICE NEEDED, NET1 GOAL
+    public BigDecimal calcAfterSpoilsAndStdAllowanceTrade() { // retest //HARDCODED FOR NOW, LIST PRICE NEEDED, NET1 GOAL
                                                              // NEEDED
-        return (getFourYearUnitVolumePerSku()
+        return (calcFourYearUnitVolumePerSku()
                 .multiply((getProduct().getUnitListCost()).subtract(getProduct().getUnitNet1Goal())))
-                        .subtract(getSpoilsTrade()).subtract(getStandardAllowanceTrade());
+                        .subtract(calcSpoilsTrade()).subtract(calcStandardAllowanceTrade());
     }
 
-    public BigDecimal getIfFobFreightCredit() {
+    public BigDecimal calcIfFobFreightCredit() {
         if (isFob()) {
             return ((getProduct().getUnitListCost()).subtract(getProduct().getUnitFobCost()))
-                    .multiply(getFourYearUnitVolumePerSku());
+                    .multiply(calcFourYearUnitVolumePerSku());
         }
         return new BigDecimal("0.0");
     }
 
-    public BigDecimal getEqualsNet1Rev() {
-        return getGrossRevenueList().subtract(getSpoilsTrade()).subtract(getStandardAllowanceTrade())
-                .subtract(getAfterSpoilsAndStdAllowanceTrade());
+    public BigDecimal calcEqualsNet1Rev() {
+        return calcGrossRevenueList().subtract(calcSpoilsTrade()).subtract(calcStandardAllowanceTrade())
+                .subtract(calcAfterSpoilsAndStdAllowanceTrade());
     }
 
-    public BigDecimal getTotalFobAndFreightSpending() {
-        return getOurFreightCost().add(getFobDiscount());
+    public BigDecimal calcTotalFobAndFreightSpending() {
+        return calcOurFreightCost().add(calcFobDiscount());
     }
 
-    public BigDecimal getEqualsNet2Rev() {
-        return getEqualsNet1Rev().subtract(getTotalFobAndFreightSpending());
+    public BigDecimal calcEqualsNet2Rev() {
+        return calcEqualsNet1Rev().subtract(calcTotalFobAndFreightSpending());
     }
 
-    public BigDecimal getEqualsNet3Rev() {
-        return getEqualsNet2Rev().subtract(getSlottingPerSku());
+    public BigDecimal calcEqualsNet3Rev() {
+        return calcEqualsNet2Rev().subtract(getSlottingPerSku());
     }
 
-    public BigDecimal getNetRev3Rate() {
-        if (getFourYearUnitVolumePerSku().equals(new BigDecimal("0.0"))) {
+    public BigDecimal calcNetRev3Rate() {
+        if (calcFourYearUnitVolumePerSku().equals(new BigDecimal("0.0"))) {
             return new BigDecimal("0.0");
         }
-        return getEqualsNet3Rev().divide((getFourYearUnitVolumePerSku()), 4, RoundingMode.HALF_UP);
+        return calcEqualsNet3Rev().divide((calcFourYearUnitVolumePerSku()), 4, RoundingMode.HALF_UP);
     }
 =
-    public BigDecimal getTotalCogs() {
-        return getFourYearUnitVolumePerSku().multiply(getProduct().getUnitBlendedCogs());
+    public BigDecimal calcTotalCogs() {
+        return calcFourYearUnitVolumePerSku().multiply(getProduct().getUnitBlendedCogs());
     }
-    public BigDecimal getGrossProfit() {
-        return getEqualsNet3Rev().subtract(getTotalCogs());
+    public BigDecimal calcGrossProfit() {
+        return calcEqualsNet3Rev().subtract(calcTotalCogs());
     }
 
-    public BigDecimal getGrossProfitPerUnit() {
-        return getGrossProfit().divide((getFourYearUnitVolumePerSku()), 4, RoundingMode.HALF_UP);
+    public BigDecimal calcGrossProfitPerUnit() {
+        return calcGrossProfit().divide((calcFourYearUnitVolumePerSku()), 4, RoundingMode.HALF_UP);
     }
     // IMPLEMENT THIS IN FIRST TABLE CONTROLLER, get the max from gross profit
     // public BigDecimal getGrossProfitIndex(){
@@ -306,22 +306,22 @@ public class RTMOption {
     // return getGrossProfit()
     // }
 
-    public BigDecimal getSlottingPayback() {
-        return (getSlottingPerSku().divide((getGrossProfitPerUnit()), 4, RoundingMode.HALF_UP))
+    public BigDecimal calcSlottingPaybackPeriod() {
+        return (getSlottingPerSku().divide((calcGrossProfitPerUnit()), 4, RoundingMode.HALF_UP))
                 .divide(getAnnualVolumePerSku(), 4, RoundingMode.HALF_UP);
     }
 
-    public BigDecimal getPostSpoilsAndFreightWeCollect() {
-        return getGrossRevenueList().subtract(getSpoilsTrade()).subtract(getOurFreightCost())
-                .subtract(getFobDiscount());
+    public BigDecimal calcPostSpoilsAndFreightWeCollect() {
+        return calcGrossRevenueList().subtract(calcSpoilsTrade()).subtract(calcOurFreightCost())
+                .subtract(calcFobDiscount());
     }
 
-    public BigDecimal getPostSpoilsAndFreightWeCollectPerUnit() {
-        return getPostSpoilsAndFreightWeCollect().divide((getFourYearUnitVolumePerSku()), 4, RoundingMode.HALF_UP);
+    public BigDecimal calcPostSpoilsAndFreightWeCollectPerUnit() {
+        return calcPostSpoilsAndFreightWeCollect().divide((calcFourYearUnitVolumePerSku()), 4, RoundingMode.HALF_UP);
     }
 
-    public BigDecimal getPostSpoilsAndStdAllowancesAvailableTrade() {
-        return getAfterSpoilsAndStdAllowanceTrade().divide((getFourYearUnitVolumePerSku()), 4, RoundingMode.HALF_UP);
+    public BigDecimal calcPostSpoilsAndStdAllowancesAvailableTrade() {
+        return calcAfterSpoilsAndStdAllowanceTrade().divide((calcFourYearUnitVolumePerSku()), 4, RoundingMode.HALF_UP);
     }
 
     public String toString() {

@@ -443,7 +443,7 @@ class RTMPlanningControllerTest {
         Assertions.assertEquals(new BigDecimal("1.2"), firstRtmOption.getElasticizedUnitVelocity());
         Assertions.assertEquals(new BigDecimal("9859.2000"), firstRtmOption.getAnnualVolumePerSku());
         Assertions.assertEquals(new BigDecimal("1.6544"), firstRtmOption.getSlottingPaybackPeriod());
-        Assertions.assertEquals(new BigDecimal("3.1923"), firstRtmOption.getPostSpoilsAndFreightWeCollectPerUnit());
+        Assertions.assertEquals(new BigDecimal("3.1923"), firstRtmOption.calcPostSpoilsAndFreightWeCollectPerUnit());
         Assertions.assertEquals(new BigDecimal("0.4923"), firstRtmOption.getUnspentTradePerUnit());
         Assertions.assertEquals(new BigDecimal("18133.9200"), firstRtmOption.getFourYearEqGpPerSku());
         Assertions.assertEquals(new BigDecimal("0.4598"), firstRtmOption.getFourYearEqGpPerUnit());
