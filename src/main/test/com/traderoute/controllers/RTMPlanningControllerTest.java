@@ -167,32 +167,32 @@ class RTMPlanningControllerTest {
         robot.doubleClickOn(cell(table1String, 3, 3, robot));
         robot.write("0.7");
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
-        Assertions.assertEquals(((RTMOption) rtmPlanningTable1.getItems().get(3)).getFirstReceiver(),new BigDecimal("0.7"));
-        Assertions.assertEquals(((RTMOption) rtmPlanningTable1.getItems().get(3)).getLandedStoreCost(),new BigDecimal("0.7"));
+        Assertions.assertEquals(rtmPlanningTable1.getItems().get(3).getFirstReceiver(),new BigDecimal("0.7"));
+        Assertions.assertEquals(rtmPlanningTable1.getItems().get(3).getLandedStoreCost(),new BigDecimal("0.7"));
     }
     @Test
     public void testSecondReceiverUpdatesLandedStoreCost(FxRobot robot){
         robot.doubleClickOn(cell(table1String, 3, 4, robot));
         robot.write("0.7");
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
-        Assertions.assertEquals(((RTMOption) rtmPlanningTable1.getItems().get(3)).getSecondReceiver(),new BigDecimal("0.7"));
-        Assertions.assertEquals(((RTMOption) rtmPlanningTable1.getItems().get(3)).getLandedStoreCost(),new BigDecimal("0.7"));
+        Assertions.assertEquals(rtmPlanningTable1.getItems().get(3).getSecondReceiver(),new BigDecimal("0.7"));
+        Assertions.assertEquals(rtmPlanningTable1.getItems().get(3).getLandedStoreCost(),new BigDecimal("0.7"));
     }
     @Test
     public void testThirdReceiverUpdatesLandedStoreCost(FxRobot robot){
         robot.doubleClickOn(cell(table1String, 3, 5, robot));
         robot.write("0.7");
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
-        Assertions.assertEquals(((RTMOption) rtmPlanningTable1.getItems().get(3)).getThirdReceiver(),new BigDecimal("0.7"));
-        Assertions.assertEquals(((RTMOption) rtmPlanningTable1.getItems().get(3)).getLandedStoreCost(),new BigDecimal("0.7"));
+        Assertions.assertEquals(rtmPlanningTable1.getItems().get(3).getThirdReceiver(),new BigDecimal("0.7"));
+        Assertions.assertEquals(rtmPlanningTable1.getItems().get(3).getLandedStoreCost(),new BigDecimal("0.7"));
     }
     @Test
     public void testFourthReceiverUpdatesLandedStoreCost(FxRobot robot){
         robot.doubleClickOn(cell(table1String, 3, 6, robot));
         robot.write("0.7");
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
-        Assertions.assertEquals(((RTMOption) rtmPlanningTable1.getItems().get(3)).getFourthReceiver(),new BigDecimal("0.7"));
-        Assertions.assertEquals(((RTMOption) rtmPlanningTable1.getItems().get(3)).getLandedStoreCost(),new BigDecimal("0.7"));
+        Assertions.assertEquals(rtmPlanningTable1.getItems().get(3).getFourthReceiver(),new BigDecimal("0.7"));
+        Assertions.assertEquals(rtmPlanningTable1.getItems().get(3).getLandedStoreCost(),new BigDecimal("0.7"));
     }
 
     @Test
@@ -200,26 +200,26 @@ class RTMPlanningControllerTest {
         robot.doubleClickOn(cell(table1String, 3, 6, robot));
         robot.write("0.7");
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
-        Assertions.assertEquals(((RTMOption) rtmPlanningTable1.getItems().get(3)).getFourthReceiver(),new BigDecimal("0.7"));
-        Assertions.assertEquals(((RTMOption) rtmPlanningTable1.getItems().get(3)).getLandedStoreCost(),new BigDecimal("0.7"));
+        Assertions.assertEquals(rtmPlanningTable1.getItems().get(3).getFourthReceiver(),new BigDecimal("0.7"));
+        Assertions.assertEquals(rtmPlanningTable1.getItems().get(3).getLandedStoreCost(),new BigDecimal("0.7"));
 
         robot.doubleClickOn(cell(table1String, 3, 5, robot));
         robot.write("1.1");
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
-        Assertions.assertEquals(((RTMOption) rtmPlanningTable1.getItems().get(3)).getThirdReceiver(),new BigDecimal("1.1"));
-        Assertions.assertEquals(((RTMOption) rtmPlanningTable1.getItems().get(3)).getLandedStoreCost(),new BigDecimal("1.1"));
+        Assertions.assertEquals(rtmPlanningTable1.getItems().get(3).getThirdReceiver(),new BigDecimal("1.1"));
+        Assertions.assertEquals(rtmPlanningTable1.getItems().get(3).getLandedStoreCost(),new BigDecimal("1.1"));
 
         robot.doubleClickOn(cell(table1String, 3, 3, robot));
         robot.write("0.9");
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
-        Assertions.assertEquals(((RTMOption) rtmPlanningTable1.getItems().get(3)).getFirstReceiver(),new BigDecimal("0.9"));
-        Assertions.assertEquals(((RTMOption) rtmPlanningTable1.getItems().get(3)).getLandedStoreCost(),new BigDecimal("1.1"));
+        Assertions.assertEquals(rtmPlanningTable1.getItems().get(3).getFirstReceiver(),new BigDecimal("0.9"));
+        Assertions.assertEquals(rtmPlanningTable1.getItems().get(3).getLandedStoreCost(),new BigDecimal("1.1"));
 
         robot.doubleClickOn(cell(table1String, 3, 4, robot));
         robot.write("5.0");
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
-        Assertions.assertEquals(((RTMOption) rtmPlanningTable1.getItems().get(3)).getSecondReceiver(),new BigDecimal("5.0"));
-        Assertions.assertEquals(((RTMOption) rtmPlanningTable1.getItems().get(3)).getLandedStoreCost(),new BigDecimal("5.0"));
+        Assertions.assertEquals(rtmPlanningTable1.getItems().get(3).getSecondReceiver(),new BigDecimal("5.0"));
+        Assertions.assertEquals(rtmPlanningTable1.getItems().get(3).getLandedStoreCost(),new BigDecimal("5.0"));
     }
 
     @Test
@@ -227,14 +227,14 @@ class RTMPlanningControllerTest {
         robot.doubleClickOn(cell(table1String, 3, 3, robot));
         robot.write("3.59");
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
-        Assertions.assertEquals(((RTMOption) rtmPlanningTable1.getItems().get(3)).getFirstReceiver(),new BigDecimal("3.59"));
-        Assertions.assertEquals(((RTMOption) rtmPlanningTable1.getItems().get(3)).getLandedStoreCost(),new BigDecimal("3.59"));
+        Assertions.assertEquals(rtmPlanningTable1.getItems().get(3).getFirstReceiver(),new BigDecimal("3.59"));
+        Assertions.assertEquals(rtmPlanningTable1.getItems().get(3).getLandedStoreCost(),new BigDecimal("3.59"));
 
         robot.doubleClickOn(everydayGpmField);
         robot.write("40.0");
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
-        Assertions.assertEquals(new BigDecimal("5.9833333333"),((RTMOption) rtmPlanningTable1.getItems().get(3)).getEverydayRetailCalcd());
-        Assertions.assertEquals(new BigDecimal("5.9833333333"), ((RTMOption) rtmPlanningTable1.getItems().get(3)).getResultingEverydayRetailOverride());
+        Assertions.assertEquals(new BigDecimal("5.9833333333"),rtmPlanningTable1.getItems().get(3).getEverydayRetailCalcd());
+        Assertions.assertEquals(new BigDecimal("5.9833333333"),rtmPlanningTable1.getItems().get(3).getResultingEverydayRetailOverride());
     }
 
     @Test
@@ -271,40 +271,40 @@ class RTMPlanningControllerTest {
         robot.doubleClickOn(cell(table1String, 3, 0, robot));
         robot.write("Direct To Customer Model");
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
-        Assertions.assertEquals(((RTMOption) rtmPlanningTable1.getItems().get(3)).getRTMName(),"Direct To Customer Model");
+        Assertions.assertEquals(rtmPlanningTable1.getItems().get(3).getRTMName(),"Direct To Customer Model");
         robot.doubleClickOn(cell(table1String, 3, 1, robot));
         robot.write("7500");
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
-        Assertions.assertEquals(((RTMOption) rtmPlanningTable1.getItems().get(3)).getSlottingPerSku(),new BigDecimal("7500"));
+        Assertions.assertEquals(rtmPlanningTable1.getItems().get(3).getSlottingPerSku(),new BigDecimal("7500"));
         robot.doubleClickOn(cell(table1String, 3, 2, robot));
         robot.write("0.29");
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
-        Assertions.assertEquals(((RTMOption) rtmPlanningTable1.getItems().get(3)).getFreightOutPerUnit(),new BigDecimal("0.29"));
+        Assertions.assertEquals(rtmPlanningTable1.getItems().get(3).getFreightOutPerUnit(),new BigDecimal("0.29"));
         robot.doubleClickOn(cell(table1String, 3, 3, robot));
         robot.write("3.59");
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
-        Assertions.assertEquals(((RTMOption) rtmPlanningTable1.getItems().get(3)).getFirstReceiver(),new BigDecimal("3.59"));
-        Assertions.assertEquals(((RTMOption) rtmPlanningTable1.getItems().get(3)).getLandedStoreCost(),new BigDecimal("3.59"));
-        Assertions.assertEquals(((RTMOption) rtmPlanningTable1.getItems().get(3)).getEverydayRetailCalcd(),new BigDecimal("5.9833333333"), "Resulting Calcd should have changed");
-        Assertions.assertEquals(((RTMOption) rtmPlanningTable1.getItems().get(3)).getResultingEverydayRetailOverride(),new BigDecimal("5.9833333333"), "Resulting Override should have changed");
+        Assertions.assertEquals(rtmPlanningTable1.getItems().get(3).getFirstReceiver(),new BigDecimal("3.59"));
+        Assertions.assertEquals(rtmPlanningTable1.getItems().get(3).getLandedStoreCost(),new BigDecimal("3.59"));
+        Assertions.assertEquals(rtmPlanningTable1.getItems().get(3).getEverydayRetailCalcd(),new BigDecimal("5.9833333333"), "Resulting Calcd should have changed");
+        Assertions.assertEquals(rtmPlanningTable1.getItems().get(3).getResultingEverydayRetailOverride(),new BigDecimal("5.9833333333"), "Resulting Override should have changed");
 //      ^^ ADD THIS LATER ^^
         robot.doubleClickOn(cell(table1String, 3, 9, robot));
         robot.write("5.99");
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
-        Assertions.assertEquals(((RTMOption) rtmPlanningTable1.getItems().get(3)).getResultingEverydayRetailOverride(),new BigDecimal("5.99"));
+        Assertions.assertEquals(rtmPlanningTable1.getItems().get(3).getResultingEverydayRetailOverride(),new BigDecimal("5.99"));
 
         robot.doubleClickOn(weeklyUfswAtMinField);
         robot.write("1.20");
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
 //        Assertions.assertEquals(new BigDecimal("1.20"), ((RTMOption)firstTableView.getItems().get(3)).getWeeklyUSFWAtMin());
 //        ^^KEEPS CHANGING FROM 1.20 to 1.2  or VICE VERSA
-        Assertions.assertEquals(((RTMOption) rtmPlanningTable1.getItems().get(3)).getElasticizedUnitVelocity(), new BigDecimal("1.2"));
-        Assertions.assertEquals(((RTMOption) rtmPlanningTable1.getItems().get(3)).getAnnualVolumePerSku(), new BigDecimal("9859.2000000000"));
-        Assertions.assertEquals(((RTMOption) rtmPlanningTable1.getItems().get(3)).getSlottingPaybackPeriod(), new BigDecimal("1.65436")); // Refactor this in RTM Option
-        Assertions.assertEquals(((RTMOption) rtmPlanningTable1.getItems().get(3)).getPostSpoilsPostFreightPerUnit(), new BigDecimal("3.1923000000")); // Refactor this in RTM Option
-        Assertions.assertEquals(((RTMOption) rtmPlanningTable1.getItems().get(3)).getUnspentTradePerUnit(), new BigDecimal("0.4923000000"));
-        Assertions.assertEquals(((RTMOption) rtmPlanningTable1.getItems().get(3)).getFourYearEqGpPerSku(), new BigDecimal("18133.920000000000000000000000000000")); // Refactor this in RTM Option
-        Assertions.assertEquals(((RTMOption) rtmPlanningTable1.getItems().get(3)).getFourYearEqGpPerUnit(), new BigDecimal("0.4598222980"));
+        Assertions.assertEquals(rtmPlanningTable1.getItems().get(3).getElasticizedUnitVelocity(), new BigDecimal("1.2"));
+        Assertions.assertEquals(rtmPlanningTable1.getItems().get(3).getAnnualVolumePerSku(), new BigDecimal("9859.2000000000"));
+        Assertions.assertEquals(rtmPlanningTable1.getItems().get(3).getSlottingPaybackPeriod(), new BigDecimal("1.65436")); // Refactor this in RTM Option
+        Assertions.assertEquals(rtmPlanningTable1.getItems().get(3).getPostSpoilsPostFreightPerUnit(), new BigDecimal("3.1923000000")); // Refactor this in RTM Option
+        Assertions.assertEquals(rtmPlanningTable1.getItems().get(3).getUnspentTradePerUnit(), new BigDecimal("0.4923000000"));
+        Assertions.assertEquals(rtmPlanningTable1.getItems().get(3).getFourYearEqGpPerSku(), new BigDecimal("18133.920000000000000000000000000000")); // Refactor this in RTM Option
+        Assertions.assertEquals(rtmPlanningTable1.getItems().get(3).getFourYearEqGpPerUnit(), new BigDecimal("0.4598222980"));
     }
     @Test
     public void testChartUpdateRtmName(FxRobot robot) throws InterruptedException {
@@ -388,16 +388,7 @@ class RTMPlanningControllerTest {
 
     @Test
     public void testYearOneStoreCountUpdates(FxRobot robot){
-        RTMOption firstRtmOption = rtmPlanningTable1.getItems().get(0);
-        firstRtmOption.setRetailerProduct(retailer.get().getRetailerProducts().get(0));
-        firstRtmOption.setProduct(retailer.get().getRetailerProducts().get(0).getProduct());
-        firstRtmOption.setFreightOutPerUnit(new BigDecimal("0.29"));
-        firstRtmOption.setSlottingPerSku(new BigDecimal("7500"));
-        firstRtmOption.setFirstReceiver(new BigDecimal("3.59"));
-        firstRtmOption.setEverydayGPM(new BigDecimal("40.0"));
-        firstRtmOption.setSpoilsAndFees(new BigDecimal("3.0"));
-//        firstRtmOption.setResultingEverydayRetailOverride(new BigDecimal("5.99"));
-        firstRtmOption.setWeeklyUSFWAtMin(new BigDecimal("1.2"));
+        RTMOption firstRtmOption = replaceValuesInSingleRtmOption(5, robot);
 
         robot.doubleClickOn(cell(table1String, 0, 9, robot));
         robot.write("5.99");
@@ -407,7 +398,67 @@ class RTMPlanningControllerTest {
         robot.write("158");
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
 
-        Assertions.assertEquals(new BigDecimal("9859.2000000000"), firstRtmOption.getAnnualVolumePerSku());
+        assertEqualsTestRtmOption(firstRtmOption);
+    }
+    @Test
+    public void testEverydayGpmUpdates(FxRobot robot){
+        RTMOption firstRtmOption = replaceValuesInSingleRtmOption(5, robot);
+
+        robot.doubleClickOn(everydayGpmField);
+        robot.write("40");
+        robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
+
+        assertEqualsTestRtmOption(firstRtmOption);
+    }
+    @Test
+    public void testSpoilsFeesUpdates(FxRobot robot){
+        RTMOption firstRtmOption = replaceValuesInSingleRtmOption(6, robot);
+        robot.doubleClickOn(spoilsFeesField);
+        robot.write("3.0");
+        robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
+
+        assertEqualsTestRtmOption(firstRtmOption);
+    }
+    @Test
+    public void testWeeklyUfswAtMinUpdates(FxRobot robot){
+        RTMOption firstRtmOption = replaceValuesInSingleRtmOption(7, robot);
+        robot.doubleClickOn(weeklyUfswAtMinField);
+        robot.write("1.2");
+        robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
+        assertEqualsTestRtmOption(firstRtmOption);
+    }
+
+    public RTMOption replaceValuesInSingleRtmOption(int replaceField, FxRobot robot){
+        RTMOption firstRtmOption = rtmPlanningTable1.getItems().get(0);
+        if (replaceField!=0){
+            rtmPlanningTable1.getItems().stream().forEach(e -> e.setRetailerProduct(retailer.get().getRetailerProducts().get(0)));
+        } if (replaceField!=1){
+            firstRtmOption.setProduct(retailer.get().getRetailerProducts().get(0).getProduct());
+        } if (replaceField!=2){
+            firstRtmOption.setFreightOutPerUnit(new BigDecimal("0.29"));
+        } if (replaceField!=3){
+            firstRtmOption.setSlottingPerSku(new BigDecimal("7500"));
+        } if (replaceField!=4){
+            firstRtmOption.setFirstReceiver(new BigDecimal("3.59"));
+        } if (replaceField!=5){
+            firstRtmOption.setEverydayGPM(new BigDecimal("40.0"));
+        } if (replaceField!=6){
+            firstRtmOption.setSpoilsAndFees(new BigDecimal("0.03"));
+        } if (replaceField!=7) {
+            firstRtmOption.setWeeklyUSFWAtMin(new BigDecimal("1.2"));
+        } if (replaceField!=8) {
+            robot.interact(() -> firstRtmOption.setResultingEverydayRetailOverride(new BigDecimal("5.99")));
+        }
+        return firstRtmOption;
+    }
+    public void assertEqualsTestRtmOption(RTMOption firstRtmOption){
+        Assertions.assertEquals(new BigDecimal("1.2"), firstRtmOption.getElasticizedUnitVelocity());
+        Assertions.assertEquals(new BigDecimal("9859.2000"), firstRtmOption.getAnnualVolumePerSku());
+        Assertions.assertEquals(new BigDecimal("1.6544"), firstRtmOption.getSlottingPaybackPeriod());
+        Assertions.assertEquals(new BigDecimal("3.1923"), firstRtmOption.getPostSpoilsAndFreightWeCollectPerUnit());
+        Assertions.assertEquals(new BigDecimal("0.4923"), firstRtmOption.getUnspentTradePerUnit());
+        Assertions.assertEquals(new BigDecimal("18133.9200"), firstRtmOption.getFourYearEqGpPerSku());
+        Assertions.assertEquals(new BigDecimal("0.4598"), firstRtmOption.getFourYearEqGpPerUnit());
     }
     @Test
     public void testUpdateChartLandedStoreCost(FxRobot robot){

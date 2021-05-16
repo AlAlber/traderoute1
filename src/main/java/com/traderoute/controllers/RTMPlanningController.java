@@ -180,7 +180,6 @@ public class RTMPlanningController implements Initializable {
     private BigDecimalTextField everydayGpmField =
             new BigDecimalTextField(new BigDecimal("40.0"),
                     new BigDecimal("1.0"), new BigDecimal("99.0"), false);
-
     /**
      * TextField to insert percentage of Spoils and Fees of RetailerProduct.
      */
@@ -188,7 +187,6 @@ public class RTMPlanningController implements Initializable {
     private BigDecimalTextField spoilsFeesField =
             new BigDecimalTextField(new BigDecimal("3.0"),
                     new BigDecimal("1.0"), new BigDecimal("99.0"), false);
-
     /**
      * TextField to insert the Weekly Velocity U/F/S/W of product at the minimum price in the everyday retail override
      * column.
@@ -202,8 +200,6 @@ public class RTMPlanningController implements Initializable {
      */
     @FXML
     private Label maxOverrideLabel;
-
-
     /**
      * Combobox where user can select the brand name of a Product.
      */
@@ -309,26 +305,17 @@ public class RTMPlanningController implements Initializable {
         brandNameBox.setOnAction(e -> changeBrandComboboxEvent());
         productClassBox.setOnAction(e -> changeProductClassComboboxEvent());
 
-
-
-        // Set up cell value factories
         setCellValueFactories();
 
-        // Set unique values for brandcombobox and set converters for both brand and productCombobox
         brandNameBox.setUniqueItems(MenuController.getExampleProducts());
 
-        // Set Bar Chart
         updateCharts();
 
-        // Set editable columns
         rtmPlanningTable1.setEditable(true);
         landedStoreCostColumn.setEditable(false);
         everydayRetailCalcdCol.setEditable(false);
 
-        // Set up event listerners
         setUpListeners();
-
-        // Set cell factories
         setCellFactories();
     }
 
@@ -433,12 +420,6 @@ public class RTMPlanningController implements Initializable {
         rtmPlanningTable2.setItems(getRetailer().getRetailerProducts().get(productIndex).getRtmOptions());
         rtmPlanningTable2.refresh();
         setUpListeners();
-        // updateChart(observableArrayList(slottingPaybackPeriodChart,
-        // postSpoilsPostFreightChart, unspentTradePerUnitChart,
-        // fourYearEqGpPerSkuChart, fourYearEqGpPerUnitChart));
-        // updateChart(false, false, false, false,
-        // true, true, true, true, true);
-        // this.retailer.set(retailer);
         ObservableList<RetailerProduct> retailerProducts = getRetailer().getRetailerProducts();
         RetailerProduct currentRetailerProduct = retailerProducts.get(getRetailer().getCurrentRetailerProductIndex());
         ObservableList<RTMOption> currentRtmOptions = currentRetailerProduct.getRtmOptions();
@@ -458,21 +439,16 @@ public class RTMPlanningController implements Initializable {
         for (RTMOption row : rtmPlanningTable1.getItems()) {
             row.setRetailerProduct(currentRetailerProduct);
             row.setProduct(currentRetailerProduct.getProduct());
-//            row.setYearOneStoreCount(getRetailer().getYearOneStoreCount());
             row.setEverydayGPM(getRetailer().getEverydayGPM());
             row.setSpoilsAndFees(
                     getRetailer().getSpoilsFees().divide((new BigDecimal("100")), divisionScale, RoundingMode.HALF_UP));
             maxReceivers(row);
             row.updateResultingEverydayRetailCald();
-
-            // updateChart(true, true, true, true, true,
-            // true, true, true, true);
         }
         updateCharts();
         rtmPlanningTable2.setVisible(false);
         rtmPlanningTable2.setVisible(true);
         rtmPlanningTable2.refresh();
-
     };
 
     /**
@@ -767,8 +743,6 @@ public class RTMPlanningController implements Initializable {
 //        rtmPlanningTable1.getItems().stream().forEach(e -> e.setRetailerProduct(currentRetailerProduct.get()));
 
         updateRetailerProduct(thisRetailerProduct.getProduct());
-
-
 
         this.brandNameBox.setUniqueItems(MenuController.getExampleProducts());
         this.brandNameBox.valueProperty().setValue(thisRetailerProduct.getProduct());

@@ -150,7 +150,7 @@ public class RTMOption {
         if (getEverydayGPM().compareTo(new BigDecimal("0.0")) > 0
                 && getLandedStoreCost().compareTo(new BigDecimal("0.0")) > 0) {
             BigDecimal newValue = (getLandedStoreCost().multiply(new BigDecimal("100")))
-                    .divide((getEverydayGPM().subtract(new BigDecimal("100"))), 10, RoundingMode.HALF_UP).abs();
+                    .divide((getEverydayGPM().subtract(new BigDecimal("100"))), 4, RoundingMode.HALF_UP).abs();
             setEverydayRetailCalcd(newValue);
             setResultingEverydayRetailOverride(newValue);
         }
@@ -165,7 +165,7 @@ public class RTMOption {
                 setElasticizedUnitVelocity(this.getWeeklyUSFWAtMin());
             } else {
                 setElasticizedUnitVelocity(((getResultingEverydayRetailOverride().subtract(getMinOverride()))
-                        .divide((getMinOverride()), 10, RoundingMode.HALF_UP)
+                        .divide((getMinOverride()), 4, RoundingMode.HALF_UP)
                         .multiply(getProduct().getElasticityMultiple()).multiply(getWeeklyUSFWAtMin()))
                                 .add(getWeeklyUSFWAtMin()));
             }
@@ -176,7 +176,7 @@ public class RTMOption {
         if (getYearOneStoreCount() > 0 && getElasticizedUnitVelocity().compareTo(new BigDecimal("0.0")) > 0) {
             setAnnualVolumePerSku(((new BigDecimal("52")
                     .multiply(new BigDecimal(getYearOneStoreCount()).multiply(getElasticizedUnitVelocity())))
-                            .setScale(10, RoundingMode.HALF_UP)));
+                            .setScale(4, RoundingMode.HALF_UP)));
         }
     }
 
@@ -212,7 +212,7 @@ public class RTMOption {
         if (getWeeklyUSFWAtMin().compareTo(new BigDecimal("0.0")) > 0
                 && getMinOverride().compareTo(new BigDecimal("0.0")) > 0
                 && getAnnualVolumePerSku().compareTo(new BigDecimal("0.0")) > 0) {
-            setFourYearEqGpPerSku(getGrossProfit());
+            setFourYearEqGpPerSku(getGrossProfit().setScale(4, RoundingMode.HALF_UP));
         }
     }
 
@@ -220,7 +220,7 @@ public class RTMOption {
         if (getWeeklyUSFWAtMin().compareTo(new BigDecimal("0.0")) > 0
                 && getMinOverride().compareTo(new BigDecimal("0.0")) > 0
                 && getAnnualVolumePerSku().compareTo(new BigDecimal("0.0")) > 0) {
-            setFourYearEqGpPerUnit(getGrossProfitPerUnit());
+            setFourYearEqGpPerUnit(getGrossProfitPerUnit().setScale(4, RoundingMode.HALF_UP));
         }
     }
 
@@ -302,7 +302,7 @@ public class RTMOption {
 
     public BigDecimal getGrossRevenueList() {
         return getFourYearUnitVolumePerSku()
-                .multiply(getProduct().getUnitListCost().setScale(10, RoundingMode.HALF_UP));
+                .multiply(getProduct().getUnitListCost().setScale(4, RoundingMode.HALF_UP));
     }
 
     public BigDecimal getFobDiscount() {
@@ -324,12 +324,12 @@ public class RTMOption {
     public BigDecimal getStandardAllowanceTrade() { // retest //HARDCODED FOR NOW, LIST PRICE NEEDED
         if (isFob()) {
             return ((((getProduct().getUnitListCost()).subtract(getFirstReceiver()))
-                    .multiply(getFourYearUnitVolumePerSku())).subtract(getFobDiscount())).setScale(10,
+                    .multiply(getFourYearUnitVolumePerSku())).subtract(getFobDiscount())).setScale(4,
                             RoundingMode.HALF_UP);
         }
         BigDecimal zeroValue = (getProduct().getUnitListCost()).subtract(getFirstReceiver());
         zeroValue = zeroValue.multiply(getFourYearUnitVolumePerSku());
-        return zeroValue.setScale(10, RoundingMode.HALF_UP);
+        return zeroValue.setScale(4, RoundingMode.HALF_UP);
     }
 
     public BigDecimal getAfterSpoilsAndStdAllowanceTrade() { // retest //HARDCODED FOR NOW, LIST PRICE NEEDED, NET1 GOAL
@@ -368,8 +368,7 @@ public class RTMOption {
         if (getFourYearUnitVolumePerSku().equals(new BigDecimal("0.0"))) {
             return new BigDecimal("0.0");
         }
-        return getEqualsNet3Rev().divide((getFourYearUnitVolumePerSku()), 10, RoundingMode.HALF_UP).setScale(10,
-                RoundingMode.HALF_UP);
+        return getEqualsNet3Rev().divide((getFourYearUnitVolumePerSku()), 4, RoundingMode.HALF_UP);
     }
 
     // IMPLEMENT COGS AND PASS IT
@@ -383,7 +382,7 @@ public class RTMOption {
     }
 
     public BigDecimal getGrossProfitPerUnit() {
-        return getGrossProfit().divide((getFourYearUnitVolumePerSku()), 10, RoundingMode.HALF_UP);
+        return getGrossProfit().divide((getFourYearUnitVolumePerSku()), 4, RoundingMode.HALF_UP);
     }
     // IMPLEMENT THIS IN FIRST TABLE CONTROLLER, get the max from gross profit
     // public BigDecimal getGrossProfitIndex(){
@@ -394,8 +393,8 @@ public class RTMOption {
     // }
 
     public BigDecimal getSlottingPayback() {
-        return (getSlottingPerSku().divide((getGrossProfitPerUnit()), 10, RoundingMode.HALF_UP))
-                .divide(getAnnualVolumePerSku(), 5, RoundingMode.HALF_UP);
+        return (getSlottingPerSku().divide((getGrossProfitPerUnit()), 4, RoundingMode.HALF_UP))
+                .divide(getAnnualVolumePerSku(), 4, RoundingMode.HALF_UP);
     }
 
     // IMPLEMENT GET GROSS PROFIT INDEX
@@ -405,11 +404,11 @@ public class RTMOption {
     }
 
     public BigDecimal getPostSpoilsAndFreightWeCollectPerUnit() {
-        return getPostSpoilsAndFreightWeCollect().divide((getFourYearUnitVolumePerSku()), 10, RoundingMode.HALF_UP);
+        return getPostSpoilsAndFreightWeCollect().divide((getFourYearUnitVolumePerSku()), 4, RoundingMode.HALF_UP);
     }
 
     public BigDecimal getPostSpoilsAndStdAllowancesAvailableTrade() {
-        return getAfterSpoilsAndStdAllowanceTrade().divide((getFourYearUnitVolumePerSku()), 10, RoundingMode.HALF_UP);
+        return getAfterSpoilsAndStdAllowanceTrade().divide((getFourYearUnitVolumePerSku()), 4, RoundingMode.HALF_UP);
     }
 
     public String toString() {
