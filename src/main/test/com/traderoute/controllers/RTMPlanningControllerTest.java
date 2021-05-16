@@ -252,6 +252,8 @@ class RTMPlanningControllerTest {
     }
     @Test
     public void testFullWorkflow1(FxRobot robot) {
+        rtmPlanningTable1.getItems().stream().forEach(e ->
+                e.setRetailerProduct(retailer.get().getRetailerProducts().get(0)));
         robot.interact(() -> {
             brandNameBox.getSelectionModel().select(0);
             productClassBox.getSelectionModel().select(0);
@@ -311,13 +313,6 @@ class RTMPlanningControllerTest {
         robot.write("New RTM Name");
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
         Assertions.assertEquals("New RTM Name", rtmPlanningTable1.getItems().get(0).getRTMName());
-//        robot.interact(() -> {
-//            XYChart.Series<String, BigDecimal> series = landedStoreCostChart.getData().get(0);
-//            XYChart.Data<String, BigDecimal> data = series.getData().get(0);
-//            String xValue = data.getXValue();
-//            Assertions.assertEquals("New RTM Name", xValue);
-//        });
-//        assertEqualsXChartValueForFirstRTMOption(robot,landedStoreCostChart, "New RTM Name");
         assertEqualsXChartValueForFirstRTMOption(robot,everydayRetailCalcdChart, "New RTM Name");
         assertEqualsXChartValueForFirstRTMOption(robot,elasticizedUnitVelocityChart,"New RTM Name");
         assertEqualsXChartValueForFirstRTMOption(robot,annualVolumePerSkuChart, "New RTM Name");
@@ -389,6 +384,30 @@ class RTMPlanningControllerTest {
         robot.write("158");
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
         assertEqualsYChartValueForFirstRTMOption( robot, annualVolumePerSkuChart, new BigDecimal("9887"));
+    }
+
+    @Test
+    public void testYearOneStoreCountUpdates(FxRobot robot){
+        RTMOption firstRtmOption = rtmPlanningTable1.getItems().get(0);
+        firstRtmOption.setRetailerProduct(retailer.get().getRetailerProducts().get(0));
+        firstRtmOption.setProduct(retailer.get().getRetailerProducts().get(0).getProduct());
+        firstRtmOption.setFreightOutPerUnit(new BigDecimal("0.29"));
+        firstRtmOption.setSlottingPerSku(new BigDecimal("7500"));
+        firstRtmOption.setFirstReceiver(new BigDecimal("3.59"));
+        firstRtmOption.setEverydayGPM(new BigDecimal("40.0"));
+        firstRtmOption.setSpoilsAndFees(new BigDecimal("3.0"));
+//        firstRtmOption.setResultingEverydayRetailOverride(new BigDecimal("5.99"));
+        firstRtmOption.setWeeklyUSFWAtMin(new BigDecimal("1.2"));
+
+        robot.doubleClickOn(cell(table1String, 0, 9, robot));
+        robot.write("5.99");
+        robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
+
+        robot.doubleClickOn(yearOneStoreCountField);
+        robot.write("158");
+        robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
+
+        Assertions.assertEquals(new BigDecimal("9859.2000000000"), firstRtmOption.getAnnualVolumePerSku());
     }
     @Test
     public void testUpdateChartLandedStoreCost(FxRobot robot){

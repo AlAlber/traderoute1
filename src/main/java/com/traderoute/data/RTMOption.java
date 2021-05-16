@@ -3,6 +3,8 @@ package com.traderoute.data;
 import com.traderoute.RTMUpdateListener;
 import com.traderoute.controllers.RTMPlanningController;
 import javafx.beans.property.*;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import lombok.Getter;
 
 import java.math.BigDecimal;
@@ -118,16 +120,17 @@ public class RTMOption {
     }
 
     public void setupListeners() {
-        if (getRetailerProduct()!=null) {
+        retailerProductProperty().addListener(((arg, oldVal, newVal) -> {
             yearOneStoreCountProperty().addListener(new RTMUpdateListener<>(this, true));
-        }
+            firstReceiverProperty().addListener(new RTMUpdateListener<>(this, true));
+            resultingEverydayRetailOverrideProperty().addListener(new RTMUpdateListener<>(this, true));
+        }));
         productProperty().addListener(new RTMUpdateListener<>(this, false));
         spoilsAndFeesProperty().addListener(new RTMUpdateListener(this, false));
         slottingPerSkuProperty().addListener(new RTMUpdateListener<>(this, false));
         freightOutPerUnitProperty().addListener(new RTMUpdateListener<>(this, false));
-        resultingEverydayRetailOverrideProperty().addListener(new RTMUpdateListener<>(this, true));
+
         minOverrideProperty().addListener(new RTMUpdateListener<>(this, true));
-        firstReceiverProperty().addListener(new RTMUpdateListener<>(this, true));
         weeklyUSFWAtMinProperty().addListener(new RTMUpdateListener<>(this, true));
         /*
          * Check if landedStoreCostProperty changed, if it it did calculate everyday Retail
