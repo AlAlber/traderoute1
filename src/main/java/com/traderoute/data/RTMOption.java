@@ -287,7 +287,7 @@ public class RTMOption {
         }
         return calcEqualsNet3Rev().divide((calcFourYearUnitVolumePerSku()), 4, RoundingMode.HALF_UP);
     }
-=
+
     public BigDecimal calcTotalCogs() {
         return calcFourYearUnitVolumePerSku().multiply(getProduct().getUnitBlendedCogs());
     }

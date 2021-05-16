@@ -16,12 +16,14 @@ public abstract class NumberTextField extends TextField {
     private Number minValue;
     private Number defaultValue;
     private boolean positiveOnly;
+    private SimpleObjectProperty<Number> value;
     public NumberTextField (Number defaultValue, Number minValue, Number maxValue, boolean positiveOnly) {
         this.defaultValue = defaultValue;
         this.minValue = minValue;
         this.maxValue = maxValue;
         this.positiveOnly = positiveOnly;
         this.setText(defaultValue.toString());
+        setValue(this.getValue());
         Alert alert = new Alert(Alert.AlertType.WARNING,
                 "Enter a value between "+ minValue + " and " + maxValue + ", please." +
                         " We have\nreset the field to its default value.", ButtonType.OK);
@@ -31,8 +33,11 @@ public abstract class NumberTextField extends TextField {
                             new BigDecimal(this.getText()).compareTo(new BigDecimal(minValue.toString())) < 0) {
 
                         this.setText(defaultValue.toString());
+                        this.value.set(getDefaultValue());
                         alert.showAndWait();
-                        }});
+                        }
+                    setValue(this.getValue());
+        });
     }
     public boolean isPositiveOnly(){
         return positiveOnly;
@@ -42,5 +47,12 @@ public abstract class NumberTextField extends TextField {
         return defaultValue;
     }
     public abstract Number getValue();
+
+    public SimpleObjectProperty<Number> valueProperty(){ return value;}
+
+    private void setValue(Number newValue){ this.value.set(newValue); }
+    
+
+
 
 }
