@@ -471,10 +471,12 @@ public class RTMPlanningController implements Initializable {
      */
     public void changeWeeklyUSFWAtMinEvent() {
         rtmPlanningTable2.setItems(rtmPlanningTable1.getItems());
-        for (RTMOption row : rtmPlanningTable2.getItems()) {
-            row.setMinOverride(getMinOverride());
-            row.setWeeklyUSFWAtMin(weeklyUfswAtMinField.getValue());
-        }
+        currentRetailerProduct.get().setMinOverride(getMinOverride());
+        currentRetailerProduct.get().setWeeklyUSFWAtMin(weeklyUfswAtMinField.getValue());
+//        for (RTMOption row : rtmPlanningTable2.getItems()) {
+//            row.setMinOverride(getMinOverride());
+//            row.setWeeklyUSFWAtMin(weeklyUfswAtMinField.getValue());
+//        }
         rtmPlanningTable2.refresh();
         updateCharts();
     }
@@ -487,9 +489,11 @@ public class RTMPlanningController implements Initializable {
      */
     public void changeOverrideEvent(final TableColumn.CellEditEvent editedCell) {
         getFocusedRtmOption().setResultingEverydayRetailOverride(new BigDecimal(editedCell.getNewValue().toString()));
-        for (RTMOption row : rtmPlanningTable2.getItems()) {
-            row.setMinOverride(getMinOverride());
-        }
+        currentRetailerProduct.get().setMinOverride(getMinOverride());
+
+//        for (RTMOption row : rtmPlanningTable2.getItems()) {
+//            row.setMinOverride(getMinOverride());
+//        }
         rtmPlanningTable2.refresh();
         updateCharts();
     }
@@ -515,9 +519,10 @@ public class RTMPlanningController implements Initializable {
      * //TODO Set RetailerProduct EverydayGpm. Set RTMProduct EverydayGpm in rows which calls listeners, updateChart.
      */
     public void changeEveryDayGpmCellEvent() {
-        for (RTMOption row : rtmPlanningTable1.getItems()) {
-            row.setEverydayGPM(everydayGpmField.getValue());
-        }
+        currentRetailerProduct.get().setEverydayGPM(everydayGpmField.getValue());
+//        for (RTMOption row : rtmPlanningTable1.getItems()) {
+//            row.setEverydayGPM(everydayGpmField.getValue());
+//        }
         updateCharts();
     }
 
@@ -526,12 +531,15 @@ public class RTMPlanningController implements Initializable {
      * as decimal percentage to RTMOption.
      */
     public void changeSpoilsAndFeesEvent() {
-        for (RTMOption row : rtmPlanningTable1.getItems()) {
-            row.setSpoilsAndFees(
-                    spoilsFeesField.getValue()
-                            .divide((new BigDecimal("100")),
-                                    divisionScale, RoundingMode.HALF_UP));
-        }
+        currentRetailerProduct.get().setSpoilsAndFees(spoilsFeesField.getValue()
+                .divide((new BigDecimal("100")),
+                        divisionScale, RoundingMode.HALF_UP));
+//        for (RTMOption row : rtmPlanningTable1.getItems()) {
+//            row.setSpoilsAndFees(
+//                    spoilsFeesField.getValue()
+//                            .divide((new BigDecimal("100")),
+//                                    divisionScale, RoundingMode.HALF_UP));
+//        }
         updateCharts();
     }
 

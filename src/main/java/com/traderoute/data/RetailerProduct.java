@@ -4,6 +4,8 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.ObservableList;
 
+import java.math.BigDecimal;
+
 public class RetailerProduct {
     private SimpleObjectProperty<Product> product;
     private SimpleObjectProperty<ObservableList<RTMOption>> rtmOptions;
@@ -11,6 +13,7 @@ public class RetailerProduct {
     private SimpleObjectProperty<ObservableList<Meeting>> meetings;
     private SimpleObjectProperty<ObservableList<PromoPlan>> promoPlans;
     private SimpleIntegerProperty yearOneStoreCount;
+    private SimpleObjectProperty<BigDecimal> minOverride, weeklyUSFWAtMin, everydayGPM, spoilsAndFees;
 
     public RetailerProduct(Product product, ObservableList rtmOptions, ObservableList skus, ObservableList meetings,
             ObservableList promoPlans, int yearOneStoreCount) {
@@ -21,6 +24,10 @@ public class RetailerProduct {
         this.promoPlans = new SimpleObjectProperty<>(promoPlans);
 
         this.yearOneStoreCount = new SimpleIntegerProperty(yearOneStoreCount);
+        this.minOverride = new SimpleObjectProperty<>();
+        this.weeklyUSFWAtMin = new SimpleObjectProperty<>();
+        this.everydayGPM = new SimpleObjectProperty<>();
+        this.spoilsAndFees = new SimpleObjectProperty<>();
     }
 
     public RetailerProduct() {
@@ -31,6 +38,10 @@ public class RetailerProduct {
         this.promoPlans = new SimpleObjectProperty<>();
 
         this.yearOneStoreCount = new SimpleIntegerProperty();
+        this.minOverride = new SimpleObjectProperty<>();
+        this.weeklyUSFWAtMin = new SimpleObjectProperty<>();
+        this.everydayGPM = new SimpleObjectProperty<>();
+        this.spoilsAndFees = new SimpleObjectProperty<>();
     }
 
     public int getYearOneStoreCount() {
@@ -43,6 +54,54 @@ public class RetailerProduct {
 
     public void setYearOneStoreCount(int yearOneStoreCount) {
         this.yearOneStoreCount.set(yearOneStoreCount);
+    }
+
+    public BigDecimal getMinOverride() {
+        return minOverride.get();
+    }
+
+    public SimpleObjectProperty<BigDecimal> minOverrideProperty() {
+        return minOverride;
+    }
+
+    public void setMinOverride(BigDecimal minOverride) {
+        this.minOverride.set(minOverride);
+    }
+
+    public BigDecimal getWeeklyUSFWAtMin() {
+        return weeklyUSFWAtMin.get();
+    }
+
+    public SimpleObjectProperty<BigDecimal> weeklyUSFWAtMinProperty() {
+        return weeklyUSFWAtMin;
+    }
+
+    public void setWeeklyUSFWAtMin(BigDecimal weeklyUSFWAtMin) {
+        this.weeklyUSFWAtMin.set(weeklyUSFWAtMin);
+    }
+
+    public BigDecimal getEverydayGPM() {
+        return everydayGPM.get();
+    }
+
+    public SimpleObjectProperty<BigDecimal> everydayGPMProperty() {
+        return everydayGPM;
+    }
+
+    public void setEverydayGPM(BigDecimal everydayGPM) {
+        this.everydayGPM.set(everydayGPM);
+    }
+
+    public BigDecimal getSpoilsAndFees() {
+        return spoilsAndFees.get();
+    }
+
+    public SimpleObjectProperty<BigDecimal> spoilsAndFeesProperty() {
+        return spoilsAndFees;
+    }
+
+    public void setSpoilsAndFees(BigDecimal spoilsAndFees) {
+        this.spoilsAndFees.set(spoilsAndFees);
     }
 
     public ObservableList<PromoPlan> getPromoPlans() {

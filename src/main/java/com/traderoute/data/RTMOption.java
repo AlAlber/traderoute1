@@ -18,10 +18,9 @@ public class RTMOption {
     private SimpleObjectProperty<BigDecimal> slottingPerSku, freightOutPerUnit, firstReceiver, secondReceiver,
             thirdReceiver, fourthReceiver, landedStoreCost, everydayRetailCalcd, resultingEverydayRetailOverride,
             elasticizedUnitVelocity, slottingPaybackPeriod, postSpoilsPostFreightPerUnit, unspentTradePerUnit,
-            fourYearEqGpPerSku, fourYearEqGpPerUnit, minOverride, weeklyUSFWAtMin, everydayGPM, spoilsAndFees,
-            annualVolumePerSku;
-    private SimpleObjectProperty<Product> product;
-
+            fourYearEqGpPerSku, fourYearEqGpPerUnit, annualVolumePerSku;
+//    private SimpleObjectProperty<Product> product;
+//    minOverride, weeklyUSFWAtMin, everydayGPM, spoilsAndFees,
     public RTMOption() {
         this.RTMName = new SimpleStringProperty();
         this.slottingPerSku = new SimpleObjectProperty<BigDecimal>();
@@ -33,8 +32,8 @@ public class RTMOption {
         this.landedStoreCost = new SimpleObjectProperty<BigDecimal>();
         this.everydayRetailCalcd = new SimpleObjectProperty<BigDecimal>();
         this.resultingEverydayRetailOverride = new SimpleObjectProperty<BigDecimal>();
-        this.minOverride = new SimpleObjectProperty<>();
-        this.weeklyUSFWAtMin = new SimpleObjectProperty<>();
+//        this.minOverride = new SimpleObjectProperty<>();
+//        this.weeklyUSFWAtMin = new SimpleObjectProperty<>();
         this.elasticizedUnitVelocity = new SimpleObjectProperty<BigDecimal>();
         this.annualVolumePerSku = new SimpleObjectProperty<>();
         this.slottingPaybackPeriod = new SimpleObjectProperty<BigDecimal>();
@@ -45,13 +44,13 @@ public class RTMOption {
 
         this.retailerProduct = new SimpleObjectProperty<RetailerProduct>();
 
-        this.minOverride = new SimpleObjectProperty<>();
-        this.weeklyUSFWAtMin = new SimpleObjectProperty<>();
-        this.everydayGPM = new SimpleObjectProperty<>();
+//        this.minOverride = new SimpleObjectProperty<>();
+//        this.weeklyUSFWAtMin = new SimpleObjectProperty<>();
+//        this.everydayGPM = new SimpleObjectProperty<>();
 //        this.yearOneStoreCount = new SimpleIntegerProperty();
-        this.spoilsAndFees = new SimpleObjectProperty<>();
+//        this.spoilsAndFees = new SimpleObjectProperty<>();
 
-        this.product = new SimpleObjectProperty<>();
+//        this.product = new SimpleObjectProperty<>();
 
         setupListeners();
     }
@@ -78,12 +77,12 @@ public class RTMOption {
 
         this.retailerProduct = new SimpleObjectProperty<RetailerProduct>();
 
-        this.minOverride = new SimpleObjectProperty<>();
-        this.weeklyUSFWAtMin = new SimpleObjectProperty<>();
-        this.everydayGPM = new SimpleObjectProperty<>();
-//        this.yearOneStoreCount = new SimpleIntegerProperty();
-        this.spoilsAndFees = new SimpleObjectProperty<>();
-        this.product = new SimpleObjectProperty<Product>();
+//        this.minOverride = new SimpleObjectProperty<>();
+//        this.weeklyUSFWAtMin = new SimpleObjectProperty<>();
+//        this.everydayGPM = new SimpleObjectProperty<>();
+////        this.yearOneStoreCount = new SimpleIntegerProperty();
+//        this.spoilsAndFees = new SimpleObjectProperty<>();
+//        this.product = new SimpleObjectProperty<Product>();
         // setupListeners();
 
     }
@@ -111,12 +110,12 @@ public class RTMOption {
 
         this.retailerProduct = new SimpleObjectProperty<RetailerProduct>();
 
-        this.minOverride = new SimpleObjectProperty<>(minOverride);
-        this.weeklyUSFWAtMin = new SimpleObjectProperty<>(weeklyUSFWAtMin);
-        this.everydayGPM = new SimpleObjectProperty<>(everydayGPM);
-//        this.yearOneStoreCount = new SimpleIntegerProperty(yearOneStoreCount);
-        this.spoilsAndFees = new SimpleObjectProperty<>(spoilsAndFees);
-        this.product = new SimpleObjectProperty<>();
+//        this.minOverride = new SimpleObjectProperty<>(minOverride);
+//        this.weeklyUSFWAtMin = new SimpleObjectProperty<>(weeklyUSFWAtMin);
+//        this.everydayGPM = new SimpleObjectProperty<>(everydayGPM);
+////        this.yearOneStoreCount = new SimpleIntegerProperty(yearOneStoreCount);
+//        this.spoilsAndFees = new SimpleObjectProperty<>(spoilsAndFees);
+//        this.product = new SimpleObjectProperty<>();
     }
 
     public void setupListeners() {
@@ -141,9 +140,6 @@ public class RTMOption {
         everydayGPMProperty().addListener(((arg, oldVal, newVal) -> {
             updateResultingEverydayRetailCald();
         }));
-    }
-    public void getMinOverride(RTMPlanningController controller){
-        controller.getMinOverride();
     }
 
     public void updateResultingEverydayRetailCald() {
@@ -225,18 +221,11 @@ public class RTMOption {
     }
 
     public Product getProduct() {
-        return product.get();
+        return getRetailerProduct().getProduct();
     }
 
     public SimpleObjectProperty<Product> productProperty() {
-        if (product == null) {
-            return new SimpleObjectProperty<Product>();
-        }
-        return product;
-    }
-
-    public void setProduct(Product product) {
-        this.product.set(product);
+        return getRetailerProduct().productProperty();
     }
 
     public Integer getYearOneStoreCount() {
@@ -244,45 +233,23 @@ public class RTMOption {
     }
 
     public SimpleIntegerProperty yearOneStoreCountProperty() {
-//        if (getRetailerProduct().yearOneStoreCountProperty() == null) {
-//            return new SimpleIntegerProperty();
-//        }
-        // ^^ GONNA BE CONFUSING Later
         return getRetailerProduct().yearOneStoreCountProperty();
     }
 
-//    public void setYearOneStoreCount(Integer yearOneStoreCount) {
-//        this.yearOneStoreCount.set(yearOneStoreCount);
-//    }
-
     public BigDecimal getEverydayGPM() {
-        if (everydayGPM.get() == null) {
-            return new BigDecimal("0.0");
-        }
-        return everydayGPM.get();
+        return getRetailerProduct().getEverydayGPM();
     }
 
     public SimpleObjectProperty<BigDecimal> everydayGPMProperty() {
-        if (everydayGPM == null) {
-            return new SimpleObjectProperty<>();
-        }
-        return everydayGPM;
-    }
-
-    public void setEverydayGPM(BigDecimal everydayGPM) {
-        this.everydayGPM.set(everydayGPM);
+        return getRetailerProduct().everydayGPMProperty();
     }
 
     public BigDecimal getSpoilsAndFees() {
-        return spoilsAndFees.get();
+        return getRetailerProduct().getSpoilsAndFees();
     }
 
     public SimpleObjectProperty<BigDecimal> spoilsAndFeesProperty() {
-        return spoilsAndFees;
-    }
-
-    public void setSpoilsAndFees(BigDecimal spoilsAndFees) {
-        this.spoilsAndFees.set(spoilsAndFees);
+        return getRetailerProduct().spoilsAndFeesProperty();
     }
 
     public boolean isFob() {
@@ -602,33 +569,19 @@ public class RTMOption {
     }
 
     public BigDecimal getMinOverride() {
-        if (minOverride.get() == null) {
-            return new BigDecimal("0.0");
-        }
-        return minOverride.get();
+        return getRetailerProduct().getMinOverride();
     }
 
     public SimpleObjectProperty<BigDecimal> minOverrideProperty() {
-        return minOverride;
-    }
-
-    public void setMinOverride(BigDecimal minOverride) {
-        this.minOverride.set(minOverride);
+        return getRetailerProduct().minOverrideProperty();
     }
 
     public BigDecimal getWeeklyUSFWAtMin() {
-        if (weeklyUSFWAtMin.get() == null) {
-            return new BigDecimal("0.0");
-        }
-        return weeklyUSFWAtMin.get();
+        return getRetailerProduct().getWeeklyUSFWAtMin();
     }
 
     public SimpleObjectProperty<BigDecimal> weeklyUSFWAtMinProperty() {
-        return weeklyUSFWAtMin;
-    }
-
-    public void setWeeklyUSFWAtMin(BigDecimal weeklyUSFWAtMin) {
-        this.weeklyUSFWAtMin.set(weeklyUSFWAtMin);
+        return getRetailerProduct().weeklyUSFWAtMinProperty();
     }
 
     public BigDecimal getElasticizedUnitVelocity() {
