@@ -297,9 +297,9 @@ public class RTMPlanningController implements Initializable {
         spoilsFeesField.setId("spoilsFeesField");
         weeklyUfswAtMinField.setId("weeklyUfswAtMinField");
         yearOneStoreCountField.addEventHandler(ActionEvent.ACTION, e -> changeYearOneStoreCount());
-        everydayGpmField.onActionProperty().addListener(e -> changeEveryDayGpmCellEvent());
-        spoilsFeesField.onActionProperty().addListener(e -> changeSpoilsAndFeesEvent());
-        weeklyUfswAtMinField.onActionProperty().addListener(e -> changeWeeklyUSFWAtMinEvent());
+        everydayGpmField.addEventHandler(ActionEvent.ACTION, e -> changeEveryDayGpmCellEvent());
+        spoilsFeesField.addEventHandler(ActionEvent.ACTION, e -> changeSpoilsAndFeesEvent());
+        weeklyUfswAtMinField.addEventHandler(ActionEvent.ACTION, e -> changeWeeklyUSFWAtMinEvent());
 
         currentRetailerProduct = new SimpleObjectProperty<>(MenuController.getRetailerProducts().get(0));
         rtmPlanningTable1.getItems().stream().forEach(e -> e.setRetailerProduct(currentRetailerProduct.get()));
