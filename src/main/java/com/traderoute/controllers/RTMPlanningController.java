@@ -338,13 +338,16 @@ public class RTMPlanningController implements Initializable {
                 updateCharts();
             }));
             row.everydayRetailOverrideProperty().addListener(((arg, oldVal, newVal) -> {
-                currentRetailerProduct.get().setMinOverride(getMinOverride());
+                getSpecs().setMinOverride(getMinOverride());
                 rtmPlanningTable1.refresh();
                 row.updateElasticizedUnitVelocity();
                 maxOverrideLabel.setText("of $" + getMinOverride());
                 rtmPlanningTable1.refresh();
             }));
         }
+    }
+    public RetailerProductSpecs getSpecs() {
+        return currentRetailerProduct.get().getSpecs();
     }
 
     /**
@@ -436,7 +439,7 @@ public class RTMPlanningController implements Initializable {
         elasticityRatioLabel.setText("Elasticity Ratio = +1% Price :"
                 + currentRetailerProduct1.getProduct().getElasticityMultiple() + "% Volume");
         // Stuff that should be implemented differently
-        this.weeklyUfswAtMinField.setText(currentRetailerProduct.get().getWeeklyUSFWAtMin().toString());
+        this.weeklyUfswAtMinField.setText(getSpecs().getWeeklyUSFWAtMin().toString());
         for (RTMOption row : rtmPlanningTable1.getItems()) {
             row.setRetailerProduct(currentRetailerProduct.get());
 //            row.setProduct(currentRetailerProduct.getProduct());
@@ -472,8 +475,8 @@ public class RTMPlanningController implements Initializable {
      */
     public void changeWeeklyUSFWAtMinEvent() {
         rtmPlanningTable2.setItems(rtmPlanningTable1.getItems());
-        currentRetailerProduct.get().setMinOverride(getMinOverride());
-        currentRetailerProduct.get().setWeeklyUSFWAtMin(weeklyUfswAtMinField.getValue());
+        getSpecs().setMinOverride(getMinOverride());
+        getSpecs().setWeeklyUSFWAtMin(weeklyUfswAtMinField.getValue());
 //        for (RTMOption row : rtmPlanningTable2.getItems()) {
 //            row.setMinOverride(getMinOverride());
 //            row.setWeeklyUSFWAtMin(weeklyUfswAtMinField.getValue());
@@ -490,7 +493,7 @@ public class RTMPlanningController implements Initializable {
      */
     public void changeOverrideEvent(final TableColumn.CellEditEvent editedCell) {
         getFocusedRtmOption().setEverydayRetailOverride(new BigDecimal(editedCell.getNewValue().toString()));
-        currentRetailerProduct.get().setMinOverride(getMinOverride());
+        getSpecs().setMinOverride(getMinOverride());
 
 //        for (RTMOption row : rtmPlanningTable2.getItems()) {
 //            row.setMinOverride(getMinOverride());
@@ -506,7 +509,7 @@ public class RTMPlanningController implements Initializable {
     public void changeYearOneStoreCount() {
         System.out.println("hello");
         rtmPlanningTable2.setItems(rtmPlanningTable1.getItems());
-        currentRetailerProduct.get().setYearOneStoreCount(yearOneStoreCountField.getValue());
+        getSpecs().setYearOneStoreCount(yearOneStoreCountField.getValue());
 //        for (RTMOption row : rtmPlanningTable2.getItems()) {
 //            row.setYearOneStoreCount(yearOneStoreCountField.getValue());
 //        }
@@ -520,7 +523,7 @@ public class RTMPlanningController implements Initializable {
      * //TODO Set RetailerProduct EverydayGpm. Set RTMProduct EverydayGpm in rows which calls listeners, updateChart.
      */
     public void changeEveryDayGpmCellEvent() {
-        currentRetailerProduct.get().setEverydayGpm(everydayGpmField.getValue());
+        getSpecs().setEverydayGpm(everydayGpmField.getValue());
 //        for (RTMOption row : rtmPlanningTable1.getItems()) {
 //            row.setEverydayGPM(everydayGpmField.getValue());
 //        }
@@ -532,7 +535,7 @@ public class RTMPlanningController implements Initializable {
      * as decimal percentage to RTMOption.
      */
     public void changeSpoilsAndFeesEvent() {
-        currentRetailerProduct.get().setSpoilsAndFees(spoilsFeesField.getValue()
+        getSpecs().setSpoilsAndFees(spoilsFeesField.getValue()
                 .divide((new BigDecimal("100")),
                         divisionScale, RoundingMode.HALF_UP));
 //        for (RTMOption row : rtmPlanningTable1.getItems()) {

@@ -230,7 +230,7 @@ public class MenuController implements Initializable {
         meetings.addAll(new Meeting("Review Meeting", "here", LocalDate.of(2022, 12, 5), "11:15", "will be fun"),
                 new Meeting());
         retailerProducts.add(new RetailerProduct(getExampleProducts().get(0), getRTMOptions(), skus, meetings,
-                getDummyPromoPlans(),158, new BigDecimal("40.0"), new BigDecimal("0.03"), new BigDecimal("1.2")));
+                getDummyPromoPlans(), new RetailerProductSpecs(158, new BigDecimal("40.0"), new BigDecimal("0.03"), new BigDecimal("1.2"))));
         return retailerProducts;
     }
 
@@ -247,7 +247,7 @@ public class MenuController implements Initializable {
         meetings.addAll(new Meeting("Review Meeting", "here", LocalDate.of(2022, 12, 5), "11:15", "will be fun"),
                 new Meeting());
         retailerProducts.add(new RetailerProduct(getExampleProducts().get(0), getTestRTMOptions(), skus, meetings,
-                getDummyPromoPlans(), 183, new BigDecimal("40.0"), new BigDecimal("0.03"), new BigDecimal("1.2")));
+                getDummyPromoPlans(),new RetailerProductSpecs( 183, new BigDecimal("40.0"), new BigDecimal("0.03"), new BigDecimal("1.2"))));
         return retailerProducts;
     }
 
@@ -267,7 +267,8 @@ public class MenuController implements Initializable {
         meetings.addAll(getExampleMeetings().get(4), getExampleMeetings().get(5), getExampleMeetings().get(6),
                 getExampleMeetings().get(7));
         retailerProducts.add(new RetailerProduct(getExampleProducts().get(4), getDifferentRTMOptions(), skus, meetings,
-                getDifferentDummyPromoPlans(), 183, new BigDecimal("40.0"), new BigDecimal("0.03"), new BigDecimal("1.2")));
+                getDifferentDummyPromoPlans(), new RetailerProductSpecs(183, new BigDecimal("40.0"),
+                new BigDecimal("0.03"), new BigDecimal("1.2"))));
 
         ObservableList<Sku> skus2 = FXCollections.observableArrayList();
         ObservableList<Meeting> meetings2 = FXCollections.observableArrayList();
@@ -275,7 +276,7 @@ public class MenuController implements Initializable {
         meetings2.addAll(getExampleMeetings().get(8), getExampleMeetings().get(9), getExampleMeetings().get(10),
                 getExampleMeetings().get(11));
         retailerProducts.add(new RetailerProduct(getExampleProducts().get(1), getDifferentRTMOptions2(), skus2,
-                meetings2, getDifferentDummyPromoPlans2(), 183, new BigDecimal("40.0"), new BigDecimal("0.03"), new BigDecimal("1.2")));
+                meetings2, getDifferentDummyPromoPlans2(),new RetailerProductSpecs( 183, new BigDecimal("40.0"), new BigDecimal("0.03"), new BigDecimal("1.2"))));
         return retailerProducts;
     }
 

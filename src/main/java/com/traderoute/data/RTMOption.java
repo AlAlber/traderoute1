@@ -203,29 +203,32 @@ public class RTMOption {
     public SimpleObjectProperty<Product> productProperty() {
         return getRetailerProduct().productProperty();
     }
+    public RetailerProductSpecs getSpecs(){
+        return getRetailerProduct().getSpecs();
+    }
 
     public Integer getYearOneStoreCount() {
-        return getRetailerProduct().getYearOneStoreCount();
+        return getSpecs().getYearOneStoreCount();
     }
 
     public SimpleIntegerProperty yearOneStoreCountProperty() {
-        return getRetailerProduct().yearOneStoreCountProperty();
+        return getSpecs().yearOneStoreCountProperty();
     }
 
     public BigDecimal getEverydayGPM() {
-        return getRetailerProduct().getEverydayGpm();
+        return getSpecs().getEverydayGpm();
     }
 
     public SimpleObjectProperty<BigDecimal> everydayGPMProperty() {
-        return getRetailerProduct().everydayGpmProperty();
+        return getSpecs().everydayGpmProperty();
     }
 
     public BigDecimal getSpoilsAndFees() {
-        return getRetailerProduct().getSpoilsAndFees();
+        return getSpecs().getSpoilsAndFees();
     }
 
     public SimpleObjectProperty<BigDecimal> spoilsAndFeesProperty() {
-        return getRetailerProduct().spoilsAndFeesProperty();
+        return getSpecs().spoilsAndFeesProperty();
     }
 
     public boolean isFob() {
@@ -534,19 +537,19 @@ public class RTMOption {
     }
 
     public BigDecimal getMinOverride() {
-        return getRetailerProduct().getMinOverride();
+        return getSpecs().getMinOverride();
     }
 
     public SimpleObjectProperty<BigDecimal> minOverrideProperty() {
-        return getRetailerProduct().minOverrideProperty();
+        return getSpecs().minOverrideProperty();
     }
 
     public BigDecimal getWeeklyUSFWAtMin() {
-        return getRetailerProduct().getWeeklyUSFWAtMin();
+        return getSpecs().getWeeklyUSFWAtMin();
     }
 
     public SimpleObjectProperty<BigDecimal> weeklyUSFWAtMinProperty() {
-        return getRetailerProduct().weeklyUSFWAtMinProperty();
+        return getSpecs().weeklyUSFWAtMinProperty();
     }
 
     public BigDecimal getElasticizedUnitVelocity() {

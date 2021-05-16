@@ -22,8 +22,8 @@ public abstract class NumberTextField extends TextField {
         this.minValue = minValue;
         this.maxValue = maxValue;
         this.positiveOnly = positiveOnly;
+        this.value = new SimpleObjectProperty<>(defaultValue);
         this.setText(defaultValue.toString());
-        setValue(this.getValue());
         Alert alert = new Alert(Alert.AlertType.WARNING,
                 "Enter a value between "+ minValue + " and " + maxValue + ", please." +
                         " We have\nreset the field to its default value.", ButtonType.OK);
