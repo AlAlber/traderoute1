@@ -13,65 +13,91 @@ import static javafx.collections.FXCollections.*;
 
 //@Getter
 public class RTMOption {
-    private SimpleStringProperty RTMName;
+    private SimpleStringProperty rtmName;
     private SimpleObjectProperty<RetailerProduct> retailerProduct;
     private SimpleObjectProperty<BigDecimal> slottingPerSku, freightOutPerUnit, firstReceiver, secondReceiver,
-            thirdReceiver, fourthReceiver, landedStoreCost, everydayRetailCalcd, resultingEverydayRetailOverride,
+            thirdReceiver, fourthReceiver, landedStoreCost, everydayRetailCalcd, everydayRetailOverride,
             elasticizedUnitVelocity, slottingPaybackPeriod, postSpoilsPostFreightPerUnit, unspentTradePerUnit,
             fourYearEqGpPerSku, fourYearEqGpPerUnit, annualVolumePerSku;
     public RTMOption() {
-        this.RTMName = new SimpleStringProperty();
-        this.slottingPerSku = new SimpleObjectProperty<BigDecimal>();
-        this.freightOutPerUnit = new SimpleObjectProperty<BigDecimal>();
-        this.firstReceiver = new SimpleObjectProperty<BigDecimal>();
-        this.secondReceiver = new SimpleObjectProperty<BigDecimal>();
-        this.thirdReceiver = new SimpleObjectProperty<BigDecimal>();
-        this.fourthReceiver = new SimpleObjectProperty<BigDecimal>();
-        this.landedStoreCost = new SimpleObjectProperty<BigDecimal>();
-        this.everydayRetailCalcd = new SimpleObjectProperty<BigDecimal>();
-        this.resultingEverydayRetailOverride = new SimpleObjectProperty<BigDecimal>();
-        this.elasticizedUnitVelocity = new SimpleObjectProperty<BigDecimal>();
+        this.rtmName = new SimpleStringProperty();
+        this.slottingPerSku = new SimpleObjectProperty<>();
+        this.freightOutPerUnit = new SimpleObjectProperty<>();
+        this.firstReceiver = new SimpleObjectProperty<>();
+        this.secondReceiver = new SimpleObjectProperty<>();
+        this.thirdReceiver = new SimpleObjectProperty<>();
+        this.fourthReceiver = new SimpleObjectProperty<>();
+        this.landedStoreCost = new SimpleObjectProperty<>();
+        this.everydayRetailCalcd = new SimpleObjectProperty<>();
+        this.everydayRetailOverride = new SimpleObjectProperty<>();
+        this.elasticizedUnitVelocity = new SimpleObjectProperty<>();
         this.annualVolumePerSku = new SimpleObjectProperty<>();
-        this.slottingPaybackPeriod = new SimpleObjectProperty<BigDecimal>();
-        this.postSpoilsPostFreightPerUnit = new SimpleObjectProperty<BigDecimal>();
-        this.unspentTradePerUnit = new SimpleObjectProperty<BigDecimal>();
-        this.fourYearEqGpPerSku = new SimpleObjectProperty<BigDecimal>();
-        this.fourYearEqGpPerUnit = new SimpleObjectProperty<BigDecimal>();
+        this.slottingPaybackPeriod = new SimpleObjectProperty<>();
+        this.postSpoilsPostFreightPerUnit = new SimpleObjectProperty<>();
+        this.unspentTradePerUnit = new SimpleObjectProperty<>();
+        this.fourYearEqGpPerSku = new SimpleObjectProperty<>();
+        this.fourYearEqGpPerUnit = new SimpleObjectProperty<>();
 
-        this.retailerProduct = new SimpleObjectProperty<RetailerProduct>();
+        this.retailerProduct = new SimpleObjectProperty<>();
 
         setupListeners();
     }
 
     public RTMOption(String RTMName, BigDecimal freightOutPerUnit, BigDecimal slottingPerSku, BigDecimal firstReceiver,
             BigDecimal secondReceiver, BigDecimal thirdReceiver, BigDecimal fourthReceiver) {
-        this.RTMName = new SimpleStringProperty(RTMName);
-        this.slottingPerSku = new SimpleObjectProperty<BigDecimal>(slottingPerSku);
-        this.freightOutPerUnit = new SimpleObjectProperty<BigDecimal>(freightOutPerUnit);
-        this.firstReceiver = new SimpleObjectProperty<BigDecimal>(firstReceiver);
-        this.secondReceiver = new SimpleObjectProperty<BigDecimal>(secondReceiver);
-        this.thirdReceiver = new SimpleObjectProperty<BigDecimal>(thirdReceiver);
-        this.fourthReceiver = new SimpleObjectProperty<BigDecimal>(fourthReceiver);
-        this.landedStoreCost = new SimpleObjectProperty<BigDecimal>();
-        this.everydayRetailCalcd = new SimpleObjectProperty<BigDecimal>();
-        this.resultingEverydayRetailOverride = new SimpleObjectProperty<BigDecimal>();
-        this.elasticizedUnitVelocity = new SimpleObjectProperty<BigDecimal>();
+        this.rtmName = new SimpleStringProperty(RTMName);
+        this.slottingPerSku = new SimpleObjectProperty<>(slottingPerSku);
+        this.freightOutPerUnit = new SimpleObjectProperty<>(freightOutPerUnit);
+        this.firstReceiver = new SimpleObjectProperty<>(firstReceiver);
+        this.secondReceiver = new SimpleObjectProperty<>(secondReceiver);
+        this.thirdReceiver = new SimpleObjectProperty<>(thirdReceiver);
+        this.fourthReceiver = new SimpleObjectProperty<>(fourthReceiver);
+        this.landedStoreCost = new SimpleObjectProperty<>();
+        this.everydayRetailCalcd = new SimpleObjectProperty<>();
+        this.everydayRetailOverride = new SimpleObjectProperty<>();
+        this.elasticizedUnitVelocity = new SimpleObjectProperty<>();
         this.annualVolumePerSku = new SimpleObjectProperty<>();
-        this.slottingPaybackPeriod = new SimpleObjectProperty<BigDecimal>();
-        this.postSpoilsPostFreightPerUnit = new SimpleObjectProperty<BigDecimal>();
-        this.unspentTradePerUnit = new SimpleObjectProperty<BigDecimal>();
-        this.fourYearEqGpPerSku = new SimpleObjectProperty<BigDecimal>();
-        this.fourYearEqGpPerUnit = new SimpleObjectProperty<BigDecimal>();
+        this.slottingPaybackPeriod = new SimpleObjectProperty<>();
+        this.postSpoilsPostFreightPerUnit = new SimpleObjectProperty<>();
+        this.unspentTradePerUnit = new SimpleObjectProperty<>();
+        this.fourYearEqGpPerSku = new SimpleObjectProperty<>();
+        this.fourYearEqGpPerUnit = new SimpleObjectProperty<>();
 
         this.retailerProduct = new SimpleObjectProperty<RetailerProduct>();
 
+    }
+
+    public RTMOption(RetailerProduct retailerProduct, String rtmName, BigDecimal slottingPerSku, BigDecimal freightOutPerUnit,
+                     BigDecimal firstReceiver, BigDecimal secondReceiver, BigDecimal thirdReceiver, BigDecimal fourthReceiver,
+                     BigDecimal landedStoreCost, BigDecimal everydayRetailCalcd, BigDecimal everydayRetailOverride,
+                     BigDecimal elasticizedUnitVelocity, BigDecimal annualVolumePerSku, BigDecimal slottingPaybackPeriod,
+                     BigDecimal postSpoilsPostFreightPerUnit, BigDecimal unspentTradePerUnit, BigDecimal fourYearEqGpPerSku,
+                     BigDecimal fourYearEqGpPerUnit) {
+        this.retailerProduct = new SimpleObjectProperty<>(retailerProduct);
+        this.rtmName = new SimpleStringProperty(rtmName);
+        this.slottingPerSku = new SimpleObjectProperty<>(slottingPerSku);
+        this.freightOutPerUnit = new SimpleObjectProperty<>(freightOutPerUnit);
+        this.firstReceiver = new SimpleObjectProperty<>(firstReceiver);
+        this.secondReceiver = new SimpleObjectProperty<>(secondReceiver);
+        this.thirdReceiver = new SimpleObjectProperty<>(thirdReceiver);
+        this.fourthReceiver = new SimpleObjectProperty<>(fourthReceiver);
+        this.landedStoreCost = new SimpleObjectProperty<>(landedStoreCost);
+        this.everydayRetailCalcd = new SimpleObjectProperty<>(everydayRetailCalcd);
+        this.everydayRetailOverride = new SimpleObjectProperty<>(everydayRetailOverride);
+        this.elasticizedUnitVelocity = new SimpleObjectProperty<>(elasticizedUnitVelocity);
+        this.annualVolumePerSku = new SimpleObjectProperty<>(annualVolumePerSku);
+        this.slottingPaybackPeriod = new SimpleObjectProperty<>(slottingPaybackPeriod);
+        this.postSpoilsPostFreightPerUnit = new SimpleObjectProperty<>(postSpoilsPostFreightPerUnit);
+        this.unspentTradePerUnit = new SimpleObjectProperty<>(unspentTradePerUnit);
+        this.fourYearEqGpPerSku = new SimpleObjectProperty<>(fourYearEqGpPerSku);
+        this.fourYearEqGpPerUnit = new SimpleObjectProperty<>(fourYearEqGpPerUnit);
     }
 
     public void setupListeners() {
         retailerProductProperty().addListener(((arg, oldVal, newVal) -> {
             yearOneStoreCountProperty().addListener(new RTMUpdateListener<>(this, true));
             firstReceiverProperty().addListener(new RTMUpdateListener<>(this, true));
-            resultingEverydayRetailOverrideProperty().addListener(new RTMUpdateListener<>(this, true));
+            everydayRetailOverrideProperty().addListener(new RTMUpdateListener<>(this, true));
             productProperty().addListener(new RTMUpdateListener<>(this, false));
             spoilsAndFeesProperty().addListener(new RTMUpdateListener(this, false));
             minOverrideProperty().addListener(new RTMUpdateListener<>(this, true));
@@ -102,12 +128,12 @@ public class RTMOption {
     }
 
     public void updateElasticizedUnitVelocity() {
-        if (allPositive(observableArrayList(weeklyUSFWAtMinProperty(), minOverrideProperty(), resultingEverydayRetailOverride))
+        if (allPositive(observableArrayList(weeklyUSFWAtMinProperty(), minOverrideProperty(), everydayRetailOverride))
                 && getMinOverride().compareTo(new BigDecimal("100000000000")) < 0) {
-            if (getMinOverride().compareTo(getResultingEverydayRetailOverride()) == 0) {
+            if (getMinOverride().compareTo(getEverydayRetailOverride()) == 0) {
                 setElasticizedUnitVelocity(this.getWeeklyUSFWAtMin());
             } else {
-                setElasticizedUnitVelocity(((getResultingEverydayRetailOverride().subtract(getMinOverride()))
+                setElasticizedUnitVelocity(((getEverydayRetailOverride().subtract(getMinOverride()))
                         .divide((getMinOverride()), 4, RoundingMode.HALF_UP)
                         .multiply(getProduct().getElasticityMultiple()).multiply(getWeeklyUSFWAtMin()))
                                 .add(getWeeklyUSFWAtMin()));
@@ -326,16 +352,16 @@ public class RTMOption {
 
     public String toString() {
         String stringBuilder = "";
-        stringBuilder += "RTMName: " + this.getRTMName() + ", Slotting per Sku:" + this.getSlottingPerSku() + "Calcd"
+        stringBuilder += "RTMName: " + this.getRtmName() + ", Slotting per Sku:" + this.getSlottingPerSku() + "Calcd"
                 + this.getEverydayRetailCalcd();
         return stringBuilder;
     }
 
-    public String getRTMName() {
-        if (RTMName.get() == null) {
+    public String getRtmName() {
+        if (rtmName.get() == null) {
             return new String("");
         }
-        return RTMName.get();
+        return rtmName.get();
     }
 
     public RetailerProduct getRetailerProduct() {
@@ -351,18 +377,11 @@ public class RTMOption {
     }
 
     public SimpleStringProperty rtmNameProperty() {
-        return RTMName;
+        return rtmName;
     }
 
-    public void setRTMName(String RTMName) {
-        this.RTMName = new SimpleStringProperty(RTMName);
-    }
-
-    public SimpleStringProperty RTMNameProperty() {
-        if (RTMName == null) {
-            return new SimpleStringProperty("");
-        }
-        return RTMName;
+    public void setRtmName(String rtmName) {
+        this.rtmName = new SimpleStringProperty(rtmName);
     }
 
     public BigDecimal getSlottingPerSku() {
@@ -496,22 +515,22 @@ public class RTMOption {
         this.everydayRetailCalcd.set(everydayRetailCalcd);
     }
 
-    public BigDecimal getResultingEverydayRetailOverride() {
-        if (resultingEverydayRetailOverride.get() == null) {
+    public BigDecimal getEverydayRetailOverride() {
+        if (everydayRetailOverride.get() == null) {
             return new BigDecimal("0.0");
         }
-        return resultingEverydayRetailOverride.get();
+        return everydayRetailOverride.get();
     }
 
-    public SimpleObjectProperty<BigDecimal> resultingEverydayRetailOverrideProperty() {
+    public SimpleObjectProperty<BigDecimal> everydayRetailOverrideProperty() {
         if (landedStoreCost == null) {
             return new SimpleObjectProperty<BigDecimal>(new BigDecimal("0.0"));
         }
-        return resultingEverydayRetailOverride;
+        return everydayRetailOverride;
     }
 
     public void setEverydayRetailOverride(BigDecimal resultingEverydayRetailOverride) {
-        this.resultingEverydayRetailOverride.set(resultingEverydayRetailOverride);
+        this.everydayRetailOverride.set(resultingEverydayRetailOverride);
     }
 
     public BigDecimal getMinOverride() {
