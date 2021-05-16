@@ -489,7 +489,7 @@ public class RTMPlanningController implements Initializable {
      *            Cell that edited in everyday Retail Override Column.
      */
     public void changeOverrideEvent(final TableColumn.CellEditEvent editedCell) {
-        getFocusedRtmOption().setResultingEverydayRetailOverride(new BigDecimal(editedCell.getNewValue().toString()));
+        getFocusedRtmOption().setEverydayRetailOverride(new BigDecimal(editedCell.getNewValue().toString()));
         currentRetailerProduct.get().setMinOverride(getMinOverride());
 
 //        for (RTMOption row : rtmPlanningTable2.getItems()) {

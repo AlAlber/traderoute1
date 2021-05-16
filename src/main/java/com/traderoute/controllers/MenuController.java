@@ -134,13 +134,13 @@ public class MenuController implements Initializable {
         ObservableList<RTMOption> RTMOptions = FXCollections.observableArrayList();
         RTMOption testOption = new RTMOption("Direct-to-Customer", new BigDecimal("0.29"), new BigDecimal("7500"),
                 new BigDecimal("3.59"), new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"));
-        testOption.setResultingEverydayRetailOverride(new BigDecimal("5.99"));
+        testOption.setEverydayRetailOverride(new BigDecimal("5.99"));
         testOption.setLandedStoreCost(new BigDecimal("3.59"));
         RTMOptions.add(testOption);
         RTMOption optionTwo = new RTMOption("Option2", new BigDecimal("0.0"), BigDecimal.valueOf(3500),
                 BigDecimal.valueOf(3.07), BigDecimal.valueOf(3.79), BigDecimal.valueOf(0.0), BigDecimal.valueOf(0.0));
         optionTwo.setEverydayRetailCalcd(new BigDecimal("6.32"));
-        optionTwo.setResultingEverydayRetailOverride(new BigDecimal("6.49"));
+        optionTwo.setEverydayRetailOverride(new BigDecimal("6.49"));
         optionTwo.setLandedStoreCost(new BigDecimal("3.79"));
         RTMOptions.add(optionTwo);
         RTMOption optionThree = new RTMOption();
@@ -172,19 +172,19 @@ public class MenuController implements Initializable {
         ObservableList<RTMOption> RTMOptions = FXCollections.observableArrayList();
         RTMOption testOption = new RTMOption("Direct-to-Customer", new BigDecimal("0.14"), BigDecimal.valueOf(5000),
                 BigDecimal.valueOf(1.49), BigDecimal.valueOf(0.0), BigDecimal.valueOf(0.0), BigDecimal.valueOf(0.0));
-        testOption.setResultingEverydayRetailOverride(new BigDecimal("2.49"));
+        testOption.setEverydayRetailOverride(new BigDecimal("2.49"));
         testOption.setEverydayRetailCalcd(new BigDecimal("2.48"));
         testOption.setLandedStoreCost(new BigDecimal("1.49"));
         RTMOptions.add(testOption);
         RTMOption optionTwo = new RTMOption("Direct-to-KeHE Model", new BigDecimal("0.14"), BigDecimal.valueOf(2500),
                 BigDecimal.valueOf(1.49), BigDecimal.valueOf(1.69), BigDecimal.valueOf(0.0), BigDecimal.valueOf(0.0));
-        optionTwo.setResultingEverydayRetailOverride(new BigDecimal("2.99"));
+        optionTwo.setEverydayRetailOverride(new BigDecimal("2.99"));
         optionTwo.setEverydayRetailCalcd(new BigDecimal("2.82"));
         optionTwo.setLandedStoreCost(new BigDecimal("1.69"));
         RTMOptions.add(optionTwo);
         RTMOption optionThree = new RTMOption("KeHE F.O.B. Model", new BigDecimal("0.0"), BigDecimal.valueOf(2500),
                 BigDecimal.valueOf(1.35), BigDecimal.valueOf(1.79), BigDecimal.valueOf(0.0), BigDecimal.valueOf(0.0));
-        optionTwo.setResultingEverydayRetailOverride(new BigDecimal("2.99"));
+        optionTwo.setEverydayRetailOverride(new BigDecimal("2.99"));
         optionTwo.setEverydayRetailCalcd(new BigDecimal("2.98"));
         optionTwo.setLandedStoreCost(new BigDecimal("1.79"));
         RTMOptions.add(optionThree);
@@ -198,18 +198,18 @@ public class MenuController implements Initializable {
         ObservableList<RTMOption> RTMOptions = FXCollections.observableArrayList();
         RTMOption testOption = new RTMOption("Direct-to-Customer", new BigDecimal("0.29"), BigDecimal.valueOf(5000),
                 BigDecimal.valueOf(3.59), BigDecimal.valueOf(0.0), BigDecimal.valueOf(0.0), BigDecimal.valueOf(0.0));
-        testOption.setResultingEverydayRetailOverride(new BigDecimal("5.99"));
+        testOption.setEverydayRetailOverride(new BigDecimal("5.99"));
         testOption.setLandedStoreCost(new BigDecimal("3.59"));
         RTMOptions.add(testOption);
         RTMOption optionTwo = new RTMOption("Direct-to-KeHE", new BigDecimal("0.29"), BigDecimal.valueOf(2500),
                 BigDecimal.valueOf(3.59), BigDecimal.valueOf(4.19), BigDecimal.valueOf(0.0), BigDecimal.valueOf(0.0));
-        optionTwo.setResultingEverydayRetailOverride(new BigDecimal("6.99"));
+        optionTwo.setEverydayRetailOverride(new BigDecimal("6.99"));
         optionTwo.setEverydayRetailCalcd(new BigDecimal("6.98"));
         optionTwo.setLandedStoreCost(new BigDecimal("4.19"));
         RTMOptions.add(optionTwo);
         RTMOption optionThree = new RTMOption("F.O.B. Model", new BigDecimal("0.0"), BigDecimal.valueOf(2500),
                 BigDecimal.valueOf(3.30), BigDecimal.valueOf(4.68), BigDecimal.valueOf(0.0), BigDecimal.valueOf(0.0));
-        optionThree.setResultingEverydayRetailOverride(new BigDecimal("7.99"));
+        optionThree.setEverydayRetailOverride(new BigDecimal("7.99"));
         optionThree.setEverydayRetailCalcd(new BigDecimal("7.80"));
         optionThree.setLandedStoreCost(new BigDecimal("4.68"));
         RTMOptions.add(optionThree);

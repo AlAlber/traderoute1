@@ -8,7 +8,6 @@ import com.traderoute.data.Retailer;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -436,7 +435,7 @@ class RTMPlanningControllerTest {
         } if (replaceField!=3){
             firstRtmOption.setFirstReceiver(new BigDecimal("3.59"));
         } if (replaceField!=4) {
-            robot.interact(() -> firstRtmOption.setResultingEverydayRetailOverride(new BigDecimal("5.99")));
+            robot.interact(() -> firstRtmOption.setEverydayRetailOverride(new BigDecimal("5.99")));
         }
         return firstRtmOption;
     }

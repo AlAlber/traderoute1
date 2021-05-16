@@ -25,13 +25,13 @@ class RTMOptionTest {
     void setUp() {
         optionOne = new RTMOption();
         optionTwo = new RTMOption("HEllo", new BigDecimal("0.6"), new BigDecimal(600),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"));
-        optionThree = new RTMOption("Direct-to-Customer",
-                new BigDecimal("0.29"), new BigDecimal(7500),
-                new BigDecimal("3.59"), new BigDecimal("0.0"),
-                158, new BigDecimal("40.0"),
-                new BigDecimal("0.03"), new BigDecimal("1.2"),
-                new BigDecimal("5.99"));
-        optionFour = new RTMOption("Direct-to-KeHe", new BigDecimal("0.0"), new BigDecimal(3500),new BigDecimal("3.30"),new BigDecimal("4.85"), 158, new BigDecimal("40.0"), new BigDecimal("3.0"), new BigDecimal("1.2"), new BigDecimal("5.99"));
+//        optionThree = new RTMOption("Direct-to-Customer",
+//                new BigDecimal("0.29"), new BigDecimal(7500),
+//                new BigDecimal("3.59"), new BigDecimal("0.0"),
+//                158, new BigDecimal("40.0"),
+//                new BigDecimal("0.03"), new BigDecimal("1.2"),
+//                new BigDecimal("5.99"));
+//        optionFour = new RTMOption("Direct-to-KeHe", new BigDecimal("0.0"), new BigDecimal(3500),new BigDecimal("3.30"),new BigDecimal("4.85"), 158, new BigDecimal("40.0"), new BigDecimal("3.0"), new BigDecimal("1.2"), new BigDecimal("5.99"));
         productOne = new Product("Big Time Food Company", "24 oz pickles", new BigDecimal("3.59"), new BigDecimal("0.29"),
                 new BigDecimal("3.30"), new BigDecimal("2.99"), new BigDecimal("2.05"), new BigDecimal("-1.15"),
                 new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),
@@ -69,9 +69,9 @@ class RTMOptionTest {
 
     @org.junit.jupiter.api.Test
     void testUpdateElasticizedEstimatedUnitVelocity() {
-        optionOne.setResultingEverydayRetailOverride(new BigDecimal("5.99"));
+        optionOne.setEverydayRetailOverride(new BigDecimal("5.99"));
 //        optionOne.setMinOverride(new BigDecimal("5.99"));
-        optionTwo.setResultingEverydayRetailOverride(new BigDecimal("8.09"));
+        optionTwo.setEverydayRetailOverride(new BigDecimal("8.09"));
 //        optionTwo.setMinOverride(new BigDecimal("5.99"));
 //        optionOne.setWeeklyUSFWAtMin(new BigDecimal("1.2"));
 //        optionTwo.setWeeklyUSFWAtMin(new BigDecimal("1.2"));

@@ -2,9 +2,14 @@ package com.traderoute.data;
 
 import com.traderoute.RTMUpdateListener;
 import javafx.beans.property.*;
+import javafx.collections.ObservableList;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import static javafx.collections.FXCollections.*;
 
 //@Getter
 public class RTMOption {
@@ -88,20 +93,17 @@ public class RTMOption {
     }
 
     public void updateResultingEverydayRetailCald() {
-        if (getEverydayGPM().compareTo(new BigDecimal("0.0")) > 0
-                && getLandedStoreCost().compareTo(new BigDecimal("0.0")) > 0) {
+        if (allPositive(observableArrayList(everydayGPMProperty(), landedStoreCost))) {
             BigDecimal newValue = (getLandedStoreCost().multiply(new BigDecimal("100")))
                     .divide((getEverydayGPM().subtract(new BigDecimal("100"))), 4, RoundingMode.HALF_UP).abs();
             setEverydayRetailCalcd(newValue);
-            setResultingEverydayRetailOverride(newValue);
+            setEverydayRetailOverride(newValue);
         }
     }
 
     public void updateElasticizedUnitVelocity() {
-        if (getWeeklyUSFWAtMin().compareTo(new BigDecimal("0.0")) > 0
-                && getMinOverride().compareTo(new BigDecimal("100000000000")) < 0
-                && getMinOverride().compareTo(new BigDecimal("0.0")) > 0
-                && getResultingEverydayRetailOverride().compareTo(new BigDecimal("0.0")) > 0) {
+        if (allPositive(observableArrayList(weeklyUSFWAtMinProperty(), minOverrideProperty(), resultingEverydayRetailOverride))
+                && getMinOverride().compareTo(new BigDecimal("100000000000")) < 0) {
             if (getMinOverride().compareTo(getResultingEverydayRetailOverride()) == 0) {
                 setElasticizedUnitVelocity(this.getWeeklyUSFWAtMin());
             } else {
@@ -122,9 +124,8 @@ public class RTMOption {
     }
 
     public void updateSlottingPaybackPeriod() {
-        if (getWeeklyUSFWAtMin().compareTo(new BigDecimal("0.0")) > 0
-                && getMinOverride().compareTo(new BigDecimal("0.0")) > 0
-                && getAnnualVolumePerSku().compareTo(new BigDecimal("0.0")) > 0) {
+        if (allPositive(observableArrayList(weeklyUSFWAtMinProperty(), minOverrideProperty(),
+                annualVolumePerSku))) {
             if (getSlottingPerSku().compareTo(new BigDecimal("0.0")) == 0) {
                 setSlottingPaybackPeriod(new BigDecimal("0.0"));
             } else {
@@ -134,35 +135,39 @@ public class RTMOption {
     }
 
     public void updatePostFreightPostSpoilsWeCollect() {
-        if (getWeeklyUSFWAtMin().compareTo(new BigDecimal("0.0")) > 0
-                && getMinOverride().compareTo(new BigDecimal("0.0")) > 0
-                && getAnnualVolumePerSku().compareTo(new BigDecimal("0.0")) > 0) {
+        if (allPositive(observableArrayList(weeklyUSFWAtMinProperty(), minOverrideProperty(),
+                annualVolumePerSku))) {
             setPostSpoilsPostFreightPerUnit(getPostSpoilsAndFreightWeCollectPerUnit());
         }
     }
 
     public void updateUnspentTrade() {
-        if (getWeeklyUSFWAtMin().compareTo(new BigDecimal("0.0")) > 0
-                && getMinOverride().compareTo(new BigDecimal("0.0")) > 0
-                && getAnnualVolumePerSku().compareTo(new BigDecimal("0.0")) > 0) {
+        if (allPositive(observableArrayList(weeklyUSFWAtMinProperty(), minOverrideProperty(),
+                annualVolumePerSku))) {
             setUnspentTradePerUnit(getPostSpoilsAndStdAllowancesAvailableTrade());
         }
     }
 
     public void updateFourYearEqGpPerSku() {
-        if (getWeeklyUSFWAtMin().compareTo(new BigDecimal("0.0")) > 0
-                && getMinOverride().compareTo(new BigDecimal("0.0")) > 0
-                && getAnnualVolumePerSku().compareTo(new BigDecimal("0.0")) > 0) {
+        if (allPositive(observableArrayList(weeklyUSFWAtMinProperty(), minOverrideProperty(),
+                annualVolumePerSku))) {
             setFourYearEqGpPerSku(getGrossProfit().setScale(4, RoundingMode.HALF_UP));
         }
     }
 
     public void updateFourYearEqGpPerUnit() {
-        if (getWeeklyUSFWAtMin().compareTo(new BigDecimal("0.0")) > 0
-                && getMinOverride().compareTo(new BigDecimal("0.0")) > 0
-                && getAnnualVolumePerSku().compareTo(new BigDecimal("0.0")) > 0) {
+        if (allPositive(observableArrayList(weeklyUSFWAtMinProperty(), minOverrideProperty(),
+                annualVolumePerSku))) {
             setFourYearEqGpPerUnit(getGrossProfitPerUnit().setScale(4, RoundingMode.HALF_UP));
         }
+    }
+    public boolean allPositive(ObservableList<SimpleObjectProperty<BigDecimal>> properties){
+        boolean allGreaterThanZero = true;
+        List<SimpleObjectProperty<BigDecimal>> propertiesSmallerThanZero =
+                properties.stream().filter(e -> e.get().compareTo(new BigDecimal("0.0"))<=0).collect(Collectors.toList());
+        if (propertiesSmallerThanZero.size()>0){
+            allGreaterThanZero = false;
+        } return allGreaterThanZero;
     }
 
     public Product getProduct() {
@@ -282,13 +287,10 @@ public class RTMOption {
         }
         return getEqualsNet3Rev().divide((getFourYearUnitVolumePerSku()), 4, RoundingMode.HALF_UP);
     }
-
-    // IMPLEMENT COGS AND PASS IT
+=
     public BigDecimal getTotalCogs() {
-        return getFourYearUnitVolumePerSku().multiply(getProduct().getUnitBlendedCogs()); // HARDCODED FOR NOW SHOULD BE
-                                                                                          // COGS
+        return getFourYearUnitVolumePerSku().multiply(getProduct().getUnitBlendedCogs());
     }
-
     public BigDecimal getGrossProfit() {
         return getEqualsNet3Rev().subtract(getTotalCogs());
     }
@@ -309,7 +311,6 @@ public class RTMOption {
                 .divide(getAnnualVolumePerSku(), 4, RoundingMode.HALF_UP);
     }
 
-    // IMPLEMENT GET GROSS PROFIT INDEX
     public BigDecimal getPostSpoilsAndFreightWeCollect() {
         return getGrossRevenueList().subtract(getSpoilsTrade()).subtract(getOurFreightCost())
                 .subtract(getFobDiscount());
@@ -509,7 +510,7 @@ public class RTMOption {
         return resultingEverydayRetailOverride;
     }
 
-    public void setResultingEverydayRetailOverride(BigDecimal resultingEverydayRetailOverride) {
+    public void setEverydayRetailOverride(BigDecimal resultingEverydayRetailOverride) {
         this.resultingEverydayRetailOverride.set(resultingEverydayRetailOverride);
     }
 
