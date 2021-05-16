@@ -9,14 +9,11 @@ import java.math.RoundingMode;
 //@Getter
 public class RTMOption {
     private SimpleStringProperty RTMName;
-//    private SimpleIntegerProperty yearOneStoreCount;
     private SimpleObjectProperty<RetailerProduct> retailerProduct;
     private SimpleObjectProperty<BigDecimal> slottingPerSku, freightOutPerUnit, firstReceiver, secondReceiver,
             thirdReceiver, fourthReceiver, landedStoreCost, everydayRetailCalcd, resultingEverydayRetailOverride,
             elasticizedUnitVelocity, slottingPaybackPeriod, postSpoilsPostFreightPerUnit, unspentTradePerUnit,
             fourYearEqGpPerSku, fourYearEqGpPerUnit, annualVolumePerSku;
-//    private SimpleObjectProperty<Product> product;
-//    minOverride, weeklyUSFWAtMin, everydayGPM, spoilsAndFees,
     public RTMOption() {
         this.RTMName = new SimpleStringProperty();
         this.slottingPerSku = new SimpleObjectProperty<BigDecimal>();
@@ -28,8 +25,6 @@ public class RTMOption {
         this.landedStoreCost = new SimpleObjectProperty<BigDecimal>();
         this.everydayRetailCalcd = new SimpleObjectProperty<BigDecimal>();
         this.resultingEverydayRetailOverride = new SimpleObjectProperty<BigDecimal>();
-//        this.minOverride = new SimpleObjectProperty<>();
-//        this.weeklyUSFWAtMin = new SimpleObjectProperty<>();
         this.elasticizedUnitVelocity = new SimpleObjectProperty<BigDecimal>();
         this.annualVolumePerSku = new SimpleObjectProperty<>();
         this.slottingPaybackPeriod = new SimpleObjectProperty<BigDecimal>();
@@ -39,14 +34,6 @@ public class RTMOption {
         this.fourYearEqGpPerUnit = new SimpleObjectProperty<BigDecimal>();
 
         this.retailerProduct = new SimpleObjectProperty<RetailerProduct>();
-
-//        this.minOverride = new SimpleObjectProperty<>();
-//        this.weeklyUSFWAtMin = new SimpleObjectProperty<>();
-//        this.everydayGPM = new SimpleObjectProperty<>();
-//        this.yearOneStoreCount = new SimpleIntegerProperty();
-//        this.spoilsAndFees = new SimpleObjectProperty<>();
-
-//        this.product = new SimpleObjectProperty<>();
 
         setupListeners();
     }
@@ -73,45 +60,6 @@ public class RTMOption {
 
         this.retailerProduct = new SimpleObjectProperty<RetailerProduct>();
 
-//        this.minOverride = new SimpleObjectProperty<>();
-//        this.weeklyUSFWAtMin = new SimpleObjectProperty<>();
-//        this.everydayGPM = new SimpleObjectProperty<>();
-////        this.yearOneStoreCount = new SimpleIntegerProperty();
-//        this.spoilsAndFees = new SimpleObjectProperty<>();
-//        this.product = new SimpleObjectProperty<Product>();
-        // setupListeners();
-
-    }
-
-    public RTMOption(String RTMName, BigDecimal freightOutPerUnit, BigDecimal slottingPerSku, BigDecimal firstReceiver,
-            BigDecimal secondReceiver, Integer yearOneStoreCount, BigDecimal everydayGPM, BigDecimal spoilsAndFees,
-            BigDecimal weeklyUSFWAtMin, BigDecimal minOverride) {
-        this.RTMName = new SimpleStringProperty(RTMName);
-        this.slottingPerSku = new SimpleObjectProperty<BigDecimal>(slottingPerSku);
-        this.freightOutPerUnit = new SimpleObjectProperty<BigDecimal>(freightOutPerUnit);
-        this.firstReceiver = new SimpleObjectProperty<BigDecimal>(firstReceiver);
-        this.secondReceiver = new SimpleObjectProperty<BigDecimal>(secondReceiver);
-        this.thirdReceiver = new SimpleObjectProperty<BigDecimal>();
-        this.fourthReceiver = new SimpleObjectProperty<BigDecimal>();
-        this.landedStoreCost = new SimpleObjectProperty<BigDecimal>();
-        this.everydayRetailCalcd = new SimpleObjectProperty<BigDecimal>();
-        this.resultingEverydayRetailOverride = new SimpleObjectProperty<BigDecimal>();
-        this.elasticizedUnitVelocity = new SimpleObjectProperty<BigDecimal>();
-        this.annualVolumePerSku = new SimpleObjectProperty<>();
-        this.slottingPaybackPeriod = new SimpleObjectProperty<BigDecimal>();
-        this.postSpoilsPostFreightPerUnit = new SimpleObjectProperty<BigDecimal>();
-        this.unspentTradePerUnit = new SimpleObjectProperty<BigDecimal>();
-        this.fourYearEqGpPerSku = new SimpleObjectProperty<BigDecimal>();
-        this.fourYearEqGpPerUnit = new SimpleObjectProperty<BigDecimal>();
-
-        this.retailerProduct = new SimpleObjectProperty<RetailerProduct>();
-
-//        this.minOverride = new SimpleObjectProperty<>(minOverride);
-//        this.weeklyUSFWAtMin = new SimpleObjectProperty<>(weeklyUSFWAtMin);
-//        this.everydayGPM = new SimpleObjectProperty<>(everydayGPM);
-////        this.yearOneStoreCount = new SimpleIntegerProperty(yearOneStoreCount);
-//        this.spoilsAndFees = new SimpleObjectProperty<>(spoilsAndFees);
-//        this.product = new SimpleObjectProperty<>();
     }
 
     public void setupListeners() {
@@ -363,8 +311,6 @@ public class RTMOption {
 
     // IMPLEMENT GET GROSS PROFIT INDEX
     public BigDecimal getPostSpoilsAndFreightWeCollect() {
-        System.out.println("grorev: " + getGrossRevenueList()+ ", spoilstrade: " + getSpoilsTrade()+ ", ourFreightcost: "+ getOurFreightCost()
-                + ", fobd: "+ getFobDiscount());
         return getGrossRevenueList().subtract(getSpoilsTrade()).subtract(getOurFreightCost())
                 .subtract(getFobDiscount());
     }
