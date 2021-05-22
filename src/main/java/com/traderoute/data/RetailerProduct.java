@@ -12,9 +12,7 @@ public class RetailerProduct {
     private SimpleObjectProperty<ObservableList<Sku>> skus;
     private SimpleObjectProperty<ObservableList<Meeting>> meetings;
     private SimpleObjectProperty<ObservableList<PromoPlan>> promoPlans;
-//    private SimpleIntegerProperty yearOneStoreCount;
     private SimpleObjectProperty<RetailerProductSpecs> specs;
-//    private SimpleObjectProperty<BigDecimal> minOverride, weeklyUSFWAtMin, everydayGpm, spoilsAndFees;
 
     public RetailerProduct(Product product, ObservableList rtmOptions, ObservableList skus, ObservableList meetings,
             ObservableList promoPlans, RetailerProductSpecs specs) {
