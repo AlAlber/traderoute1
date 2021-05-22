@@ -4,6 +4,7 @@ import com.traderoute.*;
 import com.traderoute.charts.*;
 import com.traderoute.data.Product;
 import com.traderoute.data.RTMOption;
+import com.traderoute.data.RTMOptionBuilder;
 import com.traderoute.data.Retailer;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
@@ -38,7 +39,7 @@ import java.util.Set;
 class RTMPlanningControllerTest {
     private RTMPlanningController controller;
     private ObservableList<RTMOption> rtmOptions;
-    private RTMOption testOption = new RTMOption();
+    private RTMOption testOption= new RTMOptionBuilder().buildRtmOption();
     private SimpleObjectProperty<Retailer> retailer= new SimpleObjectProperty<>(new Retailer("ahold", MenuController.getRetailerProducts(),0 ,  new BigDecimal("40") , 158,new BigDecimal("3.0")));;
     private TableView<RTMOption> rtmPlanningTable1;
     private TableView<RTMOption> rtmPlanningTable2;
@@ -112,14 +113,10 @@ class RTMPlanningControllerTest {
         brandNameBox = robot.lookup("#brandNameBox").queryAs(BrandNameComboBox.class);
 
 
-        RTMOption rtmOption1 = new RTMOption();
-        rtmOption1.setRtmName("Option 1");
-        RTMOption rtmOption2 = new RTMOption();
-        rtmOption2.setRtmName("Option 2");
-        RTMOption rtmOption3 = new RTMOption();
-        rtmOption3.setRtmName("Option 3");
-        RTMOption rtmOption4 = new RTMOption();
-        rtmOption4.setRtmName("Option 4");
+        RTMOption rtmOption1 = new RTMOptionBuilder().rtmName("Option 1").buildRtmOption();
+        RTMOption rtmOption2 = new RTMOptionBuilder().rtmName("Option 2").buildRtmOption();
+        RTMOption rtmOption3 = new RTMOptionBuilder().rtmName("Option 3").buildRtmOption();
+        RTMOption rtmOption4 = new RTMOptionBuilder().rtmName("Option 4").buildRtmOption();
         rtmPlanningTable1.setItems(FXCollections.observableArrayList(rtmOption1, rtmOption2, rtmOption3, rtmOption4));
         //Set up row listeners which is normally done in initialize
         controller.setUpListeners();

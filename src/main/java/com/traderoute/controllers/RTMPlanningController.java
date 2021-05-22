@@ -447,7 +447,7 @@ public class RTMPlanningController implements Initializable {
 //            row.setSpoilsAndFees(
 //                    getRetailer().getSpoilsFees().divide((new BigDecimal("100")), divisionScale, RoundingMode.HALF_UP));
             maxReceivers(row);
-            row.updateResultingEverydayRetailCald();
+            row. updateResultingEverydayRetailCald();
         }
         updateCharts();
         rtmPlanningTable2.setVisible(false);

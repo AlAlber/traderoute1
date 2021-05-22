@@ -25,6 +25,9 @@ import java.util.ResourceBundle;
 
 public class MenuController implements Initializable {
 
+    private static RetailerProduct firstRP;
+    private static RetailerProduct secondRP;
+
     @FXML
     private AnchorPane mainAnchorPane;
     private HostServices hostServices;
@@ -132,31 +135,39 @@ public class MenuController implements Initializable {
      */
     public static ObservableList<RTMOption> getRTMOptions() {
         ObservableList<RTMOption> RTMOptions = FXCollections.observableArrayList();
-        RTMOption testOption = new RTMOptionBuilder().rtmName("Direct-to-Customer")
+        RTMOption testOption = new RTMOptionBuilder().retailerProduct(firstRP)
+                .rtmName("Direct-to-Customer")
                 .freightOutPerUnit(new BigDecimal("0.29"))
                 .slottingPerSku(new BigDecimal("7500"))
                 .firstReceiver(new BigDecimal("3.59"))
                 .landedStoreCost(new BigDecimal("3.59"))
                 .everydayRetailOverride(new BigDecimal("5.99")).buildRtmOption();
-        RTMOption optionTwo = new RTMOptionBuilder().rtmName("Option2")
+        RTMOption optionTwo = new RTMOptionBuilder().retailerProduct(firstRP)
+                .rtmName("Option2")
                 .slottingPerSku(new BigDecimal("3500"))
                 .firstReceiver(new BigDecimal("3.07"))
                 .secondReceiver(new BigDecimal("3.07"))
                 .landedStoreCost(new BigDecimal("3.79"))
                 .everydayRetailCalcd(new BigDecimal("6.32"))
                 .everydayRetailOverride(new BigDecimal("6.49")).buildRtmOption();
-        RTMOption optionThree = new RTMOptionBuilder().rtmName("Option 3").buildRtmOption();
-        RTMOption optionFour = new RTMOptionBuilder().rtmName("Option 4").buildRtmOption();
+        RTMOption optionThree = new RTMOptionBuilder().retailerProduct(firstRP)
+                .rtmName("Option 3").buildRtmOption();
+        RTMOption optionFour = new RTMOptionBuilder().retailerProduct(firstRP)
+                .rtmName("Option 4").buildRtmOption();
         RTMOptions.addAll(testOption, optionTwo, optionThree, optionFour);
         return RTMOptions;
     }
 
     public static ObservableList<RTMOption> getTestRTMOptions() {
-        RTMOption rtmOption1 = new RTMOptionBuilder().rtmName("Option 1")
+        RTMOption rtmOption1 = new RTMOptionBuilder().retailerProduct(firstRP)
+                .rtmName("Option 1")
                 .firstReceiver(new BigDecimal("3.59")).buildRtmOption();
-        RTMOption rtmOption2 = new RTMOptionBuilder().rtmName("Option 2").buildRtmOption();
-        RTMOption rtmOption3 = new RTMOptionBuilder().rtmName("Option 3").buildRtmOption();
-        RTMOption rtmOption4 = new RTMOptionBuilder().rtmName("Option 4").buildRtmOption();;
+        RTMOption rtmOption2 = new RTMOptionBuilder().retailerProduct(firstRP)
+                .rtmName("Option 2").buildRtmOption();
+        RTMOption rtmOption3 = new RTMOptionBuilder().retailerProduct(firstRP)
+                .rtmName("Option 3").buildRtmOption();
+        RTMOption rtmOption4 = new RTMOptionBuilder().retailerProduct(firstRP)
+                .rtmName("Option 4").buildRtmOption();;
         return FXCollections.observableArrayList(rtmOption1, rtmOption2, rtmOption3, rtmOption4);
     }
 
@@ -165,14 +176,16 @@ public class MenuController implements Initializable {
      */
     public static ObservableList<RTMOption> getDifferentRTMOptions2() {
         ObservableList<RTMOption> RTMOptions = FXCollections.observableArrayList();
-        RTMOption testOption = new RTMOptionBuilder().rtmName("Direct-to-Customer")
+        RTMOption testOption = new RTMOptionBuilder().retailerProduct(secondRP)
+                .rtmName("Direct-to-Customer")
                 .freightOutPerUnit(new BigDecimal("0.14"))
                 .slottingPerSku(new BigDecimal("5000"))
                 .firstReceiver(new BigDecimal("1.49"))
                 .landedStoreCost(new BigDecimal("1.49"))
                 .everydayRetailCalcd(new BigDecimal("2.48"))
                 .everydayRetailOverride(new BigDecimal("2.49")).buildRtmOption();
-        RTMOption optionTwo = new RTMOptionBuilder().rtmName("Direct-to-KeHE Model")
+        RTMOption optionTwo = new RTMOptionBuilder().retailerProduct(secondRP)
+                .rtmName("Direct-to-KeHE Model")
                 .freightOutPerUnit(new BigDecimal("0.14"))
                 .slottingPerSku(new BigDecimal("2500"))
                 .firstReceiver(new BigDecimal("1.49"))
@@ -180,7 +193,8 @@ public class MenuController implements Initializable {
                 .landedStoreCost(new BigDecimal("1.69"))
                 .everydayRetailCalcd(new BigDecimal("2.82"))
                 .everydayRetailOverride(new BigDecimal("2.99")).buildRtmOption();
-        RTMOption optionThree = new RTMOptionBuilder().rtmName("KeHE F.O.B. Model")
+        RTMOption optionThree = new RTMOptionBuilder().retailerProduct(secondRP)
+                .rtmName("KeHE F.O.B. Model")
                 .freightOutPerUnit(new BigDecimal("0.0"))
                 .slottingPerSku(new BigDecimal("2500"))
                 .firstReceiver(new BigDecimal("1.35"))
@@ -188,20 +202,23 @@ public class MenuController implements Initializable {
                 .landedStoreCost(new BigDecimal("1.79"))
                 .everydayRetailCalcd(new BigDecimal("2.98"))
                 .everydayRetailOverride(new BigDecimal("2.99")).buildRtmOption();
-        RTMOption optionFour = new RTMOptionBuilder().rtmName("Option 4").buildRtmOption();
+        RTMOption optionFour = new RTMOptionBuilder().retailerProduct(secondRP)
+                .rtmName("Option 4").buildRtmOption();
         RTMOptions.addAll(testOption, optionTwo,  optionThree, optionFour);
         return RTMOptions;
     }
 
     public static ObservableList<RTMOption> getDifferentRTMOptions() {
         ObservableList<RTMOption> RTMOptions = FXCollections.observableArrayList();
-        RTMOption testOption = new RTMOptionBuilder().rtmName("Direct-to-Customer")
+        RTMOption testOption = new RTMOptionBuilder().retailerProduct(firstRP)
+                .rtmName("Direct-to-Customer")
                 .freightOutPerUnit(new BigDecimal("0.29"))
                 .slottingPerSku(new BigDecimal("5000"))
                 .firstReceiver(new BigDecimal("3.59"))
                 .landedStoreCost(new BigDecimal("3.59"))
                 .everydayRetailOverride(new BigDecimal("5.99")).buildRtmOption();
-        RTMOption optionTwo = new RTMOptionBuilder().rtmName("Direct-to-KeHE")
+        RTMOption optionTwo = new RTMOptionBuilder().retailerProduct(firstRP)
+                .rtmName("Direct-to-KeHE")
                 .freightOutPerUnit(new BigDecimal("0.29"))
                 .slottingPerSku(new BigDecimal("2500"))
                 .firstReceiver(new BigDecimal("3.59"))
@@ -209,14 +226,16 @@ public class MenuController implements Initializable {
                 .landedStoreCost(new BigDecimal("4.19"))
                 .everydayRetailCalcd(new BigDecimal("6.98"))
                 .everydayRetailOverride(new BigDecimal("6.99")).buildRtmOption();
-        RTMOption optionThree = new RTMOptionBuilder().rtmName("F.O.B. Model")
+        RTMOption optionThree = new RTMOptionBuilder().retailerProduct(firstRP)
+                .rtmName("F.O.B. Model")
                 .slottingPerSku(new BigDecimal("2500"))
                 .firstReceiver(new BigDecimal("3.30"))
                 .secondReceiver(new BigDecimal("4.68"))
                 .landedStoreCost(new BigDecimal("4.68"))
                 .everydayRetailCalcd(new BigDecimal("7.80"))
                 .everydayRetailOverride(new BigDecimal("7.99")).buildRtmOption();
-        RTMOption optionFour = new RTMOptionBuilder().rtmName("Option4").buildRtmOption();
+        RTMOption optionFour = new RTMOptionBuilder().retailerProduct(firstRP)
+                .rtmName("Option4").buildRtmOption();
         RTMOptions.addAll(testOption,optionTwo, optionThree, optionFour);
         return RTMOptions;
     }
@@ -231,8 +250,10 @@ public class MenuController implements Initializable {
         ObservableList<Meeting> meetings = FXCollections.observableArrayList();
         meetings.addAll(new Meeting("Review Meeting", "here", LocalDate.of(2022, 12, 5), "11:15", "will be fun"),
                 new Meeting());
-        retailerProducts.add(new RetailerProduct(getExampleProducts().get(0), getRTMOptions(), skus, meetings,
-                getDummyPromoPlans(), new RetailerProductSpecs(158, new BigDecimal("40.0"), new BigDecimal("0.03"), new BigDecimal("1.2"))));
+        firstRP = new RetailerProduct(getExampleProducts().get(0), getRTMOptions(), skus, meetings,
+                getDummyPromoPlans(), new RetailerProductSpecs(158, new BigDecimal("40.0"), new BigDecimal("0.03"), new BigDecimal("1.2")));
+        retailerProducts.add(firstRP);
+        retailerProducts.get(0).getRtmOptions().stream().forEach(i -> i.setRetailerProduct(retailerProducts.get(0)));
         return retailerProducts;
     }
 
@@ -248,8 +269,10 @@ public class MenuController implements Initializable {
         ObservableList<Meeting> meetings = FXCollections.observableArrayList();
         meetings.addAll(new Meeting("Review Meeting", "here", LocalDate.of(2022, 12, 5), "11:15", "will be fun"),
                 new Meeting());
-        retailerProducts.add(new RetailerProduct(getExampleProducts().get(0), getTestRTMOptions(), skus, meetings,
-                getDummyPromoPlans(),new RetailerProductSpecs( 183, new BigDecimal("40.0"), new BigDecimal("0.03"), new BigDecimal("1.2"))));
+        firstRP = new RetailerProduct(getExampleProducts().get(0), getTestRTMOptions(), skus, meetings,
+                getDummyPromoPlans(),new RetailerProductSpecs( 183, new BigDecimal("40.0"), new BigDecimal("0.03"), new BigDecimal("1.2")));
+        retailerProducts.add(firstRP);
+        retailerProducts.get(0).getRtmOptions().stream().forEach(i -> i.setRetailerProduct(retailerProducts.get(0)));
         return retailerProducts;
     }
 
@@ -260,7 +283,7 @@ public class MenuController implements Initializable {
     /*
      * Load dummy RetailerProduct
      */
-    public ObservableList<RetailerProduct> getDifferentRetailerProducts() {
+    public static ObservableList<RetailerProduct> getDifferentRetailerProducts() {
         ObservableList<RetailerProduct> retailerProducts = FXCollections.observableArrayList();
         ObservableList<Sku> skus = FXCollections.observableArrayList();
         ObservableList<Meeting> meetings = FXCollections.observableArrayList();
@@ -268,17 +291,19 @@ public class MenuController implements Initializable {
                 getExampleSkus().get(8));
         meetings.addAll(getExampleMeetings().get(4), getExampleMeetings().get(5), getExampleMeetings().get(6),
                 getExampleMeetings().get(7));
-        retailerProducts.add(new RetailerProduct(getExampleProducts().get(4), getDifferentRTMOptions(), skus, meetings,
+        firstRP = new RetailerProduct(getExampleProducts().get(4), getDifferentRTMOptions(), skus, meetings,
                 getDifferentDummyPromoPlans(), new RetailerProductSpecs(183, new BigDecimal("40.0"),
-                new BigDecimal("0.03"), new BigDecimal("1.2"))));
-
+                new BigDecimal("0.03"), new BigDecimal("1.2")));
+        retailerProducts.add(firstRP);
         ObservableList<Sku> skus2 = FXCollections.observableArrayList();
         ObservableList<Meeting> meetings2 = FXCollections.observableArrayList();
         skus2.addAll(getExampleSkus().get(9), getExampleSkus().get(10), getExampleSkus().get(11));
         meetings2.addAll(getExampleMeetings().get(8), getExampleMeetings().get(9), getExampleMeetings().get(10),
                 getExampleMeetings().get(11));
-        retailerProducts.add(new RetailerProduct(getExampleProducts().get(1), getDifferentRTMOptions2(), skus2,
-                meetings2, getDifferentDummyPromoPlans2(),new RetailerProductSpecs( 183, new BigDecimal("40.0"), new BigDecimal("0.03"), new BigDecimal("1.2"))));
+        secondRP = new RetailerProduct(getExampleProducts().get(1), getDifferentRTMOptions2(), skus2,
+                meetings2, getDifferentDummyPromoPlans2(),new RetailerProductSpecs( 183,
+                new BigDecimal("40.0"), new BigDecimal("0.03"), new BigDecimal("1.2")));
+        retailerProducts.add(secondRP);
         return retailerProducts;
     }
 
@@ -351,7 +376,7 @@ public class MenuController implements Initializable {
         return extendedSkus;
     }
 
-    public ObservableList<Meeting> getExampleMeetings() {
+    public static ObservableList<Meeting> getExampleMeetings() {
         ObservableList<Meeting> meetings = FXCollections.observableArrayList();
         meetings.add(new Meeting("First Meeting", "At Home", LocalDate.of(2022, 12, 5), "17:05", "gonna be cool"));
         meetings.add(new Meeting("Second Meeting", "At Home", LocalDate.of(2021, 01, 9), "17:05", "cant wait"));

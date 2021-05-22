@@ -4,6 +4,7 @@ import com.traderoute.controllers.MenuController;
 import com.traderoute.controllers.RTMPlanningController;
 import com.traderoute.data.Product;
 import com.traderoute.data.RTMOption;
+import com.traderoute.data.RTMOptionBuilder;
 import org.junit.Assert;
 
 import java.math.BigDecimal;
@@ -23,8 +24,10 @@ class RTMOptionTest {
 
     @org.junit.jupiter.api.BeforeEach
     void setUp() {
-        optionOne = new RTMOption();
-        optionTwo = new RTMOption("HEllo", new BigDecimal("0.6"), new BigDecimal(600),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"),new BigDecimal("0.0"));
+        optionOne = new RTMOptionBuilder().buildRtmOption();
+        optionTwo = new RTMOptionBuilder().rtmName("Hello")
+                .freightOutPerUnit(new BigDecimal("0.6"))
+                .slottingPerSku(new BigDecimal("600")).buildRtmOption();
 //        optionThree = new RTMOption("Direct-to-Customer",
 //                new BigDecimal("0.29"), new BigDecimal(7500),
 //                new BigDecimal("3.59"), new BigDecimal("0.0"),
