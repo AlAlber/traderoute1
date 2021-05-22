@@ -38,67 +38,67 @@ public class RTMOptionBuilder {
         this._rtmName = new SimpleStringProperty(_rtmName);
         return this;
     }
-    public RTMOptionBuilder slottingPerSku(String _slottingPerSku){
+    public RTMOptionBuilder slottingPerSku(BigDecimal _slottingPerSku){
         this._slottingPerSku = new SimpleObjectProperty(_slottingPerSku);
         return this;
     }
-    public RTMOptionBuilder freightOutPerUnit(String _freightOutPerUnit){
+    public RTMOptionBuilder freightOutPerUnit(BigDecimal _freightOutPerUnit){
         this._freightOutPerUnit = new SimpleObjectProperty(_freightOutPerUnit);
         return this;
     }
-    public RTMOptionBuilder firstReceiver(String _firstReceiver){
+    public RTMOptionBuilder firstReceiver(BigDecimal _firstReceiver){
         this._firstReceiver = new SimpleObjectProperty(_firstReceiver);
         return this;
     }
-    public RTMOptionBuilder secondReceiver(String _secondReceiver){
+    public RTMOptionBuilder secondReceiver(BigDecimal _secondReceiver){
         this._secondReceiver = new SimpleObjectProperty(_secondReceiver);
         return this;
     }
-    public RTMOptionBuilder thirdReceiver(String _thirdReceiver){
+    public RTMOptionBuilder thirdReceiver(BigDecimal _thirdReceiver){
         this._thirdReceiver = new SimpleObjectProperty(_thirdReceiver);
         return this;
     }
-    public RTMOptionBuilder fourthReceiver(String _fourthReceiver){
+    public RTMOptionBuilder fourthReceiver(BigDecimal _fourthReceiver){
         this._fourthReceiver = new SimpleObjectProperty(_fourthReceiver);
         return this;
     }
-    public RTMOptionBuilder landedStoreCost(String _landedStoreCost){
+    public RTMOptionBuilder landedStoreCost(BigDecimal _landedStoreCost){
         this._landedStoreCost = new SimpleObjectProperty(_landedStoreCost);
         return this;
     }
-    public RTMOptionBuilder everydayRetailCalcd(String _everydayRetailCalcd){
+    public RTMOptionBuilder everydayRetailCalcd(BigDecimal _everydayRetailCalcd){
         this._everydayRetailCalcd = new SimpleObjectProperty(_everydayRetailCalcd);
         return this;
     }
-    public RTMOptionBuilder everydayRetailOverride(String _everydayRetailOverride){
+    public RTMOptionBuilder everydayRetailOverride(BigDecimal _everydayRetailOverride){
         this._everydayRetailOverride = new SimpleObjectProperty(_everydayRetailOverride);
         return this;
     }
-    public RTMOptionBuilder elasticizedUnitVelocity(String _elasticizedUnitVelocity){
+    public RTMOptionBuilder elasticizedUnitVelocity(BigDecimal _elasticizedUnitVelocity){
         this._elasticizedUnitVelocity = new SimpleObjectProperty(_elasticizedUnitVelocity);
         return this;
     }
-    public RTMOptionBuilder annualVolumePerSku(String _annualVolumePerSku){
+    public RTMOptionBuilder annualVolumePerSku(BigDecimal _annualVolumePerSku){
         this._annualVolumePerSku = new SimpleObjectProperty(_annualVolumePerSku);
         return this;
     }
-    public RTMOptionBuilder slottingPaybackPeriod(String _slottingPaybackPeriod){
+    public RTMOptionBuilder slottingPaybackPeriod(BigDecimal _slottingPaybackPeriod){
         this._slottingPaybackPeriod = new SimpleObjectProperty(_slottingPaybackPeriod);
         return this;
     }
-    public RTMOptionBuilder postSpoilsPostFreightPerUnit(String _postSpoilsPostFreightPerUnit){
+    public RTMOptionBuilder postSpoilsPostFreightPerUnit(BigDecimal _postSpoilsPostFreightPerUnit){
         this._postSpoilsPostFreightPerUnit = new SimpleObjectProperty(_postSpoilsPostFreightPerUnit);
         return this;
     }
-    public RTMOptionBuilder _unspentTradePerUnit(String _unspentTradePerUnit){
+    public RTMOptionBuilder _unspentTradePerUnit(BigDecimal _unspentTradePerUnit){
         this._unspentTradePerUnit = new SimpleObjectProperty(_unspentTradePerUnit);
         return this;
     }
-    public RTMOptionBuilder fourYearEqGpPerSku(String _fourYearEqGpPerSku){
+    public RTMOptionBuilder fourYearEqGpPerSku(BigDecimal _fourYearEqGpPerSku){
         this._fourYearEqGpPerSku = new SimpleObjectProperty(_fourYearEqGpPerSku);
         return this;
     }
-    public RTMOptionBuilder fourYearEqGpPerUnit(String _fourYearEqGpPerUnit){
+    public RTMOptionBuilder fourYearEqGpPerUnit(BigDecimal _fourYearEqGpPerUnit){
         this._fourYearEqGpPerUnit = new SimpleObjectProperty(_fourYearEqGpPerUnit);
         return this;
     }

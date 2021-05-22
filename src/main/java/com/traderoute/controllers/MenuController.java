@@ -132,36 +132,31 @@ public class MenuController implements Initializable {
      */
     public static ObservableList<RTMOption> getRTMOptions() {
         ObservableList<RTMOption> RTMOptions = FXCollections.observableArrayList();
-        RTMOption testOption = new RTMOption("Direct-to-Customer", new BigDecimal("0.29"), new BigDecimal("7500"),
-                new BigDecimal("3.59"), new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"));
-        testOption.setEverydayRetailOverride(new BigDecimal("5.99"));
-        testOption.setLandedStoreCost(new BigDecimal("3.59"));
-        RTMOptions.add(testOption);
-        RTMOption optionTwo = new RTMOption("Option2", new BigDecimal("0.0"), BigDecimal.valueOf(3500),
-                BigDecimal.valueOf(3.07), BigDecimal.valueOf(3.79), BigDecimal.valueOf(0.0), BigDecimal.valueOf(0.0));
-        optionTwo.setEverydayRetailCalcd(new BigDecimal("6.32"));
-        optionTwo.setEverydayRetailOverride(new BigDecimal("6.49"));
-        optionTwo.setLandedStoreCost(new BigDecimal("3.79"));
-        RTMOptions.add(optionTwo);
-        RTMOption optionThree = new RTMOption();
-        optionThree.setRtmName("Option3");
-        RTMOptions.add(optionThree);
-        RTMOption optionFour = new RTMOption();
-        optionFour.setRtmName("Option4");
-        RTMOptions.add(optionFour);
+        RTMOption testOption = new RTMOptionBuilder().rtmName("Direct-to-Customer")
+                .freightOutPerUnit(new BigDecimal("0.29"))
+                .slottingPerSku(new BigDecimal("7500"))
+                .firstReceiver(new BigDecimal("3.59"))
+                .landedStoreCost(new BigDecimal("3.59"))
+                .everydayRetailOverride(new BigDecimal("5.99")).buildRtmOption();
+        RTMOption optionTwo = new RTMOptionBuilder().rtmName("Option2")
+                .slottingPerSku(new BigDecimal("3500"))
+                .firstReceiver(new BigDecimal("3.07"))
+                .secondReceiver(new BigDecimal("3.07"))
+                .landedStoreCost(new BigDecimal("3.79"))
+                .everydayRetailCalcd(new BigDecimal("6.32"))
+                .everydayRetailOverride(new BigDecimal("6.49")).buildRtmOption();
+        RTMOption optionThree = new RTMOptionBuilder().rtmName("Option 3").buildRtmOption();
+        RTMOption optionFour = new RTMOptionBuilder().rtmName("Option 4").buildRtmOption();
+        RTMOptions.addAll(testOption, optionTwo, optionThree, optionFour);
         return RTMOptions;
     }
 
     public static ObservableList<RTMOption> getTestRTMOptions() {
-        RTMOption rtmOption1 = new RTMOption();
-        rtmOption1.setRtmName("Option 1");
-        rtmOption1.setFirstReceiver(new BigDecimal("3.59"));
-        RTMOption rtmOption2 = new RTMOption();
-        rtmOption2.setRtmName("Option 2");
-        RTMOption rtmOption3 = new RTMOption();
-        rtmOption3.setRtmName("Option 3");
-        RTMOption rtmOption4 = new RTMOption();
-        rtmOption4.setRtmName("Option 4");
+        RTMOption rtmOption1 = new RTMOptionBuilder().rtmName("Option 1")
+                .firstReceiver(new BigDecimal("3.59")).buildRtmOption();
+        RTMOption rtmOption2 = new RTMOptionBuilder().rtmName("Option 2").buildRtmOption();
+        RTMOption rtmOption3 = new RTMOptionBuilder().rtmName("Option 3").buildRtmOption();
+        RTMOption rtmOption4 = new RTMOptionBuilder().rtmName("Option 4").buildRtmOption();;
         return FXCollections.observableArrayList(rtmOption1, rtmOption2, rtmOption3, rtmOption4);
     }
 
@@ -170,52 +165,59 @@ public class MenuController implements Initializable {
      */
     public static ObservableList<RTMOption> getDifferentRTMOptions2() {
         ObservableList<RTMOption> RTMOptions = FXCollections.observableArrayList();
-        RTMOption testOption = new RTMOption("Direct-to-Customer", new BigDecimal("0.14"), BigDecimal.valueOf(5000),
-                BigDecimal.valueOf(1.49), BigDecimal.valueOf(0.0), BigDecimal.valueOf(0.0), BigDecimal.valueOf(0.0));
-        testOption.setEverydayRetailOverride(new BigDecimal("2.49"));
-        testOption.setEverydayRetailCalcd(new BigDecimal("2.48"));
-        testOption.setLandedStoreCost(new BigDecimal("1.49"));
-        RTMOptions.add(testOption);
-        RTMOption optionTwo = new RTMOption("Direct-to-KeHE Model", new BigDecimal("0.14"), BigDecimal.valueOf(2500),
-                BigDecimal.valueOf(1.49), BigDecimal.valueOf(1.69), BigDecimal.valueOf(0.0), BigDecimal.valueOf(0.0));
-        optionTwo.setEverydayRetailOverride(new BigDecimal("2.99"));
-        optionTwo.setEverydayRetailCalcd(new BigDecimal("2.82"));
-        optionTwo.setLandedStoreCost(new BigDecimal("1.69"));
-        RTMOptions.add(optionTwo);
-        RTMOption optionThree = new RTMOption("KeHE F.O.B. Model", new BigDecimal("0.0"), BigDecimal.valueOf(2500),
-                BigDecimal.valueOf(1.35), BigDecimal.valueOf(1.79), BigDecimal.valueOf(0.0), BigDecimal.valueOf(0.0));
-        optionTwo.setEverydayRetailOverride(new BigDecimal("2.99"));
-        optionTwo.setEverydayRetailCalcd(new BigDecimal("2.98"));
-        optionTwo.setLandedStoreCost(new BigDecimal("1.79"));
-        RTMOptions.add(optionThree);
-        RTMOption optionFour = new RTMOption();
-        optionFour.setRtmName("Option 4");
-        RTMOptions.add(optionFour);
+        RTMOption testOption = new RTMOptionBuilder().rtmName("Direct-to-Customer")
+                .freightOutPerUnit(new BigDecimal("0.14"))
+                .slottingPerSku(new BigDecimal("5000"))
+                .firstReceiver(new BigDecimal("1.49"))
+                .landedStoreCost(new BigDecimal("1.49"))
+                .everydayRetailCalcd(new BigDecimal("2.48"))
+                .everydayRetailOverride(new BigDecimal("2.49")).buildRtmOption();
+        RTMOption optionTwo = new RTMOptionBuilder().rtmName("Direct-to-KeHE Model")
+                .freightOutPerUnit(new BigDecimal("0.14"))
+                .slottingPerSku(new BigDecimal("2500"))
+                .firstReceiver(new BigDecimal("1.49"))
+                .secondReceiver(new BigDecimal("1.69"))
+                .landedStoreCost(new BigDecimal("1.69"))
+                .everydayRetailCalcd(new BigDecimal("2.82"))
+                .everydayRetailOverride(new BigDecimal("2.99")).buildRtmOption();
+        RTMOption optionThree = new RTMOptionBuilder().rtmName("KeHE F.O.B. Model")
+                .freightOutPerUnit(new BigDecimal("0.0"))
+                .slottingPerSku(new BigDecimal("2500"))
+                .firstReceiver(new BigDecimal("1.35"))
+                .secondReceiver(new BigDecimal("1.79"))
+                .landedStoreCost(new BigDecimal("1.79"))
+                .everydayRetailCalcd(new BigDecimal("2.98"))
+                .everydayRetailOverride(new BigDecimal("2.99")).buildRtmOption();
+        RTMOption optionFour = new RTMOptionBuilder().rtmName("Option 4").buildRtmOption();
+        RTMOptions.addAll(testOption, optionTwo,  optionThree, optionFour);
         return RTMOptions;
     }
 
     public static ObservableList<RTMOption> getDifferentRTMOptions() {
         ObservableList<RTMOption> RTMOptions = FXCollections.observableArrayList();
-        RTMOption testOption = new RTMOption("Direct-to-Customer", new BigDecimal("0.29"), BigDecimal.valueOf(5000),
-                BigDecimal.valueOf(3.59), BigDecimal.valueOf(0.0), BigDecimal.valueOf(0.0), BigDecimal.valueOf(0.0));
-        testOption.setEverydayRetailOverride(new BigDecimal("5.99"));
-        testOption.setLandedStoreCost(new BigDecimal("3.59"));
-        RTMOptions.add(testOption);
-        RTMOption optionTwo = new RTMOption("Direct-to-KeHE", new BigDecimal("0.29"), BigDecimal.valueOf(2500),
-                BigDecimal.valueOf(3.59), BigDecimal.valueOf(4.19), BigDecimal.valueOf(0.0), BigDecimal.valueOf(0.0));
-        optionTwo.setEverydayRetailOverride(new BigDecimal("6.99"));
-        optionTwo.setEverydayRetailCalcd(new BigDecimal("6.98"));
-        optionTwo.setLandedStoreCost(new BigDecimal("4.19"));
-        RTMOptions.add(optionTwo);
-        RTMOption optionThree = new RTMOption("F.O.B. Model", new BigDecimal("0.0"), BigDecimal.valueOf(2500),
-                BigDecimal.valueOf(3.30), BigDecimal.valueOf(4.68), BigDecimal.valueOf(0.0), BigDecimal.valueOf(0.0));
-        optionThree.setEverydayRetailOverride(new BigDecimal("7.99"));
-        optionThree.setEverydayRetailCalcd(new BigDecimal("7.80"));
-        optionThree.setLandedStoreCost(new BigDecimal("4.68"));
-        RTMOptions.add(optionThree);
-        RTMOption optionFour = new RTMOption();
-        optionFour.setRtmName("Option4");
-        RTMOptions.add(optionFour);
+        RTMOption testOption = new RTMOptionBuilder().rtmName("Direct-to-Customer")
+                .freightOutPerUnit(new BigDecimal("0.29"))
+                .slottingPerSku(new BigDecimal("5000"))
+                .firstReceiver(new BigDecimal("3.59"))
+                .landedStoreCost(new BigDecimal("3.59"))
+                .everydayRetailOverride(new BigDecimal("5.99")).buildRtmOption();
+        RTMOption optionTwo = new RTMOptionBuilder().rtmName("Direct-to-KeHE")
+                .freightOutPerUnit(new BigDecimal("0.29"))
+                .slottingPerSku(new BigDecimal("2500"))
+                .firstReceiver(new BigDecimal("3.59"))
+                .secondReceiver(new BigDecimal("4.19"))
+                .landedStoreCost(new BigDecimal("4.19"))
+                .everydayRetailCalcd(new BigDecimal("6.98"))
+                .everydayRetailOverride(new BigDecimal("6.99")).buildRtmOption();
+        RTMOption optionThree = new RTMOptionBuilder().rtmName("F.O.B. Model")
+                .slottingPerSku(new BigDecimal("2500"))
+                .firstReceiver(new BigDecimal("3.30"))
+                .secondReceiver(new BigDecimal("4.68"))
+                .landedStoreCost(new BigDecimal("4.68"))
+                .everydayRetailCalcd(new BigDecimal("7.80"))
+                .everydayRetailOverride(new BigDecimal("7.99")).buildRtmOption();
+        RTMOption optionFour = new RTMOptionBuilder().rtmName("Option4").buildRtmOption();
+        RTMOptions.addAll(testOption,optionTwo, optionThree, optionFour);
         return RTMOptions;
     }
 
