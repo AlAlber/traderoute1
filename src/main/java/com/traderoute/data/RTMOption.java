@@ -314,9 +314,6 @@ public class RTMOption {
     }
 
     public String getRtmName() {
-        if (rtmName.get() == null) {
-            return new String("");
-        }
         return rtmName.get();
     }
 
@@ -341,16 +338,10 @@ public class RTMOption {
     }
 
     public BigDecimal getSlottingPerSku() {
-        if (slottingPerSku.get() == null) {
-            return new BigDecimal("0.0");
-        }
         return slottingPerSku.get();
     }
 
     public SimpleObjectProperty<BigDecimal> slottingPerSkuProperty() {
-        if (slottingPerSku == null) {
-            return new SimpleObjectProperty<BigDecimal>();
-        }
         return slottingPerSku;
     }
 
@@ -359,9 +350,6 @@ public class RTMOption {
     }
 
     public BigDecimal getFreightOutPerUnit() {
-        if (freightOutPerUnit.get() == null) {
-            return new BigDecimal("0.0");
-        }
         return freightOutPerUnit.get();
     }
 
@@ -374,13 +362,8 @@ public class RTMOption {
     }
 
     public BigDecimal getFirstReceiver() {
-        if (firstReceiverProperty().get() == null) {
-            return new BigDecimal("0.0");
-        }
         return firstReceiverProperty().get();
     }
-
-    ;
 
     public SimpleObjectProperty<BigDecimal> firstReceiverProperty() {
         return firstReceiver;
@@ -391,9 +374,6 @@ public class RTMOption {
     }
 
     public BigDecimal getSecondReceiver() {
-        if (secondReceiverProperty().get() == null) {
-            return new BigDecimal("0.0");
-        }
         return secondReceiver.get();
     }
 
@@ -406,9 +386,6 @@ public class RTMOption {
     }
 
     public BigDecimal getThirdReceiver() {
-        if (thirdReceiverProperty().get() == null) {
-            return new BigDecimal("0.0");
-        }
         return thirdReceiver.get();
     }
 
@@ -421,9 +398,6 @@ public class RTMOption {
     }
 
     public BigDecimal getFourthReceiver() {
-        if (fourthReceiverProperty().get() == null) {
-            return new BigDecimal("0.0");
-        }
         return fourthReceiver.get();
     }
 
@@ -436,16 +410,10 @@ public class RTMOption {
     }
 
     public BigDecimal getLandedStoreCost() {
-        if (landedStoreCostProperty().get() == null) {
-            return new BigDecimal("0.0");
-        }
         return landedStoreCost.get();
     }
 
     public SimpleObjectProperty<BigDecimal> landedStoreCostProperty() {
-        if (landedStoreCost == null) {
-            return new SimpleObjectProperty<BigDecimal>(new BigDecimal("0.0"));
-        }
         return landedStoreCost;
     }
 
@@ -454,16 +422,10 @@ public class RTMOption {
     }
 
     public BigDecimal getEverydayRetailCalcd() {
-        if (everydayRetailCalcd.get() == null) {
-            return new BigDecimal("0.0");
-        }
         return everydayRetailCalcd.get();
     }
 
     public SimpleObjectProperty<BigDecimal> everydayRetailCalcdProperty() {
-        if (everydayRetailCalcd == null) {
-            return new SimpleObjectProperty<BigDecimal>(new BigDecimal("0.0"));
-        }
         return everydayRetailCalcd;
     }
 
@@ -472,16 +434,10 @@ public class RTMOption {
     }
 
     public BigDecimal getEverydayRetailOverride() {
-        if (everydayRetailOverride.get() == null) {
-            return new BigDecimal("0.0");
-        }
         return everydayRetailOverride.get();
     }
 
     public SimpleObjectProperty<BigDecimal> everydayRetailOverrideProperty() {
-        if (landedStoreCost == null) {
-            return new SimpleObjectProperty<BigDecimal>(new BigDecimal("0.0"));
-        }
         return everydayRetailOverride;
     }
 
@@ -506,9 +462,6 @@ public class RTMOption {
     }
 
     public BigDecimal getElasticizedUnitVelocity() {
-        if (elasticizedUnitVelocity.get() == null) {
-            return new BigDecimal("0.0");
-        }
         return elasticizedUnitVelocity.get();
     }
 
@@ -517,16 +470,10 @@ public class RTMOption {
     }
 
     public SimpleObjectProperty<BigDecimal> elasticizedUnitVelocityProperty() {
-        if (landedStoreCost == null) {
-            return new SimpleObjectProperty<BigDecimal>(new BigDecimal("0.0"));
-        }
         return elasticizedUnitVelocity;
     }
 
     public BigDecimal getAnnualVolumePerSku() {
-        if (annualVolumePerSku.get() == null) {
-            return new BigDecimal("0.0");
-        }
         return annualVolumePerSku.get();
     }
 
@@ -535,16 +482,10 @@ public class RTMOption {
     }
 
     public SimpleObjectProperty annualVolumePerSkuProperty() {
-        if (landedStoreCost == null) {
-            return new SimpleObjectProperty(0);
-        }
         return annualVolumePerSku;
     }
 
     public BigDecimal getSlottingPaybackPeriod() {
-        if (slottingPaybackPeriod.get() == null) {
-            return new BigDecimal("0.0");
-        }
         return slottingPaybackPeriod.get();
     }
 
@@ -557,9 +498,6 @@ public class RTMOption {
     }
 
     public BigDecimal getPostSpoilsPostFreightPerUnit() {
-        if (postSpoilsPostFreightPerUnit.get() == null) {
-            return new BigDecimal("0.0");
-        }
         return postSpoilsPostFreightPerUnit.get();
     }
 
@@ -572,9 +510,6 @@ public class RTMOption {
     }
 
     public BigDecimal getUnspentTradePerUnit() {
-        if (unspentTradePerUnit.get() == null) {
-            return new BigDecimal("0.0");
-        }
         return unspentTradePerUnit.get();
     }
 
@@ -587,9 +522,6 @@ public class RTMOption {
     }
 
     public BigDecimal getFourYearEqGpPerSku() {
-        if (fourYearEqGpPerSku.get() == null) {
-            return new BigDecimal("0.0");
-        }
         return fourYearEqGpPerSku.get();
     }
 
@@ -602,9 +534,6 @@ public class RTMOption {
     }
 
     public BigDecimal getFourYearEqGpPerUnit() {
-        if (fourYearEqGpPerUnit.get() == null) {
-            return new BigDecimal("0.0");
-        }
         return fourYearEqGpPerUnit.get();
     }
 
