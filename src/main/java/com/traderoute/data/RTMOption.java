@@ -19,53 +19,6 @@ public class RTMOption {
             thirdReceiver, fourthReceiver, landedStoreCost, everydayRetailCalcd, everydayRetailOverride,
             elasticizedUnitVelocity, slottingPaybackPeriod, postSpoilsPostFreightPerUnit, unspentTradePerUnit,
             fourYearEqGpPerSku, fourYearEqGpPerUnit, annualVolumePerSku;
-    public RTMOption() {
-        this.rtmName = new SimpleStringProperty();
-        this.slottingPerSku = new SimpleObjectProperty<>();
-        this.freightOutPerUnit = new SimpleObjectProperty<>();
-        this.firstReceiver = new SimpleObjectProperty<>();
-        this.secondReceiver = new SimpleObjectProperty<>();
-        this.thirdReceiver = new SimpleObjectProperty<>();
-        this.fourthReceiver = new SimpleObjectProperty<>();
-        this.landedStoreCost = new SimpleObjectProperty<>();
-        this.everydayRetailCalcd = new SimpleObjectProperty<>();
-        this.everydayRetailOverride = new SimpleObjectProperty<>();
-        this.elasticizedUnitVelocity = new SimpleObjectProperty<>();
-        this.annualVolumePerSku = new SimpleObjectProperty<>();
-        this.slottingPaybackPeriod = new SimpleObjectProperty<>();
-        this.postSpoilsPostFreightPerUnit = new SimpleObjectProperty<>();
-        this.unspentTradePerUnit = new SimpleObjectProperty<>();
-        this.fourYearEqGpPerSku = new SimpleObjectProperty<>();
-        this.fourYearEqGpPerUnit = new SimpleObjectProperty<>();
-
-        this.retailerProduct = new SimpleObjectProperty<>();
-
-        setupListeners();
-    }
-
-    public RTMOption(String RTMName, BigDecimal freightOutPerUnit, BigDecimal slottingPerSku, BigDecimal firstReceiver,
-            BigDecimal secondReceiver, BigDecimal thirdReceiver, BigDecimal fourthReceiver) {
-        this.rtmName = new SimpleStringProperty(RTMName);
-        this.slottingPerSku = new SimpleObjectProperty<>(slottingPerSku);
-        this.freightOutPerUnit = new SimpleObjectProperty<>(freightOutPerUnit);
-        this.firstReceiver = new SimpleObjectProperty<>(firstReceiver);
-        this.secondReceiver = new SimpleObjectProperty<>(secondReceiver);
-        this.thirdReceiver = new SimpleObjectProperty<>(thirdReceiver);
-        this.fourthReceiver = new SimpleObjectProperty<>(fourthReceiver);
-        this.landedStoreCost = new SimpleObjectProperty<>();
-        this.everydayRetailCalcd = new SimpleObjectProperty<>();
-        this.everydayRetailOverride = new SimpleObjectProperty<>();
-        this.elasticizedUnitVelocity = new SimpleObjectProperty<>();
-        this.annualVolumePerSku = new SimpleObjectProperty<>();
-        this.slottingPaybackPeriod = new SimpleObjectProperty<>();
-        this.postSpoilsPostFreightPerUnit = new SimpleObjectProperty<>();
-        this.unspentTradePerUnit = new SimpleObjectProperty<>();
-        this.fourYearEqGpPerSku = new SimpleObjectProperty<>();
-        this.fourYearEqGpPerUnit = new SimpleObjectProperty<>();
-
-        this.retailerProduct = new SimpleObjectProperty<RetailerProduct>();
-
-    }
 
     public RTMOption(RetailerProduct retailerProduct, String rtmName, BigDecimal slottingPerSku, BigDecimal freightOutPerUnit,
                      BigDecimal firstReceiver, BigDecimal secondReceiver, BigDecimal thirdReceiver, BigDecimal fourthReceiver,
