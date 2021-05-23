@@ -4,6 +4,9 @@ import com.traderoute.BigDecimalTextField;
 import com.traderoute.DoubleInputConverter;
 import com.traderoute.IntegerTextField;
 import com.traderoute.NumberTextField;
+import com.traderoute.data.RTMOptionBuilder;
+import com.traderoute.data.RetailerProduct;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.Event;
@@ -15,20 +18,29 @@ import java.util.regex.Pattern;
 
 public abstract class NumberEditCell1 extends TableCell
     {
-        private String pre;
-        private String post;
         private NumberTextField textField;
+        private String pre = "";
+        private String post = "";
         private Number maxValue;
         private Number minValue;
         private Number defaultValue;
 
-    public NumberEditCell1(String pre, String post, Number defaultValue, Number minValue, Number maxValue) {
-        this.pre = pre;
-        this.post = post;
+    public NumberEditCell1(Number defaultValue, Number minValue, Number maxValue) {
+        this.pre = "";
+        this.post = "";
         this.defaultValue = defaultValue;
         this.minValue = minValue;
         this.maxValue = maxValue;
     }
+    public NumberEditCell1 pre(String pre) {
+        this.pre = pre;
+        return this;
+    }
+    public NumberEditCell1 post(String post) {
+        this.post = post;
+        return this;
+    }
+
     public NumberTextField getTextField() {
         return textField;
     }

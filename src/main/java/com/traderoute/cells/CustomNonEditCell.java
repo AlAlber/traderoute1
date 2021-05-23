@@ -10,7 +10,6 @@ public class CustomNonEditCell<Object, BigDecimal> extends TableCell<Object, Big
     private final String dollar;
 
     public CustomNonEditCell(String dollar, String per) {
-
         super();
         this.per = per;
         this.dollar = dollar;

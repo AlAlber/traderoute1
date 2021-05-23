@@ -33,11 +33,9 @@ public class ParameterNonEditCell extends TableCell<Parameter<?>, Object> {
 
             if (param.getPre().equals("%")) {
                 setText(itemString + param.getPre());
-                System.out.println(param.getPre() + itemString);
                 setTooltip(new Tooltip(itemString + param.getPre()));
             } else {
                 setText(param.getPre() + itemString);
-                System.out.println(itemString + itemString);
                 setTooltip(new Tooltip(param.getPre() + itemString));
             }
             // if (param.getJanuary() instanceof String) {
