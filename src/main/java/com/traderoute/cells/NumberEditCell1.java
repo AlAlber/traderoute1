@@ -13,7 +13,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.regex.Pattern;
 
-public abstract class NumberEditCell1<Object, Number> extends TableCell<Object, Number>
+public abstract class NumberEditCell1 extends TableCell
     {
         private String pre;
         private String post;
@@ -21,8 +21,6 @@ public abstract class NumberEditCell1<Object, Number> extends TableCell<Object, 
         private Number maxValue;
         private Number minValue;
         private Number defaultValue;
-        private final Pattern intPattern = Pattern.compile("-?\\d+");
-        private final Pattern bigDecimalPattern = Pattern.compile("-?(([1-9][0-9]*)|0)?(\\.[0-9]*)?");
 
     public NumberEditCell1(String pre, String post, Number defaultValue, Number minValue, Number maxValue) {
         this.pre = pre;
@@ -31,8 +29,7 @@ public abstract class NumberEditCell1<Object, Number> extends TableCell<Object, 
         this.minValue = minValue;
         this.maxValue = maxValue;
     }
-
-        public NumberTextField getTextField() {
+    public NumberTextField getTextField() {
         return textField;
     }
 
@@ -66,7 +63,7 @@ public abstract class NumberEditCell1<Object, Number> extends TableCell<Object, 
     }
 
         @Override
-        public void updateItem(Number item, boolean empty) {
+        public void updateItem(Object item, boolean empty) {
 
         super.updateItem(item, empty);
         // TODO Add in subclass
@@ -85,14 +82,14 @@ public abstract class NumberEditCell1<Object, Number> extends TableCell<Object, 
                 setText(null);
                 setGraphic(textField);
             } else {
-                setText(getString());
-                setTooltip(new Tooltip(getString()));
+                setText(getString(pre, post));
+                setTooltip(new Tooltip(getString(pre, post)));
             }
             setGraphic(null);
         }
     }
 
-        private void createTextField() {
+    private void createTextField() {
         textField = getSpecificTextField(defaultValue, minValue, maxValue);
         textField.setMinWidth(this.getWidth() - this.getGraphicTextGap() * 2);
         textField.selectAll();
@@ -110,29 +107,16 @@ public abstract class NumberEditCell1<Object, Number> extends TableCell<Object, 
         if (text.equals("")) {
             commitEdit(getZero());
         }
-        commitNumberEdit();
-        //TODO add in subclass
-//        if (getItem() instanceof Integer) {
-//            commitEdit((Number) Integer.valueOf(text));
-//        } else if (getItem() instanceof BigDecimal) {
-//            commitEdit((Number) new BigDecimal(text));
-//        }
+        commitNumberEdit(text);
     }
-    public abstract void commitNumberEdit();
+    public abstract void commitNumberEdit(String text);
 
     public abstract Number getZero();
 
-    public abstract String getString();
-//    {
-//        if (getItem() instanceof BigDecimal) {
-//            return getItem() == null ? ""
-//                    : pre + ((BigDecimal) getItem()).setScale(2, RoundingMode.HALF_UP).toString() + post;
-//        }
-//        return getItem() == null ? "" : pre + getItem().toString() + post;
-//    }
+    public abstract String getString(String pre, String post);
 
         @Override
-        public void commitEdit(Number item) {
+        public void commitEdit(Object item) {
         // This block is necessary to support commit on losing focus, because
         // the baked-in mechanism sets our editing state to false before we can
         // intercept the loss of focus. The default commitEdit(...) method
@@ -140,9 +124,9 @@ public abstract class NumberEditCell1<Object, Number> extends TableCell<Object, 
         if (!isEditing() && !item.equals(getItem())) {
             TableView<Object> table = getTableView();
             if (table != null) {
-                TableColumn<Object, Number> column = getTableColumn();
-                TableColumn.CellEditEvent<Object, Number> event = new TableColumn.CellEditEvent<>(table,
-                        new TablePosition<Object, Number>(table, getIndex(), column), TableColumn.editCommitEvent(),
+                TableColumn<Object, Object> column = getTableColumn();
+                TableColumn.CellEditEvent<Object, Object> event = new TableColumn.CellEditEvent<>(table,
+                        new TablePosition<Object, Object>(table, getIndex(), column), TableColumn.editCommitEvent(),
                         item);
                 Event.fireEvent(column, event);
             }
