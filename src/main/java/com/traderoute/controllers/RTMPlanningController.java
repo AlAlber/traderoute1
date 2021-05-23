@@ -656,7 +656,6 @@ public class RTMPlanningController implements Initializable {
     private void switchToAssortment() throws IOException {
         System.out.println("workign");
         switchScenes("assortment");
-
     }
     @FXML
     private void switchToRetailerSelection() throws IOException {
@@ -699,7 +698,6 @@ public class RTMPlanningController implements Initializable {
      * Sets cell factories for every column.
      */
     public void setCellFactories() {
-        //TextFieldTableCell.forTableColumn(new BigDecimalStringConverter())
         rtmNameCol1.setCellFactory(TextFieldTableCell.forTableColumn());
         slottingPerSkuCol.setCellFactory(tc -> new NumberEditCellBuilder().pre("$").buildBD());
         freightOutPerUnitCol.setCellFactory(tc -> new NumberEditCellBuilder().pre("$").buildBD());
@@ -711,17 +709,7 @@ public class RTMPlanningController implements Initializable {
         everydayRetailCalcdCol.setCellFactory(tc -> new NumberEditCellBuilder().pre("$").buildBD());
         everydayRetailOverrideCol.setCellFactory(tc -> new NumberEditCellBuilder().pre("$").buildBD());
         elasticizedUnitVelocityColumn.setCellFactory(tc -> new NumberEditCellBuilder().post(" U/S/F/W").buildBD());
-        annualVolumePerSkuColumn.setCellFactory(tc -> new TableCell<>() {
-            @Override
-            protected void updateItem(final BigDecimal item, final boolean empty) {
-                super.updateItem(item, empty);
-                if (empty || item == null) {
-                    setText("");
-                } else {
-                    setText(String.format("%,.0f", item, 0, RoundingMode.HALF_UP) + " Units");
-                }
-            }
-        });
+        annualVolumePerSkuColumn.setCellFactory(tc -> new NumberEditCellBuilder().post(" Units").decimalScale(0).buildBD());
         slottingPaybackPeriodColumn.setCellFactory(tc -> new NumberEditCellBuilder().post(" Years").buildBD());
         postFreightPostSpoilsPerUnitCol.setCellFactory(tc -> new NumberEditCellBuilder().pre("$").post(" Per Unit").buildBD());
         unspentTradePerUnitColumn.setCellFactory(tc -> new NumberEditCellBuilder().pre("$").post(" Per Unit").buildBD());

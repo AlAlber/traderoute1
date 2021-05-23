@@ -8,8 +8,10 @@ import java.math.RoundingMode;
 
 public class BigDecimalEditCell1 extends NumberEditCell1{
 
-    public BigDecimalEditCell1(String pre, String post, Number defaultValue, Number minValue, Number maxValue) {
+    private int decimalScale;
+    public BigDecimalEditCell1(String pre, String post, Number defaultValue, Number minValue, Number maxValue, int decimalScale) {
         super(pre, post, defaultValue, minValue, maxValue);
+        this.decimalScale = decimalScale;
     }
 
     @Override
@@ -30,6 +32,6 @@ public class BigDecimalEditCell1 extends NumberEditCell1{
     @Override
     public String getString(String pre, String post) {
         return getItem() == null ? "" : pre + ((BigDecimal) getItem())
-                .setScale(2, RoundingMode.HALF_UP).toString() + post;
+                .setScale(decimalScale, RoundingMode.HALF_UP).toString() + post;
     }
 }
