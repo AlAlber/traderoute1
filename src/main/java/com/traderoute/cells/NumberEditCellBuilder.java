@@ -10,14 +10,13 @@ public class NumberEditCellBuilder {
     private Number _maxValue = new BigDecimal("1000000");
 
 
-    public NumberEditCell1 buildIntEditCell(
+    public NumberEditCell1 buildInt(
             String _pre, String _post, Number _defaultValue, Number _minValue, Number _maxValue) {
         return new IntEditCell1(_pre,_post,_defaultValue,_minValue,_maxValue);
     }
 
-    public NumberEditCell1 buildBigDecimalEditCell(
-            String _pre, String _post, Number _defaultValue, Number _minValue, Number _maxValue) {
-        return new BigDecimalEditCell1(_pre,_post,_defaultValue,_minValue,_maxValue);
+    public NumberEditCell1 buildBD() {
+        return new BigDecimalEditCell1(_pre, _post, _defaultValue, _minValue, _maxValue);
     }
 
     public NumberEditCellBuilder pre(String _pre) {

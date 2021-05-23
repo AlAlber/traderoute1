@@ -2,6 +2,7 @@ package com.traderoute.controllers;
 
 import com.traderoute.*;
 import com.traderoute.cells.CustomNonEditCell;
+import com.traderoute.cells.NumberEditCellBuilder;
 import com.traderoute.charts.*;
 import com.traderoute.data.*;
 import javafx.beans.property.SimpleObjectProperty;
@@ -698,18 +699,18 @@ public class RTMPlanningController implements Initializable {
      * Sets cell factories for every column.
      */
     public void setCellFactories() {
-
+        //TextFieldTableCell.forTableColumn(new BigDecimalStringConverter())
         rtmNameCol1.setCellFactory(TextFieldTableCell.forTableColumn());
-        slottingPerSkuCol.setCellFactory(TextFieldTableCell.forTableColumn(new BigDecimalStringConverter()));
-        freightOutPerUnitCol.setCellFactory(TextFieldTableCell.forTableColumn(new BigDecimalStringConverter()));
-        firstReceiverCol.setCellFactory(TextFieldTableCell.forTableColumn(new BigDecimalStringConverter()));
-        secondReceiverColumn.setCellFactory(TextFieldTableCell.forTableColumn(new BigDecimalStringConverter()));
-        thirdReceiverColumn.setCellFactory(TextFieldTableCell.forTableColumn(new BigDecimalStringConverter()));
-        fourthReceiverColumn.setCellFactory(TextFieldTableCell.forTableColumn(new BigDecimalStringConverter()));
-        landedStoreCostColumn.setCellFactory(tc -> new CustomNonEditCell("$", ""));
-        everydayRetailCalcdCol.setCellFactory(tc -> new CustomNonEditCell("$", ""));
-        everydayRetailOverrideCol.setCellFactory(TextFieldTableCell.forTableColumn(new BigDecimalStringConverter()));
-        elasticizedUnitVelocityColumn.setCellFactory(tc -> new CustomNonEditCell("", " U/S/F/W"));
+        slottingPerSkuCol.setCellFactory(tc -> new NumberEditCellBuilder().pre("$").buildBD());
+        freightOutPerUnitCol.setCellFactory(tc -> new NumberEditCellBuilder().pre("$").buildBD());
+        firstReceiverCol.setCellFactory(tc -> new NumberEditCellBuilder().pre("$").buildBD());
+        secondReceiverColumn.setCellFactory(tc -> new NumberEditCellBuilder().pre("$").buildBD());
+        thirdReceiverColumn.setCellFactory(tc -> new NumberEditCellBuilder().pre("$").buildBD());
+        fourthReceiverColumn.setCellFactory(tc -> new NumberEditCellBuilder().pre("$").buildBD());
+        landedStoreCostColumn.setCellFactory(tc -> new NumberEditCellBuilder().pre("$").buildBD());
+        everydayRetailCalcdCol.setCellFactory(tc -> new NumberEditCellBuilder().pre("$").buildBD());
+        everydayRetailOverrideCol.setCellFactory(tc -> new NumberEditCellBuilder().pre("$").buildBD());
+        elasticizedUnitVelocityColumn.setCellFactory(tc -> new NumberEditCellBuilder().post(" U/S/F/W").buildBD());
         annualVolumePerSkuColumn.setCellFactory(tc -> new TableCell<>() {
             @Override
             protected void updateItem(final BigDecimal item, final boolean empty) {
@@ -721,11 +722,11 @@ public class RTMPlanningController implements Initializable {
                 }
             }
         });
-        slottingPaybackPeriodColumn.setCellFactory(tc -> new CustomNonEditCell("", " Years"));
-        postFreightPostSpoilsPerUnitCol.setCellFactory(tc -> new CustomNonEditCell("$", " Per Unit"));
-        unspentTradePerUnitColumn.setCellFactory(tc -> new CustomNonEditCell("$", " Per Unit"));
-        fourYearEqGpPerSkuColumn.setCellFactory(tc -> new CustomNonEditCell("$", " Per Sku"));
-        fourYearEqGpPerUnitColumn.setCellFactory(tc -> new CustomNonEditCell("$", " Per Unit"));
+        slottingPaybackPeriodColumn.setCellFactory(tc -> new NumberEditCellBuilder().post(" Years").buildBD());
+        postFreightPostSpoilsPerUnitCol.setCellFactory(tc -> new NumberEditCellBuilder().pre("$").post(" Per Unit").buildBD());
+        unspentTradePerUnitColumn.setCellFactory(tc -> new NumberEditCellBuilder().pre("$").post(" Per Unit").buildBD());
+        fourYearEqGpPerSkuColumn.setCellFactory(tc -> new NumberEditCellBuilder().pre("$").post(" Per Sku").buildBD());
+        fourYearEqGpPerUnitColumn.setCellFactory(tc -> new NumberEditCellBuilder().pre("$").post(" Per Unit").buildBD());
     }
 
     /**

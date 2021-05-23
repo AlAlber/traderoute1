@@ -75,7 +75,7 @@ public abstract class NumberEditCell1 extends TableCell
 //            return;
 //        }
         // Product product = getTableRow().getItem();// If i dont do this it removes the pre
-        setText(getItem().toString());
+        setText(getString(pre, post));
 
         setGraphic(null);
     }
