@@ -8,8 +8,8 @@ import java.math.RoundingMode;
 
 public class BigDecimalEditCell1 extends NumberEditCell1{
 
-    public BigDecimalEditCell1(Number defaultValue, Number minValue, Number maxValue) {
-        super(defaultValue, minValue, maxValue);
+    public BigDecimalEditCell1(String pre, String post, Number defaultValue, Number minValue, Number maxValue) {
+        super(pre, post, defaultValue, minValue, maxValue);
     }
 
     @Override

@@ -12,6 +12,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.Event;
 import javafx.scene.control.*;
 
+import javax.sound.midi.SysexMessage;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.regex.Pattern;
@@ -25,21 +26,26 @@ public abstract class NumberEditCell1 extends TableCell
         private Number minValue;
         private Number defaultValue;
 
-    public NumberEditCell1(Number defaultValue, Number minValue, Number maxValue) {
-        this.pre = "";
-        this.post = "";
+    public NumberEditCell1(String pre, String post, Number defaultValue, Number minValue, Number maxValue) {
+        this.pre = pre;
+        this.post = post;
         this.defaultValue = defaultValue;
         this.minValue = minValue;
         this.maxValue = maxValue;
     }
-    public NumberEditCell1 pre(String pre) {
-        this.pre = pre;
-        return this;
-    }
-    public NumberEditCell1 post(String post) {
+//    public NumberEditCell1 pre(String pre) {
+//        this.pre = pre;
+//        return this;
+//    }
+//    public NumberEditCell1 post(String post) {
+//        this.post = post;
+//        return this;
+//    }
+    public NumberEditCell1 defaultValue(String post) {
         this.post = post;
         return this;
     }
+
 
     public NumberTextField getTextField() {
         return textField;
