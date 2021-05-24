@@ -103,53 +103,48 @@ public class AssortmentController implements Initializable, MyController {
 
     }
 
+    public Meeting getFocusedMeeting(){
+        return meetingTableView.getSelectionModel().getSelectedItem();
+    }
+    public Sku getFocusedSku(){
+        return skuTableView.getSelectionModel().getSelectedItem();
+    }
+
     public void changeDescriptionCellEvent(TableColumn.CellEditEvent editedCell) {
-        Meeting selectedMeeting = meetingTableView.getSelectionModel().getSelectedItem();
-        selectedMeeting.setDescription(editedCell.getNewValue().toString());
+        getFocusedMeeting().setDescription(editedCell.getNewValue().toString());
     }
 
     public void changeLocationCellEvent(TableColumn.CellEditEvent editedCell) {
-        Meeting selectedMeeting = meetingTableView.getSelectionModel().getSelectedItem();
-        selectedMeeting.setLocation(editedCell.getNewValue().toString());
+        getFocusedMeeting().setLocation(editedCell.getNewValue().toString());
     }
 
     public void changeTimeCellEvent(TableColumn.CellEditEvent editedCell) {
-        Meeting selectedMeeting = meetingTableView.getSelectionModel().getSelectedItem();
-        selectedMeeting.setTime(editedCell.getNewValue().toString());
+        getFocusedMeeting().setTime(editedCell.getNewValue().toString());
     }
 
     public void changeNotesCellEvent(TableColumn.CellEditEvent editedCell) {
-        Meeting selectedMeeting = meetingTableView.getSelectionModel().getSelectedItem();
-        selectedMeeting.setNotes(editedCell.getNewValue().toString());
+        getFocusedMeeting().setNotes(editedCell.getNewValue().toString());
     }
 
     public void changeFlavorDescriptionCellEvent(TableColumn.CellEditEvent editedCell) {
-        Sku selectedMeeting = skuTableView.getSelectionModel().getSelectedItem();
-        selectedMeeting.setFlavorDescription(editedCell.getNewValue().toString());
+        getFocusedSku().setFlavorDescription(editedCell.getNewValue().toString());
     }
 
     public void changeStatusCellEvent(TableColumn.CellEditEvent editedCell) {
-        Sku selectedMeeting = skuTableView.getSelectionModel().getSelectedItem();
-        selectedMeeting.setStatus(editedCell.getNewValue().toString());
+        getFocusedSku().setStatus(editedCell.getNewValue().toString());
     }
 
     public void changeSkuNotesCellEvent(TableColumn.CellEditEvent editedCell) {
-        Sku selectedMeeting = skuTableView.getSelectionModel().getSelectedItem();
-        selectedMeeting.setSkuNotes(editedCell.getNewValue().toString());
+        getFocusedSku().setSkuNotes(editedCell.getNewValue().toString());
     }
 
     public String getDescription() {
-        if (descriptionField.getText() == null) {
-            return "";
-        }
-        return descriptionField.getText();
+        return descriptionField.getText() == null ? "" : descriptionField.getText();
     }
 
     public LocalDate getDate() {
-        // if(convertToDate(datePicker.getValue())==null){
-        // return convertToDate(LocalDate.of(2000,10,5));
         if (datePicker.getValue() == null) {
-            LocalDate date = LocalDate.of(1999, 12, 12);
+            LocalDate date = LocalDate.of(0, 0, 0);
             System.out.println("no correct date picked");
             return date;
         }
@@ -157,24 +152,15 @@ public class AssortmentController implements Initializable, MyController {
     }
 
     public String getTime() {
-        if (timeField.getText() == null) {
-            return "";
-        }
-        return timeField.getText();
+        return timeField.getText() == null ? "" : timeField.getText();
     }
 
     public String getLocation() {
-        if (locationField.getText() == null) {
-            return "";
-        }
-        return locationField.getText();
+        return locationField.getText() == null ? "" : locationField.getText();
     }
 
     public String getNotes() {
-        if (notesField.getText() == null) {
-            return "";
-        }
-        return notesField.getText();
+        return notesField.getText() == null ? "" : notesField.getText();
     }
 
     public void addMeetingEvent(ActionEvent event) {
