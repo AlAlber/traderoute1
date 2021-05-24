@@ -233,24 +233,16 @@ public class AssortmentController implements Initializable, MyController {
     }
 
     private String getFlavorDescription() {
-        if (flavorDescriptionField.getText() == null) {
-            return "";
-        }
-        return flavorDescriptionField.getText();
+        return flavorDescriptionField.getText() == null ? "" : flavorDescriptionField.getText();
     }
 
     private String getStatus() {
-        if (statusBox.getSelectionModel().getSelectedItem() == null) {
-            return "";
-        }
-        return statusBox.getSelectionModel().getSelectedItem().toString();
+        String status = statusBox.getSelectionModel().getSelectedItem().toString();
+        return status == null ? "" : status;
     }
 
     private String getSkuNotes() {
-        if (skuNotesField.getText() == null) {
-            return "";
-        }
-        return skuNotesField.getText();
+        return skuNotesField.getText() == null ? "" : skuNotesField.getText();
     }
 
     public void deleteMeetingEvent(ActionEvent event) {
