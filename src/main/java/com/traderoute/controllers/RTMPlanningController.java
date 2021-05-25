@@ -46,7 +46,7 @@ import static com.traderoute.controllers.RetailerSelectionController.*;
  *
  * @author Alex Alber
  */
-public class RTMPlanningController implements Initializable {
+public class RTMPlanningController implements Initializable, MyController {
 
     /**
      * All divisions except cell specific divisions should be 4.

@@ -27,6 +27,8 @@ import java.time.LocalDate;
 import java.util.Date;
 import java.util.ResourceBundle;
 
+import static com.traderoute.controllers.RetailerSelectionController.*;
+
 public class AssortmentController implements Initializable, MyController {
     @FXML
     private TableView<Meeting> meetingTable;
@@ -199,21 +201,13 @@ public class AssortmentController implements Initializable, MyController {
 
     @FXML
     private void switchToSecondTable(ActionEvent event) throws IOException {
-        FXMLLoader secondTableLoader = App.createFXMLLoader("secondTable");
-        App.setSceneRoot(secondTableLoader.load());
-
-        RTMPlanningController firstTableController = secondTableLoader.getController();
-        firstTableController.setRetailer(getRetailer());
+        switchScenes("secondTable", getRetailer());
     }
 
 
     @FXML
     private void switchToPricingPromotion(ActionEvent event) throws IOException {
-        FXMLLoader pricingPromotionLoader = App.createFXMLLoader("pricingPromotion");
-        App.setSceneRoot(pricingPromotionLoader.load());
-
-        PricingPromotionController pricingPromotionController = pricingPromotionLoader.getController();
-        pricingPromotionController.setRetailer(getRetailer());
+        switchScenes("pricingPromotion", getRetailer());
     }
 
 

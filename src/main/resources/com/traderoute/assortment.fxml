@@ -43,9 +43,9 @@
                         <Insets right="30.0" />
                      </HBox.margin>
                   </AnchorPane>
-                  <Button mnemonicParsing="false" onAction="#switchToSecondTable" text="Route-to-Market" />
+                  <Button fx:id="switchToSecondTableButton" mnemonicParsing="false" onAction="#switchToSecondTable" text="Route-to-Market" />
                   <Button mnemonicParsing="false" text="Assortment" />
-                  <Button mnemonicParsing="false" onAction="#switchToPricingPromotion" text="Pricing and Promotion" />
+                  <Button fx:id="switchToPricingPromotionButton" mnemonicParsing="false" onAction="#switchToPricingPromotion" text="Pricing and Promotion" />
                </children>
             </HBox>
             <AnchorPane prefHeight="652.0" prefWidth="1490.0">
