@@ -1,9 +1,8 @@
 package com.traderoute;
 
-import com.traderoute.cells.ParameterEditCell;
+import com.traderoute.cells.PromoRowEditCell;
 import com.traderoute.controllers.MenuController;
 import com.traderoute.controllers.PricingPromotionController;
-import com.traderoute.controllers.RTMPlanningController;
 import com.traderoute.data.*;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.ObservableList;
@@ -163,7 +162,7 @@ public class PricingPromotionControllerTest{
         robot.type(KeyCode.DIGIT0, KeyCode.PERIOD, KeyCode.DIGIT7, KeyCode.DIGIT5); //.type(.type(KeyCode.DIGIT7).type();
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
 
-        Assert.assertEquals(((Parameter)pricingPromotionTableOne.getItems().get(2)).getFebruary(),new BigDecimal("0.75"));
+        Assert.assertEquals(((PromoRow)pricingPromotionTableOne.getItems().get(2)).getFebruary(),new BigDecimal("0.75"));
 
     }
 
@@ -177,11 +176,11 @@ public class PricingPromotionControllerTest{
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
 
         // Test that all values before sku count change in july are equal to the input
-        Assertions.assertEquals(new BigDecimal("7.0"), ((Parameter)pricingPromotionTableOne.getItems().get(0)).getJune(), "Values before sku count change in july should be equal to input");
-        Assertions.assertEquals(new BigDecimal("7.0"), ((Parameter)pricingPromotionTableOne.getItems().get(0)).getFebruary(), "Values before sku count change in july should be equal to input");
+        Assertions.assertEquals(new BigDecimal("7.0"), ((PromoRow)pricingPromotionTableOne.getItems().get(0)).getJune(), "Values before sku count change in july should be equal to input");
+        Assertions.assertEquals(new BigDecimal("7.0"), ((PromoRow)pricingPromotionTableOne.getItems().get(0)).getFebruary(), "Values before sku count change in july should be equal to input");
         // Values after July should be 1 more because thats where default parameters have sku count change
-        Assertions.assertEquals(new BigDecimal("8.0"), ((Parameter)pricingPromotionTableOne.getItems().get(0)).getJuly(), "Values before sku count change in july should be equal to input");
-        Assertions.assertEquals(new BigDecimal("8.0"), ((Parameter)pricingPromotionTableOne.getItems().get(0)).getDecember(), "Values before sku count change in july should be equal to input");
+        Assertions.assertEquals(new BigDecimal("8.0"), ((PromoRow)pricingPromotionTableOne.getItems().get(0)).getJuly(), "Values before sku count change in july should be equal to input");
+        Assertions.assertEquals(new BigDecimal("8.0"), ((PromoRow)pricingPromotionTableOne.getItems().get(0)).getDecember(), "Values before sku count change in july should be equal to input");
     }
 
     @Test
@@ -192,8 +191,8 @@ public class PricingPromotionControllerTest{
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
 
         //Check to see values havent changed yet
-        Assertions.assertEquals(new BigDecimal("5.00"), ((Parameter)pricingPromotionTableOne.getItems().get(0)).getJune(), "Values before sku count change in july shouldn't have changed");
-        Assertions.assertEquals(new BigDecimal("6.00"), ((Parameter)pricingPromotionTableOne.getItems().get(0)).getJuly(), "Values after sku count change in july shouldn't have changed");
+        Assertions.assertEquals(new BigDecimal("5.00"), ((PromoRow)pricingPromotionTableOne.getItems().get(0)).getJune(), "Values before sku count change in july shouldn't have changed");
+        Assertions.assertEquals(new BigDecimal("6.00"), ((PromoRow)pricingPromotionTableOne.getItems().get(0)).getJuly(), "Values after sku count change in july shouldn't have changed");
     }
 
     @Test
@@ -204,20 +203,20 @@ public class PricingPromotionControllerTest{
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
 
         //Check to see values havent changed yet
-        Assertions.assertEquals(new BigDecimal("5.00"), ((Parameter)pricingPromotionTableOne.getItems().get(0)).getJune(), "Values before sku count change in july shouldn't have changed");
-        Assertions.assertEquals(new BigDecimal("6.00"), ((Parameter)pricingPromotionTableOne.getItems().get(0)).getJuly(), "Values after sku count change in july shouldn't have changed");
+        Assertions.assertEquals(new BigDecimal("5.00"), ((PromoRow)pricingPromotionTableOne.getItems().get(0)).getJune(), "Values before sku count change in july shouldn't have changed");
+        Assertions.assertEquals(new BigDecimal("6.00"), ((PromoRow)pricingPromotionTableOne.getItems().get(0)).getJuly(), "Values after sku count change in july shouldn't have changed");
     }
     @Test
     public void testChangingEverydayRetail(FxRobot robot) {
-        ((BigDecimalParameter) pricingPromotionTableOne.getItems().get(everydayRetailIndex)).setMonth(3, new BigDecimal("6.00"));
+        ((BigDecimalPromoRow) pricingPromotionTableOne.getItems().get(everydayRetailIndex)).setMonth(3, new BigDecimal("6.00"));
         //Check to see values havent changed yet
-        Assertions.assertEquals(new BigDecimal("3.60"), ((Parameter)pricingPromotionTableOne.getItems().get(everydayUnitCostIndex)).getMarch(), "Values before sku count change in july shouldn't have changed");
+        Assertions.assertEquals(new BigDecimal("3.60"), ((PromoRow)pricingPromotionTableOne.getItems().get(everydayUnitCostIndex)).getMarch(), "Values before sku count change in july shouldn't have changed");
         // CHECK WITH JOHN IF WE EVEN NEED TO TEST THIS
     }
 
     @Test
     public void testAddingSkuCountChangeAndConfidencePer(FxRobot robot) {
-        ParameterEditCell cell = (ParameterEditCell) cell("#pricingPromotionTableOne", 2, 5, robot);
+        PromoRowEditCell cell = (PromoRowEditCell) cell("#pricingPromotionTableOne", 2, 5, robot);
         robot.doubleClickOn(cell);
         robot.doubleClickOn(cell);
 
@@ -229,47 +228,47 @@ public class PricingPromotionControllerTest{
         robot.type(KeyCode.DIGIT5);
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
 
-        Assertions.assertEquals(new BigDecimal("5.0"), ((Parameter)pricingPromotionTableOne.getItems().get(0)).getApril(), "Values before first sku count change in july shouldn't have changed");
-        Assertions.assertEquals(new BigDecimal("7.50"), ((Parameter)pricingPromotionTableOne.getItems().get(0)).getMay(), "Values after first sku count change in july should have increased by 2.5");
-        Assertions.assertEquals(new BigDecimal("8.50"), ((Parameter)pricingPromotionTableOne.getItems().get(0)).getJuly(), "Values after first sku count change in july should have increased by 2.5");
+        Assertions.assertEquals(new BigDecimal("5.0"), ((PromoRow)pricingPromotionTableOne.getItems().get(0)).getApril(), "Values before first sku count change in july shouldn't have changed");
+        Assertions.assertEquals(new BigDecimal("7.50"), ((PromoRow)pricingPromotionTableOne.getItems().get(0)).getMay(), "Values after first sku count change in july should have increased by 2.5");
+        Assertions.assertEquals(new BigDecimal("8.50"), ((PromoRow)pricingPromotionTableOne.getItems().get(0)).getJuly(), "Values after first sku count change in july should have increased by 2.5");
     }
     @Test
     public void testPromo1UnitCostChange(FxRobot robot) {
-        ParameterEditCell promotedRetailCell = (ParameterEditCell) cell("#pricingPromotionTableOne", 10, 9, robot);
+        PromoRowEditCell promotedRetailCell = (PromoRowEditCell) cell("#pricingPromotionTableOne", 10, 9, robot);
         robot.doubleClickOn(promotedRetailCell);
         robot.doubleClickOn(promotedRetailCell);
 
         robot.type(KeyCode.DIGIT5,KeyCode.PERIOD,KeyCode.DIGIT9, KeyCode.DIGIT9);
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
 
-        ParameterEditCell requiredGpmCell = (ParameterEditCell) cell("#pricingPromotionTableOne", 11, 9, robot);
+        PromoRowEditCell requiredGpmCell = (PromoRowEditCell) cell("#pricingPromotionTableOne", 11, 9, robot);
         robot.doubleClickOn(requiredGpmCell);
         robot.doubleClickOn(requiredGpmCell);
         robot.type(KeyCode.DIGIT4, KeyCode.DIGIT0);
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
 
         //Check to see values havent changed yet
-        Assertions.assertEquals(new BigDecimal("3.594"), ((Parameter)pricingPromotionTableOne.getItems().get(15)).getSeptember(), "Promo Unit cost should have changed to 3.59");
-        Assertions.assertEquals(new BigDecimal("7.7000"), ((Parameter)pricingPromotionTableOne.getItems().get(16)).getSeptember(), "Promo Discount Percentage should have changed to 7.70");
+        Assertions.assertEquals(new BigDecimal("3.594"), ((PromoRow)pricingPromotionTableOne.getItems().get(15)).getSeptember(), "Promo Unit cost should have changed to 3.59");
+        Assertions.assertEquals(new BigDecimal("7.7000"), ((PromoRow)pricingPromotionTableOne.getItems().get(16)).getSeptember(), "Promo Discount Percentage should have changed to 7.70");
     }
     @Test
     public void testPromo2UnitCostChange(FxRobot robot) {
-        ParameterEditCell promotedRetail2Cell = (ParameterEditCell) cell("#pricingPromotionTableOne", 18, 10, robot);
+        PromoRowEditCell promotedRetail2Cell = (PromoRowEditCell) cell("#pricingPromotionTableOne", 18, 10, robot);
         robot.doubleClickOn(promotedRetail2Cell);
         robot.doubleClickOn(promotedRetail2Cell);
 
         robot.type(KeyCode.DIGIT5,KeyCode.PERIOD,KeyCode.DIGIT9, KeyCode.DIGIT9);
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
 
-        ParameterEditCell requiredGpm2Cell = (ParameterEditCell) cell("#pricingPromotionTableOne", 19, 10, robot);
+        PromoRowEditCell requiredGpm2Cell = (PromoRowEditCell) cell("#pricingPromotionTableOne", 19, 10, robot);
         robot.doubleClickOn(requiredGpm2Cell);
         robot.doubleClickOn(requiredGpm2Cell);
         robot.type(KeyCode.DIGIT4, KeyCode.DIGIT0);
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
 
         //Check to see values havent changed yet
-        Assertions.assertEquals(new BigDecimal("3.594"), ((Parameter)pricingPromotionTableOne.getItems().get(23)).getOctober(), "Promo Unit cost should have changed to 3.59");
-        Assertions.assertEquals(new BigDecimal("7.7000"), ((Parameter)pricingPromotionTableOne.getItems().get(24)).getOctober(), "Promo Discount Percentage should have changed to 7.70");
+        Assertions.assertEquals(new BigDecimal("3.594"), ((PromoRow)pricingPromotionTableOne.getItems().get(23)).getOctober(), "Promo Unit cost should have changed to 3.59");
+        Assertions.assertEquals(new BigDecimal("7.7000"), ((PromoRow)pricingPromotionTableOne.getItems().get(24)).getOctober(), "Promo Discount Percentage should have changed to 7.70");
     }
     @Test
     public void testSlottingChangesGrossProfitPlan(FxRobot robot) {
@@ -284,13 +283,13 @@ public class PricingPromotionControllerTest{
             rtmBox0.getSelectionModel().select(1);
 
         });
-        ParameterEditCell confidencePerCell = (ParameterEditCell) cell("#pricingPromotionTableOne", 2, 5, robot);
+        PromoRowEditCell confidencePerCell = (PromoRowEditCell) cell("#pricingPromotionTableOne", 2, 5, robot);
         robot.doubleClickOn(confidencePerCell);
         robot.doubleClickOn(confidencePerCell);
         robot.type(KeyCode.DIGIT5,KeyCode.DIGIT0);
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
 
-        ParameterEditCell slottingCell = (ParameterEditCell) cell("#pricingPromotionTableOne", 3, 5, robot);
+        PromoRowEditCell slottingCell = (PromoRowEditCell) cell("#pricingPromotionTableOne", 3, 5, robot);
         robot.doubleClickOn(slottingCell);
         robot.doubleClickOn(slottingCell);
         robot.type(KeyCode.DIGIT5,KeyCode.DIGIT0, KeyCode.DIGIT0,KeyCode.DIGIT0);
@@ -298,28 +297,28 @@ public class PricingPromotionControllerTest{
 
 
 
-        Assertions.assertEquals(new BigDecimal("-317"), ((Parameter)pricingPromotionTableOne.getItems().get(26)).getMay(), "Gross Profit Plan should have changed to -317");
+        Assertions.assertEquals(new BigDecimal("-317"), ((PromoRow)pricingPromotionTableOne.getItems().get(26)).getMay(), "Gross Profit Plan should have changed to -317");
     }
     @Test
     public void testChangingStoreCount(FxRobot robot){
-        Assertions.assertEquals(158, ((Parameter)pricingPromotionTableOne.getItems().get(storeCountIndex)).getMay(), "Store Count should be 158 initially");
+        Assertions.assertEquals(158, ((PromoRow)pricingPromotionTableOne.getItems().get(storeCountIndex)).getMay(), "Store Count should be 158 initially");
 
-        ParameterEditCell confidencePerCell = (ParameterEditCell) cell("#pricingPromotionTableOne", storeCountIndex, 5, robot);
+        PromoRowEditCell confidencePerCell = (PromoRowEditCell) cell("#pricingPromotionTableOne", storeCountIndex, 5, robot);
         robot.doubleClickOn(confidencePerCell);
         robot.doubleClickOn(confidencePerCell);
         robot.type(KeyCode.DIGIT5,KeyCode.DIGIT0);
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
-        Assertions.assertEquals(50, ((Parameter)pricingPromotionTableOne.getItems().get(storeCountIndex)).getMay(), "Store Count should now be 50 all the way to december");
-        Assertions.assertEquals(50, ((Parameter)pricingPromotionTableOne.getItems().get(storeCountIndex)).getDecember(), "Store Count should now be 50 all the way to december");
+        Assertions.assertEquals(50, ((PromoRow)pricingPromotionTableOne.getItems().get(storeCountIndex)).getMay(), "Store Count should now be 50 all the way to december");
+        Assertions.assertEquals(50, ((PromoRow)pricingPromotionTableOne.getItems().get(storeCountIndex)).getDecember(), "Store Count should now be 50 all the way to december");
 
-        ParameterEditCell slottingCell = (ParameterEditCell) cell("#pricingPromotionTableOne", storeCountIndex, 7, robot);
+        PromoRowEditCell slottingCell = (PromoRowEditCell) cell("#pricingPromotionTableOne", storeCountIndex, 7, robot);
         robot.doubleClickOn(slottingCell);
         robot.doubleClickOn(slottingCell);
         robot.type(KeyCode.DIGIT5,KeyCode.DIGIT0, KeyCode.DIGIT0,KeyCode.DIGIT0);
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
-        Assertions.assertEquals(50, ((Parameter)pricingPromotionTableOne.getItems().get(storeCountIndex)).getMay(), "Store Count should still be 50 here");
-        Assertions.assertEquals(5000, ((Parameter)pricingPromotionTableOne.getItems().get(storeCountIndex)).getJuly(), "Store Count should be 5000 here");
-        Assertions.assertEquals(5000, ((Parameter)pricingPromotionTableOne.getItems().get(storeCountIndex)).getDecember(), "Store Count should be 5000 all the way to december");
+        Assertions.assertEquals(50, ((PromoRow)pricingPromotionTableOne.getItems().get(storeCountIndex)).getMay(), "Store Count should still be 50 here");
+        Assertions.assertEquals(5000, ((PromoRow)pricingPromotionTableOne.getItems().get(storeCountIndex)).getJuly(), "Store Count should be 5000 here");
+        Assertions.assertEquals(5000, ((PromoRow)pricingPromotionTableOne.getItems().get(storeCountIndex)).getDecember(), "Store Count should be 5000 all the way to december");
     }
     @Test
     public void testGetSlottingGameTheoryd(){

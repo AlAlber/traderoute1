@@ -2,9 +2,8 @@
 package com.traderoute.cells;
 
 import com.traderoute.DoubleInputConverter;
-import com.traderoute.data.Parameter;
+import com.traderoute.data.PromoRow;
 import com.traderoute.data.PromoPlan;
-import com.traderoute.controllers.RTMPlanningController;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.Event;
@@ -14,12 +13,12 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.regex.Pattern;
 
-public class ParameterEditCell extends TableCell<Parameter<?>, Object> {
+public class PromoRowEditCell extends TableCell<PromoRow<?>, Object> {
     private TextField textField;
     private final Pattern intPattern = Pattern.compile("-?\\d+");
     private final Pattern bigDecimalPattern = Pattern.compile("-?(([1-9][0-9]*)|0)?(\\.[0-9]*)?");
 
-    public ParameterEditCell() {
+    public PromoRowEditCell() {
 
     }
 
@@ -34,21 +33,21 @@ public class ParameterEditCell extends TableCell<Parameter<?>, Object> {
             if (getTableRow().getIndex() == 5 || getTableRow().getIndex() == 8) {
                 return; // bail on empty rows
             }
-            TableColumn<Parameter<?>, ?> column = getTableColumn();
+            TableColumn<PromoRow<?>, ?> column = getTableColumn();
             int colIndex = getTableView().getColumns().indexOf(column); // BAIL for first line when getting past first
                                                                         // value
             if (getTableRow().getIndex() == 0 && colIndex > 1) {
                 return;
             }
             createTextField();
-            Parameter<?> param = getTableRow().getItem();
-            if (!param.isEditable()) {
+            PromoRow<?> promoRow = getTableRow().getItem();
+            if (!promoRow.isEditable()) {
                 return;
             }
-            if (param.getJanuary() instanceof BigDecimal) {
+            if (promoRow.getJanuary() instanceof BigDecimal) {
                 textField.setTextFormatter(new TextFormatter(new DoubleInputConverter(),
                         Double.valueOf(textField.getText()), DoubleInputConverter.getFilter()));
-            } else if (param.getJanuary() instanceof Integer) {
+            } else if (promoRow.getJanuary() instanceof Integer) {
                 textField.textProperty().addListener(new ChangeListener<String>() {
                     private boolean changing;
 
@@ -82,11 +81,11 @@ public class ParameterEditCell extends TableCell<Parameter<?>, Object> {
         if (getTableRow().getIndex() == 5 || getTableRow().getIndex() == 8) {
             return;
         }
-        Parameter<?> param = getTableRow().getItem();
-        if (param.getPre().equals("%")) { // If i dont do this it removes the pre
-            setText(getItem().toString() + param.getPre());
+        PromoRow<?> promoRow = getTableRow().getItem();
+        if (promoRow.getPre().equals("%")) { // If i dont do this it removes the pre
+            setText(getItem().toString() + promoRow.getPre());
         } else {
-            setText(param.getPre() + getItem().toString());
+            setText(promoRow.getPre() + getItem().toString());
         }
         setGraphic(null);
     }
@@ -104,7 +103,7 @@ public class ParameterEditCell extends TableCell<Parameter<?>, Object> {
         if (getTableRow().getIndex() == 5 || getTableRow().getIndex() == 8) {
             return;
         }
-        Parameter<?> param = getTableRow().getItem();
+        PromoRow<?> promoRow = getTableRow().getItem();
         if (empty) {
             setText(null);
             setGraphic(null);
@@ -122,15 +121,15 @@ public class ParameterEditCell extends TableCell<Parameter<?>, Object> {
                         setItem(0);
                     }
                 }
-                if (param.getPre().equals("%")) {
-                    setText(getString() + param.getPre());
-                    setTooltip(new Tooltip(getString() + param.getPre()));
+                if (promoRow.getPre().equals("%")) {
+                    setText(getString() + promoRow.getPre());
+                    setTooltip(new Tooltip(getString() + promoRow.getPre()));
                 } else {
-                    setText(param.getPre() + getString());
-                    setTooltip(new Tooltip(param.getPre() + getString()));
+                    setText(promoRow.getPre() + getString());
+                    setTooltip(new Tooltip(promoRow.getPre() + getString()));
                 }
                 setGraphic(null);
-                if (param.getJanuary() instanceof String) {
+                if (promoRow.getJanuary() instanceof String) {
                     if (item.equals("")) {
                         setStyle("-fx-background-color:  transparent");
                         setPrefHeight(40); // CAUSING BUG: SEASONALITY INDICE GETS 40 WIDTH OUTTA NOWHERE
@@ -139,11 +138,11 @@ public class ParameterEditCell extends TableCell<Parameter<?>, Object> {
                                 + "    -fx-background-insets: 0, 0 0 1 0;");
                     }
                 }
-                if (param.getJanuary() instanceof Number) {
+                if (promoRow.getJanuary() instanceof Number) {
                     int comparator = new BigDecimal(item.toString()).compareTo(new BigDecimal("0.0"));
-                    if (param.getName().startsWith("Total Volume")) {
+                    if (promoRow.getName().startsWith("Total Volume")) {
                         setStyle("-fx-text-fill: #A79543;");
-                    } else if (param.getName().startsWith("Gross Profit")) {
+                    } else if (promoRow.getName().startsWith("Gross Profit")) {
                         if (comparator >= 0) {
                             setStyle("-fx-text-fill: green;");
                         } else {
@@ -178,14 +177,14 @@ public class ParameterEditCell extends TableCell<Parameter<?>, Object> {
 
     private void processEdit() {
         String text = textField.getText();
-        Parameter<?> param = getTableRow().getItem();
-        if (param.getJanuary() instanceof Integer) {
+        PromoRow<?> promoRow = getTableRow().getItem();
+        if (promoRow.getJanuary() instanceof Integer) {
             if (text.equals("")) {
                 commitEdit(0);
             } else {
                 commitEdit(Integer.parseInt(text));
             }
-        } else if (param.getJanuary() instanceof BigDecimal) {
+        } else if (promoRow.getJanuary() instanceof BigDecimal) {
             commitEdit(new BigDecimal(text));
         } else {
             commitEdit(text);
@@ -206,11 +205,11 @@ public class ParameterEditCell extends TableCell<Parameter<?>, Object> {
         // intercept the loss of focus. The default commitEdit(...) method
         // simply bails if we are not editing...
         if (!isEditing() && !item.equals(getItem())) {
-            TableView<Parameter<?>> table = getTableView();
+            TableView<PromoRow<?>> table = getTableView();
             if (table != null) {
-                TableColumn<Parameter<?>, Object> column = getTableColumn();
-                TableColumn.CellEditEvent<Parameter<?>, Object> event = new TableColumn.CellEditEvent<>(table,
-                        new TablePosition<Parameter<?>, Object>(table, getIndex(), column),
+                TableColumn<PromoRow<?>, Object> column = getTableColumn();
+                TableColumn.CellEditEvent<PromoRow<?>, Object> event = new TableColumn.CellEditEvent<>(table,
+                        new TablePosition<PromoRow<?>, Object>(table, getIndex(), column),
                         TableColumn.editCommitEvent(), item);
                 Event.fireEvent(column, event);
             }

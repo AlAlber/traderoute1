@@ -216,7 +216,7 @@ public class RTMOption {
         return calcGrossRevenueList().subtract(calcFobDiscount());
     }
 
-    public BigDecimal calcSpoilsTrade() { // retest // Put spoils+fees field value in parameter
+    public BigDecimal calcSpoilsTrade() { // retest // Put spoils+fees field value in promoRow
         return calcGrossRevenueActual().multiply(getSpoilsAndFees());
     }
 

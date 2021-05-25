@@ -1,19 +1,18 @@
 package com.traderoute.cells;
 
-import com.traderoute.data.Parameter;
-import com.traderoute.data.PromoPlan;
+import com.traderoute.data.PromoRow;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.Tooltip;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-public class ParameterNonEditCell extends TableCell<Parameter<?>, Object> {
+public class PromoRowNonEditCell extends TableCell<PromoRow<?>, Object> {
     @Override
     public void updateItem(Object item, boolean empty) {
 
         super.updateItem(item, empty);
-        Parameter<?> param = getTableRow().getItem();
+        PromoRow<?> promoRow = getTableRow().getItem();
         if (empty || item == null) {
             setText("");
             setGraphic(null);
@@ -31,12 +30,12 @@ public class ParameterNonEditCell extends TableCell<Parameter<?>, Object> {
                 itemString = (String) item;
             }
 
-            if (param.getPre().equals("%")) {
-                setText(itemString + param.getPre());
-                setTooltip(new Tooltip(itemString + param.getPre()));
+            if (promoRow.getPre().equals("%")) {
+                setText(itemString + promoRow.getPre());
+                setTooltip(new Tooltip(itemString + promoRow.getPre()));
             } else {
-                setText(param.getPre() + itemString);
-                setTooltip(new Tooltip(param.getPre() + itemString));
+                setText(promoRow.getPre() + itemString);
+                setTooltip(new Tooltip(promoRow.getPre() + itemString));
             }
             // if (param.getJanuary() instanceof String) {
             // if (item.equals("")) {

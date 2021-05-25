@@ -1,17 +1,15 @@
 package com.traderoute.data;
 
-import com.traderoute.data.Parameter;
+public class StringPromoRow extends PromoRow<String> {
 
-public class StringParameter extends Parameter<String> {
-
-    public StringParameter(String name, String pre, String january, String february, String march, String april,
-            String may, String june, String july, String august, String september, String october, String november,
-            String december) {
+    public StringPromoRow(String name, String pre, String january, String february, String march, String april,
+                          String may, String june, String july, String august, String september, String october, String november,
+                          String december) {
         super(name, pre, january, february, march, april, may, june, july, august, september, october, november,
                 december);
     }
 
-    public StringParameter(String name, String pre) {
+    public StringPromoRow(String name, String pre) {
         super(name, pre);
     }
 

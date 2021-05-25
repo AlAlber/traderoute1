@@ -1,9 +1,8 @@
 package com.traderoute.data;
 
 import javafx.beans.property.*;
-import javafx.scene.control.TextField;
 
-public abstract class Parameter<Object> {
+public abstract class PromoRow<Object> {
     private final BooleanProperty editable = new SimpleBooleanProperty();
     public ObjectProperty<Object> total = new SimpleObjectProperty<>();
     public ObjectProperty<Object> january = new SimpleObjectProperty<>();
@@ -21,9 +20,9 @@ public abstract class Parameter<Object> {
     public String pre;
     public SimpleStringProperty name;
 
-    public Parameter(String name, String pre, Object january, Object february, Object march, Object april, Object may,
-            Object june, Object july, Object august, Object september, Object october, Object november, Object december,
-            boolean editable) {
+    public PromoRow(String name, String pre, Object january, Object february, Object march, Object april, Object may,
+                    Object june, Object july, Object august, Object september, Object october, Object november, Object december,
+                    boolean editable) {
         this.name = new SimpleStringProperty(name);
         this.pre = pre;
 
@@ -42,9 +41,9 @@ public abstract class Parameter<Object> {
         setEditable(editable);
     }
 
-    public Parameter(String name, String pre, Object total, Object january, Object february, Object march, Object april,
-            Object may, Object june, Object july, Object august, Object september, Object october, Object november,
-            Object december, boolean editable) {
+    public PromoRow(String name, String pre, Object total, Object january, Object february, Object march, Object april,
+                    Object may, Object june, Object july, Object august, Object september, Object october, Object november,
+                    Object december, boolean editable) {
         this.name = new SimpleStringProperty(name);
         this.pre = pre;
 
@@ -77,20 +76,20 @@ public abstract class Parameter<Object> {
         this.pre = pre;
     }
 
-    public Parameter() {
+    public PromoRow() {
         this.name = new SimpleStringProperty("");
         this.pre = "";
         setEditable(false);
     }
 
-    public Parameter(String name, String pre, Object january, Object february, Object march, Object april, Object may,
-            Object june, Object july, Object august, Object september, Object october, Object november,
-            Object december) {
+    public PromoRow(String name, String pre, Object january, Object february, Object march, Object april, Object may,
+                    Object june, Object july, Object august, Object september, Object october, Object november,
+                    Object december) {
         this(name, pre, january, february, march, april, may, june, july, august, september, october, november,
                 december, true);
     }
 
-    public Parameter(String name, String pre) {
+    public PromoRow(String name, String pre) {
         this.name = new SimpleStringProperty(name);
         this.pre = pre;
         this.january = new SimpleObjectProperty<>();

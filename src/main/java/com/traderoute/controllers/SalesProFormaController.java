@@ -2,7 +2,7 @@ package com.traderoute.controllers;
 
 import com.traderoute.App;
 import com.traderoute.cells.CustomTextCell;
-import com.traderoute.cells.ParameterNonEditCell;
+import com.traderoute.cells.PromoRowNonEditCell;
 import com.traderoute.data.*;
 import javafx.application.HostServices;
 import javafx.beans.value.ObservableValue;
@@ -43,229 +43,229 @@ import java.util.logging.Logger;
 public class SalesProFormaController implements Initializable {
 
     @FXML
-    private TableView<Parameter<?>> p1Table;
+    private TableView<PromoRow<?>> p1Table;
 
     @FXML
-    private TableColumn<Parameter<?>, String> p1ParameterNameColumn;
+    private TableColumn<PromoRow<?>, String> p1PromoRowNameColumn;
 
     @FXML
-    private TableColumn<Parameter<?>, Object> p1TotalsColumn;
+    private TableColumn<PromoRow<?>, Object> p1TotalsColumn;
 
     @FXML
-    private TableColumn<Parameter<?>, Object> p1JanuaryColumn;
+    private TableColumn<PromoRow<?>, Object> p1JanuaryColumn;
 
     @FXML
-    private TableColumn<Parameter<?>, Object> p1FebruaryColumn;
+    private TableColumn<PromoRow<?>, Object> p1FebruaryColumn;
 
     @FXML
-    private TableColumn<Parameter<?>, Object> p1MarchColumn;
+    private TableColumn<PromoRow<?>, Object> p1MarchColumn;
 
     @FXML
-    private TableColumn<Parameter<?>, Object> p1AprilColumn;
+    private TableColumn<PromoRow<?>, Object> p1AprilColumn;
 
     @FXML
-    private TableColumn<Parameter<?>, Object> p1MayColumn;
+    private TableColumn<PromoRow<?>, Object> p1MayColumn;
 
     @FXML
-    private TableColumn<Parameter<?>, Object> p1JuneColumn;
+    private TableColumn<PromoRow<?>, Object> p1JuneColumn;
 
     @FXML
-    private TableColumn<Parameter<?>, Object> p1JulyColumn;
+    private TableColumn<PromoRow<?>, Object> p1JulyColumn;
 
     @FXML
-    private TableColumn<Parameter<?>, Object> p1AugustColumn;
+    private TableColumn<PromoRow<?>, Object> p1AugustColumn;
 
     @FXML
-    private TableColumn<Parameter<?>, Object> p1SeptemberColumn;
+    private TableColumn<PromoRow<?>, Object> p1SeptemberColumn;
 
     @FXML
-    private TableColumn<Parameter<?>, Object> p1OctoberColumn;
+    private TableColumn<PromoRow<?>, Object> p1OctoberColumn;
 
     @FXML
-    private TableColumn<Parameter<?>, Object> p1NovemberColumn;
+    private TableColumn<PromoRow<?>, Object> p1NovemberColumn;
 
     @FXML
-    private TableColumn<Parameter<?>, Object> p1DecemberColumn;
+    private TableColumn<PromoRow<?>, Object> p1DecemberColumn;
 
     @FXML
-    private TableView<Parameter<?>> p2Table;
+    private TableView<PromoRow<?>> p2Table;
 
     @FXML
-    private TableColumn<Parameter<?>, String> p2ParameterNameColumn;
+    private TableColumn<PromoRow<?>, String> p2PromoRowNameColumn;
 
     @FXML
-    private TableColumn<Parameter<?>, Object> p2TotalsColumn;
+    private TableColumn<PromoRow<?>, Object> p2TotalsColumn;
 
     @FXML
-    private TableColumn<Parameter<?>, Object> p2JanuaryColumn;
+    private TableColumn<PromoRow<?>, Object> p2JanuaryColumn;
 
     @FXML
-    private TableColumn<Parameter<?>, Object> p2FebruaryColumn;
+    private TableColumn<PromoRow<?>, Object> p2FebruaryColumn;
 
     @FXML
-    private TableColumn<Parameter<?>, Object> p2MarchColumn;
+    private TableColumn<PromoRow<?>, Object> p2MarchColumn;
 
     @FXML
-    private TableColumn<Parameter<?>, Object> p2AprilColumn;
+    private TableColumn<PromoRow<?>, Object> p2AprilColumn;
 
     @FXML
-    private TableColumn<Parameter<?>, Object> p2MayColumn;
+    private TableColumn<PromoRow<?>, Object> p2MayColumn;
 
     @FXML
-    private TableColumn<Parameter<?>, Object> p2JuneColumn;
+    private TableColumn<PromoRow<?>, Object> p2JuneColumn;
 
     @FXML
-    private TableColumn<Parameter<?>, Object> p2JulyColumn;
+    private TableColumn<PromoRow<?>, Object> p2JulyColumn;
 
     @FXML
-    private TableColumn<Parameter<?>, Object> p2AugustColumn;
+    private TableColumn<PromoRow<?>, Object> p2AugustColumn;
 
     @FXML
-    private TableColumn<Parameter<?>, Object> p2SeptemberColumn;
+    private TableColumn<PromoRow<?>, Object> p2SeptemberColumn;
 
     @FXML
-    private TableColumn<Parameter<?>, Object> p2OctoberColumn;
+    private TableColumn<PromoRow<?>, Object> p2OctoberColumn;
 
     @FXML
-    private TableColumn<Parameter<?>, Object> p2NovemberColumn;
+    private TableColumn<PromoRow<?>, Object> p2NovemberColumn;
 
     @FXML
-    private TableColumn<Parameter<?>, Object> p2DecemberColumn;
+    private TableColumn<PromoRow<?>, Object> p2DecemberColumn;
 
     @FXML
-    private TableView<Parameter<?>> p3Table;
+    private TableView<PromoRow<?>> p3Table;
 
     @FXML
-    private TableColumn<Parameter<?>, String> p3ParameterNameColumn;
+    private TableColumn<PromoRow<?>, String> p3PromoRowNameColumn;
 
     @FXML
-    private TableColumn<Parameter<?>, Object> p3TotalsColumn;
+    private TableColumn<PromoRow<?>, Object> p3TotalsColumn;
 
     @FXML
-    private TableColumn<Parameter<?>, Object> p3JanuaryColumn;
+    private TableColumn<PromoRow<?>, Object> p3JanuaryColumn;
 
     @FXML
-    private TableColumn<Parameter<?>, Object> p3FebruaryColumn;
+    private TableColumn<PromoRow<?>, Object> p3FebruaryColumn;
 
     @FXML
-    private TableColumn<Parameter<?>, Object> p3MarchColumn;
+    private TableColumn<PromoRow<?>, Object> p3MarchColumn;
 
     @FXML
-    private TableColumn<Parameter<?>, Object> p3AprilColumn;
+    private TableColumn<PromoRow<?>, Object> p3AprilColumn;
 
     @FXML
-    private TableColumn<Parameter<?>, Object> p3MayColumn;
+    private TableColumn<PromoRow<?>, Object> p3MayColumn;
 
     @FXML
-    private TableColumn<Parameter<?>, Object> p3JuneColumn;
+    private TableColumn<PromoRow<?>, Object> p3JuneColumn;
 
     @FXML
-    private TableColumn<Parameter<?>, Object> p3JulyColumn;
+    private TableColumn<PromoRow<?>, Object> p3JulyColumn;
 
     @FXML
-    private TableColumn<Parameter<?>, Object> p3AugustColumn;
+    private TableColumn<PromoRow<?>, Object> p3AugustColumn;
 
     @FXML
-    private TableColumn<Parameter<?>, Object> p3SeptemberColumn;
+    private TableColumn<PromoRow<?>, Object> p3SeptemberColumn;
 
     @FXML
-    private TableColumn<Parameter<?>, Object> p3OctoberColumn;
+    private TableColumn<PromoRow<?>, Object> p3OctoberColumn;
 
     @FXML
-    private TableColumn<Parameter<?>, Object> p3NovemberColumn;
+    private TableColumn<PromoRow<?>, Object> p3NovemberColumn;
 
     @FXML
-    private TableColumn<Parameter<?>, Object> p3DecemberColumn;
+    private TableColumn<PromoRow<?>, Object> p3DecemberColumn;
 
     @FXML
-    private TableView<Parameter<?>> p4Table;
+    private TableView<PromoRow<?>> p4Table;
 
     @FXML
-    private TableColumn<Parameter<?>, String> p4ParameterNameColumn;
+    private TableColumn<PromoRow<?>, String> p4PromoRowNameColumn;
 
     @FXML
-    private TableColumn<Parameter<?>, Object> p4TotalsColumn;
+    private TableColumn<PromoRow<?>, Object> p4TotalsColumn;
 
     @FXML
-    private TableColumn<Parameter<?>, Object> p4JanuaryColumn;
+    private TableColumn<PromoRow<?>, Object> p4JanuaryColumn;
 
     @FXML
-    private TableColumn<Parameter<?>, Object> p4FebruaryColumn;
+    private TableColumn<PromoRow<?>, Object> p4FebruaryColumn;
 
     @FXML
-    private TableColumn<Parameter<?>, Object> p4MarchColumn;
+    private TableColumn<PromoRow<?>, Object> p4MarchColumn;
 
     @FXML
-    private TableColumn<Parameter<?>, Object> p4AprilColumn;
+    private TableColumn<PromoRow<?>, Object> p4AprilColumn;
 
     @FXML
-    private TableColumn<Parameter<?>, Object> p4MayColumn;
+    private TableColumn<PromoRow<?>, Object> p4MayColumn;
 
     @FXML
-    private TableColumn<Parameter<?>, Object> p4JuneColumn;
+    private TableColumn<PromoRow<?>, Object> p4JuneColumn;
 
     @FXML
-    private TableColumn<Parameter<?>, Object> p4JulyColumn;
+    private TableColumn<PromoRow<?>, Object> p4JulyColumn;
 
     @FXML
-    private TableColumn<Parameter<?>, Object> p4AugustColumn;
+    private TableColumn<PromoRow<?>, Object> p4AugustColumn;
 
     @FXML
-    private TableColumn<Parameter<?>, Object> p4SeptemberColumn;
+    private TableColumn<PromoRow<?>, Object> p4SeptemberColumn;
 
     @FXML
-    private TableColumn<Parameter<?>, Object> p4OctoberColumn;
+    private TableColumn<PromoRow<?>, Object> p4OctoberColumn;
 
     @FXML
-    private TableColumn<Parameter<?>, Object> p4NovemberColumn;
+    private TableColumn<PromoRow<?>, Object> p4NovemberColumn;
 
     @FXML
-    private TableColumn<Parameter<?>, Object> p4DecemberColumn;
+    private TableColumn<PromoRow<?>, Object> p4DecemberColumn;
 
     @FXML
-    private TableView<Parameter<?>> p5Table;
+    private TableView<PromoRow<?>> p5Table;
 
     @FXML
-    private TableColumn<Parameter<?>, String> p5ParameterNameColumn;
+    private TableColumn<PromoRow<?>, String> p5PromoRowNameColumn;
 
     @FXML
-    private TableColumn<Parameter<?>, Object> p5TotalsColumn;
+    private TableColumn<PromoRow<?>, Object> p5TotalsColumn;
 
     @FXML
-    private TableColumn<Parameter<?>, Object> p5JanuaryColumn;
+    private TableColumn<PromoRow<?>, Object> p5JanuaryColumn;
 
     @FXML
-    private TableColumn<Parameter<?>, Object> p5FebruaryColumn;
+    private TableColumn<PromoRow<?>, Object> p5FebruaryColumn;
 
     @FXML
-    private TableColumn<Parameter<?>, Object> p5MarchColumn;
+    private TableColumn<PromoRow<?>, Object> p5MarchColumn;
 
     @FXML
-    private TableColumn<Parameter<?>, Object> p5AprilColumn;
+    private TableColumn<PromoRow<?>, Object> p5AprilColumn;
 
     @FXML
-    private TableColumn<Parameter<?>, Object> p5MayColumn;
+    private TableColumn<PromoRow<?>, Object> p5MayColumn;
 
     @FXML
-    private TableColumn<Parameter<?>, Object> p5JuneColumn;
+    private TableColumn<PromoRow<?>, Object> p5JuneColumn;
 
     @FXML
-    private TableColumn<Parameter<?>, Object> p5JulyColumn;
+    private TableColumn<PromoRow<?>, Object> p5JulyColumn;
 
     @FXML
-    private TableColumn<Parameter<?>, Object> p5AugustColumn;
+    private TableColumn<PromoRow<?>, Object> p5AugustColumn;
 
     @FXML
-    private TableColumn<Parameter<?>, Object> p5SeptemberColumn;
+    private TableColumn<PromoRow<?>, Object> p5SeptemberColumn;
 
     @FXML
-    private TableColumn<Parameter<?>, Object> p5OctoberColumn;
+    private TableColumn<PromoRow<?>, Object> p5OctoberColumn;
 
     @FXML
-    private TableColumn<Parameter<?>, Object> p5NovemberColumn;
+    private TableColumn<PromoRow<?>, Object> p5NovemberColumn;
 
     @FXML
-    private TableColumn<Parameter<?>, Object> p5DecemberColumn;
+    private TableColumn<PromoRow<?>, Object> p5DecemberColumn;
 
     @FXML
     private Button pdfButton;
@@ -283,93 +283,93 @@ public class SalesProFormaController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        p1Table.setItems(getp1NameParameters());
-        p2Table.setItems(getp2NameParameters());
-        p3Table.setItems(getp3NameParameters());
-        p4Table.setItems(getp4NameParameters());
-        p5Table.setItems(getp5NameParameters());
+        p1Table.setItems(getp1NamePromoRows());
+        p2Table.setItems(getp2NamePromoRows());
+        p3Table.setItems(getp3NamePromoRows());
+        p4Table.setItems(getp4NamePromoRows());
+        p5Table.setItems(getp5NamePromoRows());
 
-        ObservableList<TableColumn<Parameter<?>, String>> nameColumns = FXCollections.observableArrayList(
-                p1ParameterNameColumn, p2ParameterNameColumn, p3ParameterNameColumn, p4ParameterNameColumn,
-                p5ParameterNameColumn);
-        ObservableList<TableColumn<Parameter<?>, Object>> totalColumns = FXCollections
+        ObservableList<TableColumn<PromoRow<?>, String>> nameColumns = FXCollections.observableArrayList(
+                p1PromoRowNameColumn, p2PromoRowNameColumn, p3PromoRowNameColumn, p4PromoRowNameColumn,
+                p5PromoRowNameColumn);
+        ObservableList<TableColumn<PromoRow<?>, Object>> totalColumns = FXCollections
                 .observableArrayList(p1TotalsColumn, p2TotalsColumn, p3TotalsColumn, p4TotalsColumn, p5TotalsColumn);
-        ObservableList<TableColumn<Parameter<?>, Object>> januaryColumns = FXCollections.observableArrayList(
+        ObservableList<TableColumn<PromoRow<?>, Object>> januaryColumns = FXCollections.observableArrayList(
                 p1JanuaryColumn, p2JanuaryColumn, p3JanuaryColumn, p4JanuaryColumn, p5JanuaryColumn);
-        ObservableList<TableColumn<Parameter<?>, Object>> februaryColumns = FXCollections.observableArrayList(
+        ObservableList<TableColumn<PromoRow<?>, Object>> februaryColumns = FXCollections.observableArrayList(
                 p1FebruaryColumn, p2FebruaryColumn, p3FebruaryColumn, p4FebruaryColumn, p5FebruaryColumn);
-        ObservableList<TableColumn<Parameter<?>, Object>> marchColumns = FXCollections
+        ObservableList<TableColumn<PromoRow<?>, Object>> marchColumns = FXCollections
                 .observableArrayList(p1MarchColumn, p2MarchColumn, p3MarchColumn, p4MarchColumn, p5MarchColumn);
-        ObservableList<TableColumn<Parameter<?>, Object>> aprilColumns = FXCollections
+        ObservableList<TableColumn<PromoRow<?>, Object>> aprilColumns = FXCollections
                 .observableArrayList(p1AprilColumn, p2AprilColumn, p3AprilColumn, p4AprilColumn, p5AprilColumn);
-        ObservableList<TableColumn<Parameter<?>, Object>> mayColumns = FXCollections.observableArrayList(p1MayColumn,
+        ObservableList<TableColumn<PromoRow<?>, Object>> mayColumns = FXCollections.observableArrayList(p1MayColumn,
                 p2MayColumn, p3MayColumn, p4MayColumn, p5MayColumn);
-        ObservableList<TableColumn<Parameter<?>, Object>> juneColumns = FXCollections.observableArrayList(p1JuneColumn,
+        ObservableList<TableColumn<PromoRow<?>, Object>> juneColumns = FXCollections.observableArrayList(p1JuneColumn,
                 p2JuneColumn, p3JuneColumn, p4JuneColumn, p5JuneColumn);
-        ObservableList<TableColumn<Parameter<?>, Object>> julyColumns = FXCollections.observableArrayList(p1JulyColumn,
+        ObservableList<TableColumn<PromoRow<?>, Object>> julyColumns = FXCollections.observableArrayList(p1JulyColumn,
                 p2JulyColumn, p3JulyColumn, p4JulyColumn, p5JulyColumn);
-        ObservableList<TableColumn<Parameter<?>, Object>> augustColumns = FXCollections
+        ObservableList<TableColumn<PromoRow<?>, Object>> augustColumns = FXCollections
                 .observableArrayList(p1AugustColumn, p2AugustColumn, p3AugustColumn, p4AugustColumn, p5AugustColumn);
-        ObservableList<TableColumn<Parameter<?>, Object>> septemberColumns = FXCollections.observableArrayList(
+        ObservableList<TableColumn<PromoRow<?>, Object>> septemberColumns = FXCollections.observableArrayList(
                 p1SeptemberColumn, p2SeptemberColumn, p3SeptemberColumn, p4SeptemberColumn, p5SeptemberColumn);
-        ObservableList<TableColumn<Parameter<?>, Object>> octoberColumns = FXCollections.observableArrayList(
+        ObservableList<TableColumn<PromoRow<?>, Object>> octoberColumns = FXCollections.observableArrayList(
                 p1OctoberColumn, p2OctoberColumn, p3OctoberColumn, p4OctoberColumn, p5OctoberColumn);
-        ObservableList<TableColumn<Parameter<?>, Object>> novemberColumns = FXCollections.observableArrayList(
+        ObservableList<TableColumn<PromoRow<?>, Object>> novemberColumns = FXCollections.observableArrayList(
                 p1NovemberColumn, p2NovemberColumn, p3NovemberColumn, p4NovemberColumn, p5NovemberColumn);
-        ObservableList<TableColumn<Parameter<?>, Object>> decemberColumns = FXCollections.observableArrayList(
+        ObservableList<TableColumn<PromoRow<?>, Object>> decemberColumns = FXCollections.observableArrayList(
                 p1DecemberColumn, p2DecemberColumn, p3DecemberColumn, p4DecemberColumn, p5DecemberColumn);
 
-        ObservableList<ObservableList<TableColumn<Parameter<?>, Object>>> numberColumns = FXCollections
+        ObservableList<ObservableList<TableColumn<PromoRow<?>, Object>>> numberColumns = FXCollections
                 .observableArrayList(totalColumns, januaryColumns, februaryColumns, marchColumns, aprilColumns,
                         mayColumns, juneColumns, julyColumns, augustColumns, septemberColumns, octoberColumns,
                         novemberColumns, decemberColumns);
 
-        for (TableColumn<Parameter<?>, String> column : nameColumns) {
+        for (TableColumn<PromoRow<?>, String> column : nameColumns) {
             column.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
             column.setCellFactory(tc -> new CustomTextCell<>());
         }
-        for (TableColumn<Parameter<?>, Object> column : totalColumns) {
+        for (TableColumn<PromoRow<?>, Object> column : totalColumns) {
             column.setCellValueFactory(cellData -> (ObservableValue<Object>) cellData.getValue().totalProperty());
         }
-        for (TableColumn<Parameter<?>, Object> column : januaryColumns) {
+        for (TableColumn<PromoRow<?>, Object> column : januaryColumns) {
             column.setCellValueFactory(cellData -> (ObservableValue<Object>) cellData.getValue().januaryProperty());
         }
-        for (TableColumn<Parameter<?>, Object> column : februaryColumns) {
+        for (TableColumn<PromoRow<?>, Object> column : februaryColumns) {
             column.setCellValueFactory(cellData -> (ObservableValue<Object>) cellData.getValue().februaryProperty());
         }
-        for (TableColumn<Parameter<?>, Object> column : marchColumns) {
+        for (TableColumn<PromoRow<?>, Object> column : marchColumns) {
             column.setCellValueFactory(cellData -> (ObservableValue<Object>) cellData.getValue().marchProperty());
         }
-        for (TableColumn<Parameter<?>, Object> column : aprilColumns) {
+        for (TableColumn<PromoRow<?>, Object> column : aprilColumns) {
             column.setCellValueFactory(cellData -> (ObservableValue<Object>) cellData.getValue().aprilProperty());
         }
-        for (TableColumn<Parameter<?>, Object> column : mayColumns) {
+        for (TableColumn<PromoRow<?>, Object> column : mayColumns) {
             column.setCellValueFactory(cellData -> (ObservableValue<Object>) cellData.getValue().mayProperty());
         }
-        for (TableColumn<Parameter<?>, Object> column : juneColumns) {
+        for (TableColumn<PromoRow<?>, Object> column : juneColumns) {
             column.setCellValueFactory(cellData -> (ObservableValue<Object>) cellData.getValue().juneProperty());
         }
-        for (TableColumn<Parameter<?>, Object> column : julyColumns) {
+        for (TableColumn<PromoRow<?>, Object> column : julyColumns) {
             column.setCellValueFactory(cellData -> (ObservableValue<Object>) cellData.getValue().julyProperty());
         }
-        for (TableColumn<Parameter<?>, Object> column : augustColumns) {
+        for (TableColumn<PromoRow<?>, Object> column : augustColumns) {
             column.setCellValueFactory(cellData -> (ObservableValue<Object>) cellData.getValue().augustProperty());
         }
-        for (TableColumn<Parameter<?>, Object> column : septemberColumns) {
+        for (TableColumn<PromoRow<?>, Object> column : septemberColumns) {
             column.setCellValueFactory(cellData -> (ObservableValue<Object>) cellData.getValue().septemberProperty());
         }
-        for (TableColumn<Parameter<?>, Object> column : octoberColumns) {
+        for (TableColumn<PromoRow<?>, Object> column : octoberColumns) {
             column.setCellValueFactory(cellData -> (ObservableValue<Object>) cellData.getValue().octoberProperty());
         }
-        for (TableColumn<Parameter<?>, Object> column : novemberColumns) {
+        for (TableColumn<PromoRow<?>, Object> column : novemberColumns) {
             column.setCellValueFactory(cellData -> (ObservableValue<Object>) cellData.getValue().novemberProperty());
         }
-        for (TableColumn<Parameter<?>, Object> column : decemberColumns) {
+        for (TableColumn<PromoRow<?>, Object> column : decemberColumns) {
             column.setCellValueFactory(cellData -> (ObservableValue<Object>) cellData.getValue().decemberProperty());
         }
-        for (ObservableList<TableColumn<Parameter<?>, Object>> monthColumns : numberColumns) {
-            for (TableColumn<Parameter<?>, Object> column : monthColumns) {
-                column.setCellFactory(tc -> new ParameterNonEditCell());
+        for (ObservableList<TableColumn<PromoRow<?>, Object>> monthColumns : numberColumns) {
+            for (TableColumn<PromoRow<?>, Object> column : monthColumns) {
+                column.setCellFactory(tc -> new PromoRowNonEditCell());
             }
         }
 
@@ -469,110 +469,110 @@ public class SalesProFormaController implements Initializable {
     public void updateTables(int year) {
         for (int i = 0; i < p4Table.getItems().size(); i++) {
             if (i < p1Table.getItems().size()) {
-                updateP1Parameters(0, i);
-                updateP2Parameters(0, i);
-                updateP3Parameters(0, i);
-                updateP4Parameters(0, i);
+                updateP1PromoRows(0, i);
+                updateP2PromoRows(0, i);
+                updateP3PromoRows(0, i);
+                updateP4PromoRows(0, i);
             } else if (i == 4) {
-                updateP3Parameters(0, i);
-                updateP4Parameters(0, i);
+                updateP3PromoRows(0, i);
+                updateP4PromoRows(0, i);
             } else {
-                updateP4Parameters(0, i);
+                updateP4PromoRows(0, i);
             }
         }
-        updateP5Parameter(0);
+        updateP5PromoRow(0);
     }
 
-    public void updateP1Parameters(int year, int paramIndex) {
-        Parameter<?> param = p1Table.getItems().get(paramIndex);
+    public void updateP1PromoRows(int year, int promoRowIndex) {
+        PromoRow<?> promoRow = p1Table.getItems().get(promoRowIndex);
         for (PromoPlan promoPlan : getCurrentPromoPlans(year)) {
             for (int i = 1; i <= 12; i++) {
-                switch (paramIndex) {
+                switch (promoRowIndex) {
                 // Part 1
                 case 0:
-                    ((BigDecimalParameter) param).setMonth(i, (((BigDecimalParameter) param).getMonth(i))
-                            .add((BigDecimal) promoPlan.getParameters().get(0).getMonth(i)));
+                    ((BigDecimalPromoRow) promoRow).setMonth(i, (((BigDecimalPromoRow) promoRow).getMonth(i))
+                            .add((BigDecimal) promoPlan.getPromoRows().get(0).getMonth(i)));
                     break;
                 case 1:
-                    ((IntegerParameter) param).setMonth(i, ((IntegerParameter) param).getMonth(i)
-                            + ((IntegerParameter) promoPlan.getParameters().get(1)).getMonth(i));
+                    ((IntegerPromoRow) promoRow).setMonth(i, ((IntegerPromoRow) promoRow).getMonth(i)
+                            + ((IntegerPromoRow) promoPlan.getPromoRows().get(1)).getMonth(i));
                     break;
                 case 2:
-                    ((IntegerParameter) param).setMonth(i, ((IntegerParameter) param).getMonth(i)
-                            + ((IntegerParameter) promoPlan.getParameters().get(4)).getMonth(i));
+                    ((IntegerPromoRow) promoRow).setMonth(i, ((IntegerPromoRow) promoRow).getMonth(i)
+                            + ((IntegerPromoRow) promoPlan.getPromoRows().get(4)).getMonth(i));
                     break;
                 case 3:
-                    ((BigDecimalParameter) param).setMonth(i,
-                            ((BigDecimalParameter) param).getMonth(i).add(promoPlan.getSlottingGameTheoryd(i)));
+                    ((BigDecimalPromoRow) promoRow).setMonth(i,
+                            ((BigDecimalPromoRow) promoRow).getMonth(i).add(promoPlan.getSlottingGameTheoryd(i)));
                     break;
                 }
             }
         }
         for (int i = 1; i <= 12; i++) {
-            if (paramIndex == 3) {
-                ((BigDecimalParameter) param).setTotal(
-                        ((BigDecimalParameter) param).getTotal().add(((BigDecimalParameter) param).getMonth(i)));
+            if (promoRowIndex == 3) {
+                ((BigDecimalPromoRow) promoRow).setTotal(
+                        ((BigDecimalPromoRow) promoRow).getTotal().add(((BigDecimalPromoRow) promoRow).getMonth(i)));
 
-            } else if (paramIndex == 1) {
-                System.out.println(paramIndex);
-                ((IntegerParameter) param)
-                        .setTotal(((IntegerParameter) param).getTotal() + ((IntegerParameter) param).getMonth(i));
+            } else if (promoRowIndex == 1) {
+                System.out.println(promoRowIndex);
+                ((IntegerPromoRow) promoRow)
+                        .setTotal(((IntegerPromoRow) promoRow).getTotal() + ((IntegerPromoRow) promoRow).getMonth(i));
             }
         }
     }
 
-    public void updateP2Parameters(int year, int paramIndex) {
-        BigDecimalParameter param = (BigDecimalParameter) p2Table.getItems().get(paramIndex);
+    public void updateP2PromoRows(int year, int promoRowIndex) {
+        BigDecimalPromoRow promoRow = (BigDecimalPromoRow) p2Table.getItems().get(promoRowIndex);
 
         for (PromoPlan promoPlan : getCurrentPromoPlans(year)) {
             for (int i = 1; i <= 12; i++) {
-                switch (paramIndex) {
+                switch (promoRowIndex) {
                 case 0:
-                    param.setMonth(i,
-                            param.getMonth(i).add(promoPlan.getEverydayVolume(i).setScale(4, RoundingMode.HALF_UP)));
+                    promoRow.setMonth(i,
+                            promoRow.getMonth(i).add(promoPlan.getEverydayVolume(i).setScale(4, RoundingMode.HALF_UP)));
                     break;
                 case 1:
-                    param.setMonth(i, param.getMonth(i).add(promoPlan.getPromoVolume(i, 1)));
+                    promoRow.setMonth(i, promoRow.getMonth(i).add(promoPlan.getPromoVolume(i, 1)));
                     break;
                 case 2:
-                    param.setMonth(i, param.getMonth(i).add(promoPlan.getPromoVolume(i, 2)));
+                    promoRow.setMonth(i, promoRow.getMonth(i).add(promoPlan.getPromoVolume(i, 2)));
                     break;
                 case 3:
-                    param.setMonth(i, param.getMonth(i).add(promoPlan.getTotalVolume(i)));
+                    promoRow.setMonth(i, promoRow.getMonth(i).add(promoPlan.getTotalVolume(i)));
                     break;
                 }
             }
         }
         for (int i = 1; i <= 12; i++) {
-            param.setTotal(param.getTotal().add(param.getMonth(i)));
+            promoRow.setTotal(promoRow.getTotal().add(promoRow.getMonth(i)));
         }
     }
 
-    public void updateP3Parameters(int year, int paramIndex) {
-        BigDecimalParameter param = (BigDecimalParameter) p3Table.getItems().get(paramIndex);
+    public void updateP3PromoRows(int year, int promoRowIndex) {
+        BigDecimalPromoRow promoRow = (BigDecimalPromoRow) p3Table.getItems().get(promoRowIndex);
         for (PromoPlan promoPlan : getCurrentPromoPlans(year)) {
             for (int i = 1; i <= 12; i++) {
-                switch (paramIndex) {
+                switch (promoRowIndex) {
                 // Part 3
                 case 0:
-                    param.setMonth(i, param.getMonth(i).add(promoPlan.getRetailerGrossSales(i)));
+                    promoRow.setMonth(i, promoRow.getMonth(i).add(promoPlan.getRetailerGrossSales(i)));
                     break;
                 case 1:
-                    param.setMonth(i, param.getMonth(i).add(promoPlan.getRetailerNetCost(i)));
+                    promoRow.setMonth(i, promoRow.getMonth(i).add(promoPlan.getRetailerNetCost(i)));
                     break;
                 case 2:
-                    param.setMonth(i, param.getMonth(i).add(promoPlan.getRetailerGrossProfit(i)));
+                    promoRow.setMonth(i, promoRow.getMonth(i).add(promoPlan.getRetailerGrossProfit(i)));
                     break;
                 case 3:
                     if (promoPlan.getRetailerGrossSales(i).compareTo(new BigDecimal("0.0")) != 0) {
-                        param.setMonth(i, param.getMonth(i).add(promoPlan.getRetailerGrossProfit(i)
+                        promoRow.setMonth(i, promoRow.getMonth(i).add(promoPlan.getRetailerGrossProfit(i)
                                 .divide(promoPlan.getRetailerGrossSales(i), 4, RoundingMode.HALF_UP)));
                     }
                     // Make total function
                     break;
                 case 4:
                     if (promoPlan.getTotalVolume(i).compareTo(new BigDecimal("0.0")) != 0) {
-                        param.setMonth(i, param.getMonth(i).add(promoPlan.getRetailerGrossSales(i)
+                        promoRow.setMonth(i, promoRow.getMonth(i).add(promoPlan.getRetailerGrossSales(i)
                                 .divide(promoPlan.getTotalVolume(i), 4, RoundingMode.HALF_UP)));
                     }
                     // Make total function
@@ -582,103 +582,103 @@ public class SalesProFormaController implements Initializable {
         }
         int totalPromoPlansConsidered = getCurrentPromoPlans(year).size();
         for (int i = 1; i <= 12; i++) {
-            if (paramIndex != 3 || paramIndex != 4) { // Set totals for bigdecimals
-                param.setTotal(param.getTotal().add(param.getMonth(i)));
-            } else if (paramIndex == 3 || paramIndex == 4) { // Parameters with averages
-                param.setMonth(i,
-                        param.getMonth(i).divide(new BigDecimal(totalPromoPlansConsidered), 4, RoundingMode.HALF_UP));
-                param.setTotal(param.getTotal().add(param.getMonth(i)));
+            if (promoRowIndex != 3 || promoRowIndex != 4) { // Set totals for bigdecimals
+                promoRow.setTotal(promoRow.getTotal().add(promoRow.getMonth(i)));
+            } else if (promoRowIndex == 3 || promoRowIndex == 4) { // PromoRows with averages
+                promoRow.setMonth(i,
+                        promoRow.getMonth(i).divide(new BigDecimal(totalPromoPlansConsidered), 4, RoundingMode.HALF_UP));
+                promoRow.setTotal(promoRow.getTotal().add(promoRow.getMonth(i)));
             }
         }
-        if (paramIndex == 3 || paramIndex == 4) { // Parameters with averages
-            param.setTotal(param.getTotal().divide(new BigDecimal("12"), 4, RoundingMode.HALF_UP));
+        if (promoRowIndex == 3 || promoRowIndex == 4) { // PromoRows with averages
+            promoRow.setTotal(promoRow.getTotal().divide(new BigDecimal("12"), 4, RoundingMode.HALF_UP));
         }
     }
 
-    public void updateP4Parameters(int year, int paramIndex) {
-        BigDecimalParameter param = (BigDecimalParameter) p4Table.getItems().get(paramIndex);
+    public void updateP4PromoRows(int year, int promoRowIndex) {
+        BigDecimalPromoRow promoRow = (BigDecimalPromoRow) p4Table.getItems().get(promoRowIndex);
         for (PromoPlan promoPlan : getCurrentPromoPlans(year)) {
             for (int i = 1; i <= 12; i++) {
-                switch (paramIndex) {
+                switch (promoRowIndex) {
                 // Part 4
                 case 0:
-                    param.setMonth(i, param.getMonth(i).add(promoPlan.getManufacturerGrossSalesList(i)));
+                    promoRow.setMonth(i, promoRow.getMonth(i).add(promoPlan.getManufacturerGrossSalesList(i)));
                     break;
                 case 1:
                 case 9:
-                    param.setMonth(i, param.getMonth(i).add(promoPlan.getFobDiscounts(i)));
+                    promoRow.setMonth(i, promoRow.getMonth(i).add(promoPlan.getFobDiscounts(i)));
                     break;
                 case 2:
-                    param.setMonth(i, param.getMonth(i).add(promoPlan.getManufacturerGrossSalesActual(i)));
+                    promoRow.setMonth(i, promoRow.getMonth(i).add(promoPlan.getManufacturerGrossSalesActual(i)));
                     break;
                 case 3:
-                    param.setMonth(i, param.getMonth(i).add(promoPlan.getTotalTS(i)));
+                    promoRow.setMonth(i, promoRow.getMonth(i).add(promoPlan.getTotalTS(i)));
                     break;
                 case 4:
-                    param.setMonth(i, param.getMonth(i).add(promoPlan.getSpoilsFeesTS(i)));
+                    promoRow.setMonth(i, promoRow.getMonth(i).add(promoPlan.getSpoilsFeesTS(i)));
                     break;
                 case 5:
-                    param.setMonth(i, param.getMonth(i).add(promoPlan.getEverydayAllowanceTS(i)));
+                    promoRow.setMonth(i, promoRow.getMonth(i).add(promoPlan.getEverydayAllowanceTS(i)));
                     break;
                 case 6:
-                    param.setMonth(i, param.getMonth(i).add(promoPlan.getPromoTS(i, 1)));
+                    promoRow.setMonth(i, promoRow.getMonth(i).add(promoPlan.getPromoTS(i, 1)));
                     break;
                 case 7:
-                    param.setMonth(i, param.getMonth(i).add(promoPlan.getPromoTS(i, 2)));
+                    promoRow.setMonth(i, promoRow.getMonth(i).add(promoPlan.getPromoTS(i, 2)));
                     break;
                 case 8:
-                    param.setMonth(i, param.getMonth(i).add(promoPlan.getFixedCostsTS(i)));
+                    promoRow.setMonth(i, promoRow.getMonth(i).add(promoPlan.getFixedCostsTS(i)));
                     break;
                 // Case 9 is merged
                 case 10:
-                    param.setMonth(i, param.getMonth(i).add(promoPlan.getManufacturerNet1Rev(i)));
+                    promoRow.setMonth(i, promoRow.getMonth(i).add(promoPlan.getManufacturerNet1Rev(i)));
                     break;
                 case 11:
-                    param.setMonth(i, param.getMonth(i).add(promoPlan.getManufacturerFreightCost(i)));
+                    promoRow.setMonth(i, promoRow.getMonth(i).add(promoPlan.getManufacturerFreightCost(i)));
                     break;
                 case 12:
-                    param.setMonth(i, param.getMonth(i).add(promoPlan.getManufacturerNet2Rev(i)));
+                    promoRow.setMonth(i, promoRow.getMonth(i).add(promoPlan.getManufacturerNet2Rev(i)));
                     break;
                 case 13:
-                    param.setMonth(i, param.getMonth(i).add(promoPlan.getSlottingGameTheoryd(i)));
+                    promoRow.setMonth(i, promoRow.getMonth(i).add(promoPlan.getSlottingGameTheoryd(i)));
                     break;
                 case 14:
-                    param.setMonth(i, param.getMonth(i).add(promoPlan.getManufacturerNet3Rev(i)));
+                    promoRow.setMonth(i, promoRow.getMonth(i).add(promoPlan.getManufacturerNet3Rev(i)));
                     break;
                 case 15:
-                    param.setMonth(i, param.getMonth(i).add(promoPlan.getManufacturerCogs(i)));
+                    promoRow.setMonth(i, promoRow.getMonth(i).add(promoPlan.getManufacturerCogs(i)));
                     break;
                 case 16:
-                    param.setMonth(i, param.getMonth(i).add(promoPlan.getManufacturerGrossProfit(i)));
+                    promoRow.setMonth(i, promoRow.getMonth(i).add(promoPlan.getManufacturerGrossProfit(i)));
                     break;
                 // Part 5
                 }
             }
         }
         for (int i = 1; i <= 12; i++) {
-            param.setTotal(param.getTotal().add(param.getMonth(i)));
+            promoRow.setTotal(promoRow.getTotal().add(promoRow.getMonth(i)));
         }
     }
 
-    public void updateP5Parameter(int year) {
-        BigDecimalParameter param = (BigDecimalParameter) p5Table.getItems().get(0);
+    public void updateP5PromoRow(int year) {
+        BigDecimalPromoRow promoRow = (BigDecimalPromoRow) p5Table.getItems().get(0);
         for (PromoPlan promoPlan : getCurrentPromoPlans(year)) {
             for (int i = 1; i <= 12; i++) {
                 if (promoPlan.getTotalVolume(i).compareTo(new BigDecimal("0.0")) > 0) {
-                    param.setMonth(i, param.getMonth(i).add(promoPlan.getManufacturerNet1Rev(i)
+                    promoRow.setMonth(i, promoRow.getMonth(i).add(promoPlan.getManufacturerNet1Rev(i)
                             .divide(promoPlan.getTotalVolume(1), 4, RoundingMode.HALF_UP)));
                 }
             }
         }
         int totalPromoPlansConsidered = getCurrentPromoPlans(year).size();
-        for (int i = 1; i <= 12; i++) { // Parameter with averages
+        for (int i = 1; i <= 12; i++) { // PromoRow with averages
             if (totalPromoPlansConsidered > 0) {
-                param.setMonth(i,
-                        param.getMonth(i).divide(new BigDecimal(totalPromoPlansConsidered), 4, RoundingMode.HALF_UP));
-                param.setTotal(param.getTotal().add(param.getMonth(i)));
+                promoRow.setMonth(i,
+                        promoRow.getMonth(i).divide(new BigDecimal(totalPromoPlansConsidered), 4, RoundingMode.HALF_UP));
+                promoRow.setTotal(promoRow.getTotal().add(promoRow.getMonth(i)));
             }
-        } // Parameters with averages
-        param.setTotal(param.getTotal().divide(new BigDecimal("12"), 4, RoundingMode.HALF_UP));
+        } // PromoRows with averages
+        promoRow.setTotal(promoRow.getTotal().divide(new BigDecimal("12"), 4, RoundingMode.HALF_UP));
     }
 
     public void switchToMenu(ActionEvent event) throws IOException {
@@ -690,60 +690,60 @@ public class SalesProFormaController implements Initializable {
         return retailers;
     }
 
-    public ObservableList<Parameter<?>> getp1NameParameters() {
-        ObservableList<Parameter<?>> nameParameters = FXCollections.observableArrayList();
-        nameParameters.add(new BigDecimalParameter("Projected Sku Placements", ""));
-        nameParameters.add(new IntegerParameter("Targeted New Placements", ""));
-        nameParameters.add(new IntegerParameter("Store Count", ""));
-        nameParameters.add(new BigDecimalParameter("Slotting", "$"));
-        return nameParameters;
+    public ObservableList<PromoRow<?>> getp1NamePromoRows() {
+        ObservableList<PromoRow<?>> namePromoRows = FXCollections.observableArrayList();
+        namePromoRows.add(new BigDecimalPromoRow("Projected Sku Placements", ""));
+        namePromoRows.add(new IntegerPromoRow("Targeted New Placements", ""));
+        namePromoRows.add(new IntegerPromoRow("Store Count", ""));
+        namePromoRows.add(new BigDecimalPromoRow("Slotting", "$"));
+        return namePromoRows;
     }
 
-    public ObservableList<Parameter<?>> getp2NameParameters() {
-        ObservableList<Parameter<?>> nameParameters = FXCollections.observableArrayList();
-        nameParameters.add(new BigDecimalParameter("Everyday Volume", ""));
-        nameParameters.add(new BigDecimalParameter("Promo 1 Volume", ""));
-        nameParameters.add(new BigDecimalParameter("Promo 2 Volume", ""));
-        nameParameters.add(new BigDecimalParameter("Total Volume", ""));
-        return nameParameters;
+    public ObservableList<PromoRow<?>> getp2NamePromoRows() {
+        ObservableList<PromoRow<?>> namePromoRows = FXCollections.observableArrayList();
+        namePromoRows.add(new BigDecimalPromoRow("Everyday Volume", ""));
+        namePromoRows.add(new BigDecimalPromoRow("Promo 1 Volume", ""));
+        namePromoRows.add(new BigDecimalPromoRow("Promo 2 Volume", ""));
+        namePromoRows.add(new BigDecimalPromoRow("Total Volume", ""));
+        return namePromoRows;
     }
 
-    public ObservableList<Parameter<?>> getp3NameParameters() {
-        ObservableList<Parameter<?>> nameParameters = FXCollections.observableArrayList();
-        nameParameters.add(new BigDecimalParameter("Retailer: Gross Sales", ""));
-        nameParameters.add(new BigDecimalParameter("Retailer: Net Cost", ""));
-        nameParameters.add(new BigDecimalParameter("Retailer: Gross Profit", ""));
-        nameParameters.add(new BigDecimalParameter("Retailer: Gross Profit Margin %", ""));
-        nameParameters.add(new BigDecimalParameter("Retailer: Average Selling Price", ""));
-        return nameParameters;
+    public ObservableList<PromoRow<?>> getp3NamePromoRows() {
+        ObservableList<PromoRow<?>> namePromoRows = FXCollections.observableArrayList();
+        namePromoRows.add(new BigDecimalPromoRow("Retailer: Gross Sales", ""));
+        namePromoRows.add(new BigDecimalPromoRow("Retailer: Net Cost", ""));
+        namePromoRows.add(new BigDecimalPromoRow("Retailer: Gross Profit", ""));
+        namePromoRows.add(new BigDecimalPromoRow("Retailer: Gross Profit Margin %", ""));
+        namePromoRows.add(new BigDecimalPromoRow("Retailer: Average Selling Price", ""));
+        return namePromoRows;
     }
 
-    public ObservableList<Parameter<?>> getp4NameParameters() {
-        ObservableList<Parameter<?>> nameParameters = FXCollections.observableArrayList();
-        nameParameters.add(new BigDecimalParameter("Manufacturer: Gross Sales (List)", "$"));
-        nameParameters.add(new BigDecimalParameter("F.O.B Discounts", "$"));
-        nameParameters.add(new BigDecimalParameter("Manufacturer Gross Sales Actual", "$"));
-        nameParameters.add(new BigDecimalParameter("Total Trade Spending", "$"));
-        nameParameters.add(new BigDecimalParameter("Spoils & Fees (Trade Spending)", "$"));
-        nameParameters.add(new BigDecimalParameter("Everyday Allowance (Trade Spending)", "$"));
-        nameParameters.add(new BigDecimalParameter("Promo 1 (Trade Spending)", "$"));
-        nameParameters.add(new BigDecimalParameter("Promo 2 (Trade Spending)", "$"));
-        nameParameters.add(new BigDecimalParameter("Fixed Costs (Trade Spending)", "$"));
-        nameParameters.add(new BigDecimalParameter("F.O.B Freight Credit To Trade", "$"));
-        nameParameters.add(new BigDecimalParameter("Manufacturer Net1 Revenue", "$"));
-        nameParameters.add(new BigDecimalParameter("Manufacturer Freight Cost (Non-F.O.B.)", "$"));
-        nameParameters.add(new BigDecimalParameter("Manufacturer Net2 Revenue", "$"));
-        nameParameters.add(new BigDecimalParameter("Slotting", "$"));
-        nameParameters.add(new BigDecimalParameter("Manufacturer Net3 Revenue", "$"));
-        nameParameters.add(new BigDecimalParameter("Manufacturer Cost of Goods Sold", "$"));
-        nameParameters.add(new BigDecimalParameter("Manufacturer Gross Profit", "$"));
-        return nameParameters;
+    public ObservableList<PromoRow<?>> getp4NamePromoRows() {
+        ObservableList<PromoRow<?>> namePromoRows = FXCollections.observableArrayList();
+        namePromoRows.add(new BigDecimalPromoRow("Manufacturer: Gross Sales (List)", "$"));
+        namePromoRows.add(new BigDecimalPromoRow("F.O.B Discounts", "$"));
+        namePromoRows.add(new BigDecimalPromoRow("Manufacturer Gross Sales Actual", "$"));
+        namePromoRows.add(new BigDecimalPromoRow("Total Trade Spending", "$"));
+        namePromoRows.add(new BigDecimalPromoRow("Spoils & Fees (Trade Spending)", "$"));
+        namePromoRows.add(new BigDecimalPromoRow("Everyday Allowance (Trade Spending)", "$"));
+        namePromoRows.add(new BigDecimalPromoRow("Promo 1 (Trade Spending)", "$"));
+        namePromoRows.add(new BigDecimalPromoRow("Promo 2 (Trade Spending)", "$"));
+        namePromoRows.add(new BigDecimalPromoRow("Fixed Costs (Trade Spending)", "$"));
+        namePromoRows.add(new BigDecimalPromoRow("F.O.B Freight Credit To Trade", "$"));
+        namePromoRows.add(new BigDecimalPromoRow("Manufacturer Net1 Revenue", "$"));
+        namePromoRows.add(new BigDecimalPromoRow("Manufacturer Freight Cost (Non-F.O.B.)", "$"));
+        namePromoRows.add(new BigDecimalPromoRow("Manufacturer Net2 Revenue", "$"));
+        namePromoRows.add(new BigDecimalPromoRow("Slotting", "$"));
+        namePromoRows.add(new BigDecimalPromoRow("Manufacturer Net3 Revenue", "$"));
+        namePromoRows.add(new BigDecimalPromoRow("Manufacturer Cost of Goods Sold", "$"));
+        namePromoRows.add(new BigDecimalPromoRow("Manufacturer Gross Profit", "$"));
+        return namePromoRows;
     }
 
-    public ObservableList<Parameter<?>> getp5NameParameters() {
-        ObservableList<Parameter<?>> nameParameters = FXCollections.observableArrayList();
-        nameParameters.add(new BigDecimalParameter("Net1 Revenue Rate (Sales Management)", "$"));
-        return nameParameters;
+    public ObservableList<PromoRow<?>> getp5NamePromoRows() {
+        ObservableList<PromoRow<?>> namePromoRows = FXCollections.observableArrayList();
+        namePromoRows.add(new BigDecimalPromoRow("Net1 Revenue Rate (Sales Management)", "$"));
+        return namePromoRows;
     }
 
     public void setRetailers(ObservableList<Retailer> retailers) {

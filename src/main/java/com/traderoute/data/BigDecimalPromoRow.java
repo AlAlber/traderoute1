@@ -4,29 +4,29 @@ import javafx.beans.property.SimpleStringProperty;
 
 import java.math.BigDecimal;
 
-public class BigDecimalParameter extends Parameter<BigDecimal> {
+public class BigDecimalPromoRow extends PromoRow<BigDecimal> {
 
-    public BigDecimalParameter(String name, String pre, BigDecimal january, BigDecimal february, BigDecimal march,
-            BigDecimal april, BigDecimal may, BigDecimal june, BigDecimal july, BigDecimal august, BigDecimal september,
-            BigDecimal october, BigDecimal november, BigDecimal december, boolean editable) {
+    public BigDecimalPromoRow(String name, String pre, BigDecimal january, BigDecimal february, BigDecimal march,
+                              BigDecimal april, BigDecimal may, BigDecimal june, BigDecimal july, BigDecimal august, BigDecimal september,
+                              BigDecimal october, BigDecimal november, BigDecimal december, boolean editable) {
         super(name, pre, january, february, march, april, may, june, july, august, september, october, november,
                 december, editable);
     }
 
-    public BigDecimalParameter(String name, String pre, BigDecimal total, BigDecimal january, BigDecimal february,
-            BigDecimal march, BigDecimal april, BigDecimal may, BigDecimal june, BigDecimal july, BigDecimal august,
-            BigDecimal september, BigDecimal october, BigDecimal november, BigDecimal december, boolean editable) {
+    public BigDecimalPromoRow(String name, String pre, BigDecimal total, BigDecimal january, BigDecimal february,
+                              BigDecimal march, BigDecimal april, BigDecimal may, BigDecimal june, BigDecimal july, BigDecimal august,
+                              BigDecimal september, BigDecimal october, BigDecimal november, BigDecimal december, boolean editable) {
         super(name, pre, january, february, march, april, may, june, july, august, september, october, november,
                 december, editable);
     }
 
-    public BigDecimalParameter() {
+    public BigDecimalPromoRow() {
         super.name = new SimpleStringProperty(""); // Changed name here
         super.pre = "";
         setEditable(false);
     }
 
-    public BigDecimalParameter(String name, String pre) {
+    public BigDecimalPromoRow(String name, String pre) {
         super(name, pre);
         setEditable(true);
         if (getName().equals("Skus In Distribution")) {

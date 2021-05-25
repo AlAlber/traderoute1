@@ -44,7 +44,7 @@
                <children>
                   <TableView fx:id="p1Table" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="142.0" prefWidth="1478.0" style="-fx-border-color: #A79543; -fx-border-width: 3;" stylesheets="@../styles/Styles.css">
                      <columns>
-                        <TableColumn fx:id="p1ParameterNameColumn" prefWidth="200.0" sortable="false" text="Part 1: Distribution" />
+                        <TableColumn fx:id="p1PromoRowNameColumn" prefWidth="200.0" sortable="false" text="Part 1: Distribution" />
                         <TableColumn fx:id="p1TotalsColumn" prefWidth="155.0" sortable="false" text="Totals" />
                         <TableColumn fx:id="p1JanuaryColumn" prefWidth="93.0" sortable="false" text="January" />
                         <TableColumn fx:id="p1FebruaryColumn" prefWidth="93.0" sortable="false" text="February" />
@@ -66,7 +66,7 @@
                   </TableView>
                   <TableView fx:id="p2Table" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="146.0" prefWidth="1478.0" style="-fx-border-color: #A79543; -fx-border-width: 3;" stylesheets="@../styles/Styles.css">
                      <columns>
-                        <TableColumn fx:id="p2ParameterNameColumn" prefWidth="200.0" sortable="false" text="Part 2: Volumetrics" />
+                        <TableColumn fx:id="p2PromoRowNameColumn" prefWidth="200.0" sortable="false" text="Part 2: Volumetrics" />
                         <TableColumn fx:id="p2TotalsColumn" prefWidth="155.0" sortable="false" text="Totals" />
                         <TableColumn fx:id="p2JanuaryColumn" prefWidth="93.0" sortable="false" text="January" />
                         <TableColumn fx:id="p2FebruaryColumn" prefWidth="93.0" sortable="false" text="February" />
@@ -88,7 +88,7 @@
                   </TableView>
                   <TableView fx:id="p3Table" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="168.0" prefWidth="1478.0" style="-fx-border-color: #A79543; -fx-border-width: 3;" stylesheets="@../styles/Styles.css">
                      <columns>
-                        <TableColumn fx:id="p3ParameterNameColumn" prefWidth="200.0" sortable="false" text="Part 3: Customer Financials" />
+                        <TableColumn fx:id="p3PromoRowNameColumn" prefWidth="200.0" sortable="false" text="Part 3: Customer Financials" />
                         <TableColumn fx:id="p3TotalsColumn" prefWidth="155.0" sortable="false" text="Totals" />
                         <TableColumn fx:id="p3JanuaryColumn" prefWidth="93.0" sortable="false" text="January" />
                         <TableColumn fx:id="p3FebruaryColumn" prefWidth="93.0" sortable="false" text="February" />
@@ -110,7 +110,7 @@
                   </TableView>
                   <TableView fx:id="p4Table" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="440.0" prefWidth="1478.0" style="-fx-border-color: #A79543; -fx-border-width: 3;" stylesheets="@../styles/Styles.css">
                      <columns>
-                        <TableColumn fx:id="p4ParameterNameColumn" prefWidth="200.0" sortable="false" text="Part 4: Manufacturer Financials" />
+                        <TableColumn fx:id="p4PromoRowNameColumn" prefWidth="200.0" sortable="false" text="Part 4: Manufacturer Financials" />
                         <TableColumn fx:id="p4TotalsColumn" prefWidth="155.0" sortable="false" text="Totals" />
                         <TableColumn fx:id="p4JanuaryColumn" prefWidth="93.0" sortable="false" text="January" />
                         <TableColumn fx:id="p4FebruaryColumn" prefWidth="93.0" sortable="false" text="February" />
@@ -132,7 +132,7 @@
                   </TableView>
                   <TableView fx:id="p5Table" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="80.0" prefWidth="1478.0" style="-fx-border-color: #A79543; -fx-border-width: 3;" stylesheets="@../styles/Styles.css">
                      <columns>
-                        <TableColumn fx:id="p5ParameterNameColumn" prefWidth="200.0" sortable="false" text="Part 5: Net 1 Revenue Rate" />
+                        <TableColumn fx:id="p5PromoRowNameColumn" prefWidth="200.0" sortable="false" text="Part 5: Net 1 Revenue Rate" />
                         <TableColumn fx:id="p5TotalsColumn" prefWidth="155.0" sortable="false" text="Totals" />
                         <TableColumn fx:id="p5JanuaryColumn" prefWidth="93.0" sortable="false" text="January" />
                         <TableColumn fx:id="p5FebruaryColumn" prefWidth="93.0" sortable="false" text="February" />

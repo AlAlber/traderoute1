@@ -1,24 +1,24 @@
 package com.traderoute.data;
 
-public class IntegerParameter extends Parameter<Integer> {
+public class IntegerPromoRow extends PromoRow<Integer> {
 
-    public IntegerParameter(String name, String pre, Integer january, Integer february, Integer march, Integer april,
-            Integer may, Integer june, Integer july, Integer august, Integer september, Integer october,
-            Integer november, Integer december) {
+    public IntegerPromoRow(String name, String pre, Integer january, Integer february, Integer march, Integer april,
+                           Integer may, Integer june, Integer july, Integer august, Integer september, Integer october,
+                           Integer november, Integer december) {
         super(name, pre, january, february, march, april, may, june, july, august, september, october, november,
                 december);
 
     }
 
-    public IntegerParameter(String name, String pre, Integer total, Integer january, Integer february, Integer march,
-            Integer april, Integer may, Integer june, Integer july, Integer august, Integer september, Integer october,
-            Integer november, Integer december) {
+    public IntegerPromoRow(String name, String pre, Integer total, Integer january, Integer february, Integer march,
+                           Integer april, Integer may, Integer june, Integer july, Integer august, Integer september, Integer october,
+                           Integer november, Integer december) {
         super(name, pre, january, february, march, april, may, june, july, august, september, october, november,
                 december);
 
     }
 
-    public IntegerParameter(String name, String pre) {
+    public IntegerPromoRow(String name, String pre) {
         super(name, pre);
         setEditable(true);
     }

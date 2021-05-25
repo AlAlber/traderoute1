@@ -47,7 +47,7 @@ public class PromoPlan {
     private static final int grossProfitPlanIndex = 26;
 
     private SimpleObjectProperty<Retailer> retailer;
-    private SimpleObjectProperty<ObservableList<Parameter<?>>> parameters;
+    private SimpleObjectProperty<ObservableList<PromoRow<?>>> promoRows;
     private SimpleObjectProperty<ObservableList<Summary>> toplineSummaries;
     private SimpleObjectProperty<ObservableList<Summary>> retailerSummaries;
     private SimpleObjectProperty<BigDecimal> weeklyPromoUfsw;
@@ -56,11 +56,11 @@ public class PromoPlan {
     private SimpleIntegerProperty selectedIndex;
     // private SimpleObjectProperty<BigDecimal> totalVolume,promotedVolume, grossRevenue, tradeRevenue;
 
-    public PromoPlan(ObservableList<Parameter<?>> parameters, ObservableList<Summary> toplineSummaries,
-            ObservableList<Summary> retailerSummaries, BigDecimal weeklyPromoUfsw, RTMOption selectedRtm,
-            boolean committed) {
+    public PromoPlan(ObservableList<PromoRow<?>> promoRows, ObservableList<Summary> toplineSummaries,
+                     ObservableList<Summary> retailerSummaries, BigDecimal weeklyPromoUfsw, RTMOption selectedRtm,
+                     boolean committed) {
         this.retailer = new SimpleObjectProperty<>();
-        this.parameters = new SimpleObjectProperty<>(parameters);
+        this.promoRows = new SimpleObjectProperty<>(promoRows);
         this.toplineSummaries = new SimpleObjectProperty<>(toplineSummaries);
         this.retailerSummaries = new SimpleObjectProperty<>(retailerSummaries);
         this.weeklyPromoUfsw = new SimpleObjectProperty<>(weeklyPromoUfsw);
@@ -105,7 +105,7 @@ public class PromoPlan {
     }
 
     public PromoPlan(Integer year) {
-        this.parameters = parametersProperty();
+        this.promoRows = promoRowsProperty();
         this.toplineSummaries = toplineSummariesProperty();
         this.retailerSummaries = retailerSummariesProperty();
         this.weeklyPromoUfsw = weeklyPromoUfswProperty();
@@ -209,15 +209,15 @@ public class PromoPlan {
     }
 
     public BigDecimal getSlottingGameTheoryd(int month) {
-        BigDecimal confidencePer = ((BigDecimal) getParameters().get(confidencePerIndex).getMonth(month))
+        BigDecimal confidencePer = ((BigDecimal) getPromoRows().get(confidencePerIndex).getMonth(month))
                 .divide(new BigDecimal(100.0));
-        BigDecimal slottingInvestment = ((BigDecimal) getParameters().get(slottingInvestmentIndex).getMonth(month));
+        BigDecimal slottingInvestment = ((BigDecimal) getPromoRows().get(slottingInvestmentIndex).getMonth(month));
         return confidencePer.multiply(slottingInvestment);
     }
 
     public BigDecimal getEverydayCost(int month) {
         BigDecimal everydayGPM = getRetailer().getEverydayGPM();
-        BigDecimal everydayRetail = ((BigDecimal) getParameters().get(everydayRetailIndex).getMonth(month));
+        BigDecimal everydayRetail = ((BigDecimal) getPromoRows().get(everydayRetailIndex).getMonth(month));
         return everydayRetail.multiply(new BigDecimal("1.0").subtract(everydayGPM.divide(new BigDecimal(100.0))));
     }
 
@@ -225,45 +225,45 @@ public class PromoPlan {
         BigDecimal requiredGPM = new BigDecimal("0.0");
         BigDecimal promotedRetail = new BigDecimal("0.0");
         if (promo == 1) {
-            requiredGPM = (BigDecimal) getParameters().get(requiredGpm1Index).getMonth(month);
-            promotedRetail = (BigDecimal) getParameters().get(promotedRetail1Index).getMonth(month);
+            requiredGPM = (BigDecimal) getPromoRows().get(requiredGpm1Index).getMonth(month);
+            promotedRetail = (BigDecimal) getPromoRows().get(promotedRetail1Index).getMonth(month);
         }
         if (promo == 2) {
-            requiredGPM = (BigDecimal) getParameters().get(requiredGpm2Index).getMonth(month);
-            promotedRetail = (BigDecimal) getParameters().get(promotedRetail2Index).getMonth(month);
+            requiredGPM = (BigDecimal) getPromoRows().get(requiredGpm2Index).getMonth(month);
+            promotedRetail = (BigDecimal) getPromoRows().get(promotedRetail2Index).getMonth(month);
         }
         return promotedRetail.multiply((new BigDecimal("1.0").subtract(requiredGPM.divide(new BigDecimal("100.0")))));
     }
 
     public int getEverydayRetailWeeks(int month) {
-        int durationWeeks1 = (int) getParameters().get(durationWeeks1Index).getMonth(month);
-        int durationWeeks2 = (int) getParameters().get(durationWeeks2Index).getMonth(month);
+        int durationWeeks1 = (int) getPromoRows().get(durationWeeks1Index).getMonth(month);
+        int durationWeeks2 = (int) getPromoRows().get(durationWeeks2Index).getMonth(month);
         return getWeeksInPeriod(month) - (durationWeeks1) - (durationWeeks2);
     }
 
     public BigDecimal getEverydayVolume(int month) {
-        BigDecimal skusInDistribution = (BigDecimal) getParameters().get(skusInDistributionIndex).getMonth(month);
+        BigDecimal skusInDistribution = (BigDecimal) getPromoRows().get(skusInDistributionIndex).getMonth(month);
         // make getweekly velocity set weekly promo ufsw
         BigDecimal weeklyVelocity = weeklyPromoUfsw.get();
-        BigDecimal storeCount = new BigDecimal((int) getParameters().get(storeCountIndex).getMonth(month));
+        BigDecimal storeCount = new BigDecimal((int) getPromoRows().get(storeCountIndex).getMonth(month));
         BigDecimal everyDayRetailWeeks = new BigDecimal(getEverydayRetailWeeks(month));
         return skusInDistribution.multiply(storeCount).multiply(weeklyVelocity).multiply(everyDayRetailWeeks);
     }
 
     public BigDecimal getPromoVolume(int month, int promo) {
-        BigDecimal skusInDistribution = (BigDecimal) getParameters().get(skusInDistributionIndex).getMonth(month);
+        BigDecimal skusInDistribution = (BigDecimal) getPromoRows().get(skusInDistributionIndex).getMonth(month);
         BigDecimal weeklyVelocity = weeklyPromoUfsw.get();
-        BigDecimal storeCount = new BigDecimal((int) getParameters().get(storeCountIndex).getMonth(month));
+        BigDecimal storeCount = new BigDecimal((int) getPromoRows().get(storeCountIndex).getMonth(month));
         BigDecimal volumeLiftMultiple = new BigDecimal("0.0");
         BigDecimal durationWeeks = new BigDecimal("0.0");
         if (promo == 1) {
-            volumeLiftMultiple = (BigDecimal) getParameters().get(volumeLiftMultiple1Index).getMonth(month);
-            durationWeeks = new BigDecimal((int) getParameters().get(durationWeeks1Index).getMonth(month));
+            volumeLiftMultiple = (BigDecimal) getPromoRows().get(volumeLiftMultiple1Index).getMonth(month);
+            durationWeeks = new BigDecimal((int) getPromoRows().get(durationWeeks1Index).getMonth(month));
             ;
         }
         if (promo == 2) {
-            volumeLiftMultiple = (BigDecimal) getParameters().get(volumeLiftMultiple2Index).getMonth(month);
-            durationWeeks = new BigDecimal((int) getParameters().get(durationWeeks2Index).getMonth(month));
+            volumeLiftMultiple = (BigDecimal) getPromoRows().get(volumeLiftMultiple2Index).getMonth(month);
+            durationWeeks = new BigDecimal((int) getPromoRows().get(durationWeeks2Index).getMonth(month));
             ;
         }
         return skusInDistribution.multiply(weeklyVelocity).multiply(storeCount).multiply(volumeLiftMultiple)
@@ -284,9 +284,9 @@ public class PromoPlan {
     }
 
     public BigDecimal getRetailerGrossSales(int month) {
-        BigDecimal promotedRetail1 = (BigDecimal) getParameters().get(promotedRetail1Index).getMonth(month);
-        BigDecimal promotedRetail2 = (BigDecimal) getParameters().get(promotedRetail2Index).getMonth(month);
-        BigDecimal everydayRetail = (BigDecimal) getParameters().get(everydayRetailIndex).getMonth(month);
+        BigDecimal promotedRetail1 = (BigDecimal) getPromoRows().get(promotedRetail1Index).getMonth(month);
+        BigDecimal promotedRetail2 = (BigDecimal) getPromoRows().get(promotedRetail2Index).getMonth(month);
+        BigDecimal everydayRetail = (BigDecimal) getPromoRows().get(everydayRetailIndex).getMonth(month);
         return everydayRetail.multiply(getEverydayVolume(month)).add(promotedRetail1.multiply(getPromoVolume(month, 1)))
                 .add(promotedRetail2.multiply(getPromoVolume(month, 2)));
     }
@@ -360,9 +360,9 @@ public class PromoPlan {
     }
 
     public BigDecimal getFixedCostsTS(int month) {
-        BigDecimal fixedCosts1 = (BigDecimal) getParameters().get(fixedCosts1Index).getMonth(month);
+        BigDecimal fixedCosts1 = (BigDecimal) getPromoRows().get(fixedCosts1Index).getMonth(month);
         ;
-        BigDecimal fixedCosts2 = (BigDecimal) getParameters().get(fixedCosts2Index).getMonth(month);
+        BigDecimal fixedCosts2 = (BigDecimal) getPromoRows().get(fixedCosts2Index).getMonth(month);
         return fixedCosts1.add(fixedCosts2);
     }
 
@@ -405,10 +405,10 @@ public class PromoPlan {
     public BigDecimal getPromoLiftMultiple(int month, int promo) {
         BigDecimal volumeLiftMultiple = new BigDecimal("0.0");
         if (promo == 1) {
-            volumeLiftMultiple = (BigDecimal) getParameters().get(volumeLiftMultiple1Index).getMonth(month);
+            volumeLiftMultiple = (BigDecimal) getPromoRows().get(volumeLiftMultiple1Index).getMonth(month);
         }
         if (promo == 2) {
-            volumeLiftMultiple = (BigDecimal) getParameters().get(volumeLiftMultiple2Index).getMonth(month);
+            volumeLiftMultiple = (BigDecimal) getPromoRows().get(volumeLiftMultiple2Index).getMonth(month);
         }
         return volumeLiftMultiple;
     }
@@ -565,19 +565,19 @@ public class PromoPlan {
         this.selectedIndex.set(selectedIndex);
     }
 
-    public ObservableList<Parameter<?>> getParameters() {
-        return parameters.get();
+    public ObservableList<PromoRow<?>> getPromoRows() {
+        return promoRows.get();
     }
 
-    public SimpleObjectProperty<ObservableList<Parameter<?>>> parametersProperty() {
-        if (parameters == null) {
-            return new SimpleObjectProperty<>(getEmptyParameters());
+    public SimpleObjectProperty<ObservableList<PromoRow<?>>> promoRowsProperty() {
+        if (promoRows == null) {
+            return new SimpleObjectProperty<>(getEmptyPromoRows());
         }
-        return parameters;
+        return promoRows;
     }
 
-    public void setParameters(ObservableList<Parameter<?>> parameters) {
-        this.parameters.set(parameters);
+    public void setPromoRows(ObservableList<PromoRow<?>> promoRows) {
+        this.promoRows.set(promoRows);
     }
 
     public ObservableList<Summary> getToplineSummaries() {
@@ -652,89 +652,89 @@ public class PromoPlan {
         this.committed.set(committed);
     }
 
-    public ObservableList<Parameter<?>> getEmptyParameters() {
-        ObservableList<Parameter<?>> parameters = FXCollections.observableArrayList();
-        parameters.add(new BigDecimalParameter("Skus In Distribution", "", new BigDecimal("0.0"), new BigDecimal("0.0"),
+    public ObservableList<PromoRow<?>> getEmptyPromoRows() {
+        ObservableList<PromoRow<?>> promoRows = FXCollections.observableArrayList();
+        promoRows.add(new BigDecimalPromoRow("Skus In Distribution", "", new BigDecimal("0.0"), new BigDecimal("0.0"),
                 new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"),
                 new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"),
                 new BigDecimal("0.0"), new BigDecimal("0.0"), false));
-        parameters.add(new IntegerParameter("Sku-Count Change", "", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
-        Parameter confidencePer = new BigDecimalParameter("Confidence %", "%");
-        parameters.add(confidencePer);
-        parameters.add(new BigDecimalParameter("Slotting Investment", "$", new BigDecimal("0.0"), new BigDecimal("0.0"),
+        promoRows.add(new IntegerPromoRow("Sku-Count Change", "", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
+        PromoRow confidencePer = new BigDecimalPromoRow("Confidence %", "%");
+        promoRows.add(confidencePer);
+        promoRows.add(new BigDecimalPromoRow("Slotting Investment", "$", new BigDecimal("0.0"), new BigDecimal("0.0"),
                 new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"),
                 new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"),
                 new BigDecimal("0.0"), new BigDecimal("0.0"), true));
-        parameters.add(new IntegerParameter("Store Count", "", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
-        parameters.add(new BigDecimalParameter());
+        promoRows.add(new IntegerPromoRow("Store Count", "", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
+        promoRows.add(new BigDecimalPromoRow());
         ;
-        parameters.add(new BigDecimalParameter("Everyday Retail", "$", new BigDecimal("0.0"), new BigDecimal("0.0"),
+        promoRows.add(new BigDecimalPromoRow("Everyday Retail", "$", new BigDecimal("0.0"), new BigDecimal("0.0"),
                 new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"),
                 new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"),
                 new BigDecimal("0.0"), new BigDecimal("0.0"), true));
-        parameters.add(new BigDecimalParameter("Everyday Unit Cost", "$", new BigDecimal("0.0"), new BigDecimal("0.0"),
+        promoRows.add(new BigDecimalPromoRow("Everyday Unit Cost", "$", new BigDecimal("0.0"), new BigDecimal("0.0"),
                 new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"),
                 new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"),
                 new BigDecimal("0.0"), new BigDecimal("0.0"), true));
-        parameters.add(new BigDecimalParameter());
+        promoRows.add(new BigDecimalPromoRow());
         ;
-        parameters.add(new BigDecimalParameter("Seasonality Indices", "", new BigDecimal("0.0"), new BigDecimal("0.0"),
+        promoRows.add(new BigDecimalPromoRow("Seasonality Indices", "", new BigDecimal("0.0"), new BigDecimal("0.0"),
                 new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"),
                 new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"),
                 new BigDecimal("0.0"), new BigDecimal("0.0"), true));
-        parameters.add(new BigDecimalParameter("Promoted Retail 1", "$", new BigDecimal("0.0"), new BigDecimal("0.0"),
+        promoRows.add(new BigDecimalPromoRow("Promoted Retail 1", "$", new BigDecimal("0.0"), new BigDecimal("0.0"),
                 new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"),
                 new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"),
                 new BigDecimal("0.0"), new BigDecimal("0.0"), true));
-        parameters.add(new BigDecimalParameter("Required GPM % 1", "%", new BigDecimal("0.0"), new BigDecimal("0.0"),
+        promoRows.add(new BigDecimalPromoRow("Required GPM % 1", "%", new BigDecimal("0.0"), new BigDecimal("0.0"),
                 new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"),
                 new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"),
                 new BigDecimal("0.0"), new BigDecimal("0.0"), true));
-        parameters.add(new IntegerParameter("Duration (weeks) 1", "", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
-        parameters.add(new BigDecimalParameter("Volume Lift Multiple 1", "", new BigDecimal("0.0"),
+        promoRows.add(new IntegerPromoRow("Duration (weeks) 1", "", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
+        promoRows.add(new BigDecimalPromoRow("Volume Lift Multiple 1", "", new BigDecimal("0.0"),
                 new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"),
                 new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"),
                 new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"), true));
-        parameters.add(new BigDecimalParameter("Fixed Costs 1", "$", new BigDecimal("0.0"), new BigDecimal("0.0"),
+        promoRows.add(new BigDecimalPromoRow("Fixed Costs 1", "$", new BigDecimal("0.0"), new BigDecimal("0.0"),
                 new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"),
                 new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"),
                 new BigDecimal("0.0"), new BigDecimal("0.0"), true));
-        parameters.add(new BigDecimalParameter("Promo Unit Cost 1", "$", new BigDecimal("0.0"), new BigDecimal("0.0"),
+        promoRows.add(new BigDecimalPromoRow("Promo Unit Cost 1", "$", new BigDecimal("0.0"), new BigDecimal("0.0"),
                 new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"),
                 new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"),
                 new BigDecimal("0.0"), new BigDecimal("0.0"), true));
-        parameters.add(new BigDecimalParameter("Promo Discount % 1", "%", new BigDecimal("0.0"), new BigDecimal("0.0"),
+        promoRows.add(new BigDecimalPromoRow("Promo Discount % 1", "%", new BigDecimal("0.0"), new BigDecimal("0.0"),
                 new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"),
                 new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"),
                 new BigDecimal("0.0"), new BigDecimal("0.0"), true));
-        parameters
-                .add(new StringParameter("Promotional Commentary", "", "", "", "", "", "", "", "", "", "", "", "", ""));
-        parameters.add(new BigDecimalParameter("Promoted Retail 2", "$", new BigDecimal("0.0"), new BigDecimal("0.0"),
+        promoRows
+                .add(new StringPromoRow("Promotional Commentary", "", "", "", "", "", "", "", "", "", "", "", "", ""));
+        promoRows.add(new BigDecimalPromoRow("Promoted Retail 2", "$", new BigDecimal("0.0"), new BigDecimal("0.0"),
                 new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"),
                 new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"),
                 new BigDecimal("0.0"), new BigDecimal("0.0"), true));
-        parameters.add(new BigDecimalParameter("Required GPM % 2", "%", new BigDecimal("0.0"), new BigDecimal("0.0"),
+        promoRows.add(new BigDecimalPromoRow("Required GPM % 2", "%", new BigDecimal("0.0"), new BigDecimal("0.0"),
                 new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"),
                 new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"),
                 new BigDecimal("0.0"), new BigDecimal("0.0"), true));
-        parameters.add(new IntegerParameter("Duration (weeks) 2", "", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
-        parameters.add(new BigDecimalParameter("Volume Lift Multiple 2", "", new BigDecimal("0.0"),
+        promoRows.add(new IntegerPromoRow("Duration (weeks) 2", "", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
+        promoRows.add(new BigDecimalPromoRow("Volume Lift Multiple 2", "", new BigDecimal("0.0"),
                 new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"),
                 new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"),
                 new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"), true));
-        parameters.add(new BigDecimalParameter("Fixed Costs 2", "$", new BigDecimal("0.0"), new BigDecimal("0.0"),
+        promoRows.add(new BigDecimalPromoRow("Fixed Costs 2", "$", new BigDecimal("0.0"), new BigDecimal("0.0"),
                 new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"),
                 new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"),
                 new BigDecimal("0.0"), new BigDecimal("0.0"), true));
-        parameters.add(new BigDecimalParameter("Promo Unit Cost 2", "$", new BigDecimal("0.0"), new BigDecimal("0.0"),
+        promoRows.add(new BigDecimalPromoRow("Promo Unit Cost 2", "$", new BigDecimal("0.0"), new BigDecimal("0.0"),
                 new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"),
                 new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"),
                 new BigDecimal("0.0"), new BigDecimal("0.0"), true));
-        parameters.add(new BigDecimalParameter("Promo Discount % 2", "%", new BigDecimal("0.0"), new BigDecimal("0.0"),
+        promoRows.add(new BigDecimalPromoRow("Promo Discount % 2", "%", new BigDecimal("0.0"), new BigDecimal("0.0"),
                 new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"),
                 new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"),
                 new BigDecimal("0.0"), new BigDecimal("0.0"), true));
-        return parameters;
+        return promoRows;
     }
 
     private ObservableList getEmptyToplineSummaries() {
