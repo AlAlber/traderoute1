@@ -28,6 +28,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.ResourceBundle;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class AssortmentController implements Initializable, MyController {
     @FXML
@@ -270,13 +271,16 @@ public class AssortmentController implements Initializable, MyController {
     public ObservableList<Sku> getExampleSkus() {
         ObservableList<Sku> skus = FXCollections.observableArrayList();
         skus.add(new Sku("First Sku", "Current", "love this one"));
+        skus.add(new Sku("Second Sku", "Targeted", "love this one"));
         return skus;
+
     }
 
     private static Date convertToDate(LocalDate dateToConvert) {
         return java.sql.Date.valueOf(dateToConvert);
     }
 
+    int[] iarr = {0};
     private void setCellFactories() {
         descriptionColumn.setCellFactory(TextFieldTableCell.forTableColumn());
         locationColumn.setCellFactory(TextFieldTableCell.forTableColumn());
@@ -284,13 +288,9 @@ public class AssortmentController implements Initializable, MyController {
         timeColumn.setCellFactory(TextFieldTableCell.forTableColumn());
         notesColumn.setCellFactory(TextFieldTableCell.forTableColumn());
         flavorDescriptionColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-        ComboBoxTableCell cBoxCell = new ComboBoxTableCell();
-        cBoxCell.setId("comboBoxCell");
-//        statusColumn.setCellFactory(cBoxCell.forTableColumn("Current", "Targeted", "Discontinued"));
         statusColumn.setCellFactory(col -> {
             TableCell<Sku, StringProperty> c = new TableCell<>();
-            final ComboBox<String> comboBox = new ComboBox<>(FXCollections.observableArrayList("Current", "Targeted", "Discontinued"));
-
+            ComboBox<String> comboBox = new ComboBox<>(FXCollections.observableArrayList("Current", "Targeted", "Discontinued"));
             c.itemProperty().addListener((observable, oldValue, newValue) -> {
                 if (oldValue != null) {
                     comboBox.valueProperty().unbindBidirectional(oldValue);
@@ -324,10 +324,10 @@ public class AssortmentController implements Initializable, MyController {
 
     public void setRetailer(Retailer retailer) {
         this.retailer.set(retailer);
-        RetailerProduct currentRetailerProduct = retailer.getRetailerProducts()
-                .get(retailer.getCurrentRetailerProductIndex());
-        meetingTable.setItems(currentRetailerProduct.getMeetings());
-        skuTable.setItems(currentRetailerProduct.getSkus());
+//        RetailerProduct currentRetailerProduct = retailer.getRetailerProducts()
+//                .get(retailer.getCurrentRetailerProductIndex());
+//        meetingTable.setItems(currentRetailerProduct.getMeetings());
+//        skuTable.setItems(currentRetailerProduct.getSkus());
         // implement something for general notes
     }
 }

@@ -3,11 +3,16 @@ package com.traderoute.controllers;
 import com.traderoute.App;
 import com.traderoute.TestBaseClass;
 import com.traderoute.data.Meeting;
+import com.traderoute.data.RTMOption;
 import com.traderoute.data.Retailer;
 import com.traderoute.data.Sku;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.TableCell;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.input.KeyCode;
@@ -34,6 +39,8 @@ public class AssortmentControllerTest extends TestBaseClass {
     TableView<Meeting> meetingTable;
     TableView<Sku> skuTable;
 
+    private TableColumn<Sku, String> statusColumn;
+
     private SimpleObjectProperty<Retailer> retailer;
     @Start
     public void start(Stage stage) throws IOException {
@@ -50,6 +57,8 @@ public class AssortmentControllerTest extends TestBaseClass {
     void setUp(FxRobot robot) {
         skuTable = robot.lookup(skuTableString).queryTableView();
         meetingTable = robot.lookup(meetingTableString).queryTableView();
+        ObservableList<TableColumn<Sku, ?>> columns= skuTable.getColumns();
+        statusColumn = (TableColumn<Sku, String>) columns.get(0);
     }
 
     @Test
@@ -70,11 +79,22 @@ public class AssortmentControllerTest extends TestBaseClass {
     }
     @Test
     public void testChangeStatus(FxRobot robot){
-        robot.doubleClickOn(cell(skuTableString, 0, 0, robot));
-        ComboBoxTableCell cell = robot.lookup("#cBoxCell").queryAs(ComboBoxTableCell.class);
-        robot.write("New Description").press(KeyCode.ENTER).release(KeyCode.ENTER);
-        Assertions.assertEquals("New Description",skuTable.getItems().get(0).getFlavorDescription());
+        TableCell<Sku, String> cell = (TableCell<Sku, String>) cell(skuTableString, 0, 1, robot);
+        ComboBox<String> box = (ComboBox<String>) cell.getGraphic();
+        robot.interact(() -> box.getSelectionModel().select(1));
+        Assertions.assertEquals("Targeted",skuTable.getItems().get(0).getStatus());
     }
+    @Test
+    public void testChangeSkuNotes(FxRobot robot){
+        robot.doubleClickOn(cell(skuTableString, 0, 2, robot));
+        robot.write("Note").press(KeyCode.ENTER).release(KeyCode.ENTER);
+        Assertions.assertEquals("Note", skuTable.getItems().get(0).getSkuNotes() );
+    }
+    
+
+
+
+
 
 
 
