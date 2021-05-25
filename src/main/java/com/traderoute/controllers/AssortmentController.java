@@ -3,7 +3,6 @@ package com.traderoute.controllers;
 import com.traderoute.*;
 import com.traderoute.data.Meeting;
 import com.traderoute.data.Retailer;
-import com.traderoute.data.RetailerProduct;
 import com.traderoute.data.Sku;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleObjectProperty;
@@ -16,7 +15,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.util.converter.DateTimeStringConverter;
 import javafx.util.converter.LocalDateStringConverter;
@@ -28,13 +26,12 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.ResourceBundle;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class AssortmentController implements Initializable, MyController {
     @FXML
     private TableView<Meeting> meetingTable;
     @FXML
-    private TableColumn<Meeting, String> descriptionColumn;
+    private TableColumn<Meeting, String> meetingDescriptionColumn;
     @FXML
     private TableColumn<Meeting, String> locationColumn;
     @FXML
@@ -54,7 +51,7 @@ public class AssortmentController implements Initializable, MyController {
     private TableColumn<Sku, String> skuNotesColumn;
 
     @FXML
-    private TextField descriptionField;
+    private TextField meetingDescriptionField;
     @FXML
     private TextField locationField;
     @FXML
@@ -114,7 +111,7 @@ public class AssortmentController implements Initializable, MyController {
     }
 
     public void changeDescriptionCellEvent(TableColumn.CellEditEvent editedCell) {
-        getFocusedMeeting().setDescription(editedCell.getNewValue().toString());
+        getFocusedMeeting().setMeetingDescription(editedCell.getNewValue().toString());
     }
 
     public void changeLocationCellEvent(TableColumn.CellEditEvent editedCell) {
@@ -142,7 +139,7 @@ public class AssortmentController implements Initializable, MyController {
     }
 
     public String getDescription() {
-        return descriptionField.getText() == null ? "" : descriptionField.getText();
+        return meetingDescriptionField.getText() == null ? "" : meetingDescriptionField.getText();
     }
 
     public LocalDate getDate() {
@@ -168,14 +165,14 @@ public class AssortmentController implements Initializable, MyController {
 
     public void addMeetingEvent(ActionEvent event) {
         Meeting newMeeting = new Meeting();
-        newMeeting.setDescription(getDescription());
+        newMeeting.setMeetingDescription(getDescription());
         newMeeting.setLocation(getLocation());
         newMeeting.setDate(getDate());
         newMeeting.setTime(getTime());
         newMeeting.setNotes(getNotes());
         meetingTable.getItems().add(newMeeting);
-        descriptionField.setText("");
-        descriptionField.setPromptText("Description");
+        meetingDescriptionField.setText("");
+        meetingDescriptionField.setPromptText("Description");
         locationField.setText("");
         locationField.setPromptText("Location");
         // do something here
@@ -282,7 +279,7 @@ public class AssortmentController implements Initializable, MyController {
 
     int[] iarr = {0};
     private void setCellFactories() {
-        descriptionColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        meetingDescriptionColumn.setCellFactory(TextFieldTableCell.forTableColumn());
         locationColumn.setCellFactory(TextFieldTableCell.forTableColumn());
         dateColumn.setCellFactory(TextFieldTableCell.forTableColumn(new LocalDateStringConverter()));
         timeColumn.setCellFactory(TextFieldTableCell.forTableColumn());
@@ -307,7 +304,7 @@ public class AssortmentController implements Initializable, MyController {
     }
 
     private void setCellValueFactories() {
-        descriptionColumn.setCellValueFactory(celldata -> celldata.getValue().descriptionProperty());
+        meetingDescriptionColumn.setCellValueFactory(celldata -> celldata.getValue().meetingDescriptionProperty());
         locationColumn.setCellValueFactory(celldata -> celldata.getValue().locationProperty());
         dateColumn.setCellValueFactory(celldata -> celldata.getValue().dateProperty());
         timeColumn.setCellValueFactory(celldata -> celldata.getValue().timeProperty());

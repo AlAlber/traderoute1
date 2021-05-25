@@ -4,14 +4,13 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 public class Meeting {
-    private SimpleStringProperty description, location, time, notes;
+    private SimpleStringProperty meetingDescription, location, time, notes;
     private SimpleObjectProperty<LocalDate> date;
 
     public Meeting(String description, String location, LocalDate date, String time, String notes) {
-        this.description = new SimpleStringProperty(description);
+        this.meetingDescription = new SimpleStringProperty(description);
         this.location = new SimpleStringProperty(location);
         this.date = new SimpleObjectProperty<>(date);
         this.time = new SimpleStringProperty(time);
@@ -19,7 +18,7 @@ public class Meeting {
     }
 
     public Meeting() {
-        this.description = new SimpleStringProperty();
+        this.meetingDescription = new SimpleStringProperty();
         this.location = new SimpleStringProperty();
         this.date = new SimpleObjectProperty<>();
         this.time = new SimpleStringProperty();
@@ -39,20 +38,20 @@ public class Meeting {
     }
 
     public String toString() {
-        return "Description: " + getDescription() + " Location: " + getLocation() + " Date: " + getDate() + " Notes: "
+        return "Description: " + getMeetingDescription() + " Location: " + getLocation() + " Date: " + getDate() + " Notes: "
                 + getNotes();
     }
 
-    public String getDescription() {
-        return description.get();
+    public String getMeetingDescription() {
+        return meetingDescription.get();
     }
 
-    public SimpleStringProperty descriptionProperty() {
-        return description;
+    public SimpleStringProperty meetingDescriptionProperty() {
+        return meetingDescription;
     }
 
-    public void setDescription(String description) {
-        this.description.set(description);
+    public void setMeetingDescription(String meetingDescription) {
+        this.meetingDescription.set(meetingDescription);
     }
 
     public String getLocation() {

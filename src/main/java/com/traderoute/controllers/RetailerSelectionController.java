@@ -111,7 +111,7 @@ public class RetailerSelectionController implements Initializable, MyController 
             retailerList.refresh();
         });
 
-        descriptionColumn.setCellValueFactory(cellData -> cellData.getValue().descriptionProperty());
+        descriptionColumn.setCellValueFactory(cellData -> cellData.getValue().meetingDescriptionProperty());
         locationColumn.setCellValueFactory(cellData -> cellData.getValue().locationProperty());
         dateColumn.setCellValueFactory(cellData -> cellData.getValue().dateProperty());
         timeColumn.setCellValueFactory(cellData -> cellData.getValue().timeProperty());

@@ -90,7 +90,13 @@ public class AssortmentControllerTest extends TestBaseClass {
         robot.write("Note").press(KeyCode.ENTER).release(KeyCode.ENTER);
         Assertions.assertEquals("Note", skuTable.getItems().get(0).getSkuNotes() );
     }
-    
+    @Test
+    public void testChangeMeetingDescription(FxRobot robot){
+        robot.doubleClickOn(cell(skuTableString, 0, 2, robot));
+        robot.write("Note").press(KeyCode.ENTER).release(KeyCode.ENTER);
+        Assertions.assertEquals("Note", skuTable.getItems().get(0).getSkuNotes() );
+    }
+
 
 
 
