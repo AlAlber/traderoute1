@@ -10,10 +10,7 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
@@ -90,7 +87,28 @@ public class AssortmentControllerTest extends TestBaseClass {
         robot.write("Note").press(KeyCode.ENTER).release(KeyCode.ENTER);
         Assertions.assertEquals("Note", skuTable.getItems().get(0).getSkuNotes() );
     }
-    
+
+    @Test
+    public void testGetFlavorDescription(FxRobot robot){
+        TextField field = robot.lookup("#flavorDescriptionField").queryAs(TextField.class);
+        robot.clickOn(field).write("Desc");
+        Assertions.assertEquals("Desc", controller.getFlavorDescription());
+    }
+
+    @Test
+    public void testGetStatus(FxRobot robot){
+        ComboBox<String> box = robot.lookup("#statusBox").queryComboBox();
+        robot.interact(() -> box.getSelectionModel().select(2));
+        Assertions.assertEquals("Discontinued", controller.getStatus());
+    }
+
+    @Test
+    public void testGetSkuNotes(FxRobot robot){
+        TextField field = robot.lookup("#skuNotesField").queryAs(TextField.class);
+        robot.clickOn(field).write("Noted");
+        Assertions.assertEquals("Noted", controller.getSkuNotes());
+    }
+
 
 
 

@@ -232,16 +232,16 @@ public class AssortmentController implements Initializable, MyController {
         return retailer.get();
     }
 
-    private String getFlavorDescription() {
+    public String getFlavorDescription() {
         return flavorDescriptionField.getText() == null ? "" : flavorDescriptionField.getText();
     }
 
-    private String getStatus() {
+    public String getStatus() {
         String status = statusBox.getSelectionModel().getSelectedItem().toString();
         return status == null ? "" : status;
     }
 
-    private String getSkuNotes() {
+    public String getSkuNotes() {
         return skuNotesField.getText() == null ? "" : skuNotesField.getText();
     }
 
