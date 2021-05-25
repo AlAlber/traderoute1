@@ -22,6 +22,7 @@ import org.testfx.framework.junit5.ApplicationExtension;
 import org.testfx.framework.junit5.Start;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 
 import static org.junit.Assert.*;
 
@@ -41,14 +42,14 @@ public class AssortmentControllerTest extends TestBaseClass {
     private TextField skuNotesField;
     private TextField flavorDescriptionField;
 
-    private SimpleObjectProperty<Retailer> retailer;
+    private SimpleObjectProperty<Retailer> retailer = new SimpleObjectProperty<>(new Retailer("ahold", MenuController.getRetailerProducts(),0 ,  new BigDecimal("40") , 158,new BigDecimal("3.0")));
     @Start
     public void start(Stage stage) throws IOException {
         fxmlLoader = App.createFXMLLoader("assortment");
         Scene scene = new Scene(fxmlLoader.load());
         App.setNewScene(scene);
         controller = fxmlLoader.getController();
-//        controller.setRetailer(retailer.get());
+        controller.setRetailer(retailer.get());
 
         stage.setScene(App.getScene());
         stage.show();
@@ -71,7 +72,7 @@ public class AssortmentControllerTest extends TestBaseClass {
     }
     @Test
     public void testGetFocusedSku(FxRobot robot){
-        robot.clickOn(cell(skuTableString, 0, 1, robot));
+        robot.clickOn(cell(skuTableString, 0, 0, robot));
         Assertions.assertEquals(skuTable.getItems().get(0), controller.getFocusedSku());
     }
     @Test
@@ -136,6 +137,21 @@ public class AssortmentControllerTest extends TestBaseClass {
         Button deletebtn = robot.lookup("#deleteSkuButton").queryButton();
         robot.clickOn(deletebtn);
         Assertions.assertFalse(skuTable.getItems().contains(sku));
+    }
+
+    @Test
+    public void testSwitchToPricingPromotion(FxRobot robot){
+        Button switchToPricingPromotionButton = robot.lookup("#switchToPricingPromotionButton").queryButton();
+        robot.clickOn(switchToPricingPromotionButton);
+
+        Assertions.assertTrue(App.getFxmlLoader().getController() instanceof PricingPromotionController);
+    }
+    @Test
+    public void testSwitchToRtmPlanning(FxRobot robot){
+        Button switchToRtmPlanningButton = robot.lookup("#switchToSecondTableButton").queryButton();
+        robot.clickOn(switchToRtmPlanningButton);
+
+        Assertions.assertTrue(App.getFxmlLoader().getController() instanceof RTMPlanningController);
     }
 
 
