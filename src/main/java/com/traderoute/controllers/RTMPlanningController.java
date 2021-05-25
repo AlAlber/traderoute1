@@ -25,6 +25,8 @@ import java.math.RoundingMode;
 import java.net.URL;
 import java.util.*;
 
+import static com.traderoute.controllers.RetailerSelectionController.*;
+
 /**
  * On this page a user can type in information about their Product for a a specific Retailer. In the brandNameBox a user
  * may select the brand name of a specific Product and then select the product class. On this page the user enters
@@ -648,22 +650,17 @@ public class RTMPlanningController implements Initializable {
         charts.stream().forEach(chart -> chart.updateChart(rtmPlanningTable1.getItems()));
     }
 
-    private void switchScenes(String fxml) throws IOException {
-        App.getNewController(fxml).setRetailer(retailer.get());
-    }
-
     @FXML
     private void switchToAssortment() throws IOException {
-        System.out.println("workign");
-        switchScenes("assortment");
+        switchScenes("assortment", retailer.get());
     }
     @FXML
     private void switchToRetailerSelection() throws IOException {
-        switchScenes("retailerSelection");
+        switchScenes("retailerSelection", retailer.get());
     }
     @FXML
     private void switchToPricingPromotion() throws IOException {
-        switchScenes("pricingPromotion");
+        switchScenes("pricingPromotion", retailer.get());
     }
 
     /**

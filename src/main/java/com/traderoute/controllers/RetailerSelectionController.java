@@ -227,6 +227,10 @@ public class RetailerSelectionController implements Initializable, MyController 
         App.setSceneRoot(menuLoader.load());
     }
 
+    public static void switchScenes (String fxml, Retailer retailer) throws IOException {
+        App.getNewController(fxml).setRetailer(retailer);
+    }
+
     @FXML
     private void switchToProductClassReporting(ActionEvent event) throws IOException {
         FXMLLoader productClassReportingLoader = App.createFXMLLoader("productClassReporting");
