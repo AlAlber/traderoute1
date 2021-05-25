@@ -38,6 +38,9 @@ public class AssortmentControllerTest extends TestBaseClass {
 
     private TableColumn<Sku, String> statusColumn;
 
+    private TextField skuNotesField;
+    private TextField flavorDescriptionField;
+
     private SimpleObjectProperty<Retailer> retailer;
     @Start
     public void start(Stage stage) throws IOException {
@@ -56,6 +59,9 @@ public class AssortmentControllerTest extends TestBaseClass {
         meetingTable = robot.lookup(meetingTableString).queryTableView();
         ObservableList<TableColumn<Sku, ?>> columns= skuTable.getColumns();
         statusColumn = (TableColumn<Sku, String>) columns.get(0);
+
+        skuNotesField = robot.lookup("#skuNotesField").queryAs(TextField.class);
+        flavorDescriptionField = robot.lookup("#flavorDescriptionField").queryAs(TextField.class);
     }
 
     @Test
@@ -90,8 +96,7 @@ public class AssortmentControllerTest extends TestBaseClass {
 
     @Test
     public void testGetFlavorDescription(FxRobot robot){
-        TextField field = robot.lookup("#flavorDescriptionField").queryAs(TextField.class);
-        robot.clickOn(field).write("Desc");
+        robot.clickOn(flavorDescriptionField).write("Desc");
         Assertions.assertEquals("Desc", controller.getFlavorDescription());
     }
 
@@ -104,9 +109,33 @@ public class AssortmentControllerTest extends TestBaseClass {
 
     @Test
     public void testGetSkuNotes(FxRobot robot){
-        TextField field = robot.lookup("#skuNotesField").queryAs(TextField.class);
-        robot.clickOn(field).write("Noted");
+        robot.clickOn(skuNotesField).write("Noted");
         Assertions.assertEquals("Noted", controller.getSkuNotes());
+    }
+
+    @Test
+    public void testAddSku(FxRobot robot){
+        testGetFlavorDescription(robot);
+        testGetStatus(robot);
+        testGetSkuNotes(robot);
+        Button addbtn = robot.lookup("#addNewSkuButton").queryButton();
+        robot.clickOn(addbtn);
+        Sku sku = skuTable.getItems().get(skuTable.getItems().size()-1);
+        Assertions.assertEquals("Desc", sku.getFlavorDescription());
+        Assertions.assertEquals("Discontinued", sku.getStatus());
+        Assertions.assertEquals("Noted", sku.getSkuNotes());
+        Assertions.assertEquals("", flavorDescriptionField.getText());
+        Assertions.assertEquals("", skuNotesField.getText());
+        Assertions.assertEquals("Flavor Description", flavorDescriptionField.getPromptText());
+        Assertions.assertEquals("Notes", skuNotesField.getPromptText());
+    }
+    @Test
+    public void testDeleteSku(FxRobot robot){
+        Sku sku = skuTable.getItems().get(0);
+        robot.clickOn(cell(skuTableString, 0, 0, robot));
+        Button deletebtn = robot.lookup("#deleteSkuButton").queryButton();
+        robot.clickOn(deletebtn);
+        Assertions.assertFalse(skuTable.getItems().contains(sku));
     }
 
 

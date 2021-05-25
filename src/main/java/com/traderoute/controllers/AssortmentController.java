@@ -206,6 +206,7 @@ public class AssortmentController implements Initializable, MyController {
         firstTableController.setRetailer(getRetailer());
     }
 
+
     @FXML
     private void switchToPricingPromotion(ActionEvent event) throws IOException {
         FXMLLoader pricingPromotionLoader = App.createFXMLLoader("pricingPromotion");
@@ -215,17 +216,10 @@ public class AssortmentController implements Initializable, MyController {
         pricingPromotionController.setRetailer(getRetailer());
     }
 
+
     public void deleteSkuEvent(ActionEvent event) {
-        ObservableList<Sku> selectedRows, allSkus;
-        allSkus = skuTable.getItems();
-
-        // this gives us the rows that were selected
-        selectedRows = skuTable.getSelectionModel().getSelectedItems();
-
-        // loop over the selected rows and remove the Person objects from the table
-        for (Sku sku : selectedRows) {
-            allSkus.remove(sku);
-        }
+        Sku selectedSku = skuTable.getSelectionModel().getSelectedItem();
+        skuTable.getItems().remove(selectedSku);
     }
 
     public Retailer getRetailer() {
