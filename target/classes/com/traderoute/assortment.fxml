@@ -90,7 +90,7 @@
                         </HBox>
                      </children>
                   </VBox>
-                  <TableView fx:id="meetingTableView" layoutX="228.0" layoutY="386.0" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="222.0" prefWidth="692.0" styleClass="table-row-cell" stylesheets="@../styles/Styles.css">
+                  <TableView fx:id="meetingTable" layoutX="228.0" layoutY="386.0" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="222.0" prefWidth="692.0" styleClass="table-row-cell" stylesheets="@../styles/Styles.css">
                      <columns>
                         <TableColumn fx:id="descriptionColumn" onEditCommit="#changeDescriptionCellEvent" prefWidth="137.0" resizable="false" text="Description" />
                         <TableColumn fx:id="locationColumn" onEditCommit="#changeLocationCellEvent" prefWidth="137.0" resizable="false" text="Location" />
@@ -103,7 +103,7 @@
                         <TableColumn fx:id="notesColumn" onEditCommit="#changeNotesCellEvent" prefWidth="137.0" resizable="false" text="Notes" />
                      </columns>
                   </TableView>
-                  <TableView fx:id="skuTableView" layoutX="228.0" layoutY="44.0" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="288.0" prefWidth="692.0" styleClass="table-row-cell" stylesheets="@../styles/Styles.css">
+                  <TableView fx:id="skuTable" layoutX="228.0" layoutY="44.0" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="288.0" prefWidth="692.0" styleClass="table-row-cell" stylesheets="@../styles/Styles.css">
                      <columns>
                         <TableColumn fx:id="flavorDescriptionColumn" onEditCommit="#changeFlavorDescriptionCellEvent" prefWidth="230.0" resizable="false" text="Flavor Description" />
                         <TableColumn fx:id="statusColumn" onEditCommit="#changeStatusCellEvent" prefWidth="230.0" resizable="false" text="Status">

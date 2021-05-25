@@ -3,6 +3,7 @@ package com.traderoute.data;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 
@@ -79,7 +80,7 @@ public class Sku {
         return status.get();
     }
 
-    public SimpleStringProperty statusProperty() {
+    public StringProperty statusProperty() {
         return status;
     }
 
