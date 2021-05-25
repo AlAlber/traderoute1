@@ -5,16 +5,18 @@ import com.traderoute.data.Meeting;
 import com.traderoute.data.Retailer;
 import com.traderoute.data.RetailerProduct;
 import com.traderoute.data.Sku;
+import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.ComboBoxTableCell;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.util.converter.DateTimeStringConverter;
 import javafx.util.converter.LocalDateStringConverter;
@@ -29,7 +31,7 @@ import java.util.ResourceBundle;
 
 public class AssortmentController implements Initializable, MyController {
     @FXML
-    private TableView<Meeting> meetingTableView;
+    private TableView<Meeting> meetingTable;
     @FXML
     private TableColumn<Meeting, String> descriptionColumn;
     @FXML
@@ -42,11 +44,11 @@ public class AssortmentController implements Initializable, MyController {
     private TableColumn<Meeting, String> notesColumn;
 
     @FXML
-    private TableView<Sku> skuTableView;
+    private TableView<Sku> skuTable;
     @FXML
     private TableColumn<Sku, String> flavorDescriptionColumn;
     @FXML
-    private TableColumn<Sku, String> statusColumn;
+    private TableColumn<Sku, StringProperty> statusColumn;
     @FXML
     private TableColumn<Sku, String> skuNotesColumn;
 
@@ -79,12 +81,12 @@ public class AssortmentController implements Initializable, MyController {
 
         setCellValueFactories();
 
-        meetingTableView.setItems(getExampleMeetings()); // TODO change to retailerproduct.getMeetings
-        meetingTableView.setEditable(true);
+        meetingTable.setItems(getExampleMeetings()); // TODO change to retailerproduct.getMeetings
+        meetingTable.setEditable(true);
         dateColumn.setEditable(false);
 
-        skuTableView.setItems(getExampleSkus());
-        skuTableView.setEditable(true);
+        skuTable.setItems(getExampleSkus());
+        skuTable.setEditable(true);
 
         setCellFactories();
         SimpleDateFormat format = new SimpleDateFormat("HH:mm");
@@ -94,8 +96,8 @@ public class AssortmentController implements Initializable, MyController {
             e.printStackTrace();
         }
 
-        meetingTableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        skuTableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        meetingTable.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        skuTable.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
         ObservableList<String> skuStatuses = FXCollections.observableArrayList();
         skuStatuses.addAll("Current", "Targeted", "Discontinued");
@@ -104,10 +106,10 @@ public class AssortmentController implements Initializable, MyController {
     }
 
     public Meeting getFocusedMeeting(){
-        return meetingTableView.getSelectionModel().getSelectedItem();
+        return meetingTable.getSelectionModel().getSelectedItem();
     }
     public Sku getFocusedSku(){
-        return skuTableView.getSelectionModel().getSelectedItem();
+        return skuTable.getSelectionModel().getSelectedItem();
     }
 
     public void changeDescriptionCellEvent(TableColumn.CellEditEvent editedCell) {
@@ -170,7 +172,7 @@ public class AssortmentController implements Initializable, MyController {
         newMeeting.setDate(getDate());
         newMeeting.setTime(getTime());
         newMeeting.setNotes(getNotes());
-        meetingTableView.getItems().add(newMeeting);
+        meetingTable.getItems().add(newMeeting);
         descriptionField.setText("");
         descriptionField.setPromptText("Description");
         locationField.setText("");
@@ -181,7 +183,7 @@ public class AssortmentController implements Initializable, MyController {
         timeField.setPromptText("00:00");
         notesField.setText("");
         notesField.setPromptText("Notes");
-        meetingTableView.refresh();
+        meetingTable.refresh();
     }
 
     public void addSkuEvent(ActionEvent event) {
@@ -189,12 +191,12 @@ public class AssortmentController implements Initializable, MyController {
         newSku.setFlavorDescription(getFlavorDescription());
         newSku.setStatus(getStatus());
         newSku.setSkuNotes(getSkuNotes());
-        skuTableView.getItems().add(newSku);
+        skuTable.getItems().add(newSku);
         flavorDescriptionField.setText("");
         flavorDescriptionField.setPromptText("Flavor Description");
         skuNotesField.setText("");
         skuNotesField.setPromptText("Notes");
-        skuTableView.refresh();
+        skuTable.refresh();
     }
 
     @FXML
@@ -217,10 +219,10 @@ public class AssortmentController implements Initializable, MyController {
 
     public void deleteSkuEvent(ActionEvent event) {
         ObservableList<Sku> selectedRows, allSkus;
-        allSkus = skuTableView.getItems();
+        allSkus = skuTable.getItems();
 
         // this gives us the rows that were selected
-        selectedRows = skuTableView.getSelectionModel().getSelectedItems();
+        selectedRows = skuTable.getSelectionModel().getSelectedItems();
 
         // loop over the selected rows and remove the Person objects from the table
         for (Sku sku : selectedRows) {
@@ -247,10 +249,10 @@ public class AssortmentController implements Initializable, MyController {
 
     public void deleteMeetingEvent(ActionEvent event) {
         ObservableList<Meeting> selectedRows, allMeetings;
-        allMeetings = meetingTableView.getItems();
+        allMeetings = meetingTable.getItems();
 
         // this gives us the rows that were selected
-        selectedRows = meetingTableView.getSelectionModel().getSelectedItems();
+        selectedRows = meetingTable.getSelectionModel().getSelectedItems();
 
         // loop over the selected rows and remove the Person objects from the table
         for (Meeting person : selectedRows) {
@@ -281,30 +283,51 @@ public class AssortmentController implements Initializable, MyController {
         dateColumn.setCellFactory(TextFieldTableCell.forTableColumn(new LocalDateStringConverter()));
         timeColumn.setCellFactory(TextFieldTableCell.forTableColumn());
         notesColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-
         flavorDescriptionColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-        statusColumn.setCellFactory(ComboBoxTableCell.forTableColumn("Current", "Targeted", "Discontinued"));
+        ComboBoxTableCell cBoxCell = new ComboBoxTableCell();
+        cBoxCell.setId("comboBoxCell");
+//        statusColumn.setCellFactory(cBoxCell.forTableColumn("Current", "Targeted", "Discontinued"));
+        statusColumn.setCellFactory(col -> {
+            TableCell<Sku, StringProperty> c = new TableCell<>();
+            final ComboBox<String> comboBox = new ComboBox<>(FXCollections.observableArrayList("Current", "Targeted", "Discontinued"));
+
+            c.itemProperty().addListener((observable, oldValue, newValue) -> {
+                if (oldValue != null) {
+                    comboBox.valueProperty().unbindBidirectional(oldValue);
+                }
+                if (newValue != null) {
+                    comboBox.valueProperty().bindBidirectional(newValue);
+                }
+            });
+            c.graphicProperty().bind(Bindings.when(c.emptyProperty()).then((Node) null).otherwise(comboBox));
+            return c;
+        });
         skuNotesColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+
     }
 
     private void setCellValueFactories() {
-        descriptionColumn.setCellValueFactory(new PropertyValueFactory<Meeting, String>("description"));
-        locationColumn.setCellValueFactory(new PropertyValueFactory<Meeting, String>("location"));
-        dateColumn.setCellValueFactory(new PropertyValueFactory<Meeting, LocalDate>("date"));
-        timeColumn.setCellValueFactory(new PropertyValueFactory<Meeting, String>("time"));
-        notesColumn.setCellValueFactory(new PropertyValueFactory<Meeting, String>("notes"));
+        descriptionColumn.setCellValueFactory(celldata -> celldata.getValue().descriptionProperty());
+        locationColumn.setCellValueFactory(celldata -> celldata.getValue().locationProperty());
+        dateColumn.setCellValueFactory(celldata -> celldata.getValue().dateProperty());
+        timeColumn.setCellValueFactory(celldata -> celldata.getValue().timeProperty());
+        notesColumn.setCellValueFactory(celldata -> celldata.getValue().notesProperty());
 
-        flavorDescriptionColumn.setCellValueFactory(new PropertyValueFactory<Sku, String>("flavorDescription"));
-        statusColumn.setCellValueFactory(cellData -> cellData.getValue().statusProperty());
-        skuNotesColumn.setCellValueFactory(new PropertyValueFactory<Sku, String>("skuNotes"));
+        flavorDescriptionColumn.setCellValueFactory(celldata -> celldata.getValue().flavorDescriptionProperty());
+        statusColumn.setCellValueFactory(i -> {
+            final StringProperty value = i.getValue().statusProperty();
+            // binding to constant value
+            return Bindings.createObjectBinding(() -> value);
+        });
+        skuNotesColumn.setCellValueFactory(celldata -> celldata.getValue().skuNotesProperty());
     }
 
     public void setRetailer(Retailer retailer) {
         this.retailer.set(retailer);
         RetailerProduct currentRetailerProduct = retailer.getRetailerProducts()
                 .get(retailer.getCurrentRetailerProductIndex());
-        meetingTableView.setItems(currentRetailerProduct.getMeetings());
-        skuTableView.setItems(currentRetailerProduct.getSkus());
+        meetingTable.setItems(currentRetailerProduct.getMeetings());
+        skuTable.setItems(currentRetailerProduct.getSkus());
         // implement something for general notes
     }
 }
