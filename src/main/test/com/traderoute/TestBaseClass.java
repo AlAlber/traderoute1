@@ -6,6 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
+import javafx.scene.input.KeyCode;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.loadui.testfx.exceptions.NoNodesFoundException;
 import org.testfx.api.FxRobot;
@@ -44,6 +45,11 @@ public class TestBaseClass {
         } else {
             throw new RuntimeException("Expected Group with only TableRows as children");
         }
+    }
+    public void typeInCell(TableCell cell, String value, FxRobot robot){
+        robot.doubleClickOn(cell).clickOn(cell);
+        robot.press(KeyCode.CONTROL, KeyCode.A).release(KeyCode.CONTROL, KeyCode.A).write(value);
+        robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
     }
 
     protected static TableCell<?, ?> cell(String tableSelector, int row, int column, FxRobot robot) {
