@@ -1,6 +1,9 @@
 package com.traderoute.data;
 
+import com.traderoute.cells.CellSpecs;
+import com.traderoute.cells.CellSpecsBuilder;
 import javafx.beans.property.*;
+import javafx.scene.control.Cell;
 
 public abstract class PromoRow<Object> {
     private final BooleanProperty editable = new SimpleBooleanProperty();
@@ -17,15 +20,37 @@ public abstract class PromoRow<Object> {
     public ObjectProperty<Object> october = new SimpleObjectProperty<>();
     public SimpleObjectProperty<Object> november = new SimpleObjectProperty<>();
     public SimpleObjectProperty<Object> december = new SimpleObjectProperty<>();
-    public String pre;
+//    public String pre;
+    public CellSpecs specs;
+
     public SimpleStringProperty name;
 
-    public PromoRow(String name, String pre, Object january, Object february, Object march, Object april, Object may,
+    public PromoRow(CellSpecs specs, String name, Object january, Object february, Object march, Object april, Object may,
                     Object june, Object july, Object august, Object september, Object october, Object november, Object december,
                     boolean editable) {
         this.name = new SimpleStringProperty(name);
-        this.pre = pre;
-
+//        this.pre = pre;
+        this.specs = specs;
+        this.january = new SimpleObjectProperty<>(january);
+        this.february = new SimpleObjectProperty<>(february);
+        this.march = new SimpleObjectProperty<>(march);
+        this.april = new SimpleObjectProperty<>(april);
+        this.may = new SimpleObjectProperty<>(may);
+        this.june = new SimpleObjectProperty<>(june);
+        this.july = new SimpleObjectProperty<>(july);
+        this.august = new SimpleObjectProperty<>(august);
+        this.september = new SimpleObjectProperty<>(september);
+        this.october = new SimpleObjectProperty<>(october);
+        this.november = new SimpleObjectProperty<>(november);
+        this.december = new SimpleObjectProperty<>(december);
+        setEditable(editable);
+    }
+    public PromoRow(CellSpecs specs, String name, Object total, Object january, Object february, Object march, Object april, Object may,
+                    Object june, Object july, Object august, Object september, Object october, Object november, Object december,
+                    boolean editable) {
+        this.name = new SimpleStringProperty(name);
+//        this.pre = pre;
+        this.specs = specs;
         this.january = new SimpleObjectProperty<>(january);
         this.february = new SimpleObjectProperty<>(february);
         this.march = new SimpleObjectProperty<>(march);
@@ -41,57 +66,58 @@ public abstract class PromoRow<Object> {
         setEditable(editable);
     }
 
-    public PromoRow(String name, String pre, Object total, Object january, Object february, Object march, Object april,
-                    Object may, Object june, Object july, Object august, Object september, Object october, Object november,
-                    Object december, boolean editable) {
+    public PromoRow(String name, String january, String february, String march,
+                    String april, String may, String june, String july, String august,
+                    String september, String october, String november, String december,
+                    boolean editable) {
         this.name = new SimpleStringProperty(name);
-        this.pre = pre;
-
-        this.total = new SimpleObjectProperty<>(total);
-        this.january = new SimpleObjectProperty<>(january);
-        this.february = new SimpleObjectProperty<>(february);
-        this.march = new SimpleObjectProperty<>(march);
-        this.april = new SimpleObjectProperty<>(april);
-        this.may = new SimpleObjectProperty<>(may);
-        this.june = new SimpleObjectProperty<>(june);
-        this.july = new SimpleObjectProperty<>(july);
-        this.august = new SimpleObjectProperty<>(august);
-        this.september = new SimpleObjectProperty<>(september);
-        this.october = new SimpleObjectProperty<>(october);
-        this.november = new SimpleObjectProperty<>(november);
-        this.december = new SimpleObjectProperty<>(december);
-
+        this.january = new SimpleObjectProperty(january);
+        this.february = new SimpleObjectProperty(february);
+        this.march = new SimpleObjectProperty(march);
+        this.april = new SimpleObjectProperty(april);
+        this.may = new SimpleObjectProperty(may);
+        this.june = new SimpleObjectProperty(june);
+        this.july = new SimpleObjectProperty(july);
+        this.august = new SimpleObjectProperty(august);
+        this.september = new SimpleObjectProperty(september);
+        this.october = new SimpleObjectProperty(october);
+        this.november = new SimpleObjectProperty(november);
+        this.december = new SimpleObjectProperty(december);
         setEditable(editable);
     }
 
     public String toString() {
-        return "name: " + name.get() + "pre: " + pre + "january: " + getJanuary();
+        return "name: " + name.get() + "pre: " + specs.getPre() + "january: " + getJanuary();
     }
 
-    public String getPre() {
-        return pre;
-    }
-
-    public void setPre(String pre) {
-        this.pre = pre;
-    }
+//    public String getPre() {
+//        return pre;
+//    }
+//
+//    public void setPre(String pre) {
+//        this.pre = pre;
+//    }
 
     public PromoRow() {
         this.name = new SimpleStringProperty("");
-        this.pre = "";
+//        this.pre = "";
+        this.specs = new CellSpecsBuilder().build();
         setEditable(false);
     }
 
-    public PromoRow(String name, String pre, Object january, Object february, Object march, Object april, Object may,
+    public PromoRow(CellSpecs specs, String name , Object january, Object february, Object march, Object april, Object may,
                     Object june, Object july, Object august, Object september, Object october, Object november,
                     Object december) {
-        this(name, pre, january, february, march, april, may, june, july, august, september, october, november,
+        this( specs, name, january, february, march, april, may, june, july, august, september, october, november,
                 december, true);
+//        String pre
+//        pre
     }
 
-    public PromoRow(String name, String pre) {
+    public PromoRow(CellSpecs specs, String name) {
         this.name = new SimpleStringProperty(name);
-        this.pre = pre;
+//        this.pre = pre;
+        this.specs = specs;
         this.january = new SimpleObjectProperty<>();
         this.february = new SimpleObjectProperty<>();
         this.march = new SimpleObjectProperty<>();
@@ -387,4 +413,11 @@ public abstract class PromoRow<Object> {
         editableProperty().set(editable);
     }
 
+    public CellSpecs getSpecs() {
+        return specs;
+    }
+
+    public void setSpecs(CellSpecs specs) {
+        this.specs = specs;
+    }
 }
