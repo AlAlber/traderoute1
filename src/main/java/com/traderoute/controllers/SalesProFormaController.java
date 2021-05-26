@@ -692,57 +692,57 @@ public class SalesProFormaController implements Initializable {
 
     public ObservableList<PromoRow<?>> getp1NamePromoRows() {
         ObservableList<PromoRow<?>> namePromoRows = FXCollections.observableArrayList();
-        namePromoRows.add(new BigDecimalPromoRow("Projected Sku Placements", ""));
-        namePromoRows.add(new IntegerPromoRow("Targeted New Placements", ""));
-        namePromoRows.add(new IntegerPromoRow("Store Count", ""));
-        namePromoRows.add(new BigDecimalPromoRow("Slotting", "$"));
+//        namePromoRows.add(new BigDecimalPromoRow("Projected Sku Placements", ""));
+//        namePromoRows.add(new IntegerPromoRow("Targeted New Placements", ""));
+//        namePromoRows.add(new IntegerPromoRow("Store Count", ""));
+//        namePromoRows.add(new BigDecimalPromoRow("Slotting", "$"));
         return namePromoRows;
     }
 
     public ObservableList<PromoRow<?>> getp2NamePromoRows() {
         ObservableList<PromoRow<?>> namePromoRows = FXCollections.observableArrayList();
-        namePromoRows.add(new BigDecimalPromoRow("Everyday Volume", ""));
-        namePromoRows.add(new BigDecimalPromoRow("Promo 1 Volume", ""));
-        namePromoRows.add(new BigDecimalPromoRow("Promo 2 Volume", ""));
-        namePromoRows.add(new BigDecimalPromoRow("Total Volume", ""));
+//        namePromoRows.add(new BigDecimalPromoRow("Everyday Volume", ""));
+//        namePromoRows.add(new BigDecimalPromoRow("Promo 1 Volume", ""));
+//        namePromoRows.add(new BigDecimalPromoRow("Promo 2 Volume", ""));
+//        namePromoRows.add(new BigDecimalPromoRow("Total Volume", ""));
         return namePromoRows;
     }
 
     public ObservableList<PromoRow<?>> getp3NamePromoRows() {
         ObservableList<PromoRow<?>> namePromoRows = FXCollections.observableArrayList();
-        namePromoRows.add(new BigDecimalPromoRow("Retailer: Gross Sales", ""));
-        namePromoRows.add(new BigDecimalPromoRow("Retailer: Net Cost", ""));
-        namePromoRows.add(new BigDecimalPromoRow("Retailer: Gross Profit", ""));
-        namePromoRows.add(new BigDecimalPromoRow("Retailer: Gross Profit Margin %", ""));
-        namePromoRows.add(new BigDecimalPromoRow("Retailer: Average Selling Price", ""));
+//        namePromoRows.add(new BigDecimalPromoRow("Retailer: Gross Sales", ""));
+//        namePromoRows.add(new BigDecimalPromoRow("Retailer: Net Cost", ""));
+//        namePromoRows.add(new BigDecimalPromoRow("Retailer: Gross Profit", ""));
+//        namePromoRows.add(new BigDecimalPromoRow("Retailer: Gross Profit Margin %", ""));
+//        namePromoRows.add(new BigDecimalPromoRow("Retailer: Average Selling Price", ""));
         return namePromoRows;
     }
 
     public ObservableList<PromoRow<?>> getp4NamePromoRows() {
         ObservableList<PromoRow<?>> namePromoRows = FXCollections.observableArrayList();
-        namePromoRows.add(new BigDecimalPromoRow("Manufacturer: Gross Sales (List)", "$"));
-        namePromoRows.add(new BigDecimalPromoRow("F.O.B Discounts", "$"));
-        namePromoRows.add(new BigDecimalPromoRow("Manufacturer Gross Sales Actual", "$"));
-        namePromoRows.add(new BigDecimalPromoRow("Total Trade Spending", "$"));
-        namePromoRows.add(new BigDecimalPromoRow("Spoils & Fees (Trade Spending)", "$"));
-        namePromoRows.add(new BigDecimalPromoRow("Everyday Allowance (Trade Spending)", "$"));
-        namePromoRows.add(new BigDecimalPromoRow("Promo 1 (Trade Spending)", "$"));
-        namePromoRows.add(new BigDecimalPromoRow("Promo 2 (Trade Spending)", "$"));
-        namePromoRows.add(new BigDecimalPromoRow("Fixed Costs (Trade Spending)", "$"));
-        namePromoRows.add(new BigDecimalPromoRow("F.O.B Freight Credit To Trade", "$"));
-        namePromoRows.add(new BigDecimalPromoRow("Manufacturer Net1 Revenue", "$"));
-        namePromoRows.add(new BigDecimalPromoRow("Manufacturer Freight Cost (Non-F.O.B.)", "$"));
-        namePromoRows.add(new BigDecimalPromoRow("Manufacturer Net2 Revenue", "$"));
-        namePromoRows.add(new BigDecimalPromoRow("Slotting", "$"));
-        namePromoRows.add(new BigDecimalPromoRow("Manufacturer Net3 Revenue", "$"));
-        namePromoRows.add(new BigDecimalPromoRow("Manufacturer Cost of Goods Sold", "$"));
-        namePromoRows.add(new BigDecimalPromoRow("Manufacturer Gross Profit", "$"));
+//        namePromoRows.add(new BigDecimalPromoRow("Manufacturer: Gross Sales (List)", "$"));
+//        namePromoRows.add(new BigDecimalPromoRow("F.O.B Discounts", "$"));
+//        namePromoRows.add(new BigDecimalPromoRow("Manufacturer Gross Sales Actual", "$"));
+//        namePromoRows.add(new BigDecimalPromoRow("Total Trade Spending", "$"));
+//        namePromoRows.add(new BigDecimalPromoRow("Spoils & Fees (Trade Spending)", "$"));
+//        namePromoRows.add(new BigDecimalPromoRow("Everyday Allowance (Trade Spending)", "$"));
+//        namePromoRows.add(new BigDecimalPromoRow("Promo 1 (Trade Spending)", "$"));
+//        namePromoRows.add(new BigDecimalPromoRow("Promo 2 (Trade Spending)", "$"));
+//        namePromoRows.add(new BigDecimalPromoRow("Fixed Costs (Trade Spending)", "$"));
+//        namePromoRows.add(new BigDecimalPromoRow("F.O.B Freight Credit To Trade", "$"));
+//        namePromoRows.add(new BigDecimalPromoRow("Manufacturer Net1 Revenue", "$"));
+//        namePromoRows.add(new BigDecimalPromoRow("Manufacturer Freight Cost (Non-F.O.B.)", "$"));
+//        namePromoRows.add(new BigDecimalPromoRow("Manufacturer Net2 Revenue", "$"));
+//        namePromoRows.add(new BigDecimalPromoRow("Slotting", "$"));
+//        namePromoRows.add(new BigDecimalPromoRow("Manufacturer Net3 Revenue", "$"));
+//        namePromoRows.add(new BigDecimalPromoRow("Manufacturer Cost of Goods Sold", "$"));
+//        namePromoRows.add(new BigDecimalPromoRow("Manufacturer Gross Profit", "$"));
         return namePromoRows;
     }
 
     public ObservableList<PromoRow<?>> getp5NamePromoRows() {
         ObservableList<PromoRow<?>> namePromoRows = FXCollections.observableArrayList();
-        namePromoRows.add(new BigDecimalPromoRow("Net1 Revenue Rate (Sales Management)", "$"));
+//        namePromoRows.add(new BigDecimalPromoRow("Net1 Revenue Rate (Sales Management)", "$"));
         return namePromoRows;
     }
 

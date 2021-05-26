@@ -1,11 +1,14 @@
 package com.traderoute.data;
 
+import com.traderoute.cells.NumberPromoRowBuilder;
+import com.traderoute.cells.StdSpecs;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.awt.font.NumericShaper;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
@@ -654,86 +657,33 @@ public class PromoPlan {
 
     public ObservableList<PromoRow<?>> getEmptyPromoRows() {
         ObservableList<PromoRow<?>> promoRows = FXCollections.observableArrayList();
-        promoRows.add(new BigDecimalPromoRow("Skus In Distribution", "", new BigDecimal("0.0"), new BigDecimal("0.0"),
-                new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"),
-                new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"),
-                new BigDecimal("0.0"), new BigDecimal("0.0"), false));
-        promoRows.add(new IntegerPromoRow("Sku-Count Change", "", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
-        PromoRow confidencePer = new BigDecimalPromoRow("Confidence %", "%");
-        promoRows.add(confidencePer);
-        promoRows.add(new BigDecimalPromoRow("Slotting Investment", "$", new BigDecimal("0.0"), new BigDecimal("0.0"),
-                new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"),
-                new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"),
-                new BigDecimal("0.0"), new BigDecimal("0.0"), true));
-        promoRows.add(new IntegerPromoRow("Store Count", "", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
+        promoRows.add(new NumberPromoRowBuilder().name("Skus In Distribution").buildBD());
+        promoRows.add(new NumberPromoRowBuilder().name("Sku-Count Change").buildInt());
+        promoRows.add(new NumberPromoRowBuilder().specs(StdSpecs.PERCENT.getSpecs()).name("Confidence %").buildBD());
+        promoRows.add(new NumberPromoRowBuilder().name("Slotting Investment").buildBD());
+        promoRows.add(new NumberPromoRowBuilder().name("Store Count").buildInt());
         promoRows.add(new BigDecimalPromoRow());
-        ;
-        promoRows.add(new BigDecimalPromoRow("Everyday Retail", "$", new BigDecimal("0.0"), new BigDecimal("0.0"),
-                new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"),
-                new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"),
-                new BigDecimal("0.0"), new BigDecimal("0.0"), true));
-        promoRows.add(new BigDecimalPromoRow("Everyday Unit Cost", "$", new BigDecimal("0.0"), new BigDecimal("0.0"),
-                new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"),
-                new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"),
-                new BigDecimal("0.0"), new BigDecimal("0.0"), true));
+        promoRows.add(new NumberPromoRowBuilder().name("Everyday Retail").editable(false).buildBD());
+        promoRows.add(new NumberPromoRowBuilder().name("Everyday Unit Cost").editable(false).buildBD());
         promoRows.add(new BigDecimalPromoRow());
-        ;
-        promoRows.add(new BigDecimalPromoRow("Seasonality Indices", "", new BigDecimal("0.0"), new BigDecimal("0.0"),
-                new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"),
-                new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"),
-                new BigDecimal("0.0"), new BigDecimal("0.0"), true));
-        promoRows.add(new BigDecimalPromoRow("Promoted Retail 1", "$", new BigDecimal("0.0"), new BigDecimal("0.0"),
-                new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"),
-                new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"),
-                new BigDecimal("0.0"), new BigDecimal("0.0"), true));
-        promoRows.add(new BigDecimalPromoRow("Required GPM % 1", "%", new BigDecimal("0.0"), new BigDecimal("0.0"),
-                new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"),
-                new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"),
-                new BigDecimal("0.0"), new BigDecimal("0.0"), true));
-        promoRows.add(new IntegerPromoRow("Duration (weeks) 1", "", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
-        promoRows.add(new BigDecimalPromoRow("Volume Lift Multiple 1", "", new BigDecimal("0.0"),
-                new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"),
-                new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"),
-                new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"), true));
-        promoRows.add(new BigDecimalPromoRow("Fixed Costs 1", "$", new BigDecimal("0.0"), new BigDecimal("0.0"),
-                new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"),
-                new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"),
-                new BigDecimal("0.0"), new BigDecimal("0.0"), true));
-        promoRows.add(new BigDecimalPromoRow("Promo Unit Cost 1", "$", new BigDecimal("0.0"), new BigDecimal("0.0"),
-                new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"),
-                new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"),
-                new BigDecimal("0.0"), new BigDecimal("0.0"), true));
-        promoRows.add(new BigDecimalPromoRow("Promo Discount % 1", "%", new BigDecimal("0.0"), new BigDecimal("0.0"),
-                new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"),
-                new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"),
-                new BigDecimal("0.0"), new BigDecimal("0.0"), true));
-        promoRows
-                .add(new StringPromoRow("Promotional Commentary", "", "", "", "", "", "", "", "", "", "", "", "", ""));
-        promoRows.add(new BigDecimalPromoRow("Promoted Retail 2", "$", new BigDecimal("0.0"), new BigDecimal("0.0"),
-                new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"),
-                new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"),
-                new BigDecimal("0.0"), new BigDecimal("0.0"), true));
-        promoRows.add(new BigDecimalPromoRow("Required GPM % 2", "%", new BigDecimal("0.0"), new BigDecimal("0.0"),
-                new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"),
-                new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"),
-                new BigDecimal("0.0"), new BigDecimal("0.0"), true));
-        promoRows.add(new IntegerPromoRow("Duration (weeks) 2", "", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
-        promoRows.add(new BigDecimalPromoRow("Volume Lift Multiple 2", "", new BigDecimal("0.0"),
-                new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"),
-                new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"),
-                new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"), true));
-        promoRows.add(new BigDecimalPromoRow("Fixed Costs 2", "$", new BigDecimal("0.0"), new BigDecimal("0.0"),
-                new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"),
-                new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"),
-                new BigDecimal("0.0"), new BigDecimal("0.0"), true));
-        promoRows.add(new BigDecimalPromoRow("Promo Unit Cost 2", "$", new BigDecimal("0.0"), new BigDecimal("0.0"),
-                new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"),
-                new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"),
-                new BigDecimal("0.0"), new BigDecimal("0.0"), true));
-        promoRows.add(new BigDecimalPromoRow("Promo Discount % 2", "%", new BigDecimal("0.0"), new BigDecimal("0.0"),
-                new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"),
-                new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"),
-                new BigDecimal("0.0"), new BigDecimal("0.0"), true));
+        promoRows.add(new NumberPromoRowBuilder().name("Seasonality Indices").editable(false).buildBD());
+        promoRows.add(new NumberPromoRowBuilder().name("Promoted Retail 1").buildBD());
+        promoRows.add(new NumberPromoRowBuilder().name("Required GPM % 1").specs(StdSpecs.PERCENT.getSpecs()).editable(false).buildBD());
+        promoRows.add(new NumberPromoRowBuilder().name("Duration (weeks) 1").buildInt());
+        promoRows.add(new NumberPromoRowBuilder().name("Volume Lift Multiple 1").buildBD());
+        promoRows.add(new NumberPromoRowBuilder().name("Fixed Costs 1").buildBD());
+        promoRows.add(new NumberPromoRowBuilder().name("Promo Unit Cost 1").editable(false).buildBD());
+        promoRows.add(new NumberPromoRowBuilder().name("Promo Discount % 1").specs(StdSpecs.PERCENT.getSpecs()).editable(false).buildBD());
+        promoRows.add(new StringPromoRow("Promotional Commentary", "", "", "", "", "", "", "", "", "", "", "", "", true));
+        promoRows.add(new NumberPromoRowBuilder().name("Promoted Retail 2").buildBD());
+        promoRows.add(new NumberPromoRowBuilder().name("Required GPM % 2").specs(StdSpecs.PERCENT.getSpecs()).buildBD());
+        promoRows.add(new NumberPromoRowBuilder().name("Duration (weeks) 2").buildInt());
+        promoRows.add(new NumberPromoRowBuilder().name("Volume Lift Multiple 2").buildBD());
+        promoRows.add(new NumberPromoRowBuilder().name("Fixed Costs 2").buildBD());
+        promoRows.add(new NumberPromoRowBuilder().name("Promo Unit Cost 2").editable(false).buildBD());
+        promoRows.add(new NumberPromoRowBuilder().name("Promo Discount % 2").specs(StdSpecs.PERCENT.getSpecs()).editable(false).buildBD());
+        promoRows.add(new NumberPromoRowBuilder().name("Total Volume=").editable(false).buildBD());
+        promoRows.add(new NumberPromoRowBuilder().name("Gross Profit (Plan)=").editable(false).buildBD());
         return promoRows;
     }
 
@@ -753,3 +703,77 @@ public class PromoPlan {
         return summaries;
     }
 }
+//                new BigDecimalPromoRow("Skus In Distribution", "", new BigDecimal("0.0"), new BigDecimal("0.0"),
+//                new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"),
+//                new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"),
+//                new BigDecimal("0.0"), new BigDecimal("0.0"), false));
+//                new IntegerPromoRow("Sku-Count Change", "", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
+//        PromoRow confidencePer = new BigDecimalPromoRow("Confidence %", "%");
+//        new BigDecimalPromoRow("Slotting Investment", "$", new BigDecimal("0.0"), new BigDecimal("0.0"),
+//                new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"),
+//                new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"),
+//                new BigDecimal("0.0"), new BigDecimal("0.0"), true)
+//        new IntegerPromoRow("Store Count", "", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+//        new BigDecimalPromoRow("Everyday Retail", "$", new BigDecimal("0.0"), new BigDecimal("0.0"),
+//                new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"),
+//                new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"),
+//                new BigDecimal("0.0"), new BigDecimal("0.0"), true)
+//        new BigDecimalPromoRow("Everyday Unit Cost", "$", new BigDecimal("0.0"), new BigDecimal("0.0"),
+//                new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"),
+//                new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"),
+//                new BigDecimal("0.0"), new BigDecimal("0.0"), true)
+//        new BigDecimalPromoRow("Seasonality Indices", "", new BigDecimal("0.0"), new BigDecimal("0.0"),
+//                new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"),
+//                new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"),
+//                new BigDecimal("0.0"), new BigDecimal("0.0"), true)
+//        new BigDecimalPromoRow("Promoted Retail 1", "$", new BigDecimal("0.0"), new BigDecimal("0.0"),
+//                new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"),
+//                new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"),
+//                new BigDecimal("0.0"), new BigDecimal("0.0"), true)
+//        new BigDecimalPromoRow("Required GPM % 1", "%", new BigDecimal("0.0"), new BigDecimal("0.0"),
+//                new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"),
+//                new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"),
+//                new BigDecimal("0.0"), new BigDecimal("0.0"), true)
+//        new IntegerPromoRow("Duration (weeks) 1", "", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+//        new BigDecimalPromoRow("Volume Lift Multiple 1", "", new BigDecimal("0.0"),
+//                new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"),
+//                new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"),
+//                new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"), true)
+//        new BigDecimalPromoRow("Fixed Costs 1", "$", new BigDecimal("0.0"), new BigDecimal("0.0"),
+//                new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"),
+//                new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"),
+//                new BigDecimal("0.0"), new BigDecimal("0.0"), true)
+//      new BigDecimalPromoRow("Promo Unit Cost 1", "$", new BigDecimal("0.0"), new BigDecimal("0.0"),
+//                new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"),
+//                new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"),
+//                new BigDecimal("0.0"), new BigDecimal("0.0"), true)
+//        new BigDecimalPromoRow("Promo Discount % 1", "%", new BigDecimal("0.0"), new BigDecimal("0.0"),
+//                new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"),
+//                new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"),
+//                new BigDecimal("0.0"), new BigDecimal("0.0"), true)
+//        new StringPromoRow("Promotional Commentary", "", "", "", "", "", "", "", "", "", "", "", "", "")
+//        new BigDecimalPromoRow("Promoted Retail 2", "$", new BigDecimal("0.0"), new BigDecimal("0.0"),
+//                new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"),
+//                new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"),
+//                new BigDecimal("0.0"), new BigDecimal("0.0"), true)
+//        new BigDecimalPromoRow("Required GPM % 2", "%", new BigDecimal("0.0"), new BigDecimal("0.0"),
+//                new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"),
+//                new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"),
+//                new BigDecimal("0.0"), new BigDecimal("0.0"), true)
+//        new IntegerPromoRow("Duration (weeks) 2", "", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+//        new BigDecimalPromoRow("Volume Lift Multiple 2", "", new BigDecimal("0.0"),
+//                new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"),
+//                new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"),
+//                new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"), true)
+//        new BigDecimalPromoRow("Fixed Costs 2", "$", new BigDecimal("0.0"), new BigDecimal("0.0"),
+//                new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"),
+//                new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"),
+//                new BigDecimal("0.0"), new BigDecimal("0.0"), true)
+//        new BigDecimalPromoRow("Promo Unit Cost 2", "$", new BigDecimal("0.0"), new BigDecimal("0.0"),
+//                new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"),
+//                new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"),
+//                new BigDecimal("0.0"), new BigDecimal("0.0"), true)
+//        new BigDecimalPromoRow("Promo Discount % 2", "%", new BigDecimal("0.0"), new BigDecimal("0.0"),
+//                new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"),
+//                new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"), new BigDecimal("0.0"),
+//                new BigDecimal("0.0"), new BigDecimal("0.0"), true)
