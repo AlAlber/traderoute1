@@ -1,8 +1,7 @@
 package com.traderoute.controllers;
 
 import com.traderoute.*;
-import com.traderoute.cells.CustomNonEditCell;
-import com.traderoute.cells.NumberEditCellBuilder;
+import com.traderoute.cells.*;
 import com.traderoute.charts.*;
 import com.traderoute.data.*;
 import javafx.beans.property.SimpleObjectProperty;
@@ -17,7 +16,6 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.util.converter.BigDecimalStringConverter;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -311,6 +309,8 @@ public class RTMPlanningController implements Initializable, MyController {
         setCellValueFactories();
 
         brandNameBox.setUniqueItems(MenuController.getExampleProducts());
+
+        rtmPlanningTable2.setItems(rtmPlanningTable1.getItems());
 
         updateCharts();
 
@@ -695,23 +695,31 @@ public class RTMPlanningController implements Initializable, MyController {
      * Sets cell factories for every column.
      */
     public void setCellFactories() {
+        CellSpecs specs = StdSpecs.DECPOS6$.getSpecs();
         rtmNameCol1.setCellFactory(TextFieldTableCell.forTableColumn());
-        slottingPerSkuCol.setCellFactory(tc -> new NumberEditCellBuilder().pre("$").buildBD());
-        freightOutPerUnitCol.setCellFactory(tc -> new NumberEditCellBuilder().pre("$").buildBD());
-        firstReceiverCol.setCellFactory(tc -> new NumberEditCellBuilder().pre("$").buildBD());
-        secondReceiverColumn.setCellFactory(tc -> new NumberEditCellBuilder().pre("$").buildBD());
-        thirdReceiverColumn.setCellFactory(tc -> new NumberEditCellBuilder().pre("$").buildBD());
-        fourthReceiverColumn.setCellFactory(tc -> new NumberEditCellBuilder().pre("$").buildBD());
-        landedStoreCostColumn.setCellFactory(tc -> new NumberEditCellBuilder().pre("$").buildBD());
-        everydayRetailCalcdCol.setCellFactory(tc -> new NumberEditCellBuilder().pre("$").buildBD());
-        everydayRetailOverrideCol.setCellFactory(tc -> new NumberEditCellBuilder().pre("$").buildBD());
-        elasticizedUnitVelocityColumn.setCellFactory(tc -> new NumberEditCellBuilder().post(" U/S/F/W").buildBD());
-        annualVolumePerSkuColumn.setCellFactory(tc -> new NumberEditCellBuilder().post(" Units").decimalScale(0).buildBD());
-        slottingPaybackPeriodColumn.setCellFactory(tc -> new NumberEditCellBuilder().post(" Years").buildBD());
-        postFreightPostSpoilsPerUnitCol.setCellFactory(tc -> new NumberEditCellBuilder().pre("$").post(" Per Unit").buildBD());
-        unspentTradePerUnitColumn.setCellFactory(tc -> new NumberEditCellBuilder().pre("$").post(" Per Unit").buildBD());
-        fourYearEqGpPerSkuColumn.setCellFactory(tc -> new NumberEditCellBuilder().pre("$").post(" Per Sku").buildBD());
-        fourYearEqGpPerUnitColumn.setCellFactory(tc -> new NumberEditCellBuilder().pre("$").post(" Per Unit").buildBD());
+        slottingPerSkuCol.setCellFactory(tc -> new BigDecimalEditCell1(specs));
+        freightOutPerUnitCol.setCellFactory(tc -> new BigDecimalEditCell1(specs));
+        firstReceiverCol.setCellFactory(tc -> new BigDecimalEditCell1(specs));
+        secondReceiverColumn.setCellFactory(tc -> new BigDecimalEditCell1(specs));
+        thirdReceiverColumn.setCellFactory(tc -> new BigDecimalEditCell1(specs));
+        fourthReceiverColumn.setCellFactory(tc -> new BigDecimalEditCell1(specs));
+        landedStoreCostColumn.setCellFactory(tc -> new BigDecimalEditCell1(specs));
+        everydayRetailCalcdCol.setCellFactory(tc -> new BigDecimalEditCell1(specs));
+        everydayRetailOverrideCol.setCellFactory(tc -> new BigDecimalEditCell1(specs));
+        elasticizedUnitVelocityColumn.setCellFactory(tc -> new BigDecimalEditCell1(
+                new CellSpecsBuilder().post(" U/F/S/W").build()));
+        annualVolumePerSkuColumn.setCellFactory(tc -> new BigDecimalEditCell1(
+                new CellSpecsBuilder().post(" Units").decPoints(0).build()));
+        slottingPaybackPeriodColumn.setCellFactory(tc ->
+                new BigDecimalEditCell1(new CellSpecsBuilder().post(" Years").build()));
+        postFreightPostSpoilsPerUnitCol.setCellFactory(tc -> new BigDecimalEditCell1(
+                new CellSpecsBuilder().pre("$").post(" Per Unit").build()));
+        unspentTradePerUnitColumn.setCellFactory(tc -> new BigDecimalEditCell1(
+                new CellSpecsBuilder().pre("$").post(" Per Unit").build()));
+        fourYearEqGpPerSkuColumn.setCellFactory(tc -> new BigDecimalEditCell1(
+                new CellSpecsBuilder().pre("$").post(" Per Sku").decPoints(0).build()));
+        fourYearEqGpPerUnitColumn.setCellFactory(tc -> new BigDecimalEditCell1(
+                new CellSpecsBuilder().pre("$").post(" Per Unit").build()));
     }
 
     /**
