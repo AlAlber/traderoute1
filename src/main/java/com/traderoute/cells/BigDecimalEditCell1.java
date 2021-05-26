@@ -1,17 +1,15 @@
 package com.traderoute.cells;
 
 import com.traderoute.BigDecimalTextField;
-import com.traderoute.NumberTextField;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 public class BigDecimalEditCell1 extends NumberEditCell1{
 
-    private int decimalScale;
-    public BigDecimalEditCell1(String pre, String post, Number defaultValue, Number minValue, Number maxValue, int decimalScale) {
-        super(pre, post, defaultValue, minValue, maxValue);
-        this.decimalScale = decimalScale;
+    public BigDecimalEditCell1(CellSpecs specs) {
+        super(specs);
+//        this.decPoints = decPoints;
     }
 
     @Override
@@ -20,18 +18,18 @@ public class BigDecimalEditCell1 extends NumberEditCell1{
     }
 
     @Override
-    public void commitNumberEdit(String text) {
+    public void commitValueEdit(String text) {
         commitEdit(new BigDecimal(text));
     }
 
     @Override
-    public Number getZero() {
+    public Number getZeroOrEmptyString() {
         return new BigDecimal("0.0");
     }
 
     @Override
-    public String getString(String pre, String post) {
-        return getItem() == null ? "" : pre + ((BigDecimal) getItem())
-                .setScale(decimalScale, RoundingMode.HALF_UP).toString() + post;
+    public String getString(CellSpecs specs) {
+        return getItem() == null ? "" : specs.getPre() + ((BigDecimal) getItem())
+                .setScale(specs.getDecPoints(), RoundingMode.HALF_UP).toString() + specs.getPost();
     }
 }

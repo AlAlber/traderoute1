@@ -8,8 +8,8 @@ import java.math.BigDecimal;
 
 public class IntEditCell1<Object, Integer> extends NumberEditCell1 {
 
-    public IntEditCell1(String pre, String post, Number defaultValue, Number minValue, Number maxValue) {
-        super(pre, post, defaultValue, minValue, maxValue);
+    public IntEditCell1() {
+        super();
     }
 
     @Override
@@ -18,17 +18,17 @@ public class IntEditCell1<Object, Integer> extends NumberEditCell1 {
     }
 
     @Override
-    public void commitNumberEdit(String text) {
+    public void commitValueEdit(String text) {
         commitEdit(java.lang.Integer.valueOf(text));
     }
 
     @Override
-    public java.lang.Integer getZero() {
+    public java.lang.Integer getZeroOrEmptyString() {
         return 0;
     }
 
     @Override
-    public String getString(String pre, String post) {
-        return getItem() == null ? "" : pre + getItem().toString() + post;
+    public String getString(CellSpecs specs) {
+        return getItem() == null ? "" : specs.getPre() + getItem().toString() + specs.getPost();
     }
 }
