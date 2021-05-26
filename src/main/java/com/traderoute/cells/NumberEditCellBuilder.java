@@ -13,11 +13,13 @@ public class NumberEditCellBuilder {
 
     public NumberEditCell1 buildInt(
             String _pre, String _post, Number _defaultValue, Number _minValue, Number _maxValue) {
-        return new IntEditCell1(_pre,_post,_defaultValue,_minValue,_maxValue);
+//        return new IntEditCell1(_pre,_post,_defaultValue,_minValue,_maxValue);
+        return null;
     }
 
     public NumberEditCell1 buildBD() {
-        return new BigDecimalEditCell1(_pre, _post, _defaultValue, _minValue, _maxValue, _decimalScale);
+//        return new BigDecimalEditCell1(_pre, _post, _defaultValue, _minValue, _maxValue, _decimalScale);
+        return null;
     }
 
     public NumberEditCellBuilder pre(String _pre) {
