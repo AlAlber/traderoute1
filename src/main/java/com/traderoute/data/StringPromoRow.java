@@ -1,16 +1,18 @@
 package com.traderoute.data;
 
+import com.traderoute.cells.CellSpecs;
+
 public class StringPromoRow extends PromoRow<String> {
 
-    public StringPromoRow(String name, String pre, String january, String february, String march, String april,
+    public StringPromoRow(String name, String january, String february, String march, String april,
                           String may, String june, String july, String august, String september, String october, String november,
-                          String december) {
-        super(name, pre, january, february, march, april, may, june, july, august, september, october, november,
-                december);
+                          String december, boolean editable) {
+        super(name, january, february, march, april, may, june, july, august, september, october, november,
+                december, editable);
     }
 
-    public StringPromoRow(String name, String pre) {
-        super(name, pre);
+    public StringPromoRow(CellSpecs specs, String name) {
+        super(specs, name);
     }
 
     public String getTotal() {

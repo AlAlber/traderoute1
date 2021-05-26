@@ -1,25 +1,26 @@
 package com.traderoute.data;
 
+import com.traderoute.cells.CellSpecs;
+
 public class IntegerPromoRow extends PromoRow<Integer> {
 
-    public IntegerPromoRow(String name, String pre, Integer january, Integer february, Integer march, Integer april,
+    public IntegerPromoRow(CellSpecs specs, String name, Integer january, Integer february, Integer march, Integer april,
                            Integer may, Integer june, Integer july, Integer august, Integer september, Integer october,
                            Integer november, Integer december) {
-        super(name, pre, january, february, march, april, may, june, july, august, september, october, november,
+        super(specs, name, january, february, march, april, may, june, july, august, september, october, november,
                 december);
 
     }
-
-    public IntegerPromoRow(String name, String pre, Integer total, Integer january, Integer february, Integer march,
-                           Integer april, Integer may, Integer june, Integer july, Integer august, Integer september, Integer october,
-                           Integer november, Integer december) {
-        super(name, pre, january, february, march, april, may, june, july, august, september, october, november,
-                december);
+    public IntegerPromoRow(CellSpecs specs, String name, Integer total,  Integer january, Integer february, Integer march, Integer april,
+                           Integer may, Integer june, Integer july, Integer august, Integer september, Integer october,
+                           Integer november, Integer december, boolean editable) {
+        super(specs, name, total, january, february, march, april, may, june, july, august, september, october, november,
+                december, editable);
 
     }
 
-    public IntegerPromoRow(String name, String pre) {
-        super(name, pre);
+    public IntegerPromoRow(CellSpecs specs, String name) {
+        super(specs, name);
         setEditable(true);
     }
 
