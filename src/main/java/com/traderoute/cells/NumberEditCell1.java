@@ -1,39 +1,38 @@
 package com.traderoute.cells;
 
-import com.traderoute.BigDecimalTextField;
-import com.traderoute.DoubleInputConverter;
-import com.traderoute.IntegerTextField;
-import com.traderoute.NumberTextField;
-import com.traderoute.data.RTMOptionBuilder;
-import com.traderoute.data.RetailerProduct;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.Event;
 import javafx.scene.control.*;
 
-import javax.sound.midi.SysexMessage;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.util.regex.Pattern;
-
 public abstract class NumberEditCell1 extends TableCell
     {
-        private NumberTextField textField;
-        private String pre = "";
-        private String post = "";
-        private Number maxValue;
-        private Number minValue;
-        private Number defaultValue;
+        private TextField textField;
+//        private String pre = "";
+//        private String post = "";
+//        private Number maxValue;
+//        private Number minValue;
+//        private Number defaultValue;
+        private CellSpecs _specs = StdSpecs.INTPOS6$.getSpecs();
 
-    public NumberEditCell1(String pre, String post, Number defaultValue, Number minValue, Number maxValue) {
-        this.pre = pre;
-        this.post = post;
-        this.defaultValue = defaultValue;
-        this.minValue = minValue;
-        this.maxValue = maxValue;
+//    public NumberEditCell1(CellSpecs specs) {
+////        String pre, String post, Number defaultValue, Number minValue, Number maxValue
+////        this.pre = pre;
+////        this.post = post;
+////        this.defaultValue = defaultValue;
+////        this.minValue = minValue;
+////        this.maxValue = maxValue;
+//        this.specs = specs;
+//    }
+
+    public NumberEditCell1(CellSpecs specs) {
+        this._specs = specs;
     }
-//    public NumberEditCell1 pre(String pre) {
+    public NumberEditCell1(){
+    }
+
+
+        //    public NumberEditCell1 pre(String pre) {
 //        this.pre = pre;
 //        return this;
 //    }
@@ -41,18 +40,27 @@ public abstract class NumberEditCell1 extends TableCell
 //        this.post = post;
 //        return this;
 //    }
-    public NumberEditCell1 defaultValue(String post) {
-        this.post = post;
-        return this;
+//    public NumberEditCell1 defaultValue(String post) {
+//        this.post = post;
+//        return this;
+//    }
+    public CellSpecs get_specs(){
+        return _specs;
     }
 
 
-    public NumberTextField getTextField() {
+    public TextField getTextField() {
         return textField;
     }
 
-        @Override
-        public void startEdit() {
+//    public NumberEditCell1 specs(CellSpecs _specs){
+//        this._specs = _specs;
+//        return this;
+//    }
+
+
+    @Override
+    public void startEdit() {
         if (!isEmpty()) {
             super.startEdit();
             TableColumn<?, ?> column = getTableColumn();
@@ -60,22 +68,20 @@ public abstract class NumberEditCell1 extends TableCell
             if (!column.isEditable()) {
                 return;
             }
-            setText(null);
             setGraphic(textField);
             textField.selectAll();
             textField.setOnAction(evt -> processEdit()); // react to enter
         }
     }
-
-        @Override
-        public void cancelEdit() {
+    @Override
+    public void cancelEdit() {
         super.cancelEdit();
         //TODO add this in subclass
 //        if (getTableRow().getIndex() == 5 || getTableRow().getIndex() == 8) {
 //            return;
 //        }
         // Product product = getTableRow().getItem();// If i dont do this it removes the pre
-        setText(getString(pre, post));
+        setText(getString(get_specs()));
 
         setGraphic(null);
     }
@@ -90,7 +96,7 @@ public abstract class NumberEditCell1 extends TableCell
 //        }
         // Product product = getTableRow().getItem();
         if (empty) {
-            setText(null);
+//            setText(null);
             setGraphic(null);
         } else {
             if (isEditing()) {
@@ -100,15 +106,17 @@ public abstract class NumberEditCell1 extends TableCell
                 setText(null);
                 setGraphic(textField);
             } else {
-                setText(getString(pre, post));
-                setTooltip(new Tooltip(getString(pre, post)));
+                setText(getString(get_specs()));
+                setTooltip(new Tooltip(getString(get_specs())));
             }
             setGraphic(null);
         }
     }
 
+
     private void createTextField() {
-        textField = getSpecificTextField(defaultValue, minValue, maxValue);
+        textField = getSpecificTextField(get_specs().getDefaultValue(),
+                get_specs().getMinValue(), get_specs().getMaxValue());
         textField.setMinWidth(this.getWidth() - this.getGraphicTextGap() * 2);
         textField.selectAll();
         textField.focusedProperty()
@@ -118,20 +126,20 @@ public abstract class NumberEditCell1 extends TableCell
                     }
                 });
     }
-    public abstract NumberTextField getSpecificTextField(Number defaultValue, Number minValue, Number maxValue);
+    public abstract TextField getSpecificTextField(Number defaultValue, Number minValue, Number maxValue);
 
     private void processEdit() {
         String text = textField.getText();
         if (text.equals("")) {
-            commitEdit(getZero());
+            commitEdit(getZeroOrEmptyString());
         }
-        commitNumberEdit(text);
+        commitValueEdit(text);
     }
-    public abstract void commitNumberEdit(String text);
+    public abstract void commitValueEdit(String text);
 
-    public abstract Number getZero();
+    public abstract Object getZeroOrEmptyString();
 
-    public abstract String getString(String pre, String post);
+    public abstract String getString(CellSpecs specs);
 
         @Override
         public void commitEdit(Object item) {
