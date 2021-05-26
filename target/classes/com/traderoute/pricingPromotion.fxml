@@ -405,9 +405,9 @@
                               </AnchorPane>
                            </children>
                         </VBox>
-                        <TableView fx:id="pricingPromotionTableOne" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="695.0" prefWidth="975.0" style="-fx-border-color: #A79543; -fx-border-width: 3;" stylesheets="@../styles/Styles.css">
+                        <TableView fx:id="promoTable" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="695.0" prefWidth="975.0" style="-fx-border-color: #A79543; -fx-border-width: 3;" stylesheets="@../styles/Styles.css">
                            <columns>
-                            <TableColumn fx:id="parameterNameColumn" prefWidth="152.0" sortable="false" />
+                            <TableColumn fx:id="promoRowNameColumn" prefWidth="152.0" sortable="false" />
                               <TableColumn fx:id="januaryColumn" onEditCommit="#changeMonthCellEvent" prefWidth="68.0" sortable="false" text="January" />
                               <TableColumn fx:id="februaryColumn" onEditCommit="#changeMonthCellEvent" prefWidth="68.0" sortable="false" text="February" />
                               <TableColumn fx:id="marchColumn" onEditCommit="#changeMonthCellEvent" prefWidth="68.0" sortable="false" text="March" />
