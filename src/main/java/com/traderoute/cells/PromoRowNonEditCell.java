@@ -30,12 +30,12 @@ public class PromoRowNonEditCell extends TableCell<PromoRow<?>, Object> {
                 itemString = (String) item;
             }
 
-            if (promoRow.getPre().equals("%")) {
-                setText(itemString + promoRow.getPre());
-                setTooltip(new Tooltip(itemString + promoRow.getPre()));
+            if (promoRow.getSpecs().getPre().equals("%")) {
+                setText(itemString + promoRow.getSpecs().getPre());
+                setTooltip(new Tooltip(itemString + promoRow.getSpecs().getPre()));
             } else {
-                setText(promoRow.getPre() + itemString);
-                setTooltip(new Tooltip(promoRow.getPre() + itemString));
+                setText(promoRow.getSpecs().getPre() + itemString);
+                setTooltip(new Tooltip(promoRow.getSpecs().getPre() + itemString));
             }
             // if (param.getJanuary() instanceof String) {
             // if (item.equals("")) {
