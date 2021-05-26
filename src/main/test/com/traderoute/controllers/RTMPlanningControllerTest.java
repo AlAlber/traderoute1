@@ -115,6 +115,7 @@ class RTMPlanningControllerTest extends TestBaseClass{
         rtmPlanningTable1.setItems(FXCollections.observableArrayList(rtmOption1, rtmOption2, rtmOption3, rtmOption4));
         //Set up row listeners which is normally done in initialize
         controller.setUpListeners();
+        rtmPlanningTable2.setItems(rtmPlanningTable1.getItems());
 
         listLabel = robot.lookup("#listLabel").queryAs(Label.class);
         fobLabel = robot.lookup("#fobLabel").queryAs(Label.class);
@@ -686,61 +687,103 @@ class RTMPlanningControllerTest extends TestBaseClass{
     }
 
 
-
     @Test
     public void testSlottingPerSkuCellStartsWithDollar(FxRobot robot){
-        TableCell tableCell = cell(table1String,3,1, robot);
-        robot.doubleClickOn(cell(table1String,3,1, robot));
-        robot.write("30.0");
-        robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
-        rtmPlanningTable1.refresh();
-        Assertions.assertEquals("$30.0", tableCell.getText());
+        TableCell cell = cell(table1String,3,1,robot);
+        typeInCell(cell,"30.0", robot);
+        Assertions.assertEquals("$30.00", cell.getText());
     }
     @Test
     public void testFreightOutPerUnitCellStartsWithDollar(FxRobot robot){
         TableCell tableCell = cell(table1String,3,2, robot);
-        robot.doubleClickOn(cell(table1String,3,2, robot));
-        robot.write("30.0");
-        robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
-        rtmPlanningTable1.refresh();
-        Assertions.assertEquals("$30.0", tableCell.getText());
+        typeInCell(tableCell, "30.0", robot);
+        Assertions.assertEquals("$30.00", tableCell.getText());
     }
     @Test
     public void testFirstReceiverCellStartsWithDollar(FxRobot robot){
         TableCell tableCell = cell(table1String,3,3, robot);
-        robot.doubleClickOn(cell(table1String,3,3, robot));
-        robot.write("30.0");
-        robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
-        rtmPlanningTable1.refresh();
-        Assertions.assertEquals("$30.0", tableCell.getText());
+        typeInCell(tableCell, "30.0", robot);
+        Assertions.assertEquals("$30.00", tableCell.getText());
     }
     @Test
     public void testSecondReceiverCellStartsWithDollar(FxRobot robot){
         TableCell tableCell = cell(table1String,3,4, robot);
-        robot.doubleClickOn(cell(table1String,3,4, robot));
-        robot.write("30.0");
-        robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
-        rtmPlanningTable1.refresh();
-        Assertions.assertEquals("$30.0", tableCell.getText());
+        typeInCell(tableCell, "30.0", robot);
+        Assertions.assertEquals("$30.00", tableCell.getText());
     }
     @Test
     public void testThirdReceiverCellStartsWithDollar(FxRobot robot){
         TableCell tableCell = cell(table1String,3,5, robot);
-        robot.doubleClickOn(cell(table1String,3,5, robot));
-        robot.write("30.0");
-        robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
-        rtmPlanningTable1.refresh();
-        Assertions.assertEquals("$30.0", tableCell.getText());
+        typeInCell(tableCell, "30.0", robot);
+        Assertions.assertEquals("$30.00", tableCell.getText());
     }
     @Test
     public void testFourthReceiverCellStartsWithDollar(FxRobot robot){
         TableCell tableCell = cell(table1String,3,6, robot);
-        robot.doubleClickOn(cell(table1String,3,6, robot));
-        robot.write("30.0");
-        robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
-        rtmPlanningTable1.refresh();
-        Assertions.assertEquals("$30.0", tableCell.getText());
+        typeInCell(tableCell, "30.0", robot);
+        Assertions.assertEquals("$30.00", tableCell.getText());
     }
+    public void setCellValue(TableCell cell, String value, FxRobot robot){
+
+    }
+    public RTMOption testRTMOptionCell(int row){
+        return rtmPlanningTable1.getItems().get(row);
+    }
+
+    @Test
+    public void testEverydayRetailCalcdCellStartsWithDollar(FxRobot robot) {
+        robot.interact(()->
+                testRTMOptionCell(3).setEverydayRetailCalcd(new BigDecimal("30.0")));
+        Assertions.assertEquals("$30.00", cell(table1String,3,8, robot).getText());
+    }
+    @Test
+    public void testEverydayRetailOverrideCellStartsWithDollar(FxRobot robot) {
+        TableCell tableCell = cell(table1String,3,9, robot);
+        typeInCell(tableCell, "30.0", robot);
+        Assertions.assertEquals("$30.00", tableCell.getText());
+    }
+    @Test
+    public void testElasticizedUnitVelocityCellStartsWithDollar(FxRobot robot) {
+        robot.interact(()-> testRTMOptionCell(3).setElasticizedUnitVelocity(new BigDecimal("30.0")));
+        Assertions.assertEquals("30.00 U/F/S/W", cell(table2String,3,1, robot).getText());
+    }
+    @Test
+    public void testAnnualVolumePerSkuCellStartsWithDollar(FxRobot robot) {
+        robot.interact(()-> testRTMOptionCell(3).setAnnualVolumePerSku(new BigDecimal("30.0")));
+        Assertions.assertEquals("30 Units", cell(table2String,3,2, robot).getText());
+    }
+    @Test
+    public void testSlottingPaybackPeriodCellStartsWithDollar(FxRobot robot) {
+        robot.interact(()->
+                testRTMOptionCell(3).setSlottingPaybackPeriod(new BigDecimal("30.0")));
+        Assertions.assertEquals("30.00 Years", cell(table2String,3,3, robot).getText());
+    }
+    @Test
+    public void testPostSpoilsPostFreightPerUnitCellStartsWithDollar(FxRobot robot) {
+        robot.interact(()->
+                testRTMOptionCell(3).setPostSpoilsPostFreightPerUnit(new BigDecimal("30.0")));
+        Assertions.assertEquals("$30.00 Per Unit", cell(table2String,3,4, robot).getText());
+    }
+    @Test
+    public void testUnspentTradePerUnitCellStartsWithDollar(FxRobot robot) {
+        robot.interact(()->
+                testRTMOptionCell(3).setUnspentTradePerUnit(new BigDecimal("30.0")));
+        Assertions.assertEquals("$30.00 Per Unit", cell(table2String,3,5, robot).getText());
+    }
+    @Test
+    public void testFourYearEqGpPerSkuCellStartsWithDollar(FxRobot robot) {
+        robot.interact(()->
+                testRTMOptionCell(3).setFourYearEqGpPerSku(new BigDecimal("30.0")));
+        Assertions.assertEquals("$30 Per Sku", cell(table2String,3,6, robot).getText());
+    }
+    @Test
+    public void testFourYearEqGpPerUnitCellStartsWithDollar(FxRobot robot) {
+        robot.interact(()->
+                testRTMOptionCell(3).setFourYearEqGpPerUnit(new BigDecimal("30.0")));
+        Assertions.assertEquals("$30.00 Per Unit", cell(table2String,3,7, robot).getText());
+    }
+
+
     @Test
     public void testGetUniqueBrandNamesForBrandComboBox(FxRobot robot){
         ObservableList<Product> productsWithUniqueBrandNames =
