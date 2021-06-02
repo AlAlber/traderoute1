@@ -13,10 +13,7 @@ public class LandedStoreCostChart extends RTMPlanningChart {
     public LandedStoreCostChart(CategoryAxis xAxis, NumberAxis yAxis) {
         super(xAxis, yAxis);
         this.setId("landedStoreCostChart");
-
-
     }
-
     @Override
     public BigDecimal getYValue(RTMOption rtmOption) {
         return rtmOption.getLandedStoreCost();

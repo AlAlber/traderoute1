@@ -28,11 +28,9 @@ public abstract class NumberTextField extends TextField {
         Alert alert = new Alert(Alert.AlertType.WARNING,
                 "Enter a value between "+ minValue + " and " + maxValue + ", please." +
                         " We have\nreset the field to its default value.", ButtonType.OK);
-        System.out.println("checking this?");
         addEventHandler(ActionEvent.ACTION, e -> {
                     if (new BigDecimal(this.getText()).compareTo(new BigDecimal(maxValue.toString())) > 0 ||
                             new BigDecimal(this.getText()).compareTo(new BigDecimal(minValue.toString())) < 0) {
-                        System.out.println("is it gettting here");
                         this.setText(defaultValue.toString());
                         this.value.set(getDefaultValue());
                         alert.showAndWait();
