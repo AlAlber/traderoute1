@@ -3,7 +3,7 @@ package com.traderoute.cells;
 import java.math.BigDecimal;
 
 public enum StdSpecs {
-
+    INTPOS5X(new CellSpecsBuilder().pre("").post("").defaultValue(0).minValue(0).maxValue(10000).build()),
     INTPOS5$(new CellSpecsBuilder().pre("$").post("").defaultValue(0).minValue(0).maxValue(10000).build()),
     INTPOS6$(new CellSpecsBuilder().pre("$").post("").defaultValue(0).minValue(0).maxValue(100000).build()),
     DECPOS5$(new CellSpecsBuilder().pre("$").post("").defaultValue(new BigDecimal("0.0"))

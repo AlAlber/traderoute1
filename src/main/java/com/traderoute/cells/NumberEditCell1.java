@@ -15,6 +15,7 @@ public abstract class NumberEditCell1 extends TableCell
 //        private Number defaultValue;
         private CellSpecs _specs = StdSpecs.INTPOS6$.getSpecs();
 
+
 //    public NumberEditCell1(CellSpecs specs) {
 ////        String pre, String post, Number defaultValue, Number minValue, Number maxValue
 ////        this.pre = pre;
@@ -30,7 +31,6 @@ public abstract class NumberEditCell1 extends TableCell
     }
     public NumberEditCell1(){
     }
-
 
         //    public NumberEditCell1 pre(String pre) {
 //        this.pre = pre;

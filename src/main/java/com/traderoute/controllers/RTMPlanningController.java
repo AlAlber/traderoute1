@@ -691,6 +691,7 @@ public class RTMPlanningController implements Initializable, MyController {
         rtmNameColumn2.setCellValueFactory(cellData -> cellData.getValue().rtmNameProperty());
     }
 
+
     /**
      * Sets cell factories for every column.
      */

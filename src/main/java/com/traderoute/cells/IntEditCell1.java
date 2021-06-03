@@ -8,8 +8,8 @@ import java.math.BigDecimal;
 
 public class IntEditCell1<Object, Integer> extends NumberEditCell1 {
 
-    public IntEditCell1() {
-        super();
+    public IntEditCell1(CellSpecs specs) {
+        super(specs);
     }
 
     @Override

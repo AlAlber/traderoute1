@@ -120,7 +120,7 @@ public class MenuController implements Initializable {
         window.heightProperty().addListener(listener);
     }
 
-    private ObservableList<Retailer> getExampleRetailers() {
+    public static ObservableList<Retailer> getExampleRetailers() {
         ObservableList<Retailer> retailers = FXCollections.observableArrayList();
         retailers.add(new Retailer("Ahold Giant", getRetailerProducts(), 0, new BigDecimal("40"), 158,
                 new BigDecimal("3.0")));
@@ -264,7 +264,7 @@ public class MenuController implements Initializable {
      *
      * @return
      */
-    public ObservableList<RetailerProduct> getTestRetailerProducts() {
+    public static ObservableList<RetailerProduct> getTestRetailerProducts() {
         ObservableList<RetailerProduct> retailerProducts = FXCollections.observableArrayList();
         ObservableList<Sku> skus = FXCollections.observableArrayList(getExampleSkus().get(0), getExampleSkus().get(1),
                 getExampleSkus().get(2), getExampleSkus().get(3), getExampleSkus().get(4));

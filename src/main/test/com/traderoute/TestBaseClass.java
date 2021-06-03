@@ -1,5 +1,6 @@
 package com.traderoute;
 
+import com.traderoute.data.ProductClassReport;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -7,10 +8,13 @@ import javafx.scene.control.TableCell;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.input.KeyCode;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.loadui.testfx.exceptions.NoNodesFoundException;
 import org.testfx.api.FxRobot;
 import org.testfx.framework.junit5.ApplicationExtension;
+
+import java.util.function.BiConsumer;
 
 @ExtendWith(ApplicationExtension.class)
 public class TestBaseClass {
@@ -50,6 +54,14 @@ public class TestBaseClass {
         robot.doubleClickOn(cell).clickOn(cell);
         robot.press(KeyCode.CONTROL, KeyCode.A).release(KeyCode.CONTROL, KeyCode.A).write(value);
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
+    }
+    public void checkCell(int row, int col, String input, String expected, String tableString,  BiConsumer consumer, FxRobot robot){
+        TableView table = robot.lookup(tableString).queryTableView();
+        TableCell tableCell = cell(tableString, row, col, robot);
+        ProductClassReport report = (ProductClassReport)table.getItems().get(row);
+//        BiConsumer<ProductClassReport, String> consumer = (repor, inpu) -> repor.setNet1Pod(new BigDecimal(inpu));
+        robot.interact(()-> report.setColumn(consumer, report, input));
+        Assertions.assertEquals(expected,tableCell.getText());
     }
 
     protected static TableCell<?, ?> cell(String tableSelector, int row, int column, FxRobot robot) {

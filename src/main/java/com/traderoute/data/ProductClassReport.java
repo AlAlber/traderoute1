@@ -6,10 +6,15 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.TableView;
+import org.testfx.api.FxRobot;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Locale;
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
+import java.util.function.Function;
 
 public class ProductClassReport {
     private SimpleStringProperty retailerName;
@@ -223,6 +228,10 @@ public class ProductClassReport {
         }
         return promoPlans;
     }
+    // Function used for testing
+    public void setColumn (BiConsumer<ProductClassReport, String> setColumn,ProductClassReport report, String value){
+        setColumn.accept(report, value);
+    }
 
     public String getSelectedRtm() {
         return selectedRtm.get();
@@ -315,6 +324,8 @@ public class ProductClassReport {
     public SimpleIntegerProperty storeCountProperty() {
         return storeCount;
     }
+
+    public void setStoreCount (int storeCount){ this.storeCount.set(storeCount);}
 
     public BigDecimal getTotalVolumetrics() {
         return totalVolumetrics.get();

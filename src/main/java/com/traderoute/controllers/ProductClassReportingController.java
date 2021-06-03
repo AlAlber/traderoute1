@@ -4,9 +4,7 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXComboBox;
 import com.traderoute.*;
-import com.traderoute.cells.CustomNonEditCell;
-import com.traderoute.cells.CustomNonEditCellInt;
-import com.traderoute.cells.CustomTextCell;
+import com.traderoute.cells.*;
 import com.traderoute.data.*;
 import javafx.application.HostServices;
 import javafx.application.Platform;
@@ -153,7 +151,7 @@ public class ProductClassReportingController implements Initializable {
 
         retailerNameColumn.setCellFactory(tc -> new CustomTextCell<>());
         committedColumn.setCellFactory(tc -> new CustomTextCell<>());
-        storeCountColumn.setCellFactory(tc -> new CustomNonEditCellInt("", ""));
+        storeCountColumn.setCellFactory(tc -> new IntEditCell1<>(StdSpecs.INTPOS5X.getSpecs()));
         totalVolumetricsColumn.setCellFactory(tc -> new CustomNonEditCell("", ""));
         everydayVolumetricsColumn.setCellFactory(tc -> new CustomNonEditCell("$", ""));
         promotedVolumetricsColumn.setCellFactory(tc -> new CustomNonEditCell("$", ""));
@@ -229,6 +227,7 @@ public class ProductClassReportingController implements Initializable {
             window.setWidth(mainVbox.getPrefWidth());
             window.centerOnScreen();
         });
+
 
         // averageSellingPriceColumn.setStyle(".column-header {-fx-size: 20;}");
     }
@@ -460,6 +459,8 @@ public class ProductClassReportingController implements Initializable {
     private void updateProduct(Product selectedProduct) {
     }
 
+
+
     public ObservableList<ProductClassReport> getReports() {
         ObservableList<ProductClassReport> productClassReports = FXCollections.observableArrayList();
         productClassReports.add(new ProductClassReport(retailers.get(0), retailers.get(0).getRetailerProducts().get(0),
@@ -604,5 +605,16 @@ public class ProductClassReportingController implements Initializable {
         }
         addSkuColumns();
 
+    }
+    private class TableView extends TableView implements TableWithStyles {
+
+        @Override
+        public String getTableCellStyles(int col, int row) {
+            String style = "";
+            if (col ==1 && row==0){
+                style = "-fx-background-color= steelblue";
+            }
+            return style;
+        }
     }
 }

@@ -11,8 +11,7 @@ public class NumberEditCellBuilder {
     private int _decimalScale = 2;
 
 
-    public NumberEditCell1 buildInt(
-            String _pre, String _post, Number _defaultValue, Number _minValue, Number _maxValue) {
+    public NumberEditCell1 buildInt() {
 //        return new IntEditCell1(_pre,_post,_defaultValue,_minValue,_maxValue);
         return null;
     }
