@@ -5,17 +5,21 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
+import java.util.Optional;
+
 public abstract class CustomTable extends TableView{
     public CustomTable() {
         getStylesheets().add("@../styles/Styles.css");
         setPrefWidth(1482);
     }
 
-    public abstract String getTableCellStyles(int col, int row);
+    public String getTableCellStyles(int col, int row, Object item){
+        return "";
+    }
 
-    public abstract void setCellFactories(ObservableList<TableColumn> columns);
+    public abstract void setCellFactories();
 
-    public abstract void setCellValueFactories (ObservableList<TableColumn> columns);
+    public abstract void setCellValueFactories ();
 
-    
+
 }
