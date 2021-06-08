@@ -1,5 +1,6 @@
 package com.traderoute.tables;
 
+import com.traderoute.CustomColumn;
 import com.traderoute.cells.CustomTextCell;
 import com.traderoute.cells.PromoRowNonEditCell;
 import com.traderoute.data.PromoRow;
@@ -7,20 +8,20 @@ import javafx.beans.value.ObservableValue;
 import javafx.scene.control.TableColumn;
 
 public class SalesProFormaTable extends CustomTable{
-    private TableColumn<PromoRow<?>, String> promoRowNameCol;
-    private TableColumn<PromoRow<?>, Object> totalsCol;
-    private TableColumn<PromoRow<?>, Object> janCol;
-    private TableColumn<PromoRow<?>, Object> febCol;
-    private TableColumn<PromoRow<?>, Object> marCol;
-    private TableColumn<PromoRow<?>, Object> aprCol;
-    private TableColumn<PromoRow<?>, Object> mayCol;
-    private TableColumn<PromoRow<?>, Object> junCol;
-    private TableColumn<PromoRow<?>, Object> julCol;
-    private TableColumn<PromoRow<?>, Object> augCol;
-    private TableColumn<PromoRow<?>, Object> sepCol;
-    private TableColumn<PromoRow<?>, Object> octCol;
-    private TableColumn<PromoRow<?>, Object> novCol;
-    private TableColumn<PromoRow<?>, Object> decCol;
+    private TableColumn<PromoRow<?>, String> promoRowNameCol = new TableColumn<>();
+    private TableColumn<PromoRow<?>, Object> totalsCol = new CustomColumn(155.0, "Totals", "Totals");
+    private TableColumn<PromoRow<?>, Object> janCol = new CustomColumn(93.0, "January","January");
+    private TableColumn<PromoRow<?>, Object> febCol = new CustomColumn(93.0, "February", "February");
+    private TableColumn<PromoRow<?>, Object> marCol = new CustomColumn(93.0, "March", "March");
+    private TableColumn<PromoRow<?>, Object> aprCol = new CustomColumn(93.0, "April", "April");
+    private TableColumn<PromoRow<?>, Object> mayCol = new CustomColumn(93.0, "May", "May");
+    private TableColumn<PromoRow<?>, Object> junCol = new CustomColumn(93.0, "June", "June");
+    private TableColumn<PromoRow<?>, Object> julCol = new CustomColumn(93.0, "July", "July");
+    private TableColumn<PromoRow<?>, Object> augCol = new CustomColumn(93.0, "August", "August");
+    private TableColumn<PromoRow<?>, Object> sepCol = new CustomColumn(93.0, "September", "September");
+    private TableColumn<PromoRow<?>, Object> octCol = new CustomColumn(93.0, "October", "October");
+    private TableColumn<PromoRow<?>, Object> novCol = new CustomColumn(93.0, "November", "November");
+    private TableColumn<PromoRow<?>, Object> decCol = new CustomColumn(93.0, "December", "December");
 
     public SalesProFormaTable () {
         setEditable(false);

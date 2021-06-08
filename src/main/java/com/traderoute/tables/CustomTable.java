@@ -1,19 +1,19 @@
 package com.traderoute.tables;
 
-import com.traderoute.TableWithStyles;
-import javafx.collections.ObservableList;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.Tooltip;
 
-import java.util.Optional;
-
-public abstract class CustomTable extends TableView{
+public abstract class CustomTable<T extends Object> extends TableView<T>{
     public CustomTable() {
         getStylesheets().add("@../styles/Styles.css");
         setPrefWidth(1482);
+        setCellFactories();
+        setCellValueFactories();
     }
 
-    public String getTableCellStyles(int col, int row, Object item){
+    public String getTableCellStyles(int col, int row, final Object item){
         return "";
     }
 

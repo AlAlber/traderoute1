@@ -1,22 +1,23 @@
 package com.traderoute.tables;
 
+import com.traderoute.CustomColumn;
 import com.traderoute.data.Sku;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.scene.Node;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldTableCell;
 
 public class AssortmentTable extends CustomTable{
-    private TableColumn<Sku, String> flavorDescriptionCol;
-    private TableColumn<Sku, StringProperty> statusCol;
-    private TableColumn<Sku, String> skuNotesCol;
+
+    private TableColumn<Sku, String> flavorDescriptionCol = new CustomColumn(230.0, "Flavor Description", "Flavor Description");
+    private TableColumn<Sku, StringProperty> statusCol = new CustomColumn(230.0, "Status", "Status");
+    private TableColumn<Sku, String> skuNotesCol = new CustomColumn(230.0, "Notes","Notes");
 
     public AssortmentTable (){
         getColumns().addAll(flavorDescriptionCol, statusCol, skuNotesCol);
+        getColumns().stream().forEach(tcol -> setSortPolicy(e -> false));
     }
 
     @Override

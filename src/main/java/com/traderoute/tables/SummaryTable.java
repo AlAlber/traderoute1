@@ -8,12 +8,14 @@ import javafx.scene.control.TableColumn;
 
 import java.math.BigDecimal;
 
-public abstract class SummaryTable extends CustomTable {
-    private TableColumn<Summary, String> descriptionCol;
-    private TableColumn<Summary, BigDecimal> valueCol;
+public class SummaryTable extends CustomTable {
+    private TableColumn<Summary, String> descriptionCol = new TableColumn<>();
+    private TableColumn<Summary, BigDecimal> valueCol = new TableColumn<>();
     private CellSpecs decSpecs = StdSpecs.DECPOS6$.getSpecs();
 
     public SummaryTable (String tableType) {
+        descriptionCol.setPrefWidth(70.0);
+        valueCol.setPrefWidth(94.3);
         getColumns().addAll(descriptionCol,valueCol);
         if (tableType.equals("topline")){
             setItems(getDefaultToplineSummaries());
@@ -22,6 +24,7 @@ public abstract class SummaryTable extends CustomTable {
             setItems(getDefaultRetailerSummaries());
         }
         setEditable(false);
+        getColumns().stream().forEach(tcol -> setSortPolicy(e -> false));
     }
 
     @Override

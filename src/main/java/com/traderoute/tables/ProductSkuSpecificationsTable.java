@@ -1,5 +1,6 @@
 package com.traderoute.tables;
 
+import com.traderoute.CustomColumn;
 import com.traderoute.cells.*;
 import com.traderoute.data.Sku;
 import javafx.beans.value.ObservableValue;
@@ -8,29 +9,29 @@ import javafx.scene.control.TableColumn;
 import java.math.BigDecimal;
 
 public class ProductSkuSpecificationsTable extends CustomTable{
-    private TableColumn<Sku, String> flavorDescriptionCol;
-    private TableColumn<Sku, Integer> casePackCol;
-    private TableColumn<Sku, BigDecimal> unitWeightCol;
-    private TableColumn<Sku, BigDecimal> grossCaseWeightCol;
-    private TableColumn<Sku, BigDecimal> netCaseWeightCol;
-    private TableColumn<Sku, BigDecimal> caseTareWeightCol;
-    private TableColumn<Sku, BigDecimal> caseCubeCol;
-    private TableColumn<Sku, BigDecimal> caseLengthCol;
-    private TableColumn<Sku, BigDecimal> caseWidthCol;
-    private TableColumn<Sku, BigDecimal> caseHeightCol;
-    private TableColumn<Sku, BigDecimal> unitLengthCol;
-    private TableColumn<Sku, BigDecimal> unitWidthCol;
-    private TableColumn<Sku, BigDecimal> unitHeightCol;
-    private TableColumn<Sku, Integer> casesPerLayerCol;
-    private TableColumn<Sku, Integer> layersPerPalletCol;
-    private TableColumn<Sku, Integer> casesPerPalletCol;
-    private TableColumn<Sku, BigDecimal> palletHeightCol;
-    private TableColumn<Sku, Integer> palletWeightCol;
-    private TableColumn<Sku, Integer> palletsPerTruckCol;
-    private TableColumn<Sku, Integer> deliveredShelfLifeCol;
-    private TableColumn<Sku, String> packageUpcCol;
-    private TableColumn<Sku, String> caseUpcCol;
-    private TableColumn<Sku, BigDecimal> unitListCol;
+    private TableColumn<Sku, String> flavorDescriptionCol = new CustomColumn(140.0, "Flavor Description", "Flavor Description");
+    private TableColumn<Sku, Integer> casePackCol = new CustomColumn(100.0, "Case Pack", "Case Pack");
+    private TableColumn<Sku, BigDecimal> unitWeightCol = new CustomColumn(100.0, "Unit Weight", "Unit Weight");
+    private TableColumn<Sku, BigDecimal> grossCaseWeightCol = new CustomColumn(100.0, "Gross Case Weight", "Gross Case Weight");
+    private TableColumn<Sku, BigDecimal> netCaseWeightCol = new CustomColumn(100.0, "Net Case Weight", "Net Case Weight");
+    private TableColumn<Sku, BigDecimal> caseTareWeightCol = new CustomColumn(100.0, "Case Tare Weight", "Case Tare Weight");
+    private TableColumn<Sku, BigDecimal> caseCubeCol = new CustomColumn(100.0, "Case Cube", "Case Cube");
+    private TableColumn<Sku, BigDecimal> caseLengthCol = new CustomColumn(100.0, "Case Length", "Case Length");
+    private TableColumn<Sku, BigDecimal> caseWidthCol = new CustomColumn(100.0, "Case Width", "Case Width");
+    private TableColumn<Sku, BigDecimal> caseHeightCol = new CustomColumn(100.0, "Case Height", "Case Height");
+    private TableColumn<Sku, BigDecimal> unitLengthCol = new CustomColumn(100.0, "Unit Length", "Unit Length");
+    private TableColumn<Sku, BigDecimal> unitWidthCol = new CustomColumn(100.0, "Unit Width", "Unit Width");
+    private TableColumn<Sku, BigDecimal> unitHeightCol = new CustomColumn(100.0, "Unit Height", "Unit Height");
+    private TableColumn<Sku, Integer> casesPerLayerCol = new CustomColumn(100.0, "Cases Per Layer (TI)", "Cases Per Layer (TI)");
+    private TableColumn<Sku, Integer> layersPerPalletCol = new CustomColumn(100.0, "Layers Per Pallet (HI)", "Layers Per Pallet (HI)");
+    private TableColumn<Sku, Integer> casesPerPalletCol = new CustomColumn(100.0, "Cases Per Pallet", "Cases Per Pallet");
+    private TableColumn<Sku, BigDecimal> palletHeightCol = new CustomColumn(100.0, "Pallet Height", "Pallet Height");
+    private TableColumn<Sku, Integer> palletWeightCol = new CustomColumn(100.0, "Pallet Weight", "Pallet Weight");
+    private TableColumn<Sku, Integer> palletsPerTruckCol = new CustomColumn(100.0, "Pallets Per Truck", "Pallets Per Truck");
+    private TableColumn<Sku, Integer> deliveredShelfLifeCol = new CustomColumn(100.0, "Delivered Shelf-Life", "Delivered Shelf-Life");
+    private TableColumn<Sku, String> packageUpcCol = new CustomColumn(100.0, "Package UPC", "Package UPC");
+    private TableColumn<Sku, String> caseUpcCol = new CustomColumn(100.0, "Case UPC", "Case UPC");
+    private TableColumn<Sku, BigDecimal> unitListCol = new CustomColumn(100.0, "Unit List", "Unit List");
 
     public ProductSkuSpecificationsTable (){
         setEditable(true);
@@ -40,6 +41,7 @@ public class ProductSkuSpecificationsTable extends CustomTable{
                 unitWidthCol, unitHeightCol, casesPerLayerCol, layersPerPalletCol,
                 casesPerPalletCol, palletHeightCol, palletWeightCol, palletsPerTruckCol,
                 deliveredShelfLifeCol, packageUpcCol, caseUpcCol, unitListCol);
+        getColumns().stream().forEach(tcol -> setSortPolicy(e -> false));
     }
     @Override
     public void setCellFactories() {

@@ -1,5 +1,6 @@
 package com.traderoute.tables;
 
+import com.traderoute.CustomColumn;
 import com.traderoute.cells.CustomTextCell;
 import com.traderoute.cells.PromoRowEditCell1;
 import com.traderoute.data.PromoRow;
@@ -10,21 +11,24 @@ import java.math.BigDecimal;
 
 public class PricingPromotionTable extends CustomTable {
 
-    private TableColumn<PromoRow<?>, Object> promoRowNameCol;
-    private TableColumn<PromoRow<?>, Object> janCol;
-    private TableColumn<PromoRow<?>, Object> febCol;
-    private TableColumn<PromoRow<?>, Object> marCol;
-    private TableColumn<PromoRow<?>, Object> aprCol;
-    private TableColumn<PromoRow<?>, Object> mayCol;
-    private TableColumn<PromoRow<?>, Object> junCol;
-    private TableColumn<PromoRow<?>, Object> julCol;
-    private TableColumn<PromoRow<?>, Object> augCol;
-    private TableColumn<PromoRow<?>, Object> sepCol;
-    private TableColumn<PromoRow<?>, Object> octCol;
-    private TableColumn<PromoRow<?>, Object> novCol;
-    private TableColumn<PromoRow<?>, Object> decCol;
+    private TableColumn<PromoRow<?>, Object> promoRowNameCol = new CustomColumn(68.0, "", "");
+    private TableColumn<PromoRow<?>, Object> janCol = new CustomColumn(68.0, "January", "January");
+    private TableColumn<PromoRow<?>, Object> febCol = new CustomColumn(68.0, "February", "February");
+    private TableColumn<PromoRow<?>, Object> marCol = new CustomColumn(68.0, "March", "March");
+    private TableColumn<PromoRow<?>, Object> aprCol = new CustomColumn(68.0, "April","April");
+    private TableColumn<PromoRow<?>, Object> mayCol = new CustomColumn(68.0, "May", "May");
+    private TableColumn<PromoRow<?>, Object> junCol = new CustomColumn(68.0, "June", "June");
+    private TableColumn<PromoRow<?>, Object> julCol = new CustomColumn(68.0, "July", "July");
+    private TableColumn<PromoRow<?>, Object> augCol = new CustomColumn(68.0, "August", "August");
+    private TableColumn<PromoRow<?>, Object> sepCol = new CustomColumn(68.0, "September", "September");
+    private TableColumn<PromoRow<?>, Object> octCol = new CustomColumn(68.0, "October", "October");
+    private TableColumn<PromoRow<?>, Object> novCol = new CustomColumn(68.0, "November", "November");
+    private TableColumn<PromoRow<?>, Object> decCol = new CustomColumn(71.2, "December", "December");
 
     public PricingPromotionTable () {
+        getColumns().addAll(promoRowNameCol, janCol, febCol, marCol,
+                aprCol, mayCol, junCol, julCol, augCol, sepCol, octCol, novCol, decCol);
+        getColumns().stream().forEach(tcol -> setSortPolicy(e -> false)); //setSortPolicy(e -> false)
         getSelectionModel().setCellSelectionEnabled(true);
     }
     @Override

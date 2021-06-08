@@ -1,6 +1,7 @@
 package com.traderoute.tables;
 
 import com.traderoute.App;
+import com.traderoute.CustomColumn;
 import com.traderoute.cells.*;
 import com.traderoute.data.Product;
 import javafx.beans.value.ObservableValue;
@@ -13,32 +14,35 @@ import java.io.IOException;
 import java.math.BigDecimal;
 
 public class ProductsPricingTable extends  CustomTable{
-    private TableColumn<Product, String> brandNameCol;
-    private TableColumn<Product, String> productClassCol;
-    private TableColumn<Product, BigDecimal> listCostCol;
-    private TableColumn<Product, BigDecimal> baseFreightCol;
-    private TableColumn<Product, BigDecimal> fobCostCol;
-    private TableColumn<Product, BigDecimal> net1GoalCol;
-    private TableColumn<Product, BigDecimal> blendedCogsCol;
-    private TableColumn<Product, BigDecimal> elasticityMultipleCol;
-    private TableColumn<Product, BigDecimal> janCol;
-    private TableColumn<Product, BigDecimal> febCol;
-    private TableColumn<Product, BigDecimal> marCol;
-    private TableColumn<Product, BigDecimal> aprCol;
-    private TableColumn<Product, BigDecimal> mayCol;
-    private TableColumn<Product, BigDecimal> junCol;
-    private TableColumn<Product, BigDecimal> julCol;
-    private TableColumn<Product, BigDecimal> augCol;
-    private TableColumn<Product, BigDecimal> sepCol;
-    private TableColumn<Product, BigDecimal> octCol;
-    private TableColumn<Product, BigDecimal> novCol;
-    private TableColumn<Product, BigDecimal> decCol;
-    private TableColumn<Product, Button> specificationCol;
+    private TableColumn<Product, String> brandNameCol = new CustomColumn(140.0, "Brand", "Brand");
+    private TableColumn<Product, String> productClassCol = new CustomColumn(140.0, "Product Class", "Product Class");
+    private TableColumn<Product, BigDecimal> listCostCol = new CustomColumn(100.0, "Unit List Cost", "Unit List Cost");
+    private TableColumn<Product, BigDecimal> baseFreightCol = new CustomColumn(100.0, "Unit Base Freight", "Unit Base Freight");
+    private TableColumn<Product, BigDecimal> fobCostCol = new CustomColumn(100.0, "Unit F.O.B. Cost", "Unit F.O.B. Cost");
+    private TableColumn<Product, BigDecimal> net1GoalCol = new CustomColumn(100.0, "Unit Net1 Goal", "Unit Net1 Goal");
+    private TableColumn<Product, BigDecimal> blendedCogsCol = new CustomColumn(100.0, "Unit Blended COGS", "Unit Blended Cost of Goods Sold");
+    private TableColumn<Product, BigDecimal> emptyCol = new TableColumn<>();
+    private TableColumn<Product, BigDecimal> elasticityMultipleCol = new CustomColumn(139.2, "Neg Price Elasticity Multiple", "Negative Price Elasticity Multiple");
+    private TableColumn<Product, BigDecimal> janCol = new CustomColumn(30.0, "Jan", "January");
+    private TableColumn<Product, BigDecimal> febCol = new CustomColumn(30.0, "Feb", "February");
+    private TableColumn<Product, BigDecimal> marCol = new CustomColumn(30.0, "Mar", "March");
+    private TableColumn<Product, BigDecimal> aprCol = new CustomColumn(30.0, "Apr", "April");
+    private TableColumn<Product, BigDecimal> mayCol = new CustomColumn(30.0, "May", "May");
+    private TableColumn<Product, BigDecimal> junCol = new CustomColumn(30.0, "Jun", "June");
+    private TableColumn<Product, BigDecimal> julCol = new CustomColumn(30.0, "Jul", "July");
+    private TableColumn<Product, BigDecimal> augCol = new CustomColumn(30.0, "Aug", "August");
+    private TableColumn<Product, BigDecimal> sepCol = new CustomColumn(30.0, "Sep", "September");
+    private TableColumn<Product, BigDecimal> octCol = new CustomColumn(30.0, "Oct", "October");
+    private TableColumn<Product, BigDecimal> novCol = new CustomColumn(30.0, "Nov", "November");
+    private TableColumn<Product, BigDecimal> decCol = new CustomColumn(30.0, "Dec", "December");
+    private TableColumn<Product, Button> specificationCol = new CustomColumn(140.0, "Edit Specifications", "Edit Specifications");
 
     public ProductsPricingTable () {
+        emptyCol.setPrefWidth(17.0);
         getColumns().addAll(brandNameCol, productClassCol, listCostCol, baseFreightCol, fobCostCol,
-                net1GoalCol, blendedCogsCol, elasticityMultipleCol, janCol, febCol, marCol, aprCol,
+                net1GoalCol, blendedCogsCol, emptyCol, elasticityMultipleCol, emptyCol, janCol, febCol, marCol, aprCol,
                 mayCol, junCol, julCol, augCol, sepCol, octCol, novCol, decCol);
+        getColumns().stream().forEach(tcol -> setSortPolicy(e -> false));
     }
 
     @Override
