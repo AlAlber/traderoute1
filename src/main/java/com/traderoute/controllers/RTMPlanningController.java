@@ -4,6 +4,7 @@ import com.traderoute.*;
 import com.traderoute.cells.*;
 import com.traderoute.charts.*;
 import com.traderoute.data.*;
+import com.traderoute.tables.RTMPlanningTable;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -54,63 +55,63 @@ public class RTMPlanningController implements Initializable, MyController {
      * First Route-To-Market Planning Table, mostly editable.
      */
     @FXML
-    private TableView<RTMOption> rtmPlanningTable1;
-    /**
-     * Column for the name of the Route-To-Market (Editable).
-     */
-    @FXML
-    private TableColumn<RTMOption, String> rtmNameCol1;
-    /**
-     * Column for the slotting investment with this RTMOption (Editable) .
-     */
-    @FXML
-    private TableColumn<RTMOption, BigDecimal> slottingPerSkuCol;
-    /**
-     * Column for the freight cost per unit with this RTMOption (Editable).
-     */
-    @FXML
-    private TableColumn<RTMOption, BigDecimal> freightOutPerUnitCol;
-    /**
-     * Column for the cost the first receiver pays with this RTMOption (Editable).
-     */
-    @FXML
-    private TableColumn<RTMOption, BigDecimal> firstReceiverCol;
-    /**
-     * Column for the cost the second receiver pays with this RTMOption (Editable).
-     */
-    @FXML
-    private TableColumn<RTMOption, BigDecimal> secondReceiverColumn;
-
-    /**
-     * Column for the cost the third receiver pays with this RTMOption (Editable).
-     */
-    @FXML
-    private TableColumn<RTMOption, BigDecimal> thirdReceiverColumn;
-
-    /**
-     * Column for the cost the fourth receiver pays with this RTMOption (Editable).
-     */
-    @FXML
-    private TableColumn<RTMOption, BigDecimal> fourthReceiverColumn;
-
-    /**
-     * Column for the landed Store Cost of this product with this RTMOption (Not Editable).
-     */
-    @FXML
-    private TableColumn<RTMOption, BigDecimal> landedStoreCostColumn;
-
-    /**
-     * Column for the resulting Everyday Retail Cost of this product with this RTMOption (Not Editable).
-     */
-    @FXML
-    private TableColumn<RTMOption, BigDecimal> everydayRetailCalcdCol;
-
-    /**
-     * Column for the resulting Everyday Retail Override where user can input the final price of the product, likely
-     * rounded to X.X9 (Editable).
-     */
-    @FXML
-    private TableColumn<RTMOption, BigDecimal> everydayRetailOverrideCol;
+    private RTMPlanningTable rtmPlanningTable1 = new RTMPlanningTable(1);
+//    /**
+//     * Column for the name of the Route-To-Market (Editable).
+//     */
+//    @FXML
+//    private TableColumn<RTMOption, String> rtmNameCol1;
+//    /**
+//     * Column for the slotting investment with this RTMOption (Editable) .
+//     */
+//    @FXML
+//    private TableColumn<RTMOption, BigDecimal> slottingPerSkuCol;
+//    /**
+//     * Column for the freight cost per unit with this RTMOption (Editable).
+//     */
+//    @FXML
+//    private TableColumn<RTMOption, BigDecimal> freightOutPerUnitCol;
+//    /**
+//     * Column for the cost the first receiver pays with this RTMOption (Editable).
+//     */
+//    @FXML
+//    private TableColumn<RTMOption, BigDecimal> firstReceiverCol;
+//    /**
+//     * Column for the cost the second receiver pays with this RTMOption (Editable).
+//     */
+//    @FXML
+//    private TableColumn<RTMOption, BigDecimal> secondReceiverColumn;
+//
+//    /**
+//     * Column for the cost the third receiver pays with this RTMOption (Editable).
+//     */
+//    @FXML
+//    private TableColumn<RTMOption, BigDecimal> thirdReceiverColumn;
+//
+//    /**
+//     * Column for the cost the fourth receiver pays with this RTMOption (Editable).
+//     */
+//    @FXML
+//    private TableColumn<RTMOption, BigDecimal> fourthReceiverColumn;
+//
+//    /**
+//     * Column for the landed Store Cost of this product with this RTMOption (Not Editable).
+//     */
+//    @FXML
+//    private TableColumn<RTMOption, BigDecimal> landedStoreCostColumn;
+//
+//    /**
+//     * Column for the resulting Everyday Retail Cost of this product with this RTMOption (Not Editable).
+//     */
+//    @FXML
+//    private TableColumn<RTMOption, BigDecimal> everydayRetailCalcdCol;
+//
+//    /**
+//     * Column for the resulting Everyday Retail Override where user can input the final price of the product, likely
+//     * rounded to X.X9 (Editable).
+//     */
+//    @FXML
+//    private TableColumn<RTMOption, BigDecimal> everydayRetailOverrideCol;
 
     /**
      * Second planning table with RTMOption items (ALL NOT EDITABLE).
@@ -271,6 +272,8 @@ public class RTMPlanningController implements Initializable, MyController {
      *            default javafx param in initialize method.
      */
     @FXML
+    private VBox mainVBox;
+    @FXML
     private HBox chartHBox;
     @FXML
     private VBox textfieldVBox;
@@ -278,6 +281,7 @@ public class RTMPlanningController implements Initializable, MyController {
     private VBox productVBox;
     @FXML
     private VBox weeklyUfswVBox;
+
 
     private SimpleObjectProperty<RetailerProduct> currentRetailerProduct;
 
@@ -314,9 +318,11 @@ public class RTMPlanningController implements Initializable, MyController {
 
         updateCharts();
 
+        mainVBox.getChildren().add(1, rtmPlanningTable1);
+
         rtmPlanningTable1.setEditable(true);
-        landedStoreCostColumn.setEditable(false);
-        everydayRetailCalcdCol.setEditable(false);
+//        landedStoreCostColumn.setEditable(false);
+//        everydayRetailCalcdCol.setEditable(false);
 
         setUpListeners();
         setCellFactories();
@@ -510,7 +516,6 @@ public class RTMPlanningController implements Initializable, MyController {
      * RTMOptions. Also updates charts.
      */
     public void changeYearOneStoreCount() {
-        System.out.println("hello");
         rtmPlanningTable2.setItems(rtmPlanningTable1.getItems());
         getSpecs().setYearOneStoreCount(yearOneStoreCountField.getValue());
 //        for (RTMOption row : rtmPlanningTable2.getItems()) {
@@ -667,17 +672,17 @@ public class RTMPlanningController implements Initializable, MyController {
      * Set up cellValue factories, which look for properties of RTMOption item in the table.
      */
     public void setCellValueFactories() {
-        rtmNameCol1.setCellValueFactory(cellData -> cellData.getValue().rtmNameProperty());
-        slottingPerSkuCol.setCellValueFactory(cellData -> cellData.getValue().slottingPerSkuProperty());
-        freightOutPerUnitCol.setCellValueFactory(cellData -> cellData.getValue().freightOutPerUnitProperty());
-        firstReceiverCol.setCellValueFactory(cellData -> cellData.getValue().firstReceiverProperty());
-        secondReceiverColumn.setCellValueFactory(cellData -> cellData.getValue().secondReceiverProperty());
-        thirdReceiverColumn.setCellValueFactory(cellData -> cellData.getValue().thirdReceiverProperty());
-        fourthReceiverColumn.setCellValueFactory(cellData -> cellData.getValue().fourthReceiverProperty());
-        landedStoreCostColumn.setCellValueFactory(cellData -> cellData.getValue().landedStoreCostProperty());
-        everydayRetailCalcdCol.setCellValueFactory(cellData -> cellData.getValue().everydayRetailCalcdProperty());
-        everydayRetailOverrideCol
-                .setCellValueFactory(cellData -> cellData.getValue().everydayRetailOverrideProperty());
+//        rtmNameCol1.setCellValueFactory(cellData -> cellData.getValue().rtmNameProperty());
+//        slottingPerSkuCol.setCellValueFactory(cellData -> cellData.getValue().slottingPerSkuProperty());
+//        freightOutPerUnitCol.setCellValueFactory(cellData -> cellData.getValue().freightOutPerUnitProperty());
+//        firstReceiverCol.setCellValueFactory(cellData -> cellData.getValue().firstReceiverProperty());
+//        secondReceiverColumn.setCellValueFactory(cellData -> cellData.getValue().secondReceiverProperty());
+//        thirdReceiverColumn.setCellValueFactory(cellData -> cellData.getValue().thirdReceiverProperty());
+//        fourthReceiverColumn.setCellValueFactory(cellData -> cellData.getValue().fourthReceiverProperty());
+//        landedStoreCostColumn.setCellValueFactory(cellData -> cellData.getValue().landedStoreCostProperty());
+//        everydayRetailCalcdCol.setCellValueFactory(cellData -> cellData.getValue().everydayRetailCalcdProperty());
+//        everydayRetailOverrideCol
+//                .setCellValueFactory(cellData -> cellData.getValue().everydayRetailOverrideProperty());
         elasticizedUnitVelocityColumn
                 .setCellValueFactory(cellData -> cellData.getValue().elasticizedUnitVelocityProperty());
         annualVolumePerSkuColumn.setCellValueFactory(cellData -> cellData.getValue().annualVolumePerSkuProperty());
@@ -697,16 +702,16 @@ public class RTMPlanningController implements Initializable, MyController {
      */
     public void setCellFactories() {
         CellSpecs specs = StdSpecs.DECPOS6$.getSpecs();
-        rtmNameCol1.setCellFactory(TextFieldTableCell.forTableColumn());
-        slottingPerSkuCol.setCellFactory(tc -> new BigDecimalEditCell1(specs));
-        freightOutPerUnitCol.setCellFactory(tc -> new BigDecimalEditCell1(specs));
-        firstReceiverCol.setCellFactory(tc -> new BigDecimalEditCell1(specs));
-        secondReceiverColumn.setCellFactory(tc -> new BigDecimalEditCell1(specs));
-        thirdReceiverColumn.setCellFactory(tc -> new BigDecimalEditCell1(specs));
-        fourthReceiverColumn.setCellFactory(tc -> new BigDecimalEditCell1(specs));
-        landedStoreCostColumn.setCellFactory(tc -> new BigDecimalEditCell1(specs));
-        everydayRetailCalcdCol.setCellFactory(tc -> new BigDecimalEditCell1(specs));
-        everydayRetailOverrideCol.setCellFactory(tc -> new BigDecimalEditCell1(specs));
+//        rtmNameCol1.setCellFactory(TextFieldTableCell.forTableColumn());
+//        slottingPerSkuCol.setCellFactory(tc -> new BigDecimalEditCell1(specs));
+//        freightOutPerUnitCol.setCellFactory(tc -> new BigDecimalEditCell1(specs));
+//        firstReceiverCol.setCellFactory(tc -> new BigDecimalEditCell1(specs));
+//        secondReceiverColumn.setCellFactory(tc -> new BigDecimalEditCell1(specs));
+//        thirdReceiverColumn.setCellFactory(tc -> new BigDecimalEditCell1(specs));
+//        fourthReceiverColumn.setCellFactory(tc -> new BigDecimalEditCell1(specs));
+//        landedStoreCostColumn.setCellFactory(tc -> new BigDecimalEditCell1(specs));
+//        everydayRetailCalcdCol.setCellFactory(tc -> new BigDecimalEditCell1(specs));
+//        everydayRetailOverrideCol.setCellFactory(tc -> new BigDecimalEditCell1(specs));
         elasticizedUnitVelocityColumn.setCellFactory(tc -> new BigDecimalEditCell1(
                 new CellSpecsBuilder().post(" U/F/S/W").build()));
         annualVolumePerSkuColumn.setCellFactory(tc -> new BigDecimalEditCell1(
@@ -740,7 +745,8 @@ public class RTMPlanningController implements Initializable, MyController {
         ObservableList<RetailerProduct> retailerProducts = getRetailer().getRetailerProducts();
         RetailerProduct thisRetailerProduct = retailerProducts.get(getRetailer().getCurrentRetailerProductIndex());
         ObservableList<RTMOption> currentRtmOptions = thisRetailerProduct.getRtmOptions();
-        // this.firstTableView.setItems(currentRtmOptions);
+        rtmPlanningTable1.setItems(currentRtmOptions);
+        System.out.println(rtmPlanningTable1.getItems().get(0));
         // setUpListeners();
         // CHANGE PRODUCT BOX TO AVE RETAILER OPTION SELECTION
         // INSTEAD OF PRODUCT SELECTION

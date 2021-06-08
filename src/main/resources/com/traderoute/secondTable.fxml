@@ -15,7 +15,7 @@
 
 <AnchorPane prefHeight="780.0" prefWidth="1530.0" stylesheets="@../styles/Styles.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.traderoute.controllers.RTMPlanningController">
    <children>
-      <VBox prefHeight="800.0" prefWidth="1530.0" style="-fx-background-color: #1E1D1A;">
+      <VBox fx:id="mainVBox" prefHeight="800.0" prefWidth="1530.0" style="-fx-background-color: #1E1D1A;">
          <children>
             <HBox prefHeight="126.0" prefWidth="1482.0">
                <children>
@@ -113,94 +113,94 @@
                   <Button fx:id="switchToRetailerSelectionButton" onAction="#switchToRetailerSelection" style="-fx-background-color: white;" text="Return to Selection" />
                </children>
             </HBox>
-            <TableView fx:id="rtmPlanningTable1" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="130.0" prefWidth="1464.0" styleClass="firstTable" stylesheets="@../styles/Styles.css">
-               <columns>
-                  <TableColumn fx:id="rtmNameCol1" prefWidth="148.0" resizable="false">
-                     <graphic>
-                        <Label text="Route-to-Market Options">
-                           <tooltip>
-                              <Tooltip text="Please enter the most likely 'Route-To-Market' options to get the product to the market." />
-                           </tooltip>
-                        </Label>
-                     </graphic>
-                  </TableColumn>
-                  <TableColumn fx:id="slottingPerSkuCol" onEditCommit="#changeSlottingPerSkuCellEvent" prefWidth="148.0" resizable="false">
-                     <graphic>
-                        <Label text="Slotting Per Sku">
-                           <tooltip>
-                              <Tooltip text="Please enter the required slotting (placement) investment specific to this 'Route-To-Market' option." />
-                           </tooltip>
-                        </Label>
-                     </graphic></TableColumn>
-                  <TableColumn fx:id="freightOutPerUnitCol" onEditCommit="#changeFreightOutPerUnitCellEvent" prefWidth="148.0" resizable="false">
-                     <graphic>
-                        <Label text="Freight Out Per Unit">
-                           <tooltip>
-                              <Tooltip text="If we're responsible for the cost of shipping for this 'Route-To-Market' option, please enter in the 'per unit cost' of this 'Freight-Out.' For F.O.B (Pick-up) Customers, Freight-Out equals $0." />
-                           </tooltip>
-                        </Label>
-                     </graphic></TableColumn>
-                  <TableColumn fx:id="firstReceiverCol" onEditCommit="#changeFirstReceiverCellEvent" prefWidth="148.0" resizable="false">
-                     <graphic>
-                        <Label text="First Receiver Pays">
-                           <tooltip>
-                              <Tooltip text="The Per Unit Cost the First Receiver pays us, typically the Unit List Cost or the Unit F.O.B" />
-                           </tooltip>
-                        </Label>
-                     </graphic></TableColumn>
-                  <TableColumn fx:id="secondReceiverColumn" onEditCommit="#changeSecondReceiverCellEvent" prefWidth="148.0" resizable="false">
-                     <graphic>
-                        <Label text="Second Receiver Pays">
-                           <tooltip>
-                              <Tooltip text="The Per Unit Cost the Second Receiver pays to the First Receiver." />
-                           </tooltip>
-                        </Label>
-                     </graphic></TableColumn>
-                  <TableColumn fx:id="thirdReceiverColumn" onEditCommit="#changeThirdReceiverCellEvent" prefWidth="148.0" resizable="false">
-                     <graphic>
-                        <Label text="Third Receiver Pays">
-                           <tooltip>
-                              <Tooltip text="The Per Unit Cost the Third Receiver pays to the Second Receiver." />
-                           </tooltip>
-                        </Label>
-                     </graphic></TableColumn>
-                  <TableColumn fx:id="fourthReceiverColumn" onEditCommit="#changeFourthReceiverCellEvent" prefWidth="148.0" resizable="false">
-                     <graphic>
-                        <Label text="Fourth Receiver Pays">
-                           <tooltip>
-                              <Tooltip text="The Per Unit Cost the Fourth Receiver pays to the Third Receiver." />
-                           </tooltip>
-                        </Label>
-                     </graphic></TableColumn>
-                  <TableColumn fx:id="landedStoreCostColumn" prefWidth="148.0" resizable="false">
-                     <graphic>
-                        <Label text="Landed Store Cost">
-                           <tooltip>
-                              <Tooltip text="The Per Unit Cost the Retail OutLet (Last Receiver) pays prior to applying the Required GPM% to establish the Everyday Retail." />
-                           </tooltip>
-                        </Label>
-                     </graphic></TableColumn>
-                  <TableColumn fx:id="everydayRetailCalcdCol" prefWidth="148.0" resizable="false">
-                     <graphic>
-                        <Label text="Calculated Everyday Retail">
-                           <tooltip>
-                              <Tooltip text="The auto-calculated Resulting Everyday Retail given the Landed Store Cost and Required Gross Profit Margin %." />
-                           </tooltip>
-                        </Label>
-                     </graphic></TableColumn>
-                  <TableColumn fx:id="everydayRetailOverrideCol" onEditCommit="#changeOverrideEvent" prefWidth="148.0" resizable="false">
-                     <graphic>
-                        <Label text="Override Everyday Retail">
-                           <tooltip>
-                              <Tooltip text="Please enter the REALISTIC Everyday Retail considering the auto-calculated retail to the left." />
-                           </tooltip>
-                        </Label>
-                     </graphic></TableColumn>
-               </columns>
-               <VBox.margin>
-                  <Insets top="40.0" />
-               </VBox.margin>
-            </TableView>
+<!--            <TableView fx:id="rtmPlanningTable1" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="130.0" prefWidth="1464.0" styleClass="firstTable" stylesheets="@../styles/Styles.css">-->
+<!--               <columns>-->
+<!--                  <TableColumn fx:id="rtmNameCol1" prefWidth="148.0" resizable="false">-->
+<!--                     <graphic>-->
+<!--                        <Label text="Route-to-Market Options">-->
+<!--                           <tooltip>-->
+<!--                              <Tooltip text="Please enter the most likely 'Route-To-Market' options to get the product to the market." />-->
+<!--                           </tooltip>-->
+<!--                        </Label>-->
+<!--                     </graphic>-->
+<!--                  </TableColumn>-->
+<!--                  <TableColumn fx:id="slottingPerSkuCol" onEditCommit="#changeSlottingPerSkuCellEvent" prefWidth="148.0" resizable="false">-->
+<!--                     <graphic>-->
+<!--                        <Label text="Slotting Per Sku">-->
+<!--                           <tooltip>-->
+<!--                              <Tooltip text="Please enter the required slotting (placement) investment specific to this 'Route-To-Market' option." />-->
+<!--                           </tooltip>-->
+<!--                        </Label>-->
+<!--                     </graphic></TableColumn>-->
+<!--                  <TableColumn fx:id="freightOutPerUnitCol" onEditCommit="#changeFreightOutPerUnitCellEvent" prefWidth="148.0" resizable="false">-->
+<!--                     <graphic>-->
+<!--                        <Label text="Freight Out Per Unit">-->
+<!--                           <tooltip>-->
+<!--                              <Tooltip text="If we're responsible for the cost of shipping for this 'Route-To-Market' option, please enter in the 'per unit cost' of this 'Freight-Out.' For F.O.B (Pick-up) Customers, Freight-Out equals $0." />-->
+<!--                           </tooltip>-->
+<!--                        </Label>-->
+<!--                     </graphic></TableColumn>-->
+<!--                  <TableColumn fx:id="firstReceiverCol" onEditCommit="#changeFirstReceiverCellEvent" prefWidth="148.0" resizable="false">-->
+<!--                     <graphic>-->
+<!--                        <Label text="First Receiver Pays">-->
+<!--                           <tooltip>-->
+<!--                              <Tooltip text="The Per Unit Cost the First Receiver pays us, typically the Unit List Cost or the Unit F.O.B" />-->
+<!--                           </tooltip>-->
+<!--                        </Label>-->
+<!--                     </graphic></TableColumn>-->
+<!--                  <TableColumn fx:id="secondReceiverColumn" onEditCommit="#changeSecondReceiverCellEvent" prefWidth="148.0" resizable="false">-->
+<!--                     <graphic>-->
+<!--                        <Label text="Second Receiver Pays">-->
+<!--                           <tooltip>-->
+<!--                              <Tooltip text="The Per Unit Cost the Second Receiver pays to the First Receiver." />-->
+<!--                           </tooltip>-->
+<!--                        </Label>-->
+<!--                     </graphic></TableColumn>-->
+<!--                  <TableColumn fx:id="thirdReceiverColumn" onEditCommit="#changeThirdReceiverCellEvent" prefWidth="148.0" resizable="false">-->
+<!--                     <graphic>-->
+<!--                        <Label text="Third Receiver Pays">-->
+<!--                           <tooltip>-->
+<!--                              <Tooltip text="The Per Unit Cost the Third Receiver pays to the Second Receiver." />-->
+<!--                           </tooltip>-->
+<!--                        </Label>-->
+<!--                     </graphic></TableColumn>-->
+<!--                  <TableColumn fx:id="fourthReceiverColumn" onEditCommit="#changeFourthReceiverCellEvent" prefWidth="148.0" resizable="false">-->
+<!--                     <graphic>-->
+<!--                        <Label text="Fourth Receiver Pays">-->
+<!--                           <tooltip>-->
+<!--                              <Tooltip text="The Per Unit Cost the Fourth Receiver pays to the Third Receiver." />-->
+<!--                           </tooltip>-->
+<!--                        </Label>-->
+<!--                     </graphic></TableColumn>-->
+<!--                  <TableColumn fx:id="landedStoreCostColumn" prefWidth="148.0" resizable="false">-->
+<!--                     <graphic>-->
+<!--                        <Label text="Landed Store Cost">-->
+<!--                           <tooltip>-->
+<!--                              <Tooltip text="The Per Unit Cost the Retail OutLet (Last Receiver) pays prior to applying the Required GPM% to establish the Everyday Retail." />-->
+<!--                           </tooltip>-->
+<!--                        </Label>-->
+<!--                     </graphic></TableColumn>-->
+<!--                  <TableColumn fx:id="everydayRetailCalcdCol" prefWidth="148.0" resizable="false">-->
+<!--                     <graphic>-->
+<!--                        <Label text="Calculated Everyday Retail">-->
+<!--                           <tooltip>-->
+<!--                              <Tooltip text="The auto-calculated Resulting Everyday Retail given the Landed Store Cost and Required Gross Profit Margin %." />-->
+<!--                           </tooltip>-->
+<!--                        </Label>-->
+<!--                     </graphic></TableColumn>-->
+<!--                  <TableColumn fx:id="everydayRetailOverrideCol" onEditCommit="#changeOverrideEvent" prefWidth="148.0" resizable="false">-->
+<!--                     <graphic>-->
+<!--                        <Label text="Override Everyday Retail">-->
+<!--                           <tooltip>-->
+<!--                              <Tooltip text="Please enter the REALISTIC Everyday Retail considering the auto-calculated retail to the left." />-->
+<!--                           </tooltip>-->
+<!--                        </Label>-->
+<!--                     </graphic></TableColumn>-->
+<!--               </columns>-->
+<!--               <VBox.margin>-->
+<!--                  <Insets top="40.0" />-->
+<!--               </VBox.margin>-->
+<!--            </TableView>-->
             <HBox prefHeight="117.0" prefWidth="1482.0">
                <children>
                   <AnchorPane prefHeight="130.0" prefWidth="154.0" style="-fx-background-color: transparent;">
