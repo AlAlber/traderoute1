@@ -417,17 +417,17 @@ public class MenuController implements Initializable {
 
     private static ObservableList getToplineSummaries() {
         ObservableList<Summary> summaries = FXCollections.observableArrayList();
-        summaries.add(new Summary("Gross Sales", new BigDecimal("0.0")));
-        summaries.add(new Summary("Net Sales", new BigDecimal("0.0")));
-        summaries.add(new Summary("Total Units", new BigDecimal("0.0")));
+        summaries.add(new Summary(StdSpecs.DECPOS6$.getSpecs(),"Gross Sales", new BigDecimal("0.0")));
+        summaries.add(new Summary(StdSpecs.DECPOS6$.getSpecs(),"Net Sales", new BigDecimal("0.0")));
+        summaries.add(new Summary(StdSpecs.INTPOS6$.getSpecs(),"Total Units", new BigDecimal("0.0")));
         return summaries;
     }
 
     private static ObservableList getRetailerSummaries() {
         ObservableList<Summary> summaries = FXCollections.observableArrayList();
-        summaries.add(new Summary("Gross Sales", new BigDecimal("0.0")));
-        summaries.add(new Summary("GPM", new BigDecimal("0.0")));
-        summaries.add(new Summary("Avg. Retail", new BigDecimal("0.0")));
+        summaries.add(new Summary(StdSpecs.DECPOS6$.getSpecs(),"Gross Sales", new BigDecimal("0.0")));
+        summaries.add(new Summary(StdSpecs.PERCENT.getSpecs(),"GPM", new BigDecimal("0.0")));
+        summaries.add(new Summary(StdSpecs.DECPOS6$.getSpecs(),"Avg. Retail", new BigDecimal("0.0")));
         return summaries;
     }
 

@@ -606,15 +606,4 @@ public class ProductClassReportingController implements Initializable {
         addSkuColumns();
 
     }
-    private class TableView extends TableView implements TableWithStyles {
-
-        @Override
-        public String getTableCellStyles(int col, int row) {
-            String style = "";
-            if (col ==1 && row==0){
-                style = "-fx-background-color= steelblue";
-            }
-            return style;
-        }
-    }
 }
